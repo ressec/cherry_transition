@@ -37,7 +37,7 @@ public final class PersonConverter
      */
     public static PersonServerEntity convertClient(Person entity)
     {
-        return PersonMapper.INSTANCE.fromClient(entity, new CycleAvoidingMappingContext());
+        return PersonMapper.INSTANCE.mapClient(entity, new CycleAvoidingMappingContext());
     }
 
     /**
@@ -47,7 +47,7 @@ public final class PersonConverter
      */
     public static List<PersonServerEntity> convertClientList(List<Person> list)
     {
-        return PersonMapper.INSTANCE.fromClientList(list, new CycleAvoidingMappingContext());
+        return PersonMapper.INSTANCE.mapClientList(list, new CycleAvoidingMappingContext());
     }
 
     /**
@@ -57,7 +57,7 @@ public final class PersonConverter
      */
     public static Person convertPersistence(PersonServerEntity entity)
     {
-        return PersonMapper.INSTANCE.fromServer(entity, new CycleAvoidingMappingContext());
+        return PersonMapper.INSTANCE.mapPersistence(entity, new CycleAvoidingMappingContext());
     }
 
     /**
@@ -67,7 +67,7 @@ public final class PersonConverter
      */
     public static List<Person> convertPersistenceList(List<PersonServerEntity> list)
     {
-        return PersonMapper.INSTANCE.fromServerList(list, new CycleAvoidingMappingContext());
+        return PersonMapper.INSTANCE.mapPersistenceList(list, new CycleAvoidingMappingContext());
     }
 
     /**

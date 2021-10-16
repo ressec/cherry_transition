@@ -37,7 +37,7 @@ public final class DocumentConverter
      */
     public static DocumentServerEntity fromClient(Document entity)
     {
-        return DocumentMapper.INSTANCE.convertClient(entity, new CycleAvoidingMappingContext());
+        return DocumentMapper.INSTANCE.mapClient(entity, new CycleAvoidingMappingContext());
     }
 
     /**
@@ -47,7 +47,7 @@ public final class DocumentConverter
      */
     public static List<DocumentServerEntity> fromClientList(List<Document> list)
     {
-        return DocumentMapper.INSTANCE.convertClientList(list, new CycleAvoidingMappingContext());
+        return DocumentMapper.INSTANCE.mapClientList(list, new CycleAvoidingMappingContext());
     }
 
     /**
@@ -57,7 +57,7 @@ public final class DocumentConverter
      */
     public static Document fromServer(DocumentServerEntity entity)
     {
-        return DocumentMapper.INSTANCE.convertPersistence(entity, new CycleAvoidingMappingContext());
+        return DocumentMapper.INSTANCE.mapPersistence(entity, new CycleAvoidingMappingContext());
     }
 
     /**
@@ -67,7 +67,7 @@ public final class DocumentConverter
      */
     public static List<Document> fromServerList(List<DocumentServerEntity> list)
     {
-        return DocumentMapper.INSTANCE.convertPersistenceList(list, new CycleAvoidingMappingContext());
+        return DocumentMapper.INSTANCE.mapPersistenceList(list, new CycleAvoidingMappingContext());
     }
 
     /**

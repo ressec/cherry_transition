@@ -48,7 +48,7 @@ public interface EmailAddressMapper
      * @param context Context object.
      * @return Mapped persistent entity.
      */
-    EmailAddressServerEntity convertClient(EmailAddress entity, @Context CycleAvoidingMappingContext context);
+    EmailAddressServerEntity mapClient(EmailAddress entity, @Context CycleAvoidingMappingContext context);
 
     /**
      * Maps a list of client entities to a list of persistent entities.
@@ -56,7 +56,7 @@ public interface EmailAddressMapper
      * @param context Context object.
      * @return Mapped list of persistent entities.
      */
-    List<EmailAddressServerEntity> convertClientList(List<EmailAddress> list, @Context CycleAvoidingMappingContext context);
+    List<EmailAddressServerEntity> mapClientList(List<EmailAddress> list, @Context CycleAvoidingMappingContext context);
 
     /**
      * Maps from a persistent entity to a client entity.
@@ -64,7 +64,7 @@ public interface EmailAddressMapper
      * @param context Context object.
      * @return Mapped client entity.
      */
-    EmailAddress convertPersistence(EmailAddressServerEntity entity, @Context CycleAvoidingMappingContext context);
+    EmailAddress mapPersistence(EmailAddressServerEntity entity, @Context CycleAvoidingMappingContext context);
 
     /**
      * Maps from a list of persistent entities to a list of client entities.
@@ -72,7 +72,7 @@ public interface EmailAddressMapper
      * @param context Context object.
      * @return Mapped list of client entities.
      */
-    List<EmailAddress> fromServerList(List<EmailAddressServerEntity> list, @Context CycleAvoidingMappingContext context);
+    List<EmailAddress> mapPersistenceList(List<EmailAddressServerEntity> list, @Context CycleAvoidingMappingContext context);
 
     /**
      * Copy a persistent entity.

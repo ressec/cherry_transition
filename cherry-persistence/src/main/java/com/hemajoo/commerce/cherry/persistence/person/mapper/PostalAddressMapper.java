@@ -48,7 +48,7 @@ public interface PostalAddressMapper
      * @param context Context object.
      * @return Client entity.
      */
-    PostalAddress fromServer(PostalAddressServerEntity entity, @Context CycleAvoidingMappingContext context);
+    PostalAddress mapPersistence(PostalAddressServerEntity entity, @Context CycleAvoidingMappingContext context);
 
     /**
      * Maps from a list of persistent entities to a list of client entities.
@@ -56,7 +56,7 @@ public interface PostalAddressMapper
      * @param context Context object.
      * @return List of client entities.
      */
-    List<PostalAddress> fromServerList(List<PostalAddressServerEntity> list, @Context CycleAvoidingMappingContext context);
+    List<PostalAddress> mapPersistenceList(List<PostalAddressServerEntity> list, @Context CycleAvoidingMappingContext context);
 
     /**
      * Maps from a client entity to a persistent entity.
@@ -64,7 +64,7 @@ public interface PostalAddressMapper
      * @param context Context object.
      * @return Persistent entity.
      */
-    PostalAddressServerEntity fromClient(PostalAddress entity, @Context CycleAvoidingMappingContext context);
+    PostalAddressServerEntity mapClient(PostalAddress entity, @Context CycleAvoidingMappingContext context);
 
     /**
      * Maps from a list of client entities to a list of persistent entities.
@@ -72,7 +72,7 @@ public interface PostalAddressMapper
      * @param context Context object.
      * @return List of persistent entities.
      */
-    List<PostalAddressServerEntity> fromClientList(List<PostalAddress> list, @Context CycleAvoidingMappingContext context);
+    List<PostalAddressServerEntity> mapClientList(List<PostalAddress> list, @Context CycleAvoidingMappingContext context);
 
     /**
      * Copy a persistent entity.

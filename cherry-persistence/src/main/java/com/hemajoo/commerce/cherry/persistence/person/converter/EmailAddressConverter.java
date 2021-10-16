@@ -37,7 +37,7 @@ public final class EmailAddressConverter
      */
     public static EmailAddressServerEntity convertClient(EmailAddress entity)
     {
-        return EmailAddressMapper.INSTANCE.convertClient(entity, new CycleAvoidingMappingContext());
+        return EmailAddressMapper.INSTANCE.mapClient(entity, new CycleAvoidingMappingContext());
     }
 
     /**
@@ -47,7 +47,7 @@ public final class EmailAddressConverter
      */
     public static List<EmailAddressServerEntity> convertClientList(List<EmailAddress> list)
     {
-        return EmailAddressMapper.INSTANCE.convertClientList(list, new CycleAvoidingMappingContext());
+        return EmailAddressMapper.INSTANCE.mapClientList(list, new CycleAvoidingMappingContext());
     }
 
     /**
@@ -57,7 +57,7 @@ public final class EmailAddressConverter
      */
     public static EmailAddress convertPersistence(EmailAddressServerEntity entity)
     {
-        return EmailAddressMapper.INSTANCE.convertPersistence(entity, new CycleAvoidingMappingContext());
+        return EmailAddressMapper.INSTANCE.mapPersistence(entity, new CycleAvoidingMappingContext());
     }
 
     /**
@@ -67,7 +67,7 @@ public final class EmailAddressConverter
      */
     public static List<EmailAddress> convertPersistenceList(List<EmailAddressServerEntity> list)
     {
-        return EmailAddressMapper.INSTANCE.fromServerList(list, new CycleAvoidingMappingContext());
+        return EmailAddressMapper.INSTANCE.mapPersistenceList(list, new CycleAvoidingMappingContext());
     }
 
     /**

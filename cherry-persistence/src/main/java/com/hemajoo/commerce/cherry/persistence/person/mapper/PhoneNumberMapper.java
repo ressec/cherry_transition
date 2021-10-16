@@ -50,7 +50,7 @@ public interface PhoneNumberMapper
      * @param context Context object.
      * @return Client entity.
      */
-    PhoneNumber fromServer(PhoneNumberServerEntity entity, @Context CycleAvoidingMappingContext context);
+    PhoneNumber mapPersistence(PhoneNumberServerEntity entity, @Context CycleAvoidingMappingContext context);
 
     /**
      * Maps from a list of persistent entities to a list of client entities.
@@ -58,7 +58,7 @@ public interface PhoneNumberMapper
      * @param context Context object.
      * @return List of client entities.
      */
-    List<PhoneNumber> fromServerList(List<PhoneNumberServerEntity> list, @Context CycleAvoidingMappingContext context);
+    List<PhoneNumber> mapPersistenceList(List<PhoneNumberServerEntity> list, @Context CycleAvoidingMappingContext context);
 
     /**
      * Maps from a client entity to a persistent entity.
@@ -66,7 +66,7 @@ public interface PhoneNumberMapper
      * @param context Context object.
      * @return Persistent entity.
      */
-    PhoneNumberServerEntity fromClient(PhoneNumber entity, @Context CycleAvoidingMappingContext context);
+    PhoneNumberServerEntity mapClient(PhoneNumber entity, @Context CycleAvoidingMappingContext context);
 
     /**
      * Maps from a list of client entities to a list of persistent entities.
@@ -74,7 +74,7 @@ public interface PhoneNumberMapper
      * @param context Context object.
      * @return List of persistent entities.
      */
-    List<PhoneNumberServerEntity> fromClientList(List<PhoneNumber> list, @Context CycleAvoidingMappingContext context);
+    List<PhoneNumberServerEntity> mapClientList(List<PhoneNumber> list, @Context CycleAvoidingMappingContext context);
 
     /**
      * Copy a persistent entity.

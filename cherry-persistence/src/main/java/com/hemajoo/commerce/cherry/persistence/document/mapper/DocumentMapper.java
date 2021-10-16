@@ -46,7 +46,7 @@ public interface DocumentMapper
      * @return Converted client entity.
      */
     @Mapping(source = "entity.owner", target = "owner", qualifiedByName = "toIdentity")
-    Document convertPersistence(DocumentServerEntity entity, @Context CycleAvoidingMappingContext context);
+    Document mapPersistence(DocumentServerEntity entity, @Context CycleAvoidingMappingContext context);
 
     /**
      * Maps a list of persistent entities to a list of client entities.
@@ -55,7 +55,7 @@ public interface DocumentMapper
      * @return Converted list of client entities.
      */
     //@Mapping(target = "entity.owner", qualifiedByName = "toIdentity")
-    List<Document> convertPersistenceList(List<DocumentServerEntity> list, @Context CycleAvoidingMappingContext context);
+    List<Document> mapPersistenceList(List<DocumentServerEntity> list, @Context CycleAvoidingMappingContext context);
 
     /**
      * Maps from a client entity to a persistent entity.
@@ -64,7 +64,7 @@ public interface DocumentMapper
      * @return Converted persistent entity.
      */
     @Mapping(source = "entity.owner", target = "owner", qualifiedByName = "fromIdentity")
-    DocumentServerEntity convertClient(Document entity, @Context CycleAvoidingMappingContext context);
+    DocumentServerEntity mapClient(Document entity, @Context CycleAvoidingMappingContext context);
 
     /**
      * Maps a list of client entities to a list of persistent entities.
@@ -73,7 +73,7 @@ public interface DocumentMapper
      * @return Converted list of persistent entities.
      */
     //@Mapping(target = "entity.owner", qualifiedByName = "fromIdentity")
-    List<DocumentServerEntity> convertClientList(List<Document> list, @Context CycleAvoidingMappingContext context);
+    List<DocumentServerEntity> mapClientList(List<Document> list, @Context CycleAvoidingMappingContext context);
 
     /**
      * Copy a persistent entity.

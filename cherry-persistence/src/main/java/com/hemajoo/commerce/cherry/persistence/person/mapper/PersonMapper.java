@@ -47,7 +47,7 @@ public interface PersonMapper
      * @param context Context object.
      * @return Mapped client entity.
      */
-    Person fromServer(PersonServerEntity persistent, @Context CycleAvoidingMappingContext context);
+    Person mapPersistence(PersonServerEntity persistent, @Context CycleAvoidingMappingContext context);
 
     /**
      * Maps from a list of persistent entities to a list of client entities.
@@ -55,7 +55,7 @@ public interface PersonMapper
      * @param context Context object.
      * @return Mapped list of client entities.
      */
-    List<Person> fromServerList(List<PersonServerEntity> list, @Context CycleAvoidingMappingContext context);
+    List<Person> mapPersistenceList(List<PersonServerEntity> list, @Context CycleAvoidingMappingContext context);
 
     /**
      * Maps from a client entity to a persistent entity.
@@ -63,7 +63,7 @@ public interface PersonMapper
      * @param context Context object.
      * @return Mapped persistent entity.
      */
-    PersonServerEntity fromClient(Person entity, @Context CycleAvoidingMappingContext context);
+    PersonServerEntity mapClient(Person entity, @Context CycleAvoidingMappingContext context);
 
     /**
      * Maps a list of client entities to a list of persistent entities.
@@ -71,7 +71,7 @@ public interface PersonMapper
      * @param context Context object.
      * @return Mapped list of persistent entities.
      */
-    List<PersonServerEntity> fromClientList(List<Person> list, @Context CycleAvoidingMappingContext context);
+    List<PersonServerEntity> mapClientList(List<Person> list, @Context CycleAvoidingMappingContext context);
 
     /**
      * Copy a persistent entity.
