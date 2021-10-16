@@ -10,7 +10,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>data-model</artifactId>
+    <artifactId>cherry-model</artifactId>
 
     <name>Cherry - Model</name>
     <description>Module providing the shared Cherry data model.</description>

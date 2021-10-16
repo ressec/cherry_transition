@@ -124,7 +124,7 @@
             <groupId>com.hemajoo.commerce.cherry</groupId>
             <artifactId>cherry-model</artifactId>
             <version>${project.version}</version>
-            <scope>compile</scope>
+<!--            <scope>compile</scope>-->
         </dependency>
 
         <!-- Avocado: https://github.com/ressec/Avocado
