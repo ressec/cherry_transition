@@ -1,7 +1,7 @@
 ---
 name: Persistence Service
-about: Design and implement a persistence service for the [<entity name>] entity
-title: ''
+about: Design and implement a new persistence service (interface and implementation).
+title: Design and implement a persistence service for the [ENTITY_NAME] entity
 labels: ''
 assignees: ressec
 

@@ -1,7 +1,7 @@
 ---
 name: JPA repository
-about: Design and implement a JPA repository for the [<entity name>] persistent entity
-title: ''
+about: Design and implement a new JPA repository
+title: Design and implement the [ENTITY_NAME] JPA repository
 labels: ''
 assignees: ressec
 
@@ -9,4 +9,4 @@ assignees: ressec
 
 ## Purpose
 
-This task aims to cover the design and implementation of the JPA repository for the persistent entity: `[<entity name>]`.
+This task aims to cover the design and implementation of the JPA repository for the persistent entity: `[ENTITY_NAME]`.
