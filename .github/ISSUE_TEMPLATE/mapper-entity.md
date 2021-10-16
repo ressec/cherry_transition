@@ -9,7 +9,7 @@ assignees: ressec
 
 ## Purpose
 
-This task aims to cover the design and implementation of the <entity> mapper.
+This task aims to cover the design and implementation of the `<entity>` mapper.
 
 ## Description
 
@@ -17,10 +17,10 @@ _A mapper is an interface that (through the **MapStruct** library) can convert i
 
 ## Services
 
-- [ ] Implement service `fromClient()` 
-- [ ] Implement service `fromClientList()` 
-- [ ] Implement service `fromServer()` 
-- [ ] Implement service `fromServerList()`
+- [ ] Implement service `mapClient()` 
+- [ ] Implement service `mapClientList()` 
+- [ ] Implement service `mapServer()` 
+- [ ] Implement service `mapServerList()`
 - [ ] Implement service `copy()` for a client entity.
 - [ ] Implement service `copy()` for a persistent entity. 
 
