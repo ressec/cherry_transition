@@ -40,13 +40,6 @@
         <test.pattern.unit>**/*UnitTest.java</test.pattern.unit>
         <test.pattern.integration>**/*IntegrationTest.java</test.pattern.integration>
 
-        <!-- SonarCloud properties -->
-        <sonar.projectKey>ressec_cherry</sonar.projectKey>
-        <sonar.moduleKey>${project.artifactId}</sonar.moduleKey>
-        <sonar.projectName>Cherry</sonar.projectName>
-        <sonar.organization>ressec-github</sonar.organization>
-        <sonar.host.url>https://sonarcloud.io</sonar.host.url>
-
         <!-- Plugin version properties -->
         <version.maven.plugin.compiler>3.8.1</version.maven.plugin.compiler>
         <version.maven.plugin.jar>3.1.2</version.maven.plugin.jar>
@@ -473,6 +466,13 @@
         <profile>
             <!--Sonar analysis executed only if profile 'sonar' is active -->
             <id>sonar</id>
+            <properties>
+                <sonar.projectKey>ressec_cherry</sonar.projectKey>
+                <sonar.moduleKey>${project.artifactId}</sonar.moduleKey>
+                <sonar.projectName>Cherry</sonar.projectName>
+                <sonar.organization>ressec-github</sonar.organization>
+                <sonar.host.url>https://sonarcloud.io</sonar.host.url>
+            </properties>
             <build>
                 <plugins>
                     <plugin>
