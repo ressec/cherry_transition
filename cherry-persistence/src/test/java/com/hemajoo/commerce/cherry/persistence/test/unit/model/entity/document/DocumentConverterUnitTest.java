@@ -21,7 +21,7 @@ import com.hemajoo.commerce.cherry.persistence.document.converter.DocumentConver
 import com.hemajoo.commerce.cherry.persistence.document.entity.DocumentServerEntity;
 import com.hemajoo.commerce.cherry.persistence.document.mapper.DocumentMapper;
 import com.hemajoo.commerce.cherry.persistence.document.randomizer.DocumentRandomizer;
-import com.hemajoo.commerce.cherry.persistence.test.unit.base.BaseMapperTest;
+import com.hemajoo.commerce.cherry.persistence.test.unit.base.AbstractBaseMapperTest;
 import lombok.NonNull;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -37,7 +37,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-class DocumentConverterUnitTest extends BaseMapperTest
+class DocumentConverterUnitTest extends AbstractBaseMapperTest
 {
     /**
      * List element count.

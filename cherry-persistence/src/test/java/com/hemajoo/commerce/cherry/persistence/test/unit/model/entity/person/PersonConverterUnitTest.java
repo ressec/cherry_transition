@@ -20,7 +20,7 @@ import com.hemajoo.commerce.cherry.model.person.exception.PersonException;
 import com.hemajoo.commerce.cherry.persistence.person.converter.PersonConverter;
 import com.hemajoo.commerce.cherry.persistence.person.entity.PersonServerEntity;
 import com.hemajoo.commerce.cherry.persistence.person.randomizer.PersonRandomizer;
-import com.hemajoo.commerce.cherry.persistence.test.unit.base.BaseMapperTest;
+import com.hemajoo.commerce.cherry.persistence.test.unit.base.AbstractBaseMapperTest;
 import lombok.NonNull;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -36,7 +36,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-class PersonConverterUnitTest extends BaseMapperTest
+class PersonConverterUnitTest extends AbstractBaseMapperTest
 {
     /**
      * List element count.

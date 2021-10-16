@@ -15,9 +15,8 @@
 package com.hemajoo.commerce.cherry.persistence.base.entity;
 
 import com.hemajoo.commerce.cherry.commons.entity.EntityIdentity;
-import com.hemajoo.commerce.cherry.commons.entity.IEntityIdentity;
-import com.hemajoo.commerce.cherry.commons.entity.IdentityAware;
 import com.hemajoo.commerce.cherry.commons.type.EntityType;
+import com.hemajoo.commerce.cherry.model.base.entity.BaseEntity;
 import com.hemajoo.commerce.cherry.persistence.document.entity.DocumentServerEntity;
 import lombok.*;
 import org.hibernate.annotations.Type;
@@ -38,7 +37,7 @@ import java.util.UUID;
 @Entity
 @Table(name = "ENTITY")
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-public class BaseServerEntity extends AbstractStatusServerEntity implements IEntityIdentity, IdentityAware
+public class BaseServerEntity extends AbstractStatusServerEntity implements BaseEntity
 {
     public static final String FIELD_ID             = "id";
     public static final String FIELD_ENTITY_TYPE    = "entityType";

@@ -14,6 +14,7 @@
  */
 package com.hemajoo.commerce.cherry.persistence.base.entity;
 
+import com.hemajoo.commerce.cherry.model.base.entity.AuditEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -24,7 +25,6 @@ import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
-import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -36,7 +36,7 @@ import java.util.Date;
 @ToString
 @EqualsAndHashCode
 @MappedSuperclass
-public abstract class AbstractAuditServerEntity implements Serializable
+public abstract class AbstractAuditServerEntity implements AuditEntity
 {
     public static final String FIELD_CREATED_DATE   = "createdDate";
     public static final String FIELD_MODIFIED_DATE  = "modifiedDate";

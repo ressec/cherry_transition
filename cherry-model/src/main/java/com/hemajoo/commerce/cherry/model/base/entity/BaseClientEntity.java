@@ -15,8 +15,6 @@
 package com.hemajoo.commerce.cherry.model.base.entity;
 
 import com.hemajoo.commerce.cherry.commons.entity.EntityIdentity;
-import com.hemajoo.commerce.cherry.commons.entity.IEntityIdentity;
-import com.hemajoo.commerce.cherry.commons.entity.IdentityAware;
 import com.hemajoo.commerce.cherry.commons.type.EntityType;
 import com.hemajoo.commerce.cherry.model.document.Document;
 import io.swagger.annotations.ApiModelProperty;
@@ -35,7 +33,7 @@ import java.util.UUID;
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-public class BaseClientEntity extends AbstractStatusClientEntity implements IEntityIdentity, IdentityAware
+public class BaseClientEntity extends AbstractStatusClientEntity implements BaseEntity
 {
     /**
      * Entity identifier.

@@ -22,7 +22,7 @@ import com.hemajoo.commerce.cherry.persistence.person.entity.EmailAddressServerE
 import com.hemajoo.commerce.cherry.persistence.person.entity.PersonServerEntity;
 import com.hemajoo.commerce.cherry.persistence.person.randomizer.EmailAddressRandomizer;
 import com.hemajoo.commerce.cherry.persistence.person.randomizer.PersonRandomizer;
-import com.hemajoo.commerce.cherry.persistence.test.unit.base.BaseMapperTest;
+import com.hemajoo.commerce.cherry.persistence.test.unit.base.AbstractBaseMapperTest;
 import lombok.NonNull;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -39,7 +39,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-class EmailAddressConverterUnitTest extends BaseMapperTest
+class EmailAddressConverterUnitTest extends AbstractBaseMapperTest
 {
     /**
      * List element count.

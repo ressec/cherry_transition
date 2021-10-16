@@ -18,7 +18,6 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -28,7 +27,7 @@ import java.util.Date;
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
-public abstract class AbstractAuditClientEntity implements Serializable
+public abstract class AbstractAuditClientEntity
 {
     /**
      * Entity creation date.
