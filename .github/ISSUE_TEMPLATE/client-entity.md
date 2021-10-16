@@ -1,7 +1,7 @@
 ---
 name: Client entity
 about: 'Design and implement a new client entity '
-title: Design and implement the client [ENTITY_NAME] entity
+title: Design and implement the client <entity_name> entity
 labels: ''
 assignees: ressec
 
