@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <groupId>com.hemajoo.commerce.cherry</groupId>
+        <artifactId>cherry-parent</artifactId>
+        <version>0.1.0-SNAPSHOT</version>
+        <relativePath>../cherry-parent</relativePath>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>cherry-model</artifactId>
+
+    <name>Cherry - Model</name>
+    <description>Module providing the shared Cherry data model.</description>
+
+    <dependencies>
+
+        <!-- Hemajoo Cherry dependencies -->
+        <dependency>
+            <groupId>com.hemajoo.commerce.cherry</groupId>
+            <artifactId>cherry-commons</artifactId>
+            <version>${project.version}</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-validation</artifactId>
+        </dependency>
+
+        <!-- Lombok dependencies-->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
+
+        <!-- ResseC Avocado dependencies -->
+        <dependency>
+            <groupId>org.ressec.avocado</groupId>
+            <artifactId>avocado-core</artifactId>
+        </dependency>
+
+        <!-- Tika -->
+        <dependency>
+            <groupId>com.github.lafa.tikaNoExternal</groupId>
+            <artifactId>tika-core</artifactId>
+        </dependency>
+
+    </dependencies>
+
+</project>

@@ -1,0 +1,497 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.hemajoo.commerce.cherry</groupId>
+    <artifactId>cherry-parent</artifactId>
+    <version>0.1.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <name>Cherry - Parent</name>
+    <description>Parent module for the Hemajoo's Commerce Cherry project.</description>
+
+    <developers>
+
+        <developer>
+            <id>ressec</id>
+            <roles>
+                <role>Lead Developer</role>
+            </roles>
+            <name>Resse Christophe</name>
+            <url>https://github.com/ressec</url>
+            <email>christophe.resse@gmail.com</email>
+        </developer>
+
+    </developers>
+
+    <properties>
+
+        <!-- Project properties -->
+        <maven.compiler.source>11</maven.compiler.source>
+        <maven.compiler.target>11</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.directory.benchmark>file://${basedir}/benchmark}</project.directory.benchmark>
+        <project.directory.run>${basedir}/run</project.directory.run>
+        <project.directory.data>${basedir}/data</project.directory.data>
+        <project.directory.log>${basedir}/log</project.directory.log>
+        <project.directory.db>${basedir}/db</project.directory.db>
+        <test.pattern.unit>**/*UnitTest.java</test.pattern.unit>
+        <test.pattern.integration>**/*IntegrationTest.java</test.pattern.integration>
+
+        <!-- SonarCloud properties -->
+        <sonar.projectKey>ressec_cherry</sonar.projectKey>
+        <sonar.moduleKey>${project.artifactId}</sonar.moduleKey>
+        <sonar.projectName>Cherry</sonar.projectName>
+        <sonar.organization>ressec-github</sonar.organization>
+        <sonar.host.url>https://sonarcloud.io</sonar.host.url>
+
+        <!-- Plugin version properties -->
+        <version.maven.plugin.compiler>3.8.1</version.maven.plugin.compiler>
+        <version.maven.plugin.jar>3.1.2</version.maven.plugin.jar>
+        <version.maven.plugin.javadoc>3.1.1</version.maven.plugin.javadoc>
+        <version.maven.plugin.source>3.1.0</version.maven.plugin.source>
+        <version.maven.plugin.scm>1.11.2</version.maven.plugin.scm>
+        <version.maven.plugin.release>2.5.3</version.maven.plugin.release>
+        <version.maven.plugin.site>3.7.1</version.maven.plugin.site>
+        <version.maven.plugin.sonar>3.6.0.1398</version.maven.plugin.sonar>
+        <version.maven.plugin.project.info.reports>3.0.0</version.maven.plugin.project.info.reports>
+        <version.maven.plugin.surefire>3.0.0-M5</version.maven.plugin.surefire>
+        <version.maven.plugin.flyway>7.9.1</version.maven.plugin.flyway>
+        <version.plugin.maven.docker>0.37.0</version.plugin.maven.docker>
+        <version.plugin.maven.sonarscource.scanner>3.9.0.2155</version.plugin.maven.sonarscource.scanner>
+        <version.plugin.maven.jacoco>0.8.7</version.plugin.maven.jacoco>
+
+        <!-- Dependencies version properties -->
+        <version.ressec.avocado>0.1.0-SNAPSHOT</version.ressec.avocado>
+        <version.spring.boot>2.5.5</version.spring.boot>
+        <version.swagger>3.0.0</version.swagger>
+        <version.google.gson>2.8.6</version.google.gson>
+        <version.gson-fire>1.8.4</version.gson-fire>
+        <version.google.guava>30.0-jre</version.google.guava>
+        <version.junit.jupiter>5.8.1</version.junit.jupiter>
+        <version.javafaker>1.0.1</version.javafaker>
+        <version.apache.log4j>2.13.2</version.apache.log4j>
+        <version.apache.commons.lang.3>3.9</version.apache.commons.lang.3>
+        <version.apache.commons.io>2.11.0</version.apache.commons.io>
+        <version.lombok>1.18.20</version.lombok>
+        <version.mapstruct>1.4.2.Final</version.mapstruct>
+        <version.lombok.mapstruct>0.2.0</version.lombok.mapstruct>
+        <version.h2>1.4.200</version.h2>
+        <version.flyway>7.9.2</version.flyway>
+        <version.apache.tika>1.0.18</version.apache.tika>
+        <version.hibernate.validator>7.0.1.Final</version.hibernate.validator>
+
+        <!-- Run properties -->
+        <db.h2.test.port>9092</db.h2.test.port>
+        <flyway.locations>classpath:/db/migration/h2</flyway.locations>
+
+    </properties>
+
+    <distributionManagement>
+
+        <repository>
+            <id>github</id> <!-- This repository id should match a server entry in the servers section of the settings.xml file. -->
+            <name>GitHub Hemajoo - Apache Maven Packages</name>
+            <url>https://maven.pkg.github.com/ressec/cherry</url>
+        </repository>
+
+    </distributionManagement>
+
+    <repositories>
+
+        <!-- Main Maven repository -->
+        <repository>
+            <id>central</id>
+            <url>https://repo.maven.apache.org/maven2</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+
+        <!-- Github Maven repository -->
+        <repository>
+            <id>github-public</id>
+            <url>https://public:&#103;hp_ZjQoiEsk9V7KOndlYj1nR7AC2a3jd701HtoB@maven.pkg.github.com/ressec/*</url>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+
+    </repositories>
+
+    <dependencyManagement>
+
+        <dependencies>
+
+            <!-- Project Spring Framework -->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${version.spring.boot}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>${version.spring.boot}</version>
+                <type>maven-plugin</type>
+            </dependency>
+
+            <!-- Project Lombok: https://projectlombok.org/ -->
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>${version.lombok}</version>
+            </dependency>
+
+            <!-- Google Gson: https://github.com/google/gson -->
+            <dependency>
+                <groupId>com.google.code.gson</groupId>
+                <artifactId>gson</artifactId>
+                <version>${version.google.gson}</version>
+            </dependency>
+
+            <!-- Gson Fire: https://github.com/julman99/gson-fire -->
+            <dependency>
+                <groupId>io.gsonfire</groupId>
+                <artifactId>gson-fire</artifactId>
+                <version>${version.gson-fire}</version>
+            </dependency>
+
+            <!-- https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter -->
+            <!-- Provides everything you need to write JUnit 5 Jupiter tests. -->
+            <dependency>
+                <groupId>org.junit.jupiter</groupId>
+                <artifactId>junit-jupiter</artifactId>
+                <version>${version.junit.jupiter}</version>
+                <scope>test</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.assertj</groupId>
+                <artifactId>assertj-core</artifactId>
+                <version>3.9.1</version>
+                <scope>test</scope>
+            </dependency>
+
+            <!-- Swagger -->
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-boot-starter</artifactId>
+                <version>${version.swagger}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-swagger-ui</artifactId>
+                <version>${version.swagger}</version>
+            </dependency>
+
+            <!-- Bean mapper: MapStruct -->
+            <dependency>
+                <groupId>org.mapstruct</groupId>
+                <artifactId>mapstruct</artifactId>
+                <version>${version.mapstruct}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok-mapstruct-binding</artifactId>
+                <version>${version.lombok.mapstruct}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.mapstruct</groupId>
+                <artifactId>mapstruct-processor</artifactId>
+                <version>${version.mapstruct}</version>
+            </dependency>
+
+            <!-- Apache Commons Lang: https://commons.apache.org/proper/commons-lang/ -->
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-lang3</artifactId>
+                <version>${version.apache.commons.lang.3}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>commons-io</groupId>
+                <artifactId>commons-io</artifactId>
+                <version>${version.apache.commons.io}</version>
+            </dependency>
+
+            <!-- JavaFaker: https://github.com/DiUS/java-faker ... Is this one necessary? -->
+            <dependency>
+                <groupId>com.github.javafaker</groupId>
+                <artifactId>javafaker</artifactId>
+                <version>${version.javafaker}</version>
+            </dependency>
+
+            <!-- Google Guava: https://github.com/google/guava -->
+            <dependency>
+                <groupId>com.google.guava</groupId>
+                <artifactId>guava</artifactId>
+                <version>${version.google.guava}</version>
+            </dependency>
+
+            <!-- Log4j 2: http://logging.apache.org/log4j/2.x/index.html -->
+            <dependency>
+                <groupId>org.apache.logging.log4j</groupId>
+                <artifactId>log4j-api</artifactId>
+                <version>${version.apache.log4j}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.logging.log4j</groupId>
+                <artifactId>log4j-core</artifactId>
+                <version>${version.apache.log4j}</version>
+            </dependency>
+
+            <!-- Flyway: https://flywaydb.org/documentation/usage/api/ -->
+            <dependency>
+                <groupId>org.flywaydb</groupId>
+                <artifactId>flyway-core</artifactId>
+                <version>${version.flyway}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.h2database</groupId>
+                <artifactId>h2</artifactId>
+                <version>${version.h2}</version>
+            </dependency>
+
+            <!-- Apache Tika: https://tika.apache.org -->
+            <dependency>
+                <groupId>com.github.lafa.tikaNoExternal</groupId>
+                <artifactId>tika-core</artifactId>
+                <version>${version.apache.tika}</version>
+            </dependency>
+
+            <!-- Avocado: https://github.com/ressec/Avocado -->
+            <dependency>
+                <groupId>org.ressec.avocado</groupId>
+                <artifactId>avocado-core</artifactId>
+                <version>${version.ressec.avocado}</version>
+            </dependency>
+
+        </dependencies>
+
+    </dependencyManagement>
+
+    <dependencies>
+
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <version>${version.h2}</version>
+        </dependency>
+
+    </dependencies>
+
+    <build>
+
+        <plugins>
+
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>${version.spring.boot}</version>
+            </plugin>
+
+            <!-- JAR: Compile the sources. -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${version.maven.plugin.compiler}</version>
+                <configuration>
+                    <source>${maven.compiler.source}</source>
+                    <target>${maven.compiler.target}</target>
+                    <annotationProcessorPaths>
+                        <path>
+                            <groupId>org.mapstruct</groupId>
+                            <artifactId>mapstruct-processor</artifactId>
+                            <version>${version.mapstruct}</version>
+                        </path>
+                        <path>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                            <version>${version.lombok}</version>
+                        </path>
+                        <!-- This is needed when using Lombok 1.8.16 and above -->
+                        <path>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok-mapstruct-binding</artifactId>
+                            <version>${version.lombok.mapstruct}</version>
+                        </path>
+                    </annotationProcessorPaths>
+                </configuration>
+            </plugin>
+
+            <!-- JAR: Create a jar of the test classes. -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>${version.maven.plugin.jar}</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>test-jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- JAVADOC: Used to generate the Javadoc JAR file. -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>${version.maven.plugin.javadoc}</version>
+                <configuration>
+                    <encoding>${project.build.sourceEncoding}</encoding>
+                    <docencoding>${project.build.sourceEncoding}</docencoding>
+                    <charset>${project.build.sourceEncoding}</charset>
+                    <javadocExecutable>${java.home}/bin/javadoc</javadocExecutable>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- SOURCE: Used to generate the sources JAR file. -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>${version.maven.plugin.source}</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- SCM: Used to perform Source Control Management actions with Maven. -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-scm-plugin</artifactId>
+                <version>${version.maven.plugin.scm}</version>
+            </plugin>
+
+            <!-- RELEASE: Used to release a project with Maven. -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-release-plugin</artifactId>
+                <version>${version.maven.plugin.release}</version>
+                <configuration>
+                    <tagNameFormat>@{project.version}</tagNameFormat>
+                    <autoVersionSubmodules>true</autoVersionSubmodules>
+                    <useReleaseProfile>false</useReleaseProfile>
+                </configuration>
+            </plugin>
+
+            <!-- SITE: The Site Plugin is used to generate a site for the project. -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-site-plugin</artifactId>
+                <version>${version.maven.plugin.site}</version>
+            </plugin>
+
+            <!-- INFO REPORTS: The Maven Project Info Reports plugin is used to generate reports information about the project. -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-project-info-reports-plugin</artifactId>
+                <version>${version.maven.plugin.project.info.reports}</version>
+            </plugin>
+
+            <!-- SONAR: The Maven Project Sonar plugin is used to execute static analysis on the code. -->
+            <plugin>
+                <groupId>org.sonarsource.scanner.maven</groupId>
+                <artifactId>sonar-maven-plugin</artifactId>
+                <version>${version.maven.plugin.sonar}</version>
+            </plugin>
+
+            <!-- SUREFIRE: The Maven Project Surefire plugin is used to execute the tests. -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>${version.maven.plugin.surefire}</version>
+                <configuration>
+                    <skipTests>false</skipTests>
+                    <includes>
+                        <include>**/*UnitTest.java</include>
+                    </includes>
+                    <excludes>
+                        <exclude>**/*IntegrationTest.java</exclude>
+                    </excludes>
+                </configuration>
+            </plugin>
+
+        </plugins>
+
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+
+            <!-- Allow resource filtering for variable substitution -->
+            <resource>
+                <directory>src/test/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+
+    </build>
+
+    <modules>
+        <module>../cherry-commons</module>
+        <module>../cherry-model</module>
+        <module>../cherry-persistence</module>
+        <module>../cherry-rest-api</module>
+    </modules>
+
+    <scm>
+        <url>https://github.com/ressec/cherry</url>
+        <connection>scm:git:ssh://git@github.com/ressec/cherry.git</connection>
+        <!--suppress UnresolvedMavenProperty -->
+        <developerConnection>scm:git:[push=]ssh://git@github.com/ressec/cherry.git[fetch=]ssh://git@github.com/ressec/cherry.git</developerConnection>
+        <tag>HEAD</tag>
+    </scm>
+
+    <profiles>
+
+        <profile>
+            <!--Sonar analysis executed only if profile 'sonar' is active -->
+            <id>sonar</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.sonarsource.scanner.maven</groupId>
+                        <artifactId>sonar-maven-plugin</artifactId>
+                        <version>${version.plugin.maven.sonarscource.scanner}</version>
+                        <executions>
+                            <execution>
+                                <phase>verify</phase>
+                                <goals>
+                                    <goal>sonar</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+    </profiles>
+
+</project>
