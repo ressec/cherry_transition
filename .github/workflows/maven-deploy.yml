@@ -65,7 +65,7 @@ jobs:
     permissions:
       contents: read
       packages: write
-    needs: [sonar, integration]
+    needs: [build]
     steps:
       - uses: actions/checkout@v2
         with:
