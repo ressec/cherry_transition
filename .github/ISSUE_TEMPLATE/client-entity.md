@@ -1,7 +1,7 @@
 ---
 name: Client entity
 about: 'Design and implement a new client entity '
-title: Design and implement the client <entity_name> entity
+title: Design and implement the <entity> client entity
 labels: ''
 assignees: ressec
 
@@ -9,4 +9,4 @@ assignees: ressec
 
 ## Purpose
 
-This task aims to cover the design and implementation of the client `[ENTITY_NAME]` entity.
+This task aims to cover the design and implementation of the `<entity>` client entity.

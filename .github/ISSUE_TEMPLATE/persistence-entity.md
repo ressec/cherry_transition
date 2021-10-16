@@ -1,7 +1,7 @@
 ---
 name: Persistence entity
 about: Design and implement a new persistence entity.
-title: Design and implement the [ENTITY_NAME] persistence entity
+title: Design and implement the <entity> persistence entity
 labels: ''
 assignees: ressec
 
@@ -9,4 +9,4 @@ assignees: ressec
 
 ## Purpose
 
-This task aims to cover the design and implementation of the persistence entity for the `<entity name>` entity.
+This task aims to cover the design and implementation of the `<entity>` persistence entity.
