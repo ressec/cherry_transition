@@ -35,7 +35,7 @@ public final class PersonConverter
      * @param entity Client entity to map.
      * @return Mapped persistent entity.
      */
-    public static PersonServerEntity fromClient(Person entity)
+    public static PersonServerEntity convertClient(Person entity)
     {
         return PersonMapper.INSTANCE.fromClient(entity, new CycleAvoidingMappingContext());
     }
@@ -45,7 +45,7 @@ public final class PersonConverter
      * @param list List of client entities to map.
      * @return Mapped list of persistent entities.
      */
-    public static List<PersonServerEntity> fromClientList(List<Person> list)
+    public static List<PersonServerEntity> convertClientList(List<Person> list)
     {
         return PersonMapper.INSTANCE.fromClientList(list, new CycleAvoidingMappingContext());
     }
@@ -55,7 +55,7 @@ public final class PersonConverter
      * @param entity Persistent entity to map.
      * @return Mapped client entity.
      */
-    public static Person fromPersistent(PersonServerEntity entity)
+    public static Person convertPersistence(PersonServerEntity entity)
     {
         return PersonMapper.INSTANCE.fromServer(entity, new CycleAvoidingMappingContext());
     }
@@ -65,7 +65,7 @@ public final class PersonConverter
      * @param list List of persistent entities to map.
      * @return Mapped list of client entities.
      */
-    public static List<Person> fromPersistentList(List<PersonServerEntity> list)
+    public static List<Person> convertPersistenceList(List<PersonServerEntity> list)
     {
         return PersonMapper.INSTANCE.fromServerList(list, new CycleAvoidingMappingContext());
     }

@@ -105,7 +105,7 @@ public class EmailAddressController
             @PathVariable String id)
     {
         EmailAddressServerEntity serverEmailAddress = emailAddressService.findById(UUID.fromString(id));
-        return ResponseEntity.ok(EmailAddressConverter.fromPersistent(serverEmailAddress));
+        return ResponseEntity.ok(EmailAddressConverter.convertPersistence(serverEmailAddress));
     }
 
     /**
@@ -120,10 +120,10 @@ public class EmailAddressController
             @ApiParam(value = "Email address", required = true)
             @Valid @ValidEmailAddressForCreation @RequestBody EmailAddress emailAddress)
     {
-        EmailAddressServerEntity serverEmailAddress = EmailAddressConverter.fromClient(emailAddress);
+        EmailAddressServerEntity serverEmailAddress = EmailAddressConverter.convertClient(emailAddress);
         emailAddressService.save(serverEmailAddress);
 
-        return ResponseEntity.ok(EmailAddressConverter.fromPersistent(serverEmailAddress));
+        return ResponseEntity.ok(EmailAddressConverter.convertPersistence(serverEmailAddress));
     }
 
     /**
@@ -143,7 +143,7 @@ public class EmailAddressController
         serverEmail.setPerson(person);
         emailAddressService.save(serverEmail);
 
-        return ResponseEntity.ok(EmailAddressConverter.fromPersistent(serverEmail));
+        return ResponseEntity.ok(EmailAddressConverter.convertPersistence(serverEmail));
     }
 
     /**
@@ -168,7 +168,7 @@ public class EmailAddressController
 
         try
         {
-            EmailAddressServerEntity emailAddress = emailAddressService.save(EmailAddressConverter.fromClient(email));
+            EmailAddressServerEntity emailAddress = emailAddressService.save(EmailAddressConverter.convertClient(email));
             response = RestApiResponse.ok();
 //            response = RestApiResponse.ok(String.format("Successfully updated email address with id: %s", emailAddress.getId().toString()));
         }
@@ -220,7 +220,7 @@ public class EmailAddressController
 //        RestApiResponse response = RestApiResponse.ok();
 //        ResponseEntity<RestApiResponse> entity = response.getEntity();
 
-        List<EmailAddress> list = EmailAddressConverter.fromPersistentList(emailAddressService.findAll());
+        List<EmailAddress> list = EmailAddressConverter.convertPersistenceList(emailAddressService.findAll());
 
         return list;
     }
@@ -234,7 +234,7 @@ public class EmailAddressController
     @GetMapping("/search")
     public ResponseEntity<List<String>> search(final @NonNull EmailAddressSearch search)
     {
-        List<EmailAddress> entities = EmailAddressConverter.fromPersistentList(emailAddressService.search(search));
+        List<EmailAddress> entities = EmailAddressConverter.convertPersistenceList(emailAddressService.search(search));
         List<String> ids = GenericEntityConverter.toIdList(entities);
 
         return ResponseEntity.ok(ids);
@@ -253,7 +253,7 @@ public class EmailAddressController
 
         try
         {
-            response = RestApiResponse.ok(EmailAddressConverter.fromPersistentList(emailAddressService.search(search)));
+            response = RestApiResponse.ok(EmailAddressConverter.convertPersistenceList(emailAddressService.search(search)));
         }
         catch (Exception e)
         {

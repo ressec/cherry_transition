@@ -35,9 +35,9 @@ public final class EmailAddressConverter
      * @param entity Client entity to map.
      * @return Mapped persistent entity.
      */
-    public static EmailAddressServerEntity fromClient(EmailAddress entity)
+    public static EmailAddressServerEntity convertClient(EmailAddress entity)
     {
-        return EmailAddressMapper.INSTANCE.fromClient(entity, new CycleAvoidingMappingContext());
+        return EmailAddressMapper.INSTANCE.convertClient(entity, new CycleAvoidingMappingContext());
     }
 
     /**
@@ -45,9 +45,9 @@ public final class EmailAddressConverter
      * @param list List of client entities to map.
      * @return Converted list of persistent entities.
      */
-    public static List<EmailAddressServerEntity> fromClientList(List<EmailAddress> list)
+    public static List<EmailAddressServerEntity> convertClientList(List<EmailAddress> list)
     {
-        return EmailAddressMapper.INSTANCE.fromClientList(list, new CycleAvoidingMappingContext());
+        return EmailAddressMapper.INSTANCE.convertClientList(list, new CycleAvoidingMappingContext());
     }
 
     /**
@@ -55,9 +55,9 @@ public final class EmailAddressConverter
      * @param entity Persistent entity to map.
      * @return Mapped client entity.
      */
-    public static EmailAddress fromPersistent(EmailAddressServerEntity entity)
+    public static EmailAddress convertPersistence(EmailAddressServerEntity entity)
     {
-        return EmailAddressMapper.INSTANCE.fromServer(entity, new CycleAvoidingMappingContext());
+        return EmailAddressMapper.INSTANCE.convertPersistence(entity, new CycleAvoidingMappingContext());
     }
 
     /**
@@ -65,7 +65,7 @@ public final class EmailAddressConverter
      * @param list List of persistent entities to map.
      * @return Mapped list of client entities.
      */
-    public static List<EmailAddress> fromPersistentList(List<EmailAddressServerEntity> list)
+    public static List<EmailAddress> convertPersistenceList(List<EmailAddressServerEntity> list)
     {
         return EmailAddressMapper.INSTANCE.fromServerList(list, new CycleAvoidingMappingContext());
     }

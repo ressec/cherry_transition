@@ -51,7 +51,7 @@ class EmailAddressConverterUnitTest extends AbstractBaseMapperTest
     final void testConvertPersistentEmailAddressToClientEmailAddress()
     {
         EmailAddressServerEntity persistent = EmailAddressRandomizer.generatePersistent(true);
-        EmailAddress client = EmailAddressConverter.fromPersistent(persistent);
+        EmailAddress client = EmailAddressConverter.convertPersistence(persistent);
         checkFields(persistent, client);
     }
 
@@ -61,7 +61,7 @@ class EmailAddressConverterUnitTest extends AbstractBaseMapperTest
     {
         // The purpose of this test is to ensure a document owner (on client side) is mapped to an EntityIdentity (light representation of a server entity instance).
         EmailAddressServerEntity persistent = EmailAddressRandomizer.generatePersistentWithDocument(true, 5);
-        EmailAddress client = EmailAddressConverter.fromPersistent(persistent);
+        EmailAddress client = EmailAddressConverter.convertPersistence(persistent);
         checkFields(persistent, client);
     }
 
@@ -75,7 +75,7 @@ class EmailAddressConverterUnitTest extends AbstractBaseMapperTest
             persistentList.add(EmailAddressRandomizer.generatePersistent(true));
         }
 
-        List<EmailAddress> clientList = EmailAddressConverter.fromPersistentList(persistentList);
+        List<EmailAddress> clientList = EmailAddressConverter.convertPersistenceList(persistentList);
         checkFields(persistentList, clientList);
     }
 
@@ -89,7 +89,7 @@ class EmailAddressConverterUnitTest extends AbstractBaseMapperTest
             persistentList.add(EmailAddressRandomizer.generatePersistentWithDocument(true, 3));
         }
 
-        List<EmailAddress> clientList = EmailAddressConverter.fromPersistentList(persistentList);
+        List<EmailAddress> clientList = EmailAddressConverter.convertPersistenceList(persistentList);
         checkFields(persistentList, clientList);
     }
 
@@ -98,7 +98,7 @@ class EmailAddressConverterUnitTest extends AbstractBaseMapperTest
     final void testConvertClientEmailAddressToPersistentEmailAddress()
     {
         EmailAddress client = EmailAddressRandomizer.generateClient(true);
-        EmailAddressServerEntity persistent = EmailAddressConverter.fromClient(client);
+        EmailAddressServerEntity persistent = EmailAddressConverter.convertClient(client);
         checkFields(persistent, client);
     }
 
@@ -107,7 +107,7 @@ class EmailAddressConverterUnitTest extends AbstractBaseMapperTest
     final void testConvertClientEmailAddressWithDocumentToPersistentEmailAddress() throws DocumentContentException
     {
         EmailAddress client = EmailAddressRandomizer.generateClientWithDocument(true, 3);
-        EmailAddressServerEntity persistent = EmailAddressConverter.fromClient(client);
+        EmailAddressServerEntity persistent = EmailAddressConverter.convertClient(client);
         checkFields(persistent, client);
     }
 
@@ -121,7 +121,7 @@ class EmailAddressConverterUnitTest extends AbstractBaseMapperTest
             clientList.add(EmailAddressRandomizer.generateClient(true));
         }
 
-        List<EmailAddressServerEntity> persistentList = EmailAddressConverter.fromClientList(clientList);
+        List<EmailAddressServerEntity> persistentList = EmailAddressConverter.convertClientList(clientList);
         checkFields(persistentList, clientList);
     }
 
@@ -135,7 +135,7 @@ class EmailAddressConverterUnitTest extends AbstractBaseMapperTest
             clientList.add(EmailAddressRandomizer.generateClientWithDocument(true, 5));
         }
 
-        List<EmailAddressServerEntity> persistentList = EmailAddressConverter.fromClientList(clientList);
+        List<EmailAddressServerEntity> persistentList = EmailAddressConverter.convertClientList(clientList);
         checkFields(persistentList, clientList);
     }
 

@@ -48,7 +48,7 @@ class PersonConverterUnitTest extends AbstractBaseMapperTest
     final void testMapPersistentPersonToClientPerson()
     {
         PersonServerEntity persistent = PersonRandomizer.generatePersistent(true);
-        Person client = PersonConverter.fromPersistent(persistent);
+        Person client = PersonConverter.convertPersistence(persistent);
         checkFields(persistent, client);
     }
 
@@ -62,7 +62,7 @@ class PersonConverterUnitTest extends AbstractBaseMapperTest
             persistentList.add(PersonRandomizer.generatePersistent(true));
         }
 
-        List<Person> clientList = PersonConverter.fromPersistentList(persistentList);
+        List<Person> clientList = PersonConverter.convertPersistenceList(persistentList);
         checkFields(persistentList, clientList);
     }
 
@@ -71,7 +71,7 @@ class PersonConverterUnitTest extends AbstractBaseMapperTest
     final void testMapClientPersonToPersistentPerson() throws PersonException, EmailAddressException
     {
         Person client = PersonRandomizer.generateClient(true);
-        PersonServerEntity persistent = PersonConverter.fromClient(client);
+        PersonServerEntity persistent = PersonConverter.convertClient(client);
         checkFields(persistent, client);
     }
 
@@ -85,7 +85,7 @@ class PersonConverterUnitTest extends AbstractBaseMapperTest
             clientList.add(PersonRandomizer.generateClient(true));
         }
 
-        List<PersonServerEntity> persistentList = PersonConverter.fromClientList(clientList);
+        List<PersonServerEntity> persistentList = PersonConverter.convertClientList(clientList);
         checkFields(persistentList, clientList);
     }
 
