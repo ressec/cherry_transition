@@ -94,6 +94,7 @@ public interface DocumentMapper
 
     /**
      * Converts a document owner server entity to an identity.
+     * @param <T> Class that extends {@link BaseServerEntity}.
      * @param entity Document server entity.
      * @return Document server identity.
      */

@@ -69,6 +69,7 @@ public final class EmailAddressRandomizer extends BaseServerEntityRandomizer
      * <br>Generally set to {@code true} only for unit tests.
      * @param count Number of documents to generate.
      * @return Email address.
+     * @throws DocumentContentException Thrown in case an error occurred while trying to generate a document.
      */
     public static EmailAddressServerEntity generatePersistentWithDocument(final boolean withRandomId, final int count) throws DocumentContentException
     {
@@ -123,6 +124,7 @@ public final class EmailAddressRandomizer extends BaseServerEntityRandomizer
      * <br>Generally set to {@code true} only for unit tests.
      * @param count Number of documents to generate.
      * @return Email address.
+     * @throws DocumentContentException Thrown in case an error occurred while trying to generate a document.
      */
     public static EmailAddress generateClientWithDocument(final boolean withRandomId, final int count) throws DocumentContentException
     {
