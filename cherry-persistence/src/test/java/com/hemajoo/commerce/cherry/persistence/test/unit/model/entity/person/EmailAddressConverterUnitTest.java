@@ -48,7 +48,7 @@ class EmailAddressConverterUnitTest extends AbstractBaseMapperTest
 
     @Test
     @DisplayName("Converts a persistent email address to a client email address")
-    final void testConvertPersistentEmailAddressToClientEmailAddress()
+    final void testConvertPersistentToClient()
     {
         EmailAddressServerEntity persistent = EmailAddressRandomizer.generatePersistent(true);
         EmailAddress client = EmailAddressConverter.convertPersistence(persistent);
@@ -57,7 +57,7 @@ class EmailAddressConverterUnitTest extends AbstractBaseMapperTest
 
     @Test
     @DisplayName("Converts a persistent email address with associated documents to a client email address")
-    final void testConvertPersistentEmailAddressWithDocumentsToClientEmailAddress() throws DocumentContentException
+    final void testConvertPersistentWithDocumentsToClient() throws DocumentContentException
     {
         // The purpose of this test is to ensure a document owner (on client side) is mapped to an EntityIdentity (light representation of a server entity instance).
         EmailAddressServerEntity persistent = EmailAddressRandomizer.generatePersistentWithDocument(true, 5);
@@ -67,7 +67,7 @@ class EmailAddressConverterUnitTest extends AbstractBaseMapperTest
 
     @Test
     @DisplayName("Converts a list of persistent email addresses to a list of client email addresses")
-    final void testConvertListPersistentEmailAddressToListClientEmailAddress() throws EmailAddressException
+    final void testConvertListPersistentToListClient() throws EmailAddressException
     {
         List<EmailAddressServerEntity> persistentList = new ArrayList<>();
         for (int i = 0; i < LIST_COUNT; i++)
@@ -81,7 +81,7 @@ class EmailAddressConverterUnitTest extends AbstractBaseMapperTest
 
     @Test
     @DisplayName("Converts a list of persistent email addresses with associated documents to a list of client email addresses")
-    final void testConvertListPersistentEmailAddressWithDocumentsToListClientEmailAddress() throws EmailAddressException, DocumentContentException
+    final void testConvertListPersistentWithDocumentsToListClient() throws EmailAddressException, DocumentContentException
     {
         List<EmailAddressServerEntity> persistentList = new ArrayList<>();
         for (int i = 0; i < LIST_COUNT; i++)
@@ -95,7 +95,7 @@ class EmailAddressConverterUnitTest extends AbstractBaseMapperTest
 
     @Test
     @DisplayName("Converts a client email address to a persistent email address")
-    final void testConvertClientEmailAddressToPersistentEmailAddress()
+    final void testConvertClientToPersistent()
     {
         EmailAddress client = EmailAddressRandomizer.generateClient(true);
         EmailAddressServerEntity persistent = EmailAddressConverter.convertClient(client);
@@ -104,7 +104,7 @@ class EmailAddressConverterUnitTest extends AbstractBaseMapperTest
 
     @Test
     @DisplayName("Converts a client email address with documents to a persistent email address")
-    final void testConvertClientEmailAddressWithDocumentToPersistentEmailAddress() throws DocumentContentException
+    final void testConvertClientWithDocumentToPersistent() throws DocumentContentException
     {
         EmailAddress client = EmailAddressRandomizer.generateClientWithDocument(true, 3);
         EmailAddressServerEntity persistent = EmailAddressConverter.convertClient(client);
@@ -113,7 +113,7 @@ class EmailAddressConverterUnitTest extends AbstractBaseMapperTest
 
     @Test
     @DisplayName("Converts a list of client email addresses to a list of persistent email addresses")
-    final void testConvertListClientEmailAddressToListPersistentEmailAddress() throws EmailAddressException
+    final void testConvertListClientToListPersistent() throws EmailAddressException
     {
         List<EmailAddress> clientList = new ArrayList<>();
         for (int i = 0; i < LIST_COUNT; i++)
@@ -127,7 +127,7 @@ class EmailAddressConverterUnitTest extends AbstractBaseMapperTest
 
     @Test
     @DisplayName("Converts a list of client email addresses with documents to a list of persistent email addresses")
-    final void testConvertListClientEmailAddressWithDocumentToListPersistentEmailAddress() throws EmailAddressException, DocumentContentException
+    final void testConvertListClientWithDocumentToListPersistent() throws EmailAddressException, DocumentContentException
     {
         List<EmailAddress> clientList = new ArrayList<>();
         for (int i = 0; i < LIST_COUNT; i++)
@@ -141,7 +141,7 @@ class EmailAddressConverterUnitTest extends AbstractBaseMapperTest
 
     @Test
     @DisplayName("Create a deep copy of a client email address")
-    final void testDeepCopyClientEmailAddress()
+    final void testCopyClient()
     {
         EmailAddress client = EmailAddressRandomizer.generateClient(true);
         EmailAddress copy = EmailAddressConverter.copy(client);
@@ -150,7 +150,7 @@ class EmailAddressConverterUnitTest extends AbstractBaseMapperTest
 
     @Test
     @DisplayName("Create a deep copy of a persistent email address")
-    final void testDeepCopyPersistentEmailAddress()
+    final void testCopyPersistent()
     {
         EmailAddressServerEntity persistent = EmailAddressRandomizer.generatePersistent(true);
         EmailAddressServerEntity copy = EmailAddressConverter.copy(persistent);
