@@ -1,7 +1,7 @@
 ---
 name: Randomizer entity
 about: Design and implement a new entity randomizer.
-title: Design and implement the <entity> randomizer.
+title: Design and implement the <entity> randomizer entity
 labels: ''
 assignees: ressec
 
