@@ -28,6 +28,11 @@ import org.springframework.http.HttpStatus;
 public abstract class AbstractEntityUncheckedException extends AbstractUncheckedException
 {
     /**
+     * Default serialization identifier.
+     */
+    private static final long serialVersionUID = 1L;
+
+    /**
      * Http status.
      */
     @Getter
@@ -38,11 +43,6 @@ public abstract class AbstractEntityUncheckedException extends AbstractUnchecked
      */
     @Getter
     private final EntityType entityType;
-
-    /**
-     * Default serialization identifier.
-     */
-    private static final long serialVersionUID = 1L;
 
     /**
      * Thrown to indicate that an error occurred with an entity.
