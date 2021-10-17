@@ -15,6 +15,7 @@
 package com.hemajoo.commerce.cherry.model.person.entity.base;
 
 import com.hemajoo.commerce.cherry.model.base.entity.BaseEntity;
+import com.hemajoo.commerce.cherry.model.person.type.AddressType;
 
 /**
  * Behavior of an email address entity.
@@ -23,4 +24,16 @@ import com.hemajoo.commerce.cherry.model.base.entity.BaseEntity;
  */
 public interface EmailAddress extends BaseEntity
 {
+    String getEmail();
+
+    void setEmail(final String email);
+
+    Boolean getIsDefaultEmail();
+
+    void setIsDefaultEmail(final Boolean isDefaultEmail);
+
+    AddressType getAddressType();
+
+    void setAddressType(final AddressType type);
+
 }

@@ -14,12 +14,14 @@
  */
 package com.hemajoo.commerce.cherry.persistence.base.entity;
 
+import com.hemajoo.commerce.cherry.model.base.entity.BaseEntity;
+
 /**
  * Interface providing server entity behavior.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-public interface ServerEntity
+public interface ServerEntity extends BaseEntity
 {
     // Marker interface.
 }

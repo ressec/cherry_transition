@@ -23,6 +23,7 @@ import com.hemajoo.commerce.cherry.model.person.type.GenderType;
 import com.hemajoo.commerce.cherry.model.person.type.PersonType;
 import com.hemajoo.commerce.cherry.model.person.type.PhoneNumberType;
 import com.hemajoo.commerce.cherry.persistence.base.entity.ServerBaseEntity;
+import com.hemajoo.commerce.cherry.persistence.base.entity.ServerEntity;
 import io.swagger.v3.oas.annotations.Hidden;
 import lombok.*;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -45,7 +46,7 @@ import java.util.stream.Collectors;
 @Hidden
 @Table(name = "PERSON")
 @EntityListeners(AuditingEntityListener.class)
-public class ServerPersonEntity extends ServerBaseEntity implements ServerPerson
+public class ServerPersonEntity extends ServerBaseEntity implements ServerPerson, ServerEntity
 {
     /**
      * Minimal birthdate.
@@ -169,7 +170,7 @@ public class ServerPersonEntity extends ServerBaseEntity implements ServerPerson
     public final ServerEmailAddressEntity getDefaultEmailAddress()
     {
         return emailAddresses.stream()
-                .filter(ServerEmailAddressEntity::isDefaultEmail).findFirst().orElse(null);
+                .filter(ServerEmailAddressEntity::getIsDefaultEmail).findFirst().orElse(null);
     }
 
     /**
@@ -178,7 +179,7 @@ public class ServerPersonEntity extends ServerBaseEntity implements ServerPerson
      */
     public final boolean hasDefaultEmailAddress()
     {
-        return emailAddresses.stream().anyMatch(ServerEmailAddressEntity::isDefaultEmail);
+        return emailAddresses.stream().anyMatch(ServerEmailAddressEntity::getIsDefaultEmail);
     }
 
     /**

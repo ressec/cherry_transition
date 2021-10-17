@@ -15,6 +15,10 @@
 package com.hemajoo.commerce.cherry.model.person.entity.base;
 
 import com.hemajoo.commerce.cherry.model.base.entity.BaseEntity;
+import com.hemajoo.commerce.cherry.model.person.type.GenderType;
+import com.hemajoo.commerce.cherry.model.person.type.PersonType;
+
+import java.util.Date;
 
 /**
  * Behavior of a person entity.
@@ -23,4 +27,25 @@ import com.hemajoo.commerce.cherry.model.base.entity.BaseEntity;
  */
 public interface Person extends BaseEntity
 {
+    String getLastName();
+
+    void setLastName(final String lastName);
+
+    String getFirstName();
+
+    void setFirstName(final String firstName);
+
+    Date getBirthDate();
+
+    void setBirthDate(final Date birthDate);
+
+    PersonType getPersonType();
+
+    void setPersonType(final PersonType type);
+
+    GenderType getGenderType();
+
+    void setGenderType(final GenderType type);
+
+    // Lists ???
 }

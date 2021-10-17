@@ -18,7 +18,7 @@ import com.hemajoo.commerce.cherry.model.base.entity.ClientEntity;
 import com.hemajoo.commerce.cherry.model.person.entity.base.Person;
 
 /**
- * Behavior of a client person entity.
+ * Behavior of a client postal address entity.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */

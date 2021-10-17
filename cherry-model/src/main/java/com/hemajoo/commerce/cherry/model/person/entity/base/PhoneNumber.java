@@ -15,6 +15,8 @@
 package com.hemajoo.commerce.cherry.model.person.entity.base;
 
 import com.hemajoo.commerce.cherry.model.base.entity.BaseEntity;
+import com.hemajoo.commerce.cherry.model.person.type.PhoneNumberCategoryType;
+import com.hemajoo.commerce.cherry.model.person.type.PhoneNumberType;
 
 /**
  * Behavior of a phone number entity.
@@ -23,4 +25,23 @@ import com.hemajoo.commerce.cherry.model.base.entity.BaseEntity;
  */
 public interface PhoneNumber extends BaseEntity
 {
+    String getNumber();
+
+    void setNumber(final String number);
+
+    String getCountryCode();
+
+    void setCountryCode(final String countryCode);
+
+    PhoneNumberType getPhoneType();
+
+    void setPhoneType(final PhoneNumberType type);
+
+    PhoneNumberCategoryType getCategoryType();
+
+    void setCategoryType(final PhoneNumberCategoryType type);
+
+    Boolean getIsDefault();
+
+    void setIsDefault(final Boolean isDefault);
 }

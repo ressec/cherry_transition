@@ -54,7 +54,6 @@ public interface DocumentMapper
      * @param context Context object.
      * @return Converted list of client entities.
      */
-    //@Mapping(target = "entity.owner", qualifiedByName = "toIdentity")
     List<ClientDocumentEntity> mapPersistenceList(List<ServerDocumentEntity> list, @Context CycleAvoidingMappingContext context);
 
     /**
@@ -72,7 +71,6 @@ public interface DocumentMapper
      * @param context Context object.
      * @return Converted list of persistent entities.
      */
-    //@Mapping(target = "entity.owner", qualifiedByName = "fromIdentity")
     List<ServerDocumentEntity> mapClientList(List<ClientDocumentEntity> list, @Context CycleAvoidingMappingContext context);
 
     /**
@@ -115,7 +113,7 @@ public interface DocumentMapper
         if (identity != null)
         {
             ServerEntityFactory factory = new ServerEntityFactory();
-            return (ServerDocumentEntity) factory.create(identity);
+            return (ServerDocumentEntity) factory.from(identity);
         }
 
         return null;

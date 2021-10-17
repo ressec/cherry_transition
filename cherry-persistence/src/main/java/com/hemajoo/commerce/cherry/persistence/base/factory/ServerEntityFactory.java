@@ -19,7 +19,6 @@ import com.hemajoo.commerce.cherry.persistence.base.entity.ServerBaseEntity;
 import com.hemajoo.commerce.cherry.persistence.document.repository.DocumentService;
 import com.hemajoo.commerce.cherry.persistence.person.service.EmailAddressService;
 import com.hemajoo.commerce.cherry.persistence.person.service.PersonService;
-import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -44,23 +43,27 @@ public class ServerEntityFactory
     @Autowired
     private EmailAddressService emailAddressService;
 
-    public ServerBaseEntity create(final @NonNull Identity identity)
+//    public final <T extends ServerEntity> T from(final Identity identity) // TODO Try to transform to a static method
+    public final ServerBaseEntity from(final Identity identity) // TODO Try to transform to a static method
     {
-        switch (identity.getEntityType())
+        if (identity != null)
         {
-            case DOCUMENT:
-                return documentService.findById(identity.getId());
+            switch (identity.getEntityType())
+            {
+                case DOCUMENT:
+                    return documentService.findById(identity.getId());
 
-            case PERSON:
-                return personService.findById(identity.getId());
+                case PERSON:
+                    return personService.findById(identity.getId());
 
-            case EMAIL_ADDRESS:
-                return emailAddressService.findById(identity.getId());
+                case EMAIL_ADDRESS:
+                    return emailAddressService.findById(identity.getId());
 
-            default:
-                System.err.println("Unhandled entity type: " + identity.getEntityType());
+                default:
+//                    throw new ServerEntityFactory("Unhandled entity type: " + identity.getEntityType());
+            }
         }
 
-        return null; // TODO Thrown an exception!
+        return null;
     }
 }

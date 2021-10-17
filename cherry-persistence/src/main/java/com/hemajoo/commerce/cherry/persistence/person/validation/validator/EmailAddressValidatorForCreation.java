@@ -77,7 +77,7 @@ public class EmailAddressValidatorForCreation implements ConstraintValidator<Val
      */
     public void checkActiveAndDefaultUniqueness(ServerEmailAddressEntity emailAddress) throws EmailAddressException
     {
-        if (emailAddress.isDefaultEmail() && emailAddress.isActive())
+        if (Boolean.TRUE.equals(emailAddress.getIsDefaultEmail()) && emailAddress.isActive())
         {
             ServerPersonEntity person = personService.findById(emailAddress.getPerson().getId());
             ServerEmailAddressEntity defaultEmailAddress = person.getDefaultEmailAddress();

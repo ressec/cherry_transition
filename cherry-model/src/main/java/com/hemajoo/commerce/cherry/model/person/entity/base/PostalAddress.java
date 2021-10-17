@@ -15,6 +15,8 @@
 package com.hemajoo.commerce.cherry.model.person.entity.base;
 
 import com.hemajoo.commerce.cherry.model.base.entity.BaseEntity;
+import com.hemajoo.commerce.cherry.model.person.type.AddressCategoryType;
+import com.hemajoo.commerce.cherry.model.person.type.AddressType;
 
 /**
  * Behavior of a postal address entity.
@@ -23,4 +25,39 @@ import com.hemajoo.commerce.cherry.model.base.entity.BaseEntity;
  */
 public interface PostalAddress extends BaseEntity
 {
+    String getStreetName();
+
+    void setStreetName(final String streetName);
+
+    String getStreetNumber();
+
+    void setStreetNumber(final String streetNumber);
+
+    String getLocality();
+
+    void setLocality(final String locality);
+
+    String getCountryCode();
+
+    void setCountryCode(final String countryCode);
+
+    String getZipCode();
+
+    void setZipCode(final String zipCode);
+
+    String getArea();
+
+    void setArea(final String area);
+
+    Boolean getIsDefault();
+
+    void setIsDefault(final Boolean isDefault);
+
+    AddressType getAddressType();
+
+    void setAddressType(final AddressType type);
+
+    AddressCategoryType getCategoryType();
+
+    void setCategoryType(final AddressCategoryType type);
 }

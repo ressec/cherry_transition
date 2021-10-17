@@ -37,7 +37,7 @@ import javax.validation.groups.Default;
 @ToString(callSuper = false)
 //@Builder(setterPrefix = "with") // Does not work well with MapStruct!
 @EqualsAndHashCode(callSuper = false)
-public class ClientEmailAddressEntity extends ClientBaseEntity
+public class ClientEmailAddressEntity extends ClientBaseEntity implements ClientEmailAddress
 {
     /**
      * Email address.
@@ -50,7 +50,7 @@ public class ClientEmailAddressEntity extends ClientBaseEntity
      * Is it the default email address?
      */
     @ApiModelProperty(name = "defaultEmail", notes = "Is it the default email address", value = "true")
-    private boolean defaultEmail;
+    private Boolean isDefaultEmail;
 
     /**
      * Email address type.
@@ -62,10 +62,11 @@ public class ClientEmailAddressEntity extends ClientBaseEntity
     /**
      * The person identifier this email address belongs to.
      */
-    @ApiModelProperty(name = "personId", notes = "Person identifier this email address belongs to", value = "1")
+    @ApiModelProperty(name = "ownerId", notes = "Entity identifier this email address belongs to", value = "1")
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     @JsonIgnoreProperties("emailAddresses")
+//    private ClientPersonEntity person; // TODO Should be replaced by ClientPerson interface!
     private ClientPersonEntity person;
 
     public ClientEmailAddressEntity()

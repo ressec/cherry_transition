@@ -48,7 +48,7 @@ import java.util.stream.Collectors;
 @ToString(callSuper = false)
 @EqualsAndHashCode(callSuper = false)
 @EntityListeners(AuditingEntityListener.class)
-public class ClientPersonEntity extends ClientBaseEntity
+public class ClientPersonEntity extends ClientBaseEntity implements ClientPerson
 {
     /**
      * Minimal birthdate.
@@ -150,14 +150,14 @@ public class ClientPersonEntity extends ClientBaseEntity
     public final ClientEmailAddressEntity getDefaultEmailAddress()
     {
         Optional<ClientEmailAddressEntity> optional = emailAddresses.stream()
-                .filter(ClientEmailAddressEntity::isDefaultEmail).findFirst();
+                .filter(ClientEmailAddressEntity::getIsDefaultEmail).findFirst();
 
         return optional.orElse(null);
     }
 
     public final boolean hasDefaultEmailAddress()
     {
-        return emailAddresses.stream().anyMatch(ClientEmailAddressEntity::isDefaultEmail);
+        return emailAddresses.stream().anyMatch(ClientEmailAddressEntity::getIsDefaultEmail);
     }
 
     /**

@@ -91,7 +91,7 @@ public final class EmailAddressRuleEngine
      */
     public void validateDefaultEmail(final @NonNull ClientEmailAddressEntity emailAddress) throws EmailAddressException
     {
-        if (emailAddress.isDefaultEmail() && emailAddress.isActive())
+        if (Boolean.TRUE.equals(emailAddress.getIsDefaultEmail()) && emailAddress.isActive())
         {
             ServerPersonEntity person = personService.findById(emailAddress.getPerson().getId());
             ServerEmailAddressEntity defaultEmailAddress = person.getDefaultEmailAddress();

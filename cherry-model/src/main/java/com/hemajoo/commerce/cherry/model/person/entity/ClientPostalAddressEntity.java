@@ -26,14 +26,14 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 
 /**
- * Represents a postal address (associated to a person).
+ * Represents a client postal address entity.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
 @Data
 //@Builder(setterPrefix = "with") // Does not work well with MapStruct!
 @EqualsAndHashCode(callSuper = false)
-public class ClientPostalAddressEntity extends ClientBaseEntity
+public class ClientPostalAddressEntity extends ClientBaseEntity implements ClientPostalAddress
 {
     /**
      * Postal address street name.
@@ -94,7 +94,8 @@ public class ClientPostalAddressEntity extends ClientBaseEntity
     /**
      * The person identifier this postal address belongs to.
      */
-    //private Long personId;
+    @ApiModelProperty(name = "personId", notes = "Person identifier this postal address belongs to", value = "1")
+//    private ClientPersonEntity person;
     private ClientPersonEntity person;
 
     /**

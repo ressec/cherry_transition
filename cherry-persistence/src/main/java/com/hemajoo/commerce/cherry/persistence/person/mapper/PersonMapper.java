@@ -14,10 +14,14 @@
  */
 package com.hemajoo.commerce.cherry.persistence.person.mapper;
 
+import com.hemajoo.commerce.cherry.commons.entity.Identity;
+import com.hemajoo.commerce.cherry.model.document.exception.DocumentException;
 import com.hemajoo.commerce.cherry.model.person.entity.ClientPersonEntity;
 import com.hemajoo.commerce.cherry.model.person.search.SearchPerson;
+import com.hemajoo.commerce.cherry.persistence.base.factory.ServerEntityFactory;
 import com.hemajoo.commerce.cherry.persistence.base.mapper.CycleAvoidingMappingContext;
 import com.hemajoo.commerce.cherry.persistence.document.mapper.DocumentMapper;
+import com.hemajoo.commerce.cherry.persistence.person.entity.ServerPerson;
 import com.hemajoo.commerce.cherry.persistence.person.entity.ServerPersonEntity;
 import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
@@ -97,6 +101,29 @@ public interface PersonMapper
      */
     @Mapping(source = "id", target = "id", qualifiedByName = "uuidToString")
     SearchPerson toSearch(ServerPersonEntity entity, @Context CycleAvoidingMappingContext context);
+
+    /**
+     * Converts a server person to an entity identity.
+     * @param person Server person entity.
+     * @return Entity identity.
+     */
+    @Named("toIdentity")
+    default Identity toIdentity(final ServerPerson person)
+    {
+        return person != null ? person.getIdentity() : null;
+    }
+
+    /**
+     * Converts an entity identity to a server entity.
+     * @param identity Entity identity.
+     * @return Server entity.
+     * @throws DocumentException Thrown in case an error occurred with a document.
+     */
+    @Named("fromIdentity")
+    default ServerPerson fromIdentity(final Identity identity) throws DocumentException
+    {
+        return (ServerPerson) new ServerEntityFactory().from(identity);
+    }
 
     @Named("stringToUuid")
     default UUID stringToUuid(String uuid)

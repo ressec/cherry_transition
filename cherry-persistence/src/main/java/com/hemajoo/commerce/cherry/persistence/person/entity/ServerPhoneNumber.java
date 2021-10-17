@@ -24,4 +24,21 @@ import com.hemajoo.commerce.cherry.persistence.base.entity.ServerEntity;
  */
 public interface ServerPhoneNumber extends PhoneNumber, ServerEntity
 {
+//    /**
+//     * Returns the owner of this entity.
+//     * @param <T> Type of the owner entity.
+//     * @return Owner entity.
+//     */
+//    <T extends ServerEntity & Person> T getPerson();
+//
+//    /**
+//     * Sets the owner of this entity.
+//     * @param owner Owner entity.
+//     * @param <T> Type of the owner entity.
+//     */
+//    <T extends ServerEntity & Person> void setPerson(final T owner);
+
+    ServerPersonEntity getPerson();
+
+    void setPerson(final ServerPersonEntity owner);
 }

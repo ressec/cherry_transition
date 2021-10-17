@@ -19,7 +19,7 @@ package com.hemajoo.commerce.cherry.model.base.entity;
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-public interface ClientEntity
+public interface ClientEntity extends BaseEntity
 {
     // Marker interface.
 }

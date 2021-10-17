@@ -14,14 +14,15 @@
  */
 package com.hemajoo.commerce.cherry.persistence.person.mapper;
 
+import com.hemajoo.commerce.cherry.commons.entity.Identity;
+import com.hemajoo.commerce.cherry.model.document.exception.DocumentException;
 import com.hemajoo.commerce.cherry.model.person.entity.ClientEmailAddressEntity;
+import com.hemajoo.commerce.cherry.persistence.base.factory.ServerEntityFactory;
 import com.hemajoo.commerce.cherry.persistence.base.mapper.CycleAvoidingMappingContext;
 import com.hemajoo.commerce.cherry.persistence.document.mapper.DocumentMapper;
 import com.hemajoo.commerce.cherry.persistence.person.entity.ServerEmailAddressEntity;
-import org.mapstruct.CollectionMappingStrategy;
-import org.mapstruct.Context;
-import org.mapstruct.Mapper;
-import org.mapstruct.ReportingPolicy;
+import com.hemajoo.commerce.cherry.persistence.person.entity.ServerPerson;
+import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
 
 import java.util.List;
@@ -48,6 +49,7 @@ public interface EmailAddressMapper
      * @param context Context object.
      * @return Mapped persistent entity.
      */
+    //@Mapping(source = "entity.person", target = "person", qualifiedByName = "fromIdentity")
     ServerEmailAddressEntity mapClient(ClientEmailAddressEntity entity, @Context CycleAvoidingMappingContext context);
 
     /**
@@ -64,6 +66,7 @@ public interface EmailAddressMapper
      * @param context Context object.
      * @return Mapped client entity.
      */
+    //@Mapping(source = "entity.person", target = "person", qualifiedByName = "toIdentity")
     ClientEmailAddressEntity mapPersistence(ServerEmailAddressEntity entity, @Context CycleAvoidingMappingContext context);
 
     /**
@@ -89,4 +92,27 @@ public interface EmailAddressMapper
      * @return Copied client entity.
      */
     ClientEmailAddressEntity copy(ClientEmailAddressEntity entity, @Context CycleAvoidingMappingContext context);
+
+    /**
+     * Converts a server person to an entity identity.
+     * @param person Server email address entity.
+     * @return Entity identity.
+     */
+    @Named("toIdentity")
+    default Identity toIdentity(final ServerPerson person)
+    {
+        return person != null ? person.getIdentity() : null;
+    }
+
+    /**
+     * Converts an entity identity to a server person entity.
+     * @param identity Entity identity.
+     * @return Server entity.
+     * @throws DocumentException Thrown in case an error occurred with a document.
+     */
+    @Named("fromIdentity")
+    default ServerPerson fromIdentity(final Identity identity) throws DocumentException
+    {
+        return (ServerPerson) new ServerEntityFactory().from(identity);
+    }
 }

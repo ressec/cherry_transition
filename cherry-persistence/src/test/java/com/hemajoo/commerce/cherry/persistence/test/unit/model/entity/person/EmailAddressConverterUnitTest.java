@@ -188,9 +188,9 @@ class EmailAddressConverterUnitTest extends AbstractBaseMapperTest
         assertThat(persistent.getAddressType())
                 .as("Address types should be equal!")
                 .isEqualTo(client.getAddressType());
-        assertThat(persistent.isDefaultEmail())
+        assertThat(persistent.getIsDefaultEmail())
                 .as("Is default should be equal!")
-                .isEqualTo(client.isDefaultEmail());
+                .isEqualTo(client.getIsDefaultEmail());
     }
 
     /**
@@ -209,9 +209,9 @@ class EmailAddressConverterUnitTest extends AbstractBaseMapperTest
         assertThat(copy.getAddressType())
                 .as("Address types should be equal!")
                 .isEqualTo(client.getAddressType());
-        assertThat(copy.isDefaultEmail())
+        assertThat(copy.getIsDefaultEmail())
                 .as("Is default should be equal!")
-                .isEqualTo(client.isDefaultEmail());
+                .isEqualTo(client.getIsDefaultEmail());
     }
 
     /**
@@ -230,9 +230,9 @@ class EmailAddressConverterUnitTest extends AbstractBaseMapperTest
         assertThat(copy.getAddressType())
                 .as("Address types should be equal!")
                 .isEqualTo(persistent.getAddressType());
-        assertThat(copy.isDefaultEmail())
+        assertThat(copy.getIsDefaultEmail())
                 .as("Is default should be equal!")
-                .isEqualTo(persistent.isDefaultEmail());
+                .isEqualTo(persistent.getIsDefaultEmail());
     }
 
     /**

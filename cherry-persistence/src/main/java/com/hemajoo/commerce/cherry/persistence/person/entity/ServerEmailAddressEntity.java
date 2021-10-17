@@ -69,7 +69,7 @@ public class ServerEmailAddressEntity extends ServerBaseEntity implements EmailA
     @Getter
     @Setter
     @Column(name = "IS_DEFAULT", columnDefinition = "BOOLEAN DEFAULT false")
-    private boolean defaultEmail;
+    private Boolean isDefaultEmail;
 
     /**
      * Email type.

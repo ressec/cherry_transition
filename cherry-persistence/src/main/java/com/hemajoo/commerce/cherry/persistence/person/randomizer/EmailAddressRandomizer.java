@@ -58,7 +58,7 @@ public final class EmailAddressRandomizer extends AbstractBaseServerEntityRandom
 
         entity.setEmail(FAKER.internet().emailAddress());
         entity.setAddressType((AddressType) ADDRESS_TYPE_GENERATOR.gen());
-        entity.setDefaultEmail(RANDOM.nextBoolean());
+        entity.setIsDefaultEmail(RANDOM.nextBoolean());
 
         return entity;
     }
@@ -90,7 +90,7 @@ public final class EmailAddressRandomizer extends AbstractBaseServerEntityRandom
 
         entity.setEmail(FAKER.internet().emailAddress());
         entity.setAddressType((AddressType) ADDRESS_TYPE_GENERATOR.gen());
-        entity.setDefaultEmail(RANDOM.nextBoolean());
+        entity.setIsDefaultEmail(RANDOM.nextBoolean());
 
         return entity;
     }
@@ -113,7 +113,7 @@ public final class EmailAddressRandomizer extends AbstractBaseServerEntityRandom
 
         entity.setEmail(FAKER.internet().emailAddress());
         entity.setAddressType((AddressType) ADDRESS_TYPE_GENERATOR.gen());
-        entity.setDefaultEmail(RANDOM.nextBoolean());
+        entity.setIsDefaultEmail(RANDOM.nextBoolean());
 
         return entity;
     }
@@ -145,7 +145,7 @@ public final class EmailAddressRandomizer extends AbstractBaseServerEntityRandom
 
         entity.setEmail(FAKER.internet().emailAddress());
         entity.setAddressType((AddressType) ADDRESS_TYPE_GENERATOR.gen());
-        entity.setDefaultEmail(RANDOM.nextBoolean());
+        entity.setIsDefaultEmail(RANDOM.nextBoolean());
 
         return entity;
     }
