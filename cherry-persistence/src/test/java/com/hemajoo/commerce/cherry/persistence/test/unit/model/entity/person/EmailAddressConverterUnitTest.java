@@ -18,7 +18,7 @@ import com.hemajoo.commerce.cherry.model.document.exception.DocumentContentExcep
 import com.hemajoo.commerce.cherry.model.person.entity.ClientEmailAddressEntity;
 import com.hemajoo.commerce.cherry.model.person.exception.EmailAddressException;
 import com.hemajoo.commerce.cherry.persistence.person.converter.EmailAddressConverter;
-import com.hemajoo.commerce.cherry.persistence.person.entity.EmailAddressServerEntity;
+import com.hemajoo.commerce.cherry.persistence.person.entity.ServerEmailAddressEntity;
 import com.hemajoo.commerce.cherry.persistence.person.entity.ServerPersonEntity;
 import com.hemajoo.commerce.cherry.persistence.person.randomizer.EmailAddressRandomizer;
 import com.hemajoo.commerce.cherry.persistence.person.randomizer.PersonRandomizer;
@@ -50,7 +50,7 @@ class EmailAddressConverterUnitTest extends AbstractBaseMapperTest
     @DisplayName("Converts a persistent email address to a client email address")
     final void testConvertPersistentToClient()
     {
-        EmailAddressServerEntity persistent = EmailAddressRandomizer.generatePersistent(true);
+        ServerEmailAddressEntity persistent = EmailAddressRandomizer.generatePersistent(true);
         ClientEmailAddressEntity client = EmailAddressConverter.convertPersistence(persistent);
         checkFields(persistent, client);
     }
@@ -60,7 +60,7 @@ class EmailAddressConverterUnitTest extends AbstractBaseMapperTest
     final void testConvertPersistentWithDocumentsToClient() throws DocumentContentException
     {
         // The purpose of this test is to ensure a document owner (on client side) is mapped to an EntityIdentity (light representation of a server entity instance).
-        EmailAddressServerEntity persistent = EmailAddressRandomizer.generatePersistentWithDocument(true, 5);
+        ServerEmailAddressEntity persistent = EmailAddressRandomizer.generatePersistentWithDocument(true, 5);
         ClientEmailAddressEntity client = EmailAddressConverter.convertPersistence(persistent);
         checkFields(persistent, client);
     }
@@ -69,7 +69,7 @@ class EmailAddressConverterUnitTest extends AbstractBaseMapperTest
     @DisplayName("Converts a list of persistent email addresses to a list of client email addresses")
     final void testConvertListPersistentToListClient() throws EmailAddressException
     {
-        List<EmailAddressServerEntity> persistentList = new ArrayList<>();
+        List<ServerEmailAddressEntity> persistentList = new ArrayList<>();
         for (int i = 0; i < LIST_COUNT; i++)
         {
             persistentList.add(EmailAddressRandomizer.generatePersistent(true));
@@ -83,7 +83,7 @@ class EmailAddressConverterUnitTest extends AbstractBaseMapperTest
     @DisplayName("Converts a list of persistent email addresses with associated documents to a list of client email addresses")
     final void testConvertListPersistentWithDocumentsToListClient() throws EmailAddressException, DocumentContentException
     {
-        List<EmailAddressServerEntity> persistentList = new ArrayList<>();
+        List<ServerEmailAddressEntity> persistentList = new ArrayList<>();
         for (int i = 0; i < LIST_COUNT; i++)
         {
             persistentList.add(EmailAddressRandomizer.generatePersistentWithDocument(true, 3));
@@ -98,7 +98,7 @@ class EmailAddressConverterUnitTest extends AbstractBaseMapperTest
     final void testConvertClientToPersistent()
     {
         ClientEmailAddressEntity client = EmailAddressRandomizer.generateClient(true);
-        EmailAddressServerEntity persistent = EmailAddressConverter.convertClient(client);
+        ServerEmailAddressEntity persistent = EmailAddressConverter.convertClient(client);
         checkFields(persistent, client);
     }
 
@@ -107,7 +107,7 @@ class EmailAddressConverterUnitTest extends AbstractBaseMapperTest
     final void testConvertClientWithDocumentToPersistent() throws DocumentContentException
     {
         ClientEmailAddressEntity client = EmailAddressRandomizer.generateClientWithDocument(true, 3);
-        EmailAddressServerEntity persistent = EmailAddressConverter.convertClient(client);
+        ServerEmailAddressEntity persistent = EmailAddressConverter.convertClient(client);
         checkFields(persistent, client);
     }
 
@@ -121,7 +121,7 @@ class EmailAddressConverterUnitTest extends AbstractBaseMapperTest
             clientList.add(EmailAddressRandomizer.generateClient(true));
         }
 
-        List<EmailAddressServerEntity> persistentList = EmailAddressConverter.convertClientList(clientList);
+        List<ServerEmailAddressEntity> persistentList = EmailAddressConverter.convertClientList(clientList);
         checkFields(persistentList, clientList);
     }
 
@@ -135,7 +135,7 @@ class EmailAddressConverterUnitTest extends AbstractBaseMapperTest
             clientList.add(EmailAddressRandomizer.generateClientWithDocument(true, 5));
         }
 
-        List<EmailAddressServerEntity> persistentList = EmailAddressConverter.convertClientList(clientList);
+        List<ServerEmailAddressEntity> persistentList = EmailAddressConverter.convertClientList(clientList);
         checkFields(persistentList, clientList);
     }
 
@@ -152,8 +152,8 @@ class EmailAddressConverterUnitTest extends AbstractBaseMapperTest
     @DisplayName("Create a deep copy of a persistent email address")
     final void testCopyPersistent()
     {
-        EmailAddressServerEntity persistent = EmailAddressRandomizer.generatePersistent(true);
-        EmailAddressServerEntity copy = EmailAddressConverter.copy(persistent);
+        ServerEmailAddressEntity persistent = EmailAddressRandomizer.generatePersistent(true);
+        ServerEmailAddressEntity copy = EmailAddressConverter.copy(persistent);
         checkFields(persistent, copy);
     }
 
@@ -163,7 +163,7 @@ class EmailAddressConverterUnitTest extends AbstractBaseMapperTest
     {
         ServerPersonEntity person1 = PersonRandomizer.generatePersistent(true);
         ServerPersonEntity person2 = PersonRandomizer.generatePersistent(true);
-        EmailAddressServerEntity email = EmailAddressRandomizer.generatePersistent(true);
+        ServerEmailAddressEntity email = EmailAddressRandomizer.generatePersistent(true);
 
         // Cannot associate the same email address to multiple persons!
         person1.addEmailAddress(email);
@@ -177,7 +177,7 @@ class EmailAddressConverterUnitTest extends AbstractBaseMapperTest
      * @param persistent Persistent entity.
      * @param client Client entity.
      */
-    private void checkFields(final @NonNull EmailAddressServerEntity persistent, final @NonNull ClientEmailAddressEntity client)
+    private void checkFields(final @NonNull ServerEmailAddressEntity persistent, final @NonNull ClientEmailAddressEntity client)
     {
         checkBaseFields(persistent, client);
 
@@ -219,7 +219,7 @@ class EmailAddressConverterUnitTest extends AbstractBaseMapperTest
      * @param persistent Persistent entity.
      * @param copy Persistent entity.
      */
-    private void checkFields(final @NonNull EmailAddressServerEntity persistent, final @NonNull EmailAddressServerEntity copy)
+    private void checkFields(final @NonNull ServerEmailAddressEntity persistent, final @NonNull ServerEmailAddressEntity copy)
     {
         checkBaseFields(persistent, copy);
 
@@ -241,10 +241,10 @@ class EmailAddressConverterUnitTest extends AbstractBaseMapperTest
      * @param clientList List of client email addresses.
      * @throws EmailAddressException Thrown in case an error occurred finding a client email address!
      */
-    private void checkFields(final @NonNull List<EmailAddressServerEntity> persistentList, final @NonNull List<ClientEmailAddressEntity> clientList) throws EmailAddressException
+    private void checkFields(final @NonNull List<ServerEmailAddressEntity> persistentList, final @NonNull List<ClientEmailAddressEntity> clientList) throws EmailAddressException
     {
         Optional<ClientEmailAddressEntity> client;
-        for (EmailAddressServerEntity persistent : persistentList)
+        for (ServerEmailAddressEntity persistent : persistentList)
         {
             client = clientList.stream().filter(element -> element.getId().equals(persistent.getId())).findFirst();
             if (client.isPresent())

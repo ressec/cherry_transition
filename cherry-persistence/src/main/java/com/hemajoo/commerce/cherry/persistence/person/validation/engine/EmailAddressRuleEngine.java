@@ -16,7 +16,7 @@ package com.hemajoo.commerce.cherry.persistence.person.validation.engine;
 
 import com.hemajoo.commerce.cherry.model.person.entity.ClientEmailAddressEntity;
 import com.hemajoo.commerce.cherry.model.person.exception.EmailAddressException;
-import com.hemajoo.commerce.cherry.persistence.person.entity.EmailAddressServerEntity;
+import com.hemajoo.commerce.cherry.persistence.person.entity.ServerEmailAddressEntity;
 import com.hemajoo.commerce.cherry.persistence.person.entity.ServerPersonEntity;
 import com.hemajoo.commerce.cherry.persistence.person.service.EmailAddressService;
 import com.hemajoo.commerce.cherry.persistence.person.service.PersonService;
@@ -94,7 +94,7 @@ public final class EmailAddressRuleEngine
         if (emailAddress.isDefaultEmail() && emailAddress.isActive())
         {
             ServerPersonEntity person = personService.findById(emailAddress.getPerson().getId());
-            EmailAddressServerEntity defaultEmailAddress = person.getDefaultEmailAddress();
+            ServerEmailAddressEntity defaultEmailAddress = person.getDefaultEmailAddress();
             if (!Objects.equals(defaultEmailAddress.getIdentity(), emailAddress.getIdentity()) || emailAddress.getId() == null)
             {
                 throw new EmailAddressException(
@@ -116,7 +116,7 @@ public final class EmailAddressRuleEngine
         ServerPersonEntity person = personService.findById(emailAddress.getPerson().getId());
         if (person.existEmail(emailAddress.getEmail()))
         {
-            EmailAddressServerEntity emailById = person.getEmailById(emailAddress.getId());
+            ServerEmailAddressEntity emailById = person.getEmailById(emailAddress.getId());
             // TODO Services to implement
 //            EmailAddressEntity emailByName = person.getEmailByName(emailAddress.getName());
 //            List<EmailAddressEntity> emailsByType = person.getEmails(emailAddress.getAddressType());

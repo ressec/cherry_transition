@@ -16,7 +16,7 @@ package com.hemajoo.commerce.cherry.persistence.person.validation.validator;
 
 import com.hemajoo.commerce.cherry.model.person.entity.ClientEmailAddressEntity;
 import com.hemajoo.commerce.cherry.model.person.exception.EmailAddressException;
-import com.hemajoo.commerce.cherry.persistence.person.entity.EmailAddressServerEntity;
+import com.hemajoo.commerce.cherry.persistence.person.entity.ServerEmailAddressEntity;
 import com.hemajoo.commerce.cherry.persistence.person.entity.ServerPersonEntity;
 import com.hemajoo.commerce.cherry.persistence.person.service.EmailAddressService;
 import com.hemajoo.commerce.cherry.persistence.person.service.PersonService;
@@ -75,12 +75,12 @@ public class EmailAddressValidatorForCreation implements ConstraintValidator<Val
      * @param emailAddress Email address persistent entity.
      * @throws EmailAddressException Thrown in case the underlying person already has an active default email address set!
      */
-    public void checkActiveAndDefaultUniqueness(EmailAddressServerEntity emailAddress) throws EmailAddressException
+    public void checkActiveAndDefaultUniqueness(ServerEmailAddressEntity emailAddress) throws EmailAddressException
     {
         if (emailAddress.isDefaultEmail() && emailAddress.isActive())
         {
             ServerPersonEntity person = personService.findById(emailAddress.getPerson().getId());
-            EmailAddressServerEntity defaultEmailAddress = person.getDefaultEmailAddress();
+            ServerEmailAddressEntity defaultEmailAddress = person.getDefaultEmailAddress();
             if (defaultEmailAddress.getIdentity() != emailAddress.getIdentity() || emailAddress.getId() == null)
             {
                 throw new EmailAddressException(
@@ -97,12 +97,12 @@ public class EmailAddressValidatorForCreation implements ConstraintValidator<Val
      * @param emailAddress Email address persistent entity.
      * @throws EmailAddressException Thrown in case the underlying person already holds such an email address!
      */
-    public void checkUniqueness(final EmailAddressServerEntity emailAddress) throws EmailAddressException
+    public void checkUniqueness(final ServerEmailAddressEntity emailAddress) throws EmailAddressException
     {
         ServerPersonEntity person = personService.findById(emailAddress.getPerson().getId());
         if (person.existEmail(emailAddress.getEmail()))
         {
-            EmailAddressServerEntity emailById = person.getEmailById(emailAddress.getId());
+            ServerEmailAddressEntity emailById = person.getEmailById(emailAddress.getId());
             // TODO Services to implement
 //            EmailAddressEntity emailByName = person.getEmailByName(emailAddress.getName());
 //            List<EmailAddressEntity> emailsByType = person.getEmails(emailAddress.getAddressType());

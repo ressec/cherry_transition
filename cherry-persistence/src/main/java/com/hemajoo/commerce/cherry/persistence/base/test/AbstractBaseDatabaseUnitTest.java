@@ -17,7 +17,7 @@ package com.hemajoo.commerce.cherry.persistence.base.test;
 import com.hemajoo.commerce.cherry.persistence.content.DocumentStore;
 import com.hemajoo.commerce.cherry.persistence.document.repository.DocumentRepository;
 import com.hemajoo.commerce.cherry.persistence.document.repository.DocumentService;
-import com.hemajoo.commerce.cherry.persistence.person.entity.EmailAddressServerEntity;
+import com.hemajoo.commerce.cherry.persistence.person.entity.ServerEmailAddressEntity;
 import com.hemajoo.commerce.cherry.persistence.person.service.EmailAddressService;
 import com.hemajoo.commerce.cherry.persistence.person.service.PersonService;
 import lombok.Getter;
@@ -54,7 +54,7 @@ public abstract class AbstractBaseDatabaseUnitTest extends BaseUnitTest
     protected PersonService personService;
 
     /**
-     * {@link EmailAddressServerEntity} service.
+     * {@link ServerEmailAddressEntity} service.
      */
     @Autowired
     protected EmailAddressService emailAddressService;

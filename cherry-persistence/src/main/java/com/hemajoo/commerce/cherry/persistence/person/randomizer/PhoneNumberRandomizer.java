@@ -18,7 +18,7 @@ import com.hemajoo.commerce.cherry.model.person.entity.ClientPhoneNumberEntity;
 import com.hemajoo.commerce.cherry.model.person.type.PhoneNumberCategoryType;
 import com.hemajoo.commerce.cherry.model.person.type.PhoneNumberType;
 import com.hemajoo.commerce.cherry.persistence.base.randomizer.AbstractBaseServerEntityRandomizer;
-import com.hemajoo.commerce.cherry.persistence.person.entity.PhoneNumberServerEntity;
+import com.hemajoo.commerce.cherry.persistence.person.entity.ServerPhoneNumberEntity;
 import lombok.experimental.UtilityClass;
 import org.ressec.avocado.core.random.EnumRandomGenerator;
 
@@ -48,9 +48,9 @@ public final class PhoneNumberRandomizer extends AbstractBaseServerEntityRandomi
      * <br>Generally set to {@code true} only for unit tests.
      * @return Phone number.
      */
-    public static PhoneNumberServerEntity generatePersistent(final boolean withRandomId)
+    public static ServerPhoneNumberEntity generatePersistent(final boolean withRandomId)
     {
-        var entity = new PhoneNumberServerEntity();
+        var entity = new ServerPhoneNumberEntity();
         AbstractBaseServerEntityRandomizer.populateBaseFields(entity);
 
         if (withRandomId)

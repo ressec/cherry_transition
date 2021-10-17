@@ -17,7 +17,7 @@ package com.hemajoo.commerce.cherry.persistence.person.mapper;
 import com.hemajoo.commerce.cherry.model.person.entity.ClientEmailAddressEntity;
 import com.hemajoo.commerce.cherry.persistence.base.mapper.CycleAvoidingMappingContext;
 import com.hemajoo.commerce.cherry.persistence.document.mapper.DocumentMapper;
-import com.hemajoo.commerce.cherry.persistence.person.entity.EmailAddressServerEntity;
+import com.hemajoo.commerce.cherry.persistence.person.entity.ServerEmailAddressEntity;
 import org.mapstruct.CollectionMappingStrategy;
 import org.mapstruct.Context;
 import org.mapstruct.Mapper;
@@ -27,7 +27,7 @@ import org.mapstruct.factory.Mappers;
 import java.util.List;
 
 /**
- * A mapper interface providing services to map between {@link ClientEmailAddressEntity} and {@link EmailAddressServerEntity} and vice-versa.
+ * A mapper interface providing services to map between {@link ClientEmailAddressEntity} and {@link ServerEmailAddressEntity} and vice-versa.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
@@ -48,7 +48,7 @@ public interface EmailAddressMapper
      * @param context Context object.
      * @return Mapped persistent entity.
      */
-    EmailAddressServerEntity mapClient(ClientEmailAddressEntity entity, @Context CycleAvoidingMappingContext context);
+    ServerEmailAddressEntity mapClient(ClientEmailAddressEntity entity, @Context CycleAvoidingMappingContext context);
 
     /**
      * Maps a list of client entities to a list of persistent entities.
@@ -56,7 +56,7 @@ public interface EmailAddressMapper
      * @param context Context object.
      * @return Mapped list of persistent entities.
      */
-    List<EmailAddressServerEntity> mapClientList(List<ClientEmailAddressEntity> list, @Context CycleAvoidingMappingContext context);
+    List<ServerEmailAddressEntity> mapClientList(List<ClientEmailAddressEntity> list, @Context CycleAvoidingMappingContext context);
 
     /**
      * Maps from a persistent entity to a client entity.
@@ -64,7 +64,7 @@ public interface EmailAddressMapper
      * @param context Context object.
      * @return Mapped client entity.
      */
-    ClientEmailAddressEntity mapPersistence(EmailAddressServerEntity entity, @Context CycleAvoidingMappingContext context);
+    ClientEmailAddressEntity mapPersistence(ServerEmailAddressEntity entity, @Context CycleAvoidingMappingContext context);
 
     /**
      * Maps from a list of persistent entities to a list of client entities.
@@ -72,7 +72,7 @@ public interface EmailAddressMapper
      * @param context Context object.
      * @return Mapped list of client entities.
      */
-    List<ClientEmailAddressEntity> mapPersistenceList(List<EmailAddressServerEntity> list, @Context CycleAvoidingMappingContext context);
+    List<ClientEmailAddressEntity> mapPersistenceList(List<ServerEmailAddressEntity> list, @Context CycleAvoidingMappingContext context);
 
     /**
      * Copy a persistent entity.
@@ -80,7 +80,7 @@ public interface EmailAddressMapper
      * @param context Context object.
      * @return Copied persistent entity.
      */
-    EmailAddressServerEntity copy(EmailAddressServerEntity entity, @Context CycleAvoidingMappingContext context);
+    ServerEmailAddressEntity copy(ServerEmailAddressEntity entity, @Context CycleAvoidingMappingContext context);
 
     /**
      * Copy a client entity.

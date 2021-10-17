@@ -21,7 +21,7 @@ import com.hemajoo.commerce.cherry.model.person.type.AddressType;
 import com.hemajoo.commerce.cherry.persistence.base.randomizer.AbstractBaseServerEntityRandomizer;
 import com.hemajoo.commerce.cherry.persistence.document.entity.ServerDocumentEntity;
 import com.hemajoo.commerce.cherry.persistence.document.randomizer.DocumentRandomizer;
-import com.hemajoo.commerce.cherry.persistence.person.entity.EmailAddressServerEntity;
+import com.hemajoo.commerce.cherry.persistence.person.entity.ServerEmailAddressEntity;
 import lombok.experimental.UtilityClass;
 import org.ressec.avocado.core.random.EnumRandomGenerator;
 
@@ -46,9 +46,9 @@ public final class EmailAddressRandomizer extends AbstractBaseServerEntityRandom
      * <br>Generally set to {@code true} only for unit tests.
      * @return Email address.
      */
-    public static EmailAddressServerEntity generatePersistent(final boolean withRandomId)
+    public static ServerEmailAddressEntity generatePersistent(final boolean withRandomId)
     {
-        var entity = new EmailAddressServerEntity();
+        var entity = new ServerEmailAddressEntity();
         AbstractBaseServerEntityRandomizer.populateBaseFields(entity);
 
         if (withRandomId)
@@ -71,9 +71,9 @@ public final class EmailAddressRandomizer extends AbstractBaseServerEntityRandom
      * @return Email address.
      * @throws DocumentContentException Thrown in case an error occurred while trying to generate a document.
      */
-    public static EmailAddressServerEntity generatePersistentWithDocument(final boolean withRandomId, final int count) throws DocumentContentException
+    public static ServerEmailAddressEntity generatePersistentWithDocument(final boolean withRandomId, final int count) throws DocumentContentException
     {
-        var entity = new EmailAddressServerEntity();
+        var entity = new ServerEmailAddressEntity();
         ServerDocumentEntity document;
         AbstractBaseServerEntityRandomizer.populateBaseFields(entity);
 

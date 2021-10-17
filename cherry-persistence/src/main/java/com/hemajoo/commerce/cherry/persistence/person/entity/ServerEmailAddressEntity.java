@@ -14,10 +14,10 @@
  */
 package com.hemajoo.commerce.cherry.persistence.person.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.hemajoo.commerce.cherry.commons.type.EntityType;
-import com.hemajoo.commerce.cherry.model.person.entity.base.PhoneNumber;
-import com.hemajoo.commerce.cherry.model.person.type.PhoneNumberCategoryType;
-import com.hemajoo.commerce.cherry.model.person.type.PhoneNumberType;
+import com.hemajoo.commerce.cherry.model.person.entity.base.EmailAddress;
+import com.hemajoo.commerce.cherry.model.person.type.AddressType;
 import com.hemajoo.commerce.cherry.persistence.base.entity.ServerBaseEntity;
 import com.hemajoo.commerce.cherry.persistence.base.entity.ServerEntity;
 import com.hemajoo.commerce.cherry.persistence.base.validation.BasicValidation;
@@ -30,89 +30,83 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import javax.validation.GroupSequence;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
+import javax.validation.groups.Default;
 
 /**
- * Represents a server phone number entity.
+ * Represents a server email address entity.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-@GroupSequence( { PhoneNumberServerEntity.class, BasicValidation.class, ExtendedValidation.class } )
+@GroupSequence( { ServerEmailAddressEntity.class, BasicValidation.class, ExtendedValidation.class } )
 @ToString(callSuper = false)
 @EqualsAndHashCode(callSuper = false)
-@Table(name = "PHONE_NUMBER")
+@Table(name = "EMAIL_ADDRESS")
 @Entity
 @EntityListeners(AuditingEntityListener.class)
-public class PhoneNumberServerEntity extends ServerBaseEntity implements PhoneNumber, ServerEntity
+public class ServerEmailAddressEntity extends ServerBaseEntity implements EmailAddress, ServerEntity
 {
-    public static final String FIELD_IS_DEFAULT             = "isDefault";
-    public static final String FIELD_NUMBER                 = "number";
-    public static final String FIELD_COUNTRY_CODE           = "countryCode";
-    public static final String FIELD_PHONE_TYPE             = "phoneType";
-    public static final String FIELD_PHONE_CATEGORY_TYPE    = "categoryType";
+    public static final String FIELD_EMAIL          = "email";
+    public static final String FIELD_IS_DEFAULT     = "defaultEmail";
+    public static final String FIELD_ADDRESS_TYPE   = "addressType";
 
-    public static final String FIELD_PERSON_ID              = "personId";
+    public static final String FIELD_PERSON         = "person";
 
     /**
-     * Phone number.
+     * Email address.
      */
     @Getter
     @Setter
-    @NotNull(message = "Phone number: 'phoneNumber' cannot be null!")
-    @Column(name = "PHONE_NUMBER", length = 30)
-    private String number;
+    @NotNull(message = "Email address: 'email' cannot be null!")
+    @Email(message = "Email address: '${validatedValue}' is not a valid email!", groups = { Default.class })
+    @Column(name = "EMAIL")
+    private String email;
 
     /**
-     * Phone number country code (ISO Alpha-3 code).
+     * Is it the default email address?
      */
     @Getter
     @Setter
-    @NotNull(message = "Phone number: 'countryCode' cannot be null!")
-    @Column(name = "COUNTRY_CODE", length = 3)
-    private String countryCode;
+    @Column(name = "IS_DEFAULT", columnDefinition = "BOOLEAN DEFAULT false")
+    private boolean defaultEmail;
 
     /**
-     * Phone number type.
-     */
-    @Getter
-    @Setter
-    @Enumerated(EnumType.STRING)
-    @Column(name = "PHONE_TYPE")
-    private PhoneNumberType phoneType;
-
-    /**
-     * Phone number category type.
+     * Email type.
      */
     @Getter
     @Setter
     @Enumerated(EnumType.STRING)
-    @Column(name = "CATEGORY_TYPE")
-    private PhoneNumberCategoryType categoryType;
+    @Column(name = "ADDRESS_TYPE")
+    private AddressType addressType;
 
     /**
-     * Is it a default phone number?
+     * The person identifier this email address belongs to.
      */
     @Getter
-    @Setter
-    @Column(name = "IS_DEFAULT")
-    private Boolean isDefault;
-
-    /**
-     * The person identifier this phone number belongs to.
-     */
-    @EqualsAndHashCode.Exclude
     @ToString.Exclude
-    @Getter
-    @Setter
+    @EqualsAndHashCode.Exclude
+    @JsonIgnoreProperties
     @ManyToOne(targetEntity = ServerPersonEntity.class, fetch = FetchType.LAZY)
     @JoinColumn(name = "PERSON_ID", nullable = false)
     private ServerPersonEntity person;
 
     /**
-     * Creates a new phone number.
+     * Creates a new persistent email address.
      */
-    public PhoneNumberServerEntity()
+    public ServerEmailAddressEntity()
     {
-        super(EntityType.PHONE_NUMBER);
+        super(EntityType.EMAIL_ADDRESS);
+    }
+
+    public void setPerson(final ServerPersonEntity person)
+    {
+        if (person != null)
+        {
+            if (this.person == null)
+            {
+                this.person = person;
+            }
+        }
     }
 }

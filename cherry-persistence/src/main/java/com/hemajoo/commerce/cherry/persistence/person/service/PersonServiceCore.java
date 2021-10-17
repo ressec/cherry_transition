@@ -27,7 +27,7 @@ import com.hemajoo.commerce.cherry.persistence.base.entity.ServerBaseEntity;
 import com.hemajoo.commerce.cherry.persistence.base.specification.GenericSpecification;
 import com.hemajoo.commerce.cherry.persistence.document.entity.ServerDocumentEntity;
 import com.hemajoo.commerce.cherry.persistence.document.repository.DocumentService;
-import com.hemajoo.commerce.cherry.persistence.person.entity.EmailAddressServerEntity;
+import com.hemajoo.commerce.cherry.persistence.person.entity.ServerEmailAddressEntity;
 import com.hemajoo.commerce.cherry.persistence.person.entity.ServerPersonEntity;
 import com.hemajoo.commerce.cherry.persistence.person.repository.EmailAddressRepository;
 import com.hemajoo.commerce.cherry.persistence.person.repository.PersonRepository;
@@ -128,7 +128,7 @@ public class PersonServiceCore implements PersonService
         }
 
         // Save the email addresses directly attached to the person.
-        for (EmailAddressServerEntity email : person.getEmailAddresses())
+        for (ServerEmailAddressEntity email : person.getEmailAddresses())
         {
             try
             {
@@ -249,7 +249,7 @@ public class PersonServiceCore implements PersonService
     }
 
     @Override
-    public List<EmailAddressServerEntity> getEmailAddresses(final @NonNull ServerPersonEntity person)
+    public List<ServerEmailAddressEntity> getEmailAddresses(final @NonNull ServerPersonEntity person)
     {
         return emailAddressRepository.findByPersonId(person.getId());
     }

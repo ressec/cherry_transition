@@ -27,7 +27,7 @@ import com.hemajoo.commerce.cherry.persistence.base.entity.ServerBaseEntity;
 import com.hemajoo.commerce.cherry.persistence.base.specification.GenericSpecification;
 import com.hemajoo.commerce.cherry.persistence.document.entity.ServerDocumentEntity;
 import com.hemajoo.commerce.cherry.persistence.document.repository.DocumentService;
-import com.hemajoo.commerce.cherry.persistence.person.entity.EmailAddressServerEntity;
+import com.hemajoo.commerce.cherry.persistence.person.entity.ServerEmailAddressEntity;
 import com.hemajoo.commerce.cherry.persistence.person.repository.EmailAddressRepository;
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,13 +71,13 @@ public class EmailAddressServiceCore implements EmailAddressService
     }
 
     @Override
-    public EmailAddressServerEntity findById(UUID id)
+    public ServerEmailAddressEntity findById(UUID id)
     {
         return emailAddressRepository.findById(id).orElse(null);
     }
 
     @Override
-    public EmailAddressServerEntity save(final @NonNull EmailAddressServerEntity emailAddress) throws EmailAddressException, DocumentException
+    public ServerEmailAddressEntity save(final @NonNull ServerEmailAddressEntity emailAddress) throws EmailAddressException, DocumentException
     {
         emailAddressRepository.save(emailAddress);
 
@@ -104,39 +104,39 @@ public class EmailAddressServiceCore implements EmailAddressService
     }
 
     @Override
-    public List<EmailAddressServerEntity> findAll()
+    public List<ServerEmailAddressEntity> findAll()
     {
         return emailAddressRepository.findAll();
     }
 
     @Override
-    public List<EmailAddressServerEntity> findByAddressType(final AddressType type)
+    public List<ServerEmailAddressEntity> findByAddressType(final AddressType type)
     {
         return emailAddressRepository.findByAddressType(type);
     }
 
     @Override
-    public List<EmailAddressServerEntity> findByStatus(final StatusType status)
+    public List<ServerEmailAddressEntity> findByStatus(final StatusType status)
     {
         return emailAddressRepository.findByStatusType(status);
     }
 
     @Override
-    public List<EmailAddressServerEntity> findByDefaultEmail(final boolean defaultEmail)
+    public List<ServerEmailAddressEntity> findByDefaultEmail(final boolean defaultEmail)
     {
         return emailAddressRepository.findByDefaultEmail(defaultEmail);
     }
 
     @Override
-    public List<EmailAddressServerEntity> findByPersonId(final UUID personId)
+    public List<ServerEmailAddressEntity> findByPersonId(final UUID personId)
     {
         return emailAddressRepository.findByPersonId(personId);
     }
 
     @Override
-    public List<EmailAddressServerEntity> search(final @NonNull SearchEmailAddress search)
+    public List<ServerEmailAddressEntity> search(final @NonNull SearchEmailAddress search)
     {
-        GenericSpecification<EmailAddressServerEntity> specification = new GenericSpecification<>();
+        GenericSpecification<ServerEmailAddressEntity> specification = new GenericSpecification<>();
 
         // Inherited fields
         if (search.getCreatedBy() != null)
@@ -163,14 +163,14 @@ public class EmailAddressServiceCore implements EmailAddressService
         }
 
         specification.add(new SearchCriteria(
-                EmailAddressServerEntity.FIELD_IS_DEFAULT,
+                ServerEmailAddressEntity.FIELD_IS_DEFAULT,
                 search.isDefaultEmail(),
                 SearchOperation.EQUAL));
 
         if (search.getAddressType() != null && search.getAddressType() != AddressType.UNSPECIFIED)
         {
             specification.add(new SearchCriteria(
-                    EmailAddressServerEntity.FIELD_ADDRESS_TYPE,
+                    ServerEmailAddressEntity.FIELD_ADDRESS_TYPE,
                     search.getAddressType(),
                     SearchOperation.EQUAL));
         }
@@ -186,7 +186,7 @@ public class EmailAddressServiceCore implements EmailAddressService
         if (search.getEmail() != null)
         {
             specification.add(new SearchCriteria(
-                    EmailAddressServerEntity.FIELD_EMAIL,
+                    ServerEmailAddressEntity.FIELD_EMAIL,
                     search.getEmail(),
                     SearchOperation.MATCH));
         }
@@ -194,7 +194,7 @@ public class EmailAddressServiceCore implements EmailAddressService
         if (search.getPersonId() != null)
         {
             specification.add(new SearchCriteria(
-                    EmailAddressServerEntity.FIELD_PERSON,
+                    ServerEmailAddressEntity.FIELD_PERSON,
                     search.getPersonId(),
                     SearchOperation.EQUAL_OBJECT_UUID));
         }

@@ -20,7 +20,7 @@ import com.hemajoo.commerce.cherry.model.person.entity.ClientEmailAddressEntity;
 import com.hemajoo.commerce.cherry.model.person.exception.EmailAddressException;
 import com.hemajoo.commerce.cherry.model.person.search.SearchEmailAddress;
 import com.hemajoo.commerce.cherry.persistence.person.converter.EmailAddressConverter;
-import com.hemajoo.commerce.cherry.persistence.person.entity.EmailAddressServerEntity;
+import com.hemajoo.commerce.cherry.persistence.person.entity.ServerEmailAddressEntity;
 import com.hemajoo.commerce.cherry.persistence.person.entity.ServerPersonEntity;
 import com.hemajoo.commerce.cherry.persistence.person.randomizer.EmailAddressRandomizer;
 import com.hemajoo.commerce.cherry.persistence.person.service.EmailAddressService;
@@ -104,7 +104,7 @@ public class EmailAddressController
             @NotNull
             @PathVariable String id)
     {
-        EmailAddressServerEntity serverEmailAddress = emailAddressService.findById(UUID.fromString(id));
+        ServerEmailAddressEntity serverEmailAddress = emailAddressService.findById(UUID.fromString(id));
         return ResponseEntity.ok(EmailAddressConverter.convertPersistence(serverEmailAddress));
     }
 
@@ -120,7 +120,7 @@ public class EmailAddressController
             @ApiParam(value = "Email address", required = true)
             @Valid @ValidEmailAddressForCreation @RequestBody ClientEmailAddressEntity emailAddress)
     {
-        EmailAddressServerEntity serverEmailAddress = EmailAddressConverter.convertClient(emailAddress);
+        ServerEmailAddressEntity serverEmailAddress = EmailAddressConverter.convertClient(emailAddress);
         emailAddressService.save(serverEmailAddress);
 
         return ResponseEntity.ok(EmailAddressConverter.convertPersistence(serverEmailAddress));
@@ -137,7 +137,7 @@ public class EmailAddressController
             @ApiParam(value = "Person identifier (UUID)", name = "personId", required = true, example = "523cd226-49e4-4034-85dd-d0768af295da")
             @Valid @ValidPersonId @NotNull @RequestParam String personId)
     {
-        EmailAddressServerEntity serverEmail = EmailAddressRandomizer.generatePersistent(false);
+        ServerEmailAddressEntity serverEmail = EmailAddressRandomizer.generatePersistent(false);
 
         ServerPersonEntity person = personService.findById(UUID.fromString(personId));
         serverEmail.setPerson(person);
@@ -168,7 +168,7 @@ public class EmailAddressController
 
         try
         {
-            EmailAddressServerEntity emailAddress = emailAddressService.save(EmailAddressConverter.convertClient(email));
+            ServerEmailAddressEntity emailAddress = emailAddressService.save(EmailAddressConverter.convertClient(email));
             response = RestApiResponse.ok();
 //            response = RestApiResponse.ok(String.format("Successfully updated email address with id: %s", emailAddress.getId().toString()));
         }

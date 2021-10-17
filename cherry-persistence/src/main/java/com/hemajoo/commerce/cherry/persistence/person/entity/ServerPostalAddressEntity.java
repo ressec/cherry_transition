@@ -39,7 +39,7 @@ import javax.validation.constraints.NotNull;
 @Table(name = "POSTAL_ADDRESS")
 @Entity
 @EntityListeners(AuditingEntityListener.class)
-public class PostalAddressServerEntity extends ServerBaseEntity implements PostalAddress, ServerEntity
+public class ServerPostalAddressEntity extends ServerBaseEntity implements PostalAddress, ServerEntity
 {
     public static final String FIELD_IS_DEFAULT     = "isDefault";
     public static final String FIELD_ADDRESS_TYPE   = "addressType";
@@ -146,7 +146,7 @@ public class PostalAddressServerEntity extends ServerBaseEntity implements Posta
     /**
      * Creates a new postal address.
      */
-    public PostalAddressServerEntity()
+    public ServerPostalAddressEntity()
     {
         super(EntityType.POSTAL_ADDRESS);
     }

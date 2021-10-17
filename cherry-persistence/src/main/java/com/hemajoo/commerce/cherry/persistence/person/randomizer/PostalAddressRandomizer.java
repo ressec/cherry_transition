@@ -18,7 +18,7 @@ import com.hemajoo.commerce.cherry.model.person.entity.ClientPostalAddressEntity
 import com.hemajoo.commerce.cherry.model.person.type.AddressCategoryType;
 import com.hemajoo.commerce.cherry.model.person.type.AddressType;
 import com.hemajoo.commerce.cherry.persistence.base.randomizer.AbstractBaseServerEntityRandomizer;
-import com.hemajoo.commerce.cherry.persistence.person.entity.PostalAddressServerEntity;
+import com.hemajoo.commerce.cherry.persistence.person.entity.ServerPostalAddressEntity;
 import lombok.experimental.UtilityClass;
 import org.ressec.avocado.core.random.EnumRandomGenerator;
 
@@ -48,9 +48,9 @@ public final class PostalAddressRandomizer extends AbstractBaseServerEntityRando
      * <br>Generally set to {@code true} only for unit tests.
      * @return Postal address.
      */
-    public static PostalAddressServerEntity generatePersistent(final boolean withRandomId)
+    public static ServerPostalAddressEntity generatePersistent(final boolean withRandomId)
     {
-        var entity = new PostalAddressServerEntity();
+        var entity = new ServerPostalAddressEntity();
         AbstractBaseServerEntityRandomizer.populateBaseFields(entity);
 
         if (withRandomId)

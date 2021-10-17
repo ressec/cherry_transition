@@ -109,8 +109,8 @@ public class ServerPersonEntity extends ServerBaseEntity implements ServerPerson
 //    @ToString.Exclude
 //    @EqualsAndHashCode.Exclude
     @JsonIgnoreProperties("person")
-    @OneToMany(targetEntity = PostalAddressServerEntity.class, mappedBy = "person", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<PostalAddressServerEntity> postalAddresses = new ArrayList<>();
+    @OneToMany(targetEntity = ServerPostalAddressEntity.class, mappedBy = "person", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<ServerPostalAddressEntity> postalAddresses = new ArrayList<>();
 
     /**
      * Phone numbers associated to the person.
@@ -120,8 +120,8 @@ public class ServerPersonEntity extends ServerBaseEntity implements ServerPerson
 //    @ToString.Exclude
 //    @EqualsAndHashCode.Exclude
     @JsonIgnoreProperties("person")
-    @OneToMany(targetEntity = PhoneNumberServerEntity.class, mappedBy = "person", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<PhoneNumberServerEntity> phoneNumbers = new ArrayList<>();
+    @OneToMany(targetEntity = ServerPhoneNumberEntity.class, mappedBy = "person", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<ServerPhoneNumberEntity> phoneNumbers = new ArrayList<>();
 
     /**
      * Email addresses associated to the person.
@@ -131,8 +131,8 @@ public class ServerPersonEntity extends ServerBaseEntity implements ServerPerson
 //    @ToString.Exclude
 //    @EqualsAndHashCode.Exclude
     @JsonIgnoreProperties("person")
-    @OneToMany(targetEntity = EmailAddressServerEntity.class, mappedBy = "person", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<EmailAddressServerEntity> emailAddresses = new ArrayList<>();
+    @OneToMany(targetEntity = ServerEmailAddressEntity.class, mappedBy = "person", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ServerEmailAddressEntity> emailAddresses = new ArrayList<>();
 
     /**
      * Creates a new person.
@@ -166,10 +166,10 @@ public class ServerPersonEntity extends ServerBaseEntity implements ServerPerson
      * Returns the default email address.
      * @return Optional default email address.
      */
-    public final EmailAddressServerEntity getDefaultEmailAddress()
+    public final ServerEmailAddressEntity getDefaultEmailAddress()
     {
         return emailAddresses.stream()
-                .filter(EmailAddressServerEntity::isDefaultEmail).findFirst().orElse(null);
+                .filter(ServerEmailAddressEntity::isDefaultEmail).findFirst().orElse(null);
     }
 
     /**
@@ -178,7 +178,7 @@ public class ServerPersonEntity extends ServerBaseEntity implements ServerPerson
      */
     public final boolean hasDefaultEmailAddress()
     {
-        return emailAddresses.stream().anyMatch(EmailAddressServerEntity::isDefaultEmail);
+        return emailAddresses.stream().anyMatch(ServerEmailAddressEntity::isDefaultEmail);
     }
 
     /**
@@ -197,7 +197,7 @@ public class ServerPersonEntity extends ServerBaseEntity implements ServerPerson
      * @param emailAddress Email address to check.
      * @return {@code True} if it already exist, {@code false} otherwise.
      */
-    public final boolean existEmailAddress(final @NonNull EmailAddressServerEntity emailAddress) // TODO Not sure it is necessary? Provide a test case.
+    public final boolean existEmailAddress(final @NonNull ServerEmailAddressEntity emailAddress) // TODO Not sure it is necessary? Provide a test case.
     {
         return emailAddresses.stream()
                 .anyMatch(e -> e.equals(emailAddress));
@@ -208,7 +208,7 @@ public class ServerPersonEntity extends ServerBaseEntity implements ServerPerson
      * @param id Email address identifier.
      * @return Email address if one is matching the given identifier, null otherwise.
      */
-    public final EmailAddressServerEntity getEmailById(final @NonNull UUID id)
+    public final ServerEmailAddressEntity getEmailById(final @NonNull UUID id)
     {
         return emailAddresses.stream()
                 .filter(e -> e.getId().equals(id)).findFirst().orElse(null);
@@ -219,7 +219,7 @@ public class ServerPersonEntity extends ServerBaseEntity implements ServerPerson
      * @param type Address type.
      * @return List of email addresses.
      */
-    public final List<EmailAddressServerEntity> findEmailAddressByType(final AddressType type)
+    public final List<ServerEmailAddressEntity> findEmailAddressByType(final AddressType type)
     {
         return emailAddresses.stream()
                 .filter(emailAddress -> emailAddress.getAddressType() == type)
@@ -231,7 +231,7 @@ public class ServerPersonEntity extends ServerBaseEntity implements ServerPerson
      * @param status Status type.
      * @return List of email addresses.
      */
-    public final List<EmailAddressServerEntity> findEmailAddressByStatus(final StatusType status)
+    public final List<ServerEmailAddressEntity> findEmailAddressByStatus(final StatusType status)
     {
         return emailAddresses.stream()
                 .filter(emailAddress -> emailAddress.getStatusType() == status)
@@ -243,7 +243,7 @@ public class ServerPersonEntity extends ServerBaseEntity implements ServerPerson
      * @param emailAddress Email address.
      * @throws EmailAddressException Raised if the email address already belongs to another person!
      */
-    public final void addEmailAddress(final @NonNull EmailAddressServerEntity emailAddress) throws EmailAddressException
+    public final void addEmailAddress(final @NonNull ServerEmailAddressEntity emailAddress) throws EmailAddressException
     {
         // An email address cannot be shared!
         if (emailAddress.getPerson() != null)
@@ -263,10 +263,10 @@ public class ServerPersonEntity extends ServerBaseEntity implements ServerPerson
      * Returns the default postal address.
      * @return Default postal address.
      */
-    public final Optional<PostalAddressServerEntity> getDefaultPostalAddress()
+    public final Optional<ServerPostalAddressEntity> getDefaultPostalAddress()
     {
         return postalAddresses.stream()
-                .filter(PostalAddressServerEntity::getIsDefault).findFirst();
+                .filter(ServerPostalAddressEntity::getIsDefault).findFirst();
     }
 
     /**
@@ -275,7 +275,7 @@ public class ServerPersonEntity extends ServerBaseEntity implements ServerPerson
      */
     public final boolean hasDefaultPostalAddress()
     {
-        return postalAddresses.stream().anyMatch(PostalAddressServerEntity::getIsDefault);
+        return postalAddresses.stream().anyMatch(ServerPostalAddressEntity::getIsDefault);
     }
 
     /**
@@ -283,7 +283,7 @@ public class ServerPersonEntity extends ServerBaseEntity implements ServerPerson
      * @param address Postal address.
      * @return {@code True} if a postal address matches, {@code false} otherwise.
      */
-    public final boolean existPostalAddress(final @NotNull PostalAddressServerEntity address)
+    public final boolean existPostalAddress(final @NotNull ServerPostalAddressEntity address)
     {
         return postalAddresses.stream().anyMatch(e -> e.equals(address));
     }
@@ -293,7 +293,7 @@ public class ServerPersonEntity extends ServerBaseEntity implements ServerPerson
      * @param type Address type.
      * @return List of postal addresses.
      */
-    public final List<PostalAddressServerEntity> findPostalAddressByType(final AddressType type)
+    public final List<ServerPostalAddressEntity> findPostalAddressByType(final AddressType type)
     {
         return postalAddresses.stream()
                 .filter(e -> e.getAddressType() == type)
@@ -305,7 +305,7 @@ public class ServerPersonEntity extends ServerBaseEntity implements ServerPerson
      * @param status Status type.
      * @return List of postal addresses.
      */
-    public final List<PostalAddressServerEntity> findPostalAddressByStatus(final StatusType status)
+    public final List<ServerPostalAddressEntity> findPostalAddressByStatus(final StatusType status)
     {
         return postalAddresses.stream()
                 .filter(e -> e.getStatusType() == status)
@@ -316,7 +316,7 @@ public class ServerPersonEntity extends ServerBaseEntity implements ServerPerson
      * Adds an postal address.
      * @param postalAddress Postal address.
      */
-    public final void addPostalAddress(final @NonNull PostalAddressServerEntity postalAddress)
+    public final void addPostalAddress(final @NonNull ServerPostalAddressEntity postalAddress)
     {
         postalAddress.setPerson(this);
         postalAddresses.add(postalAddress);
@@ -326,10 +326,10 @@ public class ServerPersonEntity extends ServerBaseEntity implements ServerPerson
      * Returns the default phone number.
      * @return Optional default phone number.
      */
-    public final Optional<PhoneNumberServerEntity> getDefaultPhoneNumber()
+    public final Optional<ServerPhoneNumberEntity> getDefaultPhoneNumber()
     {
         return phoneNumbers.stream()
-                .filter(PhoneNumberServerEntity::getIsDefault).findFirst();
+                .filter(ServerPhoneNumberEntity::getIsDefault).findFirst();
     }
 
     /**
@@ -338,7 +338,7 @@ public class ServerPersonEntity extends ServerBaseEntity implements ServerPerson
      */
     public final boolean hasDefaultPhoneNumber()
     {
-        return phoneNumbers.stream().anyMatch(PhoneNumberServerEntity::getIsDefault);
+        return phoneNumbers.stream().anyMatch(ServerPhoneNumberEntity::getIsDefault);
     }
 
     /**
@@ -357,7 +357,7 @@ public class ServerPersonEntity extends ServerBaseEntity implements ServerPerson
      * @param phoneNumber Phone number to check.
      * @return {@code True} if it already exist, {@code false} otherwise.
      */
-    public final boolean existPhoneNumber(final @NonNull PhoneNumberServerEntity phoneNumber) // TODO Not sure it is necessary? Provide a test case.
+    public final boolean existPhoneNumber(final @NonNull ServerPhoneNumberEntity phoneNumber) // TODO Not sure it is necessary? Provide a test case.
     {
         return phoneNumbers.stream()
                 .anyMatch(e -> e.equals(phoneNumber));
@@ -368,7 +368,7 @@ public class ServerPersonEntity extends ServerBaseEntity implements ServerPerson
      * @param type Address type.
      * @return List of phone numbers.
      */
-    public final List<PhoneNumberServerEntity> findPhoneNumberByType(final PhoneNumberType type)
+    public final List<ServerPhoneNumberEntity> findPhoneNumberByType(final PhoneNumberType type)
     {
         return phoneNumbers.stream()
                 .filter(e -> e.getPhoneType() == type)
@@ -380,7 +380,7 @@ public class ServerPersonEntity extends ServerBaseEntity implements ServerPerson
      * @param status Status type.
      * @return List of phone numbers.
      */
-    public final List<PhoneNumberServerEntity> findPhoneNumberByStatus(final StatusType status)
+    public final List<ServerPhoneNumberEntity> findPhoneNumberByStatus(final StatusType status)
     {
         return phoneNumbers.stream()
                 .filter(e -> e.getStatusType() == status)
@@ -391,7 +391,7 @@ public class ServerPersonEntity extends ServerBaseEntity implements ServerPerson
      * Adds a phone number.
      * @param phoneNumber Phone number.
      */
-    public final void addPhoneNumber(final @NonNull PhoneNumberServerEntity phoneNumber)
+    public final void addPhoneNumber(final @NonNull ServerPhoneNumberEntity phoneNumber)
     {
         phoneNumber.setPerson(this);
         phoneNumbers.add(phoneNumber);
@@ -401,7 +401,7 @@ public class ServerPersonEntity extends ServerBaseEntity implements ServerPerson
      * Removes an email address.
      * @param email Email address to remove.
      */
-    public final void removeEmailAddress(final @NonNull EmailAddressServerEntity email)
+    public final void removeEmailAddress(final @NonNull ServerEmailAddressEntity email)
     {
         email.setPerson(null);
         emailAddresses.remove(email);
