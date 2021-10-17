@@ -48,7 +48,7 @@ import java.util.stream.Collectors;
 @ToString(callSuper = false)
 @EqualsAndHashCode(callSuper = false)
 @EntityListeners(AuditingEntityListener.class)
-public class Person extends ClientBaseEntity
+public class ClientPersonEntity extends ClientBaseEntity
 {
     /**
      * Minimal birthdate.
@@ -94,7 +94,7 @@ public class Person extends ClientBaseEntity
     @EqualsAndHashCode.Exclude
     //@JsonIgnore
     @ApiModelProperty(hidden = true)
-    private List<PostalAddress> postalAddresses = new ArrayList<>();
+    private List<ClientPostalAddressEntity> postalAddresses = new ArrayList<>();
 
     /**
      * Set of phone numbers associated to the person.
@@ -103,7 +103,7 @@ public class Person extends ClientBaseEntity
     @EqualsAndHashCode.Exclude
     //@JsonIgnore
     @ApiModelProperty(hidden = true)
-    private List<PhoneNumber> phoneNumbers = new ArrayList<>();
+    private List<ClientPhoneNumberEntity> phoneNumbers = new ArrayList<>();
 
     /**
      * Set of email addresses associated to the person.
@@ -112,12 +112,12 @@ public class Person extends ClientBaseEntity
     @EqualsAndHashCode.Exclude
     //@JsonIgnore
     @ApiModelProperty(hidden = true)
-    private List<EmailAddress> emailAddresses = new ArrayList<>();
+    private List<ClientEmailAddressEntity> emailAddresses = new ArrayList<>();
 
     /**
      * Creates a new person.
      */
-    public Person()
+    public ClientPersonEntity()
     {
         super(EntityType.PERSON);
     }
@@ -147,17 +147,17 @@ public class Person extends ClientBaseEntity
      * @return Default email address if one, null otherwise.
      */
     @JsonIgnore
-    public final EmailAddress getDefaultEmailAddress()
+    public final ClientEmailAddressEntity getDefaultEmailAddress()
     {
-        Optional<EmailAddress> optional = emailAddresses.stream()
-                .filter(EmailAddress::isDefaultEmail).findFirst();
+        Optional<ClientEmailAddressEntity> optional = emailAddresses.stream()
+                .filter(ClientEmailAddressEntity::isDefaultEmail).findFirst();
 
         return optional.orElse(null);
     }
 
     public final boolean hasDefaultEmailAddress()
     {
-        return emailAddresses.stream().anyMatch(EmailAddress::isDefaultEmail);
+        return emailAddresses.stream().anyMatch(ClientEmailAddressEntity::isDefaultEmail);
     }
 
     /**
@@ -165,10 +165,10 @@ public class Person extends ClientBaseEntity
      * @return Default postal address if one, null otherwise.
      */
     @JsonIgnore
-    public final PostalAddress getDefaultPostalAddress()
+    public final ClientPostalAddressEntity getDefaultPostalAddress()
     {
-        Optional<PostalAddress> optional =  postalAddresses.stream()
-                .filter(PostalAddress::getIsDefault).findFirst();
+        Optional<ClientPostalAddressEntity> optional =  postalAddresses.stream()
+                .filter(ClientPostalAddressEntity::getIsDefault).findFirst();
 
         return optional.orElse(null);
     }
@@ -189,7 +189,7 @@ public class Person extends ClientBaseEntity
      * @param type Address type.
      * @return List of email addresses.
      */
-    public final List<EmailAddress> findEmailAddressByType(final AddressType type)
+    public final List<ClientEmailAddressEntity> findEmailAddressByType(final AddressType type)
     {
         return emailAddresses.stream()
                 .filter(emailAddress -> emailAddress.getAddressType() == type)
@@ -201,7 +201,7 @@ public class Person extends ClientBaseEntity
      * @param status Status type.
      * @return List of email addresses.
      */
-    public final List<EmailAddress> findEmailAddressByStatus(final StatusType status)
+    public final List<ClientEmailAddressEntity> findEmailAddressByStatus(final StatusType status)
     {
         return emailAddresses.stream()
                 .filter(emailAddress -> emailAddress.getStatusType() == status)
@@ -213,7 +213,7 @@ public class Person extends ClientBaseEntity
      * @param type Address type.
      * @return List of postal addresses.
      */
-    public final List<PostalAddress> findPostalAddressByType(final AddressType type)
+    public final List<ClientPostalAddressEntity> findPostalAddressByType(final AddressType type)
     {
         return postalAddresses.stream()
                 .filter(postalAddress -> postalAddress.getAddressType() == type)
@@ -225,7 +225,7 @@ public class Person extends ClientBaseEntity
      * @param status Status type.
      * @return List of postal addresses.
      */
-    public final List<PostalAddress> findPostalAddressByStatus(final StatusType status)
+    public final List<ClientPostalAddressEntity> findPostalAddressByStatus(final StatusType status)
     {
         return postalAddresses.stream()
                 .filter(postalAddress -> postalAddress.getStatusType() == status)

@@ -12,56 +12,63 @@
  * Resse Christophe (christophe.resse@gmail.com).
  * -----------------------------------------------------------------------------------------------
  */
-package com.hemajoo.commerce.cherry.model.person.search;
+package com.hemajoo.commerce.cherry.model.person.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.hemajoo.commerce.cherry.commons.type.EntityType;
-import com.hemajoo.commerce.cherry.model.base.search.BaseSearch;
+import com.hemajoo.commerce.cherry.model.base.entity.ClientBaseEntity;
 import com.hemajoo.commerce.cherry.model.person.type.AddressType;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.validation.constraints.Email;
+import javax.validation.groups.Default;
 
 /**
- * Represents an email address search object.
+ * Represents an email address (associated to a person).
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
 @Data
-@EqualsAndHashCode(callSuper = true)
-public final class EmailAddressSearch extends BaseSearch
+@ToString(callSuper = false)
+//@Builder(setterPrefix = "with") // Does not work well with MapStruct!
+@EqualsAndHashCode(callSuper = false)
+public class ClientEmailAddressEntity extends ClientBaseEntity
 {
     /**
      * Email address.
      */
-    @ApiModelProperty(value = "Email address", allowEmptyValue = true)
+    @ApiModelProperty(name = "email", notes = "Email address", value = "joe.doe@gmail.com")
+    @Email(message = "email: '${validatedValue}' is not a valid email!", groups = { Default.class })
     private String email;
 
     /**
      * Is it the default email address?
      */
-    @ApiModelProperty(value = "Is default email address?", required = true, example = "true")
+    @ApiModelProperty(name = "defaultEmail", notes = "Is it the default email address", value = "true")
     private boolean defaultEmail;
 
     /**
      * Email address type.
      */
+    @ApiModelProperty(name = "addressType", notes = "Address type", value = "PRIVATE")
     @Enumerated(EnumType.STRING)
-    @ApiModelProperty(name = "type", value = "Email address type", notes = "Address type", allowEmptyValue = true)
     private AddressType addressType;
 
     /**
      * The person identifier this email address belongs to.
      */
-    @ApiModelProperty(value = "Person identifier (UUID) owning the email address(es)", hidden = false)
-    private String personId;
+    @ApiModelProperty(name = "personId", notes = "Person identifier this email address belongs to", value = "1")
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    @JsonIgnoreProperties("emailAddresses")
+    private ClientPersonEntity person;
 
-    /**
-     * Creates a new email address search entity.
-     */
-    public EmailAddressSearch()
+    public ClientEmailAddressEntity()
     {
         super(EntityType.EMAIL_ADDRESS);
     }

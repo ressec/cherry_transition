@@ -15,15 +15,15 @@
 package com.hemajoo.commerce.cherry.persistence.test.integration.model.entity.person;
 
 import com.hemajoo.commerce.cherry.commons.type.StatusType;
-import com.hemajoo.commerce.cherry.model.document.DocumentContentException;
-import com.hemajoo.commerce.cherry.model.document.DocumentException;
+import com.hemajoo.commerce.cherry.model.document.exception.DocumentContentException;
+import com.hemajoo.commerce.cherry.model.document.exception.DocumentException;
 import com.hemajoo.commerce.cherry.model.person.exception.EmailAddressException;
 import com.hemajoo.commerce.cherry.model.person.type.AddressType;
 import com.hemajoo.commerce.cherry.persistence.base.test.AbstractBaseDatabaseUnitTest;
 import com.hemajoo.commerce.cherry.persistence.document.entity.ServerDocumentEntity;
 import com.hemajoo.commerce.cherry.persistence.document.randomizer.DocumentRandomizer;
 import com.hemajoo.commerce.cherry.persistence.person.entity.EmailAddressServerEntity;
-import com.hemajoo.commerce.cherry.persistence.person.entity.PersonServerEntity;
+import com.hemajoo.commerce.cherry.persistence.person.entity.ServerPersonEntity;
 import com.hemajoo.commerce.cherry.persistence.person.randomizer.EmailAddressRandomizer;
 import com.hemajoo.commerce.cherry.persistence.person.randomizer.PersonRandomizer;
 import com.hemajoo.commerce.cherry.persistence.test.integration.SpringCherryForIntegrationTest;
@@ -57,13 +57,13 @@ class EmailAddressIntegrationTest extends AbstractBaseDatabaseUnitTest
     @DisplayName("Create an email address (without document)") final void testCreateEmailAddressWithoutDocument() throws DocumentException, EmailAddressException
     {
         // Generate random person & email address.
-        PersonServerEntity person = PersonRandomizer.generatePersistent(false);
+        ServerPersonEntity person = PersonRandomizer.generatePersistent(false);
         EmailAddressServerEntity email = EmailAddressRandomizer.generatePersistent(false);
         person.addEmailAddress(email);
         personService.save(person); // TODO Need to save the documents content in the content store!
 
         // Load the persisted person using its id.
-        PersonServerEntity persistent = personService.findById(person.getId());
+        ServerPersonEntity persistent = personService.findById(person.getId());
 
         assertThat(persistent)
                 .as("Person must not be null!")
@@ -81,7 +81,7 @@ class EmailAddressIntegrationTest extends AbstractBaseDatabaseUnitTest
         // Generate random entities.
         EmailAddressServerEntity email = EmailAddressRandomizer.generatePersistent(false);
         ServerDocumentEntity document = DocumentRandomizer.generatePersistent(false);
-        PersonServerEntity person = PersonRandomizer.generatePersistent(false);
+        ServerPersonEntity person = PersonRandomizer.generatePersistent(false);
         email.addDocument(document);
         person.addEmailAddress(email);
 
@@ -89,7 +89,7 @@ class EmailAddressIntegrationTest extends AbstractBaseDatabaseUnitTest
         personService.save(person);
 
         // Load the saved person.
-        PersonServerEntity persistent = personService.findById(person.getId());
+        ServerPersonEntity persistent = personService.findById(person.getId());
 
         assertThat(persistent)
                 .as("Person must not be null!")
@@ -114,7 +114,7 @@ class EmailAddressIntegrationTest extends AbstractBaseDatabaseUnitTest
 
         // Generate random entities and save them in database.
         EmailAddressServerEntity email = EmailAddressRandomizer.generatePersistent(false);
-        PersonServerEntity person = PersonRandomizer.generatePersistent(false);
+        ServerPersonEntity person = PersonRandomizer.generatePersistent(false);
         person.addEmailAddress(email);
         personService.save(person);
 
@@ -127,7 +127,7 @@ class EmailAddressIntegrationTest extends AbstractBaseDatabaseUnitTest
         email.setStatusType(StatusType.ACTIVE);
         personService.save(person);
 
-        PersonServerEntity persistent = personService.findById(person.getId());
+        ServerPersonEntity persistent = personService.findById(person.getId());
 
         assertThat(persistent)
                 .as("Person should not be null!")
@@ -146,7 +146,7 @@ class EmailAddressIntegrationTest extends AbstractBaseDatabaseUnitTest
     @DisplayName("Delete an email address") final void testDeleteEmailAddress() throws DocumentException, EmailAddressException
     {
         // Generate a person and an email address.
-        PersonServerEntity person = PersonRandomizer.generatePersistent(false);
+        ServerPersonEntity person = PersonRandomizer.generatePersistent(false);
         EmailAddressServerEntity email = EmailAddressRandomizer.generatePersistent(false);
         person.addEmailAddress(email);
         personService.save(person);
@@ -156,7 +156,7 @@ class EmailAddressIntegrationTest extends AbstractBaseDatabaseUnitTest
         personService.save(person);
 
         // Load the person from the database.
-        PersonServerEntity other = personService.findById(person.getId());
+        ServerPersonEntity other = personService.findById(person.getId());
 
         assertThat(other)
                 .as("Person must not be null!")
@@ -172,7 +172,7 @@ class EmailAddressIntegrationTest extends AbstractBaseDatabaseUnitTest
     @DisplayName("Orphan email address removal") final void testRemovalOrphanEmailAddress() throws DocumentException, EmailAddressException
     {
         // Generate a person and an email address.
-        PersonServerEntity person = PersonRandomizer.generatePersistent(false);
+        ServerPersonEntity person = PersonRandomizer.generatePersistent(false);
         EmailAddressServerEntity email = EmailAddressRandomizer.generatePersistent(false);
         person.addEmailAddress(email);
         personService.save(person);

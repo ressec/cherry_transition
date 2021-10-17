@@ -12,18 +12,18 @@
  * Resse Christophe (christophe.resse@gmail.com).
  * -----------------------------------------------------------------------------------------------
  */
-package com.hemajoo.commerce.cherry.model.document;
+package com.hemajoo.commerce.cherry.model.document.exception;
 
-import com.hemajoo.commerce.cherry.commons.exception.AbstractEntityCheckedException;
+import com.hemajoo.commerce.cherry.commons.exception.AbstractEntityUncheckedException;
 import com.hemajoo.commerce.cherry.commons.type.EntityType;
 import org.springframework.http.HttpStatus;
 
 /**
- * Checked exception thrown to indicate an error occurred with a document content.
+ * Checked exception thrown to indicate an error occurred with a document.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-public class DocumentContentException extends AbstractEntityCheckedException
+public class DocumentException extends AbstractEntityUncheckedException
 {
     /**
      * Default serialization identifier.
@@ -31,61 +31,61 @@ public class DocumentContentException extends AbstractEntityCheckedException
     private static final long serialVersionUID = 1L;
 
     /**
-     * Thrown to indicate that an error occurred with a document content.
+     * Thrown to indicate that an error occurred with a document.
      * @param exception Parent exception.
      */
-    public DocumentContentException(final Exception exception)
+    public DocumentException(final Exception exception)
     {
-        super(EntityType.DOCUMENT_CONTENT, exception, HttpStatus.BAD_REQUEST);
+        super(EntityType.DOCUMENT, exception, HttpStatus.BAD_REQUEST);
     }
 
     /**
-     * Thrown to indicate that an error occurred with a document content.
-     * @param exception Parent exception.
-     * @param status {@link HttpStatus}.
-     */
-    public DocumentContentException(final Exception exception, final HttpStatus status)
-    {
-        super(EntityType.DOCUMENT_CONTENT, exception, status);
-    }
-
-    /**
-     * Thrown to indicate that an error occurred with a document content.
-     * @param message Message describing the error being the cause of the raised exception.
-     */
-    public DocumentContentException(final String message)
-    {
-        super(EntityType.DOCUMENT_CONTENT, message, HttpStatus.BAD_REQUEST);
-    }
-
-    /**
-     * Thrown to indicate that an error occurred with a document content.
-     * @param message Message describing the error being the cause of the raised exception.
-     * @param status {@link HttpStatus}.
-     */
-    public DocumentContentException(final String message, final HttpStatus status)
-    {
-        super(EntityType.DOCUMENT_CONTENT, message, status);
-    }
-
-    /**
-     * Thrown to indicate that an error occurred with a document content.
-     * @param message Message describing the error being the cause of the raised exception.
-     * @param exception Parent exception.
-     */
-    public DocumentContentException(final String message, final Exception exception)
-    {
-        super(EntityType.DOCUMENT_CONTENT, message, exception, HttpStatus.BAD_REQUEST);
-    }
-
-    /**
-     * Thrown to indicate that an error occurred with a document content.
-     * @param message Message describing the error being the cause of the raised exception.
+     * Thrown to indicate that an error occurred with a document.
      * @param exception Parent exception.
      * @param status {@link HttpStatus}.
      */
-    public DocumentContentException(final String message, final Exception exception, final HttpStatus status)
+    public DocumentException(final Exception exception, final HttpStatus status)
     {
-        super(EntityType.DOCUMENT_CONTENT, message, exception, status);
+        super(EntityType.DOCUMENT, exception, status);
+    }
+
+    /**
+     * Thrown to indicate that an error occurred with a document.
+     * @param message Message describing the error being the cause of the raised exception.
+     */
+    public DocumentException(final String message)
+    {
+        super(EntityType.DOCUMENT, message, HttpStatus.BAD_REQUEST);
+    }
+
+    /**
+     * Thrown to indicate that an error occurred with a document.
+     * @param message Message describing the error being the cause of the raised exception.
+     * @param status {@link HttpStatus}.
+     */
+    public DocumentException(final String message, final HttpStatus status)
+    {
+        super(EntityType.DOCUMENT, message, status);
+    }
+
+    /**
+     * Thrown to indicate that an error occurred with a document.
+     * @param message Message describing the error being the cause of the raised exception.
+     * @param exception Parent exception.
+     */
+    public DocumentException(final String message, final Exception exception)
+    {
+        super(EntityType.DOCUMENT, message, exception, HttpStatus.BAD_REQUEST);
+    }
+
+    /**
+     * Thrown to indicate that an error occurred with a document.
+     * @param message Message describing the error being the cause of the raised exception.
+     * @param exception Parent exception.
+     * @param status {@link HttpStatus}.
+     */
+    public DocumentException(final String message, final Exception exception, final HttpStatus status)
+    {
+        super(EntityType.DOCUMENT, message, exception, status);
     }
 }

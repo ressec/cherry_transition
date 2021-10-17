@@ -14,7 +14,7 @@
  */
 package com.hemajoo.commerce.cherry.persistence.person.randomizer;
 
-import com.hemajoo.commerce.cherry.model.person.entity.PhoneNumber;
+import com.hemajoo.commerce.cherry.model.person.entity.ClientPhoneNumberEntity;
 import com.hemajoo.commerce.cherry.model.person.type.PhoneNumberCategoryType;
 import com.hemajoo.commerce.cherry.model.person.type.PhoneNumberType;
 import com.hemajoo.commerce.cherry.persistence.base.randomizer.AbstractBaseServerEntityRandomizer;
@@ -73,9 +73,9 @@ public final class PhoneNumberRandomizer extends AbstractBaseServerEntityRandomi
      * <br>Generally set to {@code true} only for unit tests.
      * @return Phone number.
      */
-    public static PhoneNumber generateClient(final boolean withRandomId)
+    public static ClientPhoneNumberEntity generateClient(final boolean withRandomId)
     {
-        var entity = new PhoneNumber();
+        var entity = new ClientPhoneNumberEntity();
         AbstractBaseServerEntityRandomizer.populateBaseFields(entity);
 
         if (withRandomId)

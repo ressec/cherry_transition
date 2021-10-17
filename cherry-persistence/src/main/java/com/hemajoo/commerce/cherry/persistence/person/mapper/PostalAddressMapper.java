@@ -14,7 +14,7 @@
  */
 package com.hemajoo.commerce.cherry.persistence.person.mapper;
 
-import com.hemajoo.commerce.cherry.model.person.entity.PostalAddress;
+import com.hemajoo.commerce.cherry.model.person.entity.ClientPostalAddressEntity;
 import com.hemajoo.commerce.cherry.persistence.base.mapper.CycleAvoidingMappingContext;
 import com.hemajoo.commerce.cherry.persistence.document.mapper.DocumentMapper;
 import com.hemajoo.commerce.cherry.persistence.person.entity.PostalAddressServerEntity;
@@ -27,7 +27,7 @@ import org.mapstruct.factory.Mappers;
 import java.util.List;
 
 /**
- * A mapper interface providing services to map between {@link PostalAddress} and {@link PostalAddressServerEntity} and vice-versa.
+ * A mapper interface providing services to map between {@link ClientPostalAddressEntity} and {@link PostalAddressServerEntity} and vice-versa.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
@@ -48,7 +48,7 @@ public interface PostalAddressMapper
      * @param context Context object.
      * @return Client entity.
      */
-    PostalAddress mapPersistence(PostalAddressServerEntity entity, @Context CycleAvoidingMappingContext context);
+    ClientPostalAddressEntity mapPersistence(PostalAddressServerEntity entity, @Context CycleAvoidingMappingContext context);
 
     /**
      * Maps from a list of persistent entities to a list of client entities.
@@ -56,7 +56,7 @@ public interface PostalAddressMapper
      * @param context Context object.
      * @return List of client entities.
      */
-    List<PostalAddress> mapPersistenceList(List<PostalAddressServerEntity> list, @Context CycleAvoidingMappingContext context);
+    List<ClientPostalAddressEntity> mapPersistenceList(List<PostalAddressServerEntity> list, @Context CycleAvoidingMappingContext context);
 
     /**
      * Maps from a client entity to a persistent entity.
@@ -64,7 +64,7 @@ public interface PostalAddressMapper
      * @param context Context object.
      * @return Persistent entity.
      */
-    PostalAddressServerEntity mapClient(PostalAddress entity, @Context CycleAvoidingMappingContext context);
+    PostalAddressServerEntity mapClient(ClientPostalAddressEntity entity, @Context CycleAvoidingMappingContext context);
 
     /**
      * Maps from a list of client entities to a list of persistent entities.
@@ -72,7 +72,7 @@ public interface PostalAddressMapper
      * @param context Context object.
      * @return List of persistent entities.
      */
-    List<PostalAddressServerEntity> mapClientList(List<PostalAddress> list, @Context CycleAvoidingMappingContext context);
+    List<PostalAddressServerEntity> mapClientList(List<ClientPostalAddressEntity> list, @Context CycleAvoidingMappingContext context);
 
     /**
      * Copy a persistent entity.
@@ -88,5 +88,5 @@ public interface PostalAddressMapper
      * @param context Context object.
      * @return Copy.
      */
-    PostalAddress copy(PostalAddress entity, @Context CycleAvoidingMappingContext context);
+    ClientPostalAddressEntity copy(ClientPostalAddressEntity entity, @Context CycleAvoidingMappingContext context);
 }

@@ -16,8 +16,10 @@ package com.hemajoo.commerce.cherry.persistence.person.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.hemajoo.commerce.cherry.commons.type.EntityType;
+import com.hemajoo.commerce.cherry.model.person.entity.base.EmailAddress;
 import com.hemajoo.commerce.cherry.model.person.type.AddressType;
 import com.hemajoo.commerce.cherry.persistence.base.entity.ServerBaseEntity;
+import com.hemajoo.commerce.cherry.persistence.base.entity.ServerEntity;
 import com.hemajoo.commerce.cherry.persistence.base.validation.BasicValidation;
 import com.hemajoo.commerce.cherry.persistence.base.validation.ExtendedValidation;
 import lombok.EqualsAndHashCode;
@@ -33,7 +35,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.groups.Default;
 
 /**
- * Represents a persistent email address.
+ * Represents a server email address entity.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
@@ -43,7 +45,7 @@ import javax.validation.groups.Default;
 @Table(name = "EMAIL_ADDRESS")
 @Entity
 @EntityListeners(AuditingEntityListener.class)
-public class EmailAddressServerEntity extends ServerBaseEntity
+public class EmailAddressServerEntity extends ServerBaseEntity implements EmailAddress, ServerEntity
 {
     public static final String FIELD_EMAIL          = "email";
     public static final String FIELD_IS_DEFAULT     = "defaultEmail";
@@ -85,9 +87,9 @@ public class EmailAddressServerEntity extends ServerBaseEntity
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     @JsonIgnoreProperties
-    @ManyToOne(targetEntity = PersonServerEntity.class, fetch = FetchType.LAZY)
+    @ManyToOne(targetEntity = ServerPersonEntity.class, fetch = FetchType.LAZY)
     @JoinColumn(name = "PERSON_ID", nullable = false)
-    private PersonServerEntity person;
+    private ServerPersonEntity person;
 
     /**
      * Creates a new persistent email address.
@@ -97,7 +99,7 @@ public class EmailAddressServerEntity extends ServerBaseEntity
         super(EntityType.EMAIL_ADDRESS);
     }
 
-    public void setPerson(final PersonServerEntity person)
+    public void setPerson(final ServerPersonEntity person)
     {
         if (person != null)
         {

@@ -15,8 +15,8 @@
 package com.hemajoo.commerce.cherry.persistence.person.randomizer;
 
 import com.hemajoo.commerce.cherry.model.document.ClientDocumentEntity;
-import com.hemajoo.commerce.cherry.model.document.DocumentContentException;
-import com.hemajoo.commerce.cherry.model.person.entity.EmailAddress;
+import com.hemajoo.commerce.cherry.model.document.exception.DocumentContentException;
+import com.hemajoo.commerce.cherry.model.person.entity.ClientEmailAddressEntity;
 import com.hemajoo.commerce.cherry.model.person.type.AddressType;
 import com.hemajoo.commerce.cherry.persistence.base.randomizer.AbstractBaseServerEntityRandomizer;
 import com.hemajoo.commerce.cherry.persistence.document.entity.ServerDocumentEntity;
@@ -101,9 +101,9 @@ public final class EmailAddressRandomizer extends AbstractBaseServerEntityRandom
      * <br>Generally set to {@code true} only for unit tests.
      * @return Email address.
      */
-    public static EmailAddress generateClient(final boolean withRandomId)
+    public static ClientEmailAddressEntity generateClient(final boolean withRandomId)
     {
-        var entity = new EmailAddress();
+        var entity = new ClientEmailAddressEntity();
         AbstractBaseServerEntityRandomizer.populateBaseFields(entity);
 
         if (withRandomId)
@@ -126,10 +126,10 @@ public final class EmailAddressRandomizer extends AbstractBaseServerEntityRandom
      * @return Email address.
      * @throws DocumentContentException Thrown in case an error occurred while trying to generate a document.
      */
-    public static EmailAddress generateClientWithDocument(final boolean withRandomId, final int count) throws DocumentContentException
+    public static ClientEmailAddressEntity generateClientWithDocument(final boolean withRandomId, final int count) throws DocumentContentException
     {
         ClientDocumentEntity document;
-        EmailAddress entity = new EmailAddress();
+        ClientEmailAddressEntity entity = new ClientEmailAddressEntity();
         AbstractBaseServerEntityRandomizer.populateBaseFields(entity);
 
         if (withRandomId)

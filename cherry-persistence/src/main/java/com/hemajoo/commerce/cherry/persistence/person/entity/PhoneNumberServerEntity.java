@@ -15,9 +15,11 @@
 package com.hemajoo.commerce.cherry.persistence.person.entity;
 
 import com.hemajoo.commerce.cherry.commons.type.EntityType;
+import com.hemajoo.commerce.cherry.model.person.entity.base.PhoneNumber;
 import com.hemajoo.commerce.cherry.model.person.type.PhoneNumberCategoryType;
 import com.hemajoo.commerce.cherry.model.person.type.PhoneNumberType;
 import com.hemajoo.commerce.cherry.persistence.base.entity.ServerBaseEntity;
+import com.hemajoo.commerce.cherry.persistence.base.entity.ServerEntity;
 import com.hemajoo.commerce.cherry.persistence.base.validation.BasicValidation;
 import com.hemajoo.commerce.cherry.persistence.base.validation.ExtendedValidation;
 import lombok.EqualsAndHashCode;
@@ -31,7 +33,7 @@ import javax.validation.GroupSequence;
 import javax.validation.constraints.NotNull;
 
 /**
- * Represents a persistent phone number.
+ * Represents a server phone number entity.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
@@ -41,7 +43,7 @@ import javax.validation.constraints.NotNull;
 @Table(name = "PHONE_NUMBER")
 @Entity
 @EntityListeners(AuditingEntityListener.class)
-public class PhoneNumberServerEntity extends ServerBaseEntity
+public class PhoneNumberServerEntity extends ServerBaseEntity implements PhoneNumber, ServerEntity
 {
     public static final String FIELD_IS_DEFAULT             = "isDefault";
     public static final String FIELD_NUMBER                 = "number";
@@ -102,9 +104,9 @@ public class PhoneNumberServerEntity extends ServerBaseEntity
     @ToString.Exclude
     @Getter
     @Setter
-    @ManyToOne(targetEntity = PersonServerEntity.class, fetch = FetchType.LAZY)
+    @ManyToOne(targetEntity = ServerPersonEntity.class, fetch = FetchType.LAZY)
     @JoinColumn(name = "PERSON_ID", nullable = false)
-    private PersonServerEntity person;
+    private ServerPersonEntity person;
 
     /**
      * Creates a new phone number.

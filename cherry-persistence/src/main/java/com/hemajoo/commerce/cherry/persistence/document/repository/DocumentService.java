@@ -14,7 +14,7 @@
  */
 package com.hemajoo.commerce.cherry.persistence.document.repository;
 
-import com.hemajoo.commerce.cherry.model.document.DocumentException;
+import com.hemajoo.commerce.cherry.model.document.exception.DocumentException;
 import com.hemajoo.commerce.cherry.persistence.document.entity.ServerDocumentEntity;
 
 import java.util.List;

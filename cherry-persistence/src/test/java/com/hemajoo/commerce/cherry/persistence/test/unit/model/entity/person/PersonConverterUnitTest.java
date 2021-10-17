@@ -14,11 +14,11 @@
  */
 package com.hemajoo.commerce.cherry.persistence.test.unit.model.entity.person;
 
-import com.hemajoo.commerce.cherry.model.person.entity.Person;
+import com.hemajoo.commerce.cherry.model.person.entity.ClientPersonEntity;
 import com.hemajoo.commerce.cherry.model.person.exception.EmailAddressException;
 import com.hemajoo.commerce.cherry.model.person.exception.PersonException;
 import com.hemajoo.commerce.cherry.persistence.person.converter.PersonConverter;
-import com.hemajoo.commerce.cherry.persistence.person.entity.PersonServerEntity;
+import com.hemajoo.commerce.cherry.persistence.person.entity.ServerPersonEntity;
 import com.hemajoo.commerce.cherry.persistence.person.randomizer.PersonRandomizer;
 import com.hemajoo.commerce.cherry.persistence.test.unit.base.AbstractBaseMapperTest;
 import lombok.NonNull;
@@ -47,8 +47,8 @@ class PersonConverterUnitTest extends AbstractBaseMapperTest
     @DisplayName("Map a persistent person to a client person")
     final void testMapPersistentToClient()
     {
-        PersonServerEntity persistent = PersonRandomizer.generatePersistent(true);
-        Person client = PersonConverter.convertPersistence(persistent);
+        ServerPersonEntity persistent = PersonRandomizer.generatePersistent(true);
+        ClientPersonEntity client = PersonConverter.convertPersistence(persistent);
         checkFields(persistent, client);
     }
 
@@ -56,13 +56,13 @@ class PersonConverterUnitTest extends AbstractBaseMapperTest
     @DisplayName("Map a list of persistent persons to a list of client persons")
     final void testMapListPersistentToListClient() throws PersonException
     {
-        List<PersonServerEntity> persistentList = new ArrayList<>();
+        List<ServerPersonEntity> persistentList = new ArrayList<>();
         for (int i = 0; i < LIST_COUNT; i++)
         {
             persistentList.add(PersonRandomizer.generatePersistent(true));
         }
 
-        List<Person> clientList = PersonConverter.convertPersistenceList(persistentList);
+        List<ClientPersonEntity> clientList = PersonConverter.convertPersistenceList(persistentList);
         checkFields(persistentList, clientList);
     }
 
@@ -70,8 +70,8 @@ class PersonConverterUnitTest extends AbstractBaseMapperTest
     @DisplayName("Map a client person to a persistent person")
     final void testMapClientToPersistent() throws PersonException, EmailAddressException
     {
-        Person client = PersonRandomizer.generateClient(true);
-        PersonServerEntity persistent = PersonConverter.convertClient(client);
+        ClientPersonEntity client = PersonRandomizer.generateClient(true);
+        ServerPersonEntity persistent = PersonConverter.convertClient(client);
         checkFields(persistent, client);
     }
 
@@ -79,13 +79,13 @@ class PersonConverterUnitTest extends AbstractBaseMapperTest
     @DisplayName("Map a list of client persons to a list of persistent persons")
     final void testMapListClientToListPersistent() throws PersonException, EmailAddressException
     {
-        List<Person> clientList = new ArrayList<>();
+        List<ClientPersonEntity> clientList = new ArrayList<>();
         for (int i = 0; i < LIST_COUNT; i++)
         {
             clientList.add(PersonRandomizer.generateClient(true));
         }
 
-        List<PersonServerEntity> persistentList = PersonConverter.convertClientList(clientList);
+        List<ServerPersonEntity> persistentList = PersonConverter.convertClientList(clientList);
         checkFields(persistentList, clientList);
     }
 
@@ -93,8 +93,8 @@ class PersonConverterUnitTest extends AbstractBaseMapperTest
     @DisplayName("Create a deep copy of a client person")
     final void testCopyClient()
     {
-        Person client = PersonRandomizer.generateClient(true);
-        Person copy = PersonConverter.copy(client);
+        ClientPersonEntity client = PersonRandomizer.generateClient(true);
+        ClientPersonEntity copy = PersonConverter.copy(client);
         checkFields(client, copy);
     }
 
@@ -102,8 +102,8 @@ class PersonConverterUnitTest extends AbstractBaseMapperTest
     @DisplayName("Create a deep copy of a persistent person")
     final void testCopyPersistent()
     {
-        PersonServerEntity persistent = PersonRandomizer.generatePersistent(true);
-        PersonServerEntity copy = PersonConverter.copy(persistent);
+        ServerPersonEntity persistent = PersonRandomizer.generatePersistent(true);
+        ServerPersonEntity copy = PersonConverter.copy(persistent);
         checkFields(persistent, copy);
     }
 
@@ -112,7 +112,7 @@ class PersonConverterUnitTest extends AbstractBaseMapperTest
      * @param persistent Persistent entity.
      * @param client Client entity.
      */
-    private void checkFields(final @NonNull PersonServerEntity persistent, final @NonNull Person client)
+    private void checkFields(final @NonNull ServerPersonEntity persistent, final @NonNull ClientPersonEntity client)
     {
         checkBaseFields(persistent, client);
 
@@ -142,7 +142,7 @@ class PersonConverterUnitTest extends AbstractBaseMapperTest
      * @param client Client entity.
      * @param copy Client entity.
      */
-    private void checkFields(final @NonNull Person client, final @NonNull Person copy)
+    private void checkFields(final @NonNull ClientPersonEntity client, final @NonNull ClientPersonEntity copy)
     {
         checkBaseFields(client, copy);
 
@@ -172,7 +172,7 @@ class PersonConverterUnitTest extends AbstractBaseMapperTest
      * @param persistent Persistent entity.
      * @param copy Persistent entity.
      */
-    private void checkFields(final @NonNull PersonServerEntity persistent, final @NonNull PersonServerEntity copy)
+    private void checkFields(final @NonNull ServerPersonEntity persistent, final @NonNull ServerPersonEntity copy)
     {
         checkBaseFields(persistent, copy);
 
@@ -203,10 +203,10 @@ class PersonConverterUnitTest extends AbstractBaseMapperTest
      * @param clientList List of client persons.
      * @throws PersonException Thrown in case an error occurred finding a client person!
      */
-    private void checkFields(final @NonNull List<PersonServerEntity> persistentList, final @NonNull List<Person> clientList) throws PersonException
+    private void checkFields(final @NonNull List<ServerPersonEntity> persistentList, final @NonNull List<ClientPersonEntity> clientList) throws PersonException
     {
-        Optional<Person> client;
-        for (PersonServerEntity persistent : persistentList)
+        Optional<ClientPersonEntity> client;
+        for (ServerPersonEntity persistent : persistentList)
         {
             client = clientList.stream().filter(element -> element.getId().equals(persistent.getId())).findFirst();
             if (client.isPresent())

@@ -12,7 +12,7 @@
  * Resse Christophe (christophe.resse@gmail.com).
  * -----------------------------------------------------------------------------------------------
  */
-package com.hemajoo.commerce.cherry.model.document;
+package com.hemajoo.commerce.cherry.model.document.type;
 
 import lombok.NonNull;
 

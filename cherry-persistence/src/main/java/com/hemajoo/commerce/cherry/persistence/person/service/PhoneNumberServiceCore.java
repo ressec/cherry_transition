@@ -17,7 +17,7 @@ package com.hemajoo.commerce.cherry.persistence.person.service;
 import com.hemajoo.commerce.cherry.commons.type.StatusType;
 import com.hemajoo.commerce.cherry.model.base.search.criteria.SearchCriteria;
 import com.hemajoo.commerce.cherry.model.base.search.criteria.SearchOperation;
-import com.hemajoo.commerce.cherry.model.person.search.PhoneNumberSearch;
+import com.hemajoo.commerce.cherry.model.person.search.SearchPhoneNumber;
 import com.hemajoo.commerce.cherry.model.person.type.PhoneNumberCategoryType;
 import com.hemajoo.commerce.cherry.model.person.type.PhoneNumberType;
 import com.hemajoo.commerce.cherry.persistence.base.entity.AbstractAuditServerEntity;
@@ -108,7 +108,7 @@ public class PhoneNumberServiceCore implements PhoneNumberService
     }
 
     @Override
-    public List<PhoneNumberServerEntity> search(@NonNull PhoneNumberSearch phoneNumber)
+    public List<PhoneNumberServerEntity> search(@NonNull SearchPhoneNumber phoneNumber)
     {
         GenericSpecification<PhoneNumberServerEntity> specification = new GenericSpecification<>();
 

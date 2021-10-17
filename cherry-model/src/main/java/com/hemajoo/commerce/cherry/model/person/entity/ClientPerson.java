@@ -12,28 +12,16 @@
  * Resse Christophe (christophe.resse@gmail.com).
  * -----------------------------------------------------------------------------------------------
  */
-package com.hemajoo.commerce.cherry.persistence.document.entity;
+package com.hemajoo.commerce.cherry.model.person.entity;
 
-import com.hemajoo.commerce.cherry.model.base.entity.BaseEntity;
-import com.hemajoo.commerce.cherry.model.document.base.Document;
-import com.hemajoo.commerce.cherry.persistence.base.entity.ServerEntity;
+import com.hemajoo.commerce.cherry.model.base.entity.ClientEntity;
+import com.hemajoo.commerce.cherry.model.person.entity.base.Person;
 
 /**
- * Behavior of a server document entity.
+ * Behavior of a client person entity.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-public interface ServerDocument extends Document, ServerEntity
+public interface ClientPerson extends Person, ClientEntity
 {
-    /**
-     * Returns the owner entity of this server document.
-     * @return Owner entity.
-     */
-    BaseEntity getOwner();
-
-    /**
-     * Sets the owner entity of this server document.
-     * @param owner Owner entity.
-     */
-    void setOwner(final BaseEntity owner);
 }

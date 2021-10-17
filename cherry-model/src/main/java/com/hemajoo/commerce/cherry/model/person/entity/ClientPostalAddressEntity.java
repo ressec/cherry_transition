@@ -33,7 +33,7 @@ import javax.persistence.Enumerated;
 @Data
 //@Builder(setterPrefix = "with") // Does not work well with MapStruct!
 @EqualsAndHashCode(callSuper = false)
-public class PostalAddress extends ClientBaseEntity
+public class ClientPostalAddressEntity extends ClientBaseEntity
 {
     /**
      * Postal address street name.
@@ -95,12 +95,12 @@ public class PostalAddress extends ClientBaseEntity
      * The person identifier this postal address belongs to.
      */
     //private Long personId;
-    private Person person;
+    private ClientPersonEntity person;
 
     /**
      * Creates a new postal address.
      */
-    public PostalAddress()
+    public ClientPostalAddressEntity()
     {
         super(EntityType.POSTAL_ADDRESS);
     }

@@ -16,6 +16,7 @@ package com.hemajoo.commerce.cherry.model.document;
 
 import com.hemajoo.commerce.cherry.commons.entity.Identity;
 import com.hemajoo.commerce.cherry.model.base.entity.ClientEntity;
+import com.hemajoo.commerce.cherry.model.document.base.Document;
 
 /**
  * Behavior of a client document entity.

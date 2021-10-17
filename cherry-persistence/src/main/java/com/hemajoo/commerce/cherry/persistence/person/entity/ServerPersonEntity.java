@@ -45,7 +45,7 @@ import java.util.stream.Collectors;
 @Hidden
 @Table(name = "PERSON")
 @EntityListeners(AuditingEntityListener.class)
-public class PersonServerEntity extends ServerBaseEntity
+public class ServerPersonEntity extends ServerBaseEntity implements ServerPerson
 {
     /**
      * Minimal birthdate.
@@ -137,7 +137,7 @@ public class PersonServerEntity extends ServerBaseEntity
     /**
      * Creates a new person.
      */
-    public PersonServerEntity()
+    public ServerPersonEntity()
     {
         super(EntityType.PERSON);
     }

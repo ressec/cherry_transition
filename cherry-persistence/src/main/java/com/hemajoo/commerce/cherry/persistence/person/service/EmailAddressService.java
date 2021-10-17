@@ -15,9 +15,9 @@
 package com.hemajoo.commerce.cherry.persistence.person.service;
 
 import com.hemajoo.commerce.cherry.commons.type.StatusType;
-import com.hemajoo.commerce.cherry.model.document.DocumentException;
+import com.hemajoo.commerce.cherry.model.document.exception.DocumentException;
 import com.hemajoo.commerce.cherry.model.person.exception.EmailAddressException;
-import com.hemajoo.commerce.cherry.model.person.search.EmailAddressSearch;
+import com.hemajoo.commerce.cherry.model.person.search.SearchEmailAddress;
 import com.hemajoo.commerce.cherry.model.person.type.AddressType;
 import com.hemajoo.commerce.cherry.persistence.person.entity.EmailAddressServerEntity;
 import lombok.NonNull;
@@ -98,5 +98,5 @@ public interface EmailAddressService
      * @param emailAddress Email address search object containing the predicates.
      * @return List of email addresses matching the given predicates.
      */
-    List<EmailAddressServerEntity> search(final @NonNull EmailAddressSearch emailAddress);
+    List<EmailAddressServerEntity> search(final @NonNull SearchEmailAddress emailAddress);
 }

@@ -17,7 +17,7 @@ package com.hemajoo.commerce.cherry.persistence.person.service;
 import com.hemajoo.commerce.cherry.commons.type.StatusType;
 import com.hemajoo.commerce.cherry.model.base.search.criteria.SearchCriteria;
 import com.hemajoo.commerce.cherry.model.base.search.criteria.SearchOperation;
-import com.hemajoo.commerce.cherry.model.person.search.PostalAddressSearch;
+import com.hemajoo.commerce.cherry.model.person.search.SearchPostalAddress;
 import com.hemajoo.commerce.cherry.model.person.type.AddressCategoryType;
 import com.hemajoo.commerce.cherry.model.person.type.AddressType;
 import com.hemajoo.commerce.cherry.persistence.base.entity.AbstractAuditServerEntity;
@@ -102,7 +102,7 @@ public class PostalAddressServiceCore implements PostalAddressService
     }
 
     @Override
-    public List<PostalAddressServerEntity> search(@NonNull PostalAddressSearch postalAddress)
+    public List<PostalAddressServerEntity> search(@NonNull SearchPostalAddress postalAddress)
     {
         GenericSpecification<PostalAddressServerEntity> specification = new GenericSpecification<>();
 

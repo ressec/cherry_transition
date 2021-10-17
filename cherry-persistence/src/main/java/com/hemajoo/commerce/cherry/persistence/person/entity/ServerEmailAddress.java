@@ -12,28 +12,16 @@
  * Resse Christophe (christophe.resse@gmail.com).
  * -----------------------------------------------------------------------------------------------
  */
-package com.hemajoo.commerce.cherry.persistence.document.entity;
+package com.hemajoo.commerce.cherry.persistence.person.entity;
 
-import com.hemajoo.commerce.cherry.model.base.entity.BaseEntity;
-import com.hemajoo.commerce.cherry.model.document.base.Document;
+import com.hemajoo.commerce.cherry.model.person.entity.base.EmailAddress;
 import com.hemajoo.commerce.cherry.persistence.base.entity.ServerEntity;
 
 /**
- * Behavior of a server document entity.
+ * Behavior of a server email address entity.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-public interface ServerDocument extends Document, ServerEntity
+public interface ServerEmailAddress extends EmailAddress, ServerEntity
 {
-    /**
-     * Returns the owner entity of this server document.
-     * @return Owner entity.
-     */
-    BaseEntity getOwner();
-
-    /**
-     * Sets the owner entity of this server document.
-     * @param owner Owner entity.
-     */
-    void setOwner(final BaseEntity owner);
 }

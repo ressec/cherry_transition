@@ -14,12 +14,12 @@
  */
 package com.hemajoo.commerce.cherry.persistence.person.randomizer;
 
-import com.hemajoo.commerce.cherry.model.person.entity.Person;
+import com.hemajoo.commerce.cherry.model.person.entity.ClientPersonEntity;
 import com.hemajoo.commerce.cherry.model.person.exception.EmailAddressException;
 import com.hemajoo.commerce.cherry.model.person.type.GenderType;
 import com.hemajoo.commerce.cherry.model.person.type.PersonType;
 import com.hemajoo.commerce.cherry.persistence.base.randomizer.AbstractBaseServerEntityRandomizer;
-import com.hemajoo.commerce.cherry.persistence.person.entity.PersonServerEntity;
+import com.hemajoo.commerce.cherry.persistence.person.entity.ServerPersonEntity;
 import lombok.experimental.UtilityClass;
 import org.ressec.avocado.core.random.EnumRandomGenerator;
 
@@ -48,9 +48,9 @@ public final class PersonRandomizer extends AbstractBaseServerEntityRandomizer
      * @param withRandomId Do we need to generate a random identifier? False by default.
      * @return Random person.
      */
-    public static PersonServerEntity generatePersistent(final boolean withRandomId)
+    public static ServerPersonEntity generatePersistent(final boolean withRandomId)
     {
-        var entity = new PersonServerEntity();
+        var entity = new ServerPersonEntity();
         AbstractBaseServerEntityRandomizer.populateBaseFields(entity);
 
         if (withRandomId)
@@ -73,9 +73,9 @@ public final class PersonRandomizer extends AbstractBaseServerEntityRandomizer
      * <br>Generally set to {@code true} only for unit tests.
      * @return Random person.
      */
-    public static Person generateClient(final boolean withRandomId)
+    public static ClientPersonEntity generateClient(final boolean withRandomId)
     {
-        var entity = new Person();
+        var entity = new ClientPersonEntity();
         AbstractBaseServerEntityRandomizer.populateBaseFields(entity);
    
         if (withRandomId)
@@ -100,7 +100,7 @@ public final class PersonRandomizer extends AbstractBaseServerEntityRandomizer
      * @return Person.
      * @throws EmailAddressException Raised in case an error occurred when trying to create an email address!
      */
-    public static PersonServerEntity generateWithDependencies(final boolean withRandomId, final int bound) throws EmailAddressException
+    public static ServerPersonEntity generateWithDependencies(final boolean withRandomId, final int bound) throws EmailAddressException
     {
         var person = generatePersistent(withRandomId);
 

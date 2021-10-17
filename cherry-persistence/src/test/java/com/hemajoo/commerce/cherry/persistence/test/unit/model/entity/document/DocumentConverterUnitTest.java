@@ -15,9 +15,9 @@
 package com.hemajoo.commerce.cherry.persistence.test.unit.model.entity.document;
 
 import com.hemajoo.commerce.cherry.model.document.ClientDocumentEntity;
-import com.hemajoo.commerce.cherry.model.document.Document;
-import com.hemajoo.commerce.cherry.model.document.DocumentContentException;
-import com.hemajoo.commerce.cherry.model.document.DocumentException;
+import com.hemajoo.commerce.cherry.model.document.base.Document;
+import com.hemajoo.commerce.cherry.model.document.exception.DocumentContentException;
+import com.hemajoo.commerce.cherry.model.document.exception.DocumentException;
 import com.hemajoo.commerce.cherry.persistence.document.converter.DocumentConverter;
 import com.hemajoo.commerce.cherry.persistence.document.entity.ServerDocumentEntity;
 import com.hemajoo.commerce.cherry.persistence.document.mapper.DocumentMapper;

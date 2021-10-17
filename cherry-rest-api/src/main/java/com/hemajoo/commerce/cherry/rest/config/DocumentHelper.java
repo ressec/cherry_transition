@@ -14,7 +14,7 @@
  */
 package com.hemajoo.commerce.cherry.rest.config;
 
-import com.hemajoo.commerce.cherry.model.document.DocumentException;
+import com.hemajoo.commerce.cherry.model.document.exception.DocumentException;
 import com.hemajoo.commerce.cherry.persistence.content.DocumentStore;
 import com.hemajoo.commerce.cherry.persistence.document.entity.ServerDocumentEntity;
 import lombok.NonNull;

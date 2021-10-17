@@ -15,7 +15,7 @@
 package com.hemajoo.commerce.cherry.persistence.person.service;
 
 import com.hemajoo.commerce.cherry.commons.type.StatusType;
-import com.hemajoo.commerce.cherry.model.person.search.PhoneNumberSearch;
+import com.hemajoo.commerce.cherry.model.person.search.SearchPhoneNumber;
 import com.hemajoo.commerce.cherry.model.person.type.PhoneNumberCategoryType;
 import com.hemajoo.commerce.cherry.model.person.type.PhoneNumberType;
 import com.hemajoo.commerce.cherry.persistence.person.entity.PhoneNumberServerEntity;
@@ -103,5 +103,5 @@ public interface PhoneNumberService
      * @param phoneNumber Phone number search object containing the predicates.
      * @return List of phone numbers matching the given predicates.
      */
-    List<PhoneNumberServerEntity> search(final @NonNull PhoneNumberSearch phoneNumber);
+    List<PhoneNumberServerEntity> search(final @NonNull SearchPhoneNumber phoneNumber);
 }

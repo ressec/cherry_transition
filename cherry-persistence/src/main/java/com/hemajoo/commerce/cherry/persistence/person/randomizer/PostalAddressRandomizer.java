@@ -14,7 +14,7 @@
  */
 package com.hemajoo.commerce.cherry.persistence.person.randomizer;
 
-import com.hemajoo.commerce.cherry.model.person.entity.PostalAddress;
+import com.hemajoo.commerce.cherry.model.person.entity.ClientPostalAddressEntity;
 import com.hemajoo.commerce.cherry.model.person.type.AddressCategoryType;
 import com.hemajoo.commerce.cherry.model.person.type.AddressType;
 import com.hemajoo.commerce.cherry.persistence.base.randomizer.AbstractBaseServerEntityRandomizer;
@@ -78,9 +78,9 @@ public final class PostalAddressRandomizer extends AbstractBaseServerEntityRando
      * <br>Generally set to {@code true} only for unit tests.
      * @return Postal address.
      */
-    public static PostalAddress generateClient(final boolean withRandomId)
+    public static ClientPostalAddressEntity generateClient(final boolean withRandomId)
     {
-        var entity = new PostalAddress();
+        var entity = new ClientPostalAddressEntity();
         AbstractBaseServerEntityRandomizer.populateBaseFields(entity);
 
         if (withRandomId)

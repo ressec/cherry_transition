@@ -32,7 +32,7 @@ import javax.persistence.Enumerated;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class PhoneNumber extends ClientBaseEntity
+public class ClientPhoneNumberEntity extends ClientBaseEntity
 {
     /**
      * Phone number.
@@ -71,12 +71,12 @@ public class PhoneNumber extends ClientBaseEntity
      */
     @ApiModelProperty(name = "personId", notes = "Person identifier this phone number belongs to", value = "1")
     //private Long personId;
-    private Person person;
+    private ClientPersonEntity person;
 
     /**
      * Creates a new phone number.
      */
-    public PhoneNumber()
+    public ClientPhoneNumberEntity()
     {
         super(EntityType.PHONE_NUMBER);
     }

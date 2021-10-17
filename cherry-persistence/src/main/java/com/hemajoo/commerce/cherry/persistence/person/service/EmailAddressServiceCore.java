@@ -17,9 +17,9 @@ package com.hemajoo.commerce.cherry.persistence.person.service;
 import com.hemajoo.commerce.cherry.commons.type.StatusType;
 import com.hemajoo.commerce.cherry.model.base.search.criteria.SearchCriteria;
 import com.hemajoo.commerce.cherry.model.base.search.criteria.SearchOperation;
-import com.hemajoo.commerce.cherry.model.document.DocumentException;
+import com.hemajoo.commerce.cherry.model.document.exception.DocumentException;
 import com.hemajoo.commerce.cherry.model.person.exception.EmailAddressException;
-import com.hemajoo.commerce.cherry.model.person.search.EmailAddressSearch;
+import com.hemajoo.commerce.cherry.model.person.search.SearchEmailAddress;
 import com.hemajoo.commerce.cherry.model.person.type.AddressType;
 import com.hemajoo.commerce.cherry.persistence.base.entity.AbstractAuditServerEntity;
 import com.hemajoo.commerce.cherry.persistence.base.entity.AbstractStatusServerEntity;
@@ -134,7 +134,7 @@ public class EmailAddressServiceCore implements EmailAddressService
     }
 
     @Override
-    public List<EmailAddressServerEntity> search(final @NonNull EmailAddressSearch search)
+    public List<EmailAddressServerEntity> search(final @NonNull SearchEmailAddress search)
     {
         GenericSpecification<EmailAddressServerEntity> specification = new GenericSpecification<>();
 

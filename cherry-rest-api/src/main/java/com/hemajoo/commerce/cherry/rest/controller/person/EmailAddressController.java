@@ -15,13 +15,13 @@
 package com.hemajoo.commerce.cherry.rest.controller.person;
 
 import com.hemajoo.commerce.cherry.model.base.converter.GenericEntityConverter;
-import com.hemajoo.commerce.cherry.model.document.DocumentException;
-import com.hemajoo.commerce.cherry.model.person.entity.EmailAddress;
+import com.hemajoo.commerce.cherry.model.document.exception.DocumentException;
+import com.hemajoo.commerce.cherry.model.person.entity.ClientEmailAddressEntity;
 import com.hemajoo.commerce.cherry.model.person.exception.EmailAddressException;
-import com.hemajoo.commerce.cherry.model.person.search.EmailAddressSearch;
+import com.hemajoo.commerce.cherry.model.person.search.SearchEmailAddress;
 import com.hemajoo.commerce.cherry.persistence.person.converter.EmailAddressConverter;
 import com.hemajoo.commerce.cherry.persistence.person.entity.EmailAddressServerEntity;
-import com.hemajoo.commerce.cherry.persistence.person.entity.PersonServerEntity;
+import com.hemajoo.commerce.cherry.persistence.person.entity.ServerPersonEntity;
 import com.hemajoo.commerce.cherry.persistence.person.randomizer.EmailAddressRandomizer;
 import com.hemajoo.commerce.cherry.persistence.person.service.EmailAddressService;
 import com.hemajoo.commerce.cherry.persistence.person.service.EmailAddressServiceCore;
@@ -98,7 +98,7 @@ public class EmailAddressController
      */
     @ApiOperation(value = "Retrieve an email address given its identifier.", notes = "Retrieve an email address given its identifier.")
     @GetMapping("/get/{id}")
-    public ResponseEntity<EmailAddress> get(
+    public ResponseEntity<ClientEmailAddressEntity> get(
             @ApiParam(value = "Email address identifier", required = true, example = "356fb9b0-61c8-11de-99e1-4b55c7f2e1b5")
             @Valid @ValidEmailAddressId // Handles email id validation automatically
             @NotNull
@@ -116,9 +116,9 @@ public class EmailAddressController
     @ApiOperation(value = "Create a new email address.",
             notes = "Notes: <i>No need to set the postal address identifier (id) as it is automatically generated. If set, it will be ignored!</i>")
     @PostMapping("/create")
-    public ResponseEntity<EmailAddress> create(
+    public ResponseEntity<ClientEmailAddressEntity> create(
             @ApiParam(value = "Email address", required = true)
-            @Valid @ValidEmailAddressForCreation @RequestBody EmailAddress emailAddress)
+            @Valid @ValidEmailAddressForCreation @RequestBody ClientEmailAddressEntity emailAddress)
     {
         EmailAddressServerEntity serverEmailAddress = EmailAddressConverter.convertClient(emailAddress);
         emailAddressService.save(serverEmailAddress);
@@ -129,17 +129,17 @@ public class EmailAddressController
     /**
      * Endpoint service to create a random email address for a given person identifier.
      * @param personId Person identifier.
-     * @return Response entity containing the randomly generated {@link EmailAddress}.
+     * @return Response entity containing the randomly generated {@link ClientEmailAddressEntity}.
      */
     @ApiOperation(value = "Create a new random email address for the given person identifier.")
     @PostMapping("/random")
-    public ResponseEntity<EmailAddress> random(
+    public ResponseEntity<ClientEmailAddressEntity> random(
             @ApiParam(value = "Person identifier (UUID)", name = "personId", required = true, example = "523cd226-49e4-4034-85dd-d0768af295da")
             @Valid @ValidPersonId @NotNull @RequestParam String personId)
     {
         EmailAddressServerEntity serverEmail = EmailAddressRandomizer.generatePersistent(false);
 
-        PersonServerEntity person = personService.findById(UUID.fromString(personId));
+        ServerPersonEntity person = personService.findById(UUID.fromString(personId));
         serverEmail.setPerson(person);
         emailAddressService.save(serverEmail);
 
@@ -154,7 +154,7 @@ public class EmailAddressController
     @ApiOperation(value = "Update an email address.", notes = "Update an email address given the new values.")
     @PutMapping("/update")
     @Transactional
-    public ResponseEntity<RestApiResponse> update(@Valid @ValidEmailAddressForUpdate @RequestBody EmailAddress email)
+    public ResponseEntity<RestApiResponse> update(@Valid @ValidEmailAddressForUpdate @RequestBody ClientEmailAddressEntity email)
     {
         RestApiResponse response;
 
@@ -212,7 +212,7 @@ public class EmailAddressController
      */
     @ApiOperation(value = "Find all email addresses.", notes = "Find all email addresses.")
     @GetMapping("/findAll")
-    public List<EmailAddress> findAll()
+    public List<ClientEmailAddressEntity> findAll()
     {
 
         // TODO We should only return a list of the email address ids!
@@ -220,7 +220,7 @@ public class EmailAddressController
 //        RestApiResponse response = RestApiResponse.ok();
 //        ResponseEntity<RestApiResponse> entity = response.getEntity();
 
-        List<EmailAddress> list = EmailAddressConverter.convertPersistenceList(emailAddressService.findAll());
+        List<ClientEmailAddressEntity> list = EmailAddressConverter.convertPersistenceList(emailAddressService.findAll());
 
         return list;
     }
@@ -232,9 +232,9 @@ public class EmailAddressController
      */
     @ApiOperation(value = "Search for email addresses.", notes = "Search for email addresses matching the given predicates. Fill only the fields you want to be taken into account for the search.")
     @GetMapping("/search")
-    public ResponseEntity<List<String>> search(final @NonNull EmailAddressSearch search)
+    public ResponseEntity<List<String>> search(final @NonNull SearchEmailAddress search)
     {
-        List<EmailAddress> entities = EmailAddressConverter.convertPersistenceList(emailAddressService.search(search));
+        List<ClientEmailAddressEntity> entities = EmailAddressConverter.convertPersistenceList(emailAddressService.search(search));
         List<String> ids = GenericEntityConverter.toIdList(entities);
 
         return ResponseEntity.ok(ids);
@@ -247,7 +247,7 @@ public class EmailAddressController
      */
     @ApiOperation(value = "Query email addresses", notes = "Query email addresses matching the given predicates.")
     @GetMapping("/query")
-    public ResponseEntity<RestApiResponse> query(final @NonNull EmailAddressSearch search)
+    public ResponseEntity<RestApiResponse> query(final @NonNull SearchEmailAddress search)
     {
         RestApiResponse response;
 

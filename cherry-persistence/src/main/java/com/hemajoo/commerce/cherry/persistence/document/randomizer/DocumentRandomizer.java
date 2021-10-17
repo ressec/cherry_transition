@@ -15,8 +15,8 @@
 package com.hemajoo.commerce.cherry.persistence.document.randomizer;
 
 import com.hemajoo.commerce.cherry.model.document.ClientDocumentEntity;
-import com.hemajoo.commerce.cherry.model.document.DocumentContentException;
-import com.hemajoo.commerce.cherry.model.document.DocumentType;
+import com.hemajoo.commerce.cherry.model.document.exception.DocumentContentException;
+import com.hemajoo.commerce.cherry.model.document.type.DocumentType;
 import com.hemajoo.commerce.cherry.persistence.base.randomizer.AbstractBaseServerEntityRandomizer;
 import com.hemajoo.commerce.cherry.persistence.document.entity.ServerDocumentEntity;
 import lombok.experimental.UtilityClass;

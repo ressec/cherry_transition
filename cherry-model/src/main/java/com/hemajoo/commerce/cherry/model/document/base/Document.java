@@ -12,9 +12,10 @@
  * Resse Christophe (christophe.resse@gmail.com).
  * -----------------------------------------------------------------------------------------------
  */
-package com.hemajoo.commerce.cherry.model.document;
+package com.hemajoo.commerce.cherry.model.document.base;
 
 import com.hemajoo.commerce.cherry.model.base.entity.BaseEntity;
+import com.hemajoo.commerce.cherry.model.document.type.DocumentType;
 
 /**
  * Behavior of a document entity.

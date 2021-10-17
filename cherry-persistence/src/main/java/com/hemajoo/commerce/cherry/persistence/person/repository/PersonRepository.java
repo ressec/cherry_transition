@@ -17,7 +17,7 @@ package com.hemajoo.commerce.cherry.persistence.person.repository;
 import com.hemajoo.commerce.cherry.commons.type.StatusType;
 import com.hemajoo.commerce.cherry.model.person.type.GenderType;
 import com.hemajoo.commerce.cherry.model.person.type.PersonType;
-import com.hemajoo.commerce.cherry.persistence.person.entity.PersonServerEntity;
+import com.hemajoo.commerce.cherry.persistence.person.entity.ServerPersonEntity;
 import lombok.NonNull;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.data.jpa.domain.Specification;
@@ -34,11 +34,11 @@ import java.util.UUID;
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-public interface PersonRepository extends JpaRepository<PersonServerEntity, UUID>, JpaSpecificationExecutor<PersonServerEntity>
+public interface PersonRepository extends JpaRepository<ServerPersonEntity, UUID>, JpaSpecificationExecutor<ServerPersonEntity>
 {
     @NotNull
     @EntityGraph(attributePaths = "documents")
-    Optional<PersonServerEntity> findById(final @NonNull UUID id);
+    Optional<ServerPersonEntity> findById(final @NonNull UUID id);
 
     /**
      * Returns a list of persons matching the given status.
@@ -46,7 +46,7 @@ public interface PersonRepository extends JpaRepository<PersonServerEntity, UUID
      * @return List of persons.
      * @see StatusType
      */
-    List<PersonServerEntity> findByStatusType(StatusType statusType);
+    List<ServerPersonEntity> findByStatusType(StatusType statusType);
 
     /**
      * Returns a list of persons matching the given person type.
@@ -54,7 +54,7 @@ public interface PersonRepository extends JpaRepository<PersonServerEntity, UUID
      * @return List of persons.
      * @see PersonType
      */
-    List<PersonServerEntity> findByPersonType(PersonType personType);
+    List<ServerPersonEntity> findByPersonType(PersonType personType);
 
     /**
      * Returns a list of persons matching the given gender type.
@@ -62,28 +62,28 @@ public interface PersonRepository extends JpaRepository<PersonServerEntity, UUID
      * @return List of persons.
      * @see GenderType
      */
-    List<PersonServerEntity> findByGenderType(GenderType gender);
+    List<ServerPersonEntity> findByGenderType(GenderType gender);
 
     /**
      * Returns a list of persons matching the given last name.
      * @param lastName Last name (strict).
      * @return List of persons.
      */
-    List<PersonServerEntity> findByLastName(String lastName);
+    List<ServerPersonEntity> findByLastName(String lastName);
 
     /**
      * Returns a list of persons matching the given first name.
      * @param firstName First name (strict).
      * @return List of persons.
      */
-    List<PersonServerEntity> findByFirstName(String firstName);
+    List<ServerPersonEntity> findByFirstName(String firstName);
 
     /**
      * Find persons given predicates.
      * @param specification Specification of the predicates.
      * @return List of matching persons.
      */
-    List<PersonServerEntity> findAll(final Specification<PersonServerEntity> specification);
+    List<ServerPersonEntity> findAll(final Specification<ServerPersonEntity> specification);
 
 //    /**
 //     * Returns a list of persons matching the given set of criteria.

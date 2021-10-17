@@ -32,7 +32,7 @@ import javax.persistence.Enumerated;
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
-public class PostalAddressSearch extends BaseSearch
+public class SearchPostalAddress extends BaseSearch
 {
     /**
      * Postal address street name.
@@ -99,7 +99,7 @@ public class PostalAddressSearch extends BaseSearch
     /**
      * Creates a new postal address.
      */
-    public PostalAddressSearch()
+    public SearchPostalAddress()
     {
         super(EntityType.POSTAL_ADDRESS);
     }

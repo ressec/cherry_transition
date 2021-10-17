@@ -16,64 +16,67 @@ package com.hemajoo.commerce.cherry.model.person.search;
 
 import com.hemajoo.commerce.cherry.commons.type.EntityType;
 import com.hemajoo.commerce.cherry.model.base.search.BaseSearch;
-import com.hemajoo.commerce.cherry.model.person.type.GenderType;
-import com.hemajoo.commerce.cherry.model.person.type.PersonType;
-import io.swagger.annotations.ApiModel;
+import com.hemajoo.commerce.cherry.model.person.type.PhoneNumberCategoryType;
+import com.hemajoo.commerce.cherry.model.person.type.PhoneNumberType;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import java.time.LocalDate;
 
 /**
- * Represents a person search object.
+ * Represents a phone number search object.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-@ApiModel(value = "PersonSearch", description = "Predicate object used to search for persons.")
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class PersonSearch extends BaseSearch
+public class SearchPhoneNumber extends BaseSearch
 {
     /**
-     * Person last name.
+     * Phone number.
      */
-    @ApiModelProperty(value = "Last name", allowEmptyValue = true)
-    private String lastName;
+    @ApiModelProperty(value = "Number", allowEmptyValue = true)
+    private String number;
 
     /**
-     * Person first name.
+     * Phone number country code (ISO Alpha-3 code).
      */
-    @ApiModelProperty(value = "First name", allowEmptyValue = true)
-    private String firstName;
+    @ApiModelProperty(value = "Country code", notes = "Iso Alpha-3 code.", allowEmptyValue = true)
+    private String countryCode;
 
     /**
-     * Person birth date.
-     */
-    @ApiModelProperty(value = "Birth date", notes = "(YYYY-MM-DD)", allowEmptyValue = true)
-    private LocalDate birthDate;
-
-    /**
-     * Person gender type.
+     * Phone number type.
      */
     @Enumerated(EnumType.STRING)
-    @ApiModelProperty(value = "genderType", notes = "Gender type", allowEmptyValue = true)
-    private GenderType genderType;
+    @ApiModelProperty(value = "phoneType", notes = "Phone type", allowEmptyValue = true)
+    private PhoneNumberType phoneType;
 
     /**
-     * Person type.
+     * Phone number category type.
      */
     @Enumerated(EnumType.STRING)
-    @ApiModelProperty(value = "personType", notes = "Person type", allowEmptyValue = true)
-    private PersonType personType;
+    @ApiModelProperty(value = "categoryType", notes = "Category type", allowEmptyValue = true)
+    private PhoneNumberCategoryType categoryType;
 
     /**
-     * Creates a new search person.
+     * Is it a default phone number?
      */
-    public PersonSearch()
+    @ApiModelProperty(value = "Is default", allowEmptyValue = true)
+    private Boolean isDefault;
+
+    /**
+     * The person identifier this phone number belongs to.
+     */
+    @ApiModelProperty(value = "Person identifier", allowEmptyValue = true)
+    private Long personId;
+
+    /**
+     * Creates a new phone number.
+     */
+    public SearchPhoneNumber()
     {
-        super(EntityType.PERSON);
+        super(EntityType.PHONE_NUMBER);
     }
 }

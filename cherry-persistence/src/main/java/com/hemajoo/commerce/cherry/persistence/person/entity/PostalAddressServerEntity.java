@@ -15,9 +15,11 @@
 package com.hemajoo.commerce.cherry.persistence.person.entity;
 
 import com.hemajoo.commerce.cherry.commons.type.EntityType;
+import com.hemajoo.commerce.cherry.model.person.entity.base.PostalAddress;
 import com.hemajoo.commerce.cherry.model.person.type.AddressCategoryType;
 import com.hemajoo.commerce.cherry.model.person.type.AddressType;
 import com.hemajoo.commerce.cherry.persistence.base.entity.ServerBaseEntity;
+import com.hemajoo.commerce.cherry.persistence.base.entity.ServerEntity;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -28,7 +30,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 /**
- * Represents a persistent postal address.
+ * Represents a server postal address entity.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
@@ -37,7 +39,7 @@ import javax.validation.constraints.NotNull;
 @Table(name = "POSTAL_ADDRESS")
 @Entity
 @EntityListeners(AuditingEntityListener.class)
-public class PostalAddressServerEntity extends ServerBaseEntity
+public class PostalAddressServerEntity extends ServerBaseEntity implements PostalAddress, ServerEntity
 {
     public static final String FIELD_IS_DEFAULT     = "isDefault";
     public static final String FIELD_ADDRESS_TYPE   = "addressType";
@@ -137,9 +139,9 @@ public class PostalAddressServerEntity extends ServerBaseEntity
     @EqualsAndHashCode.Exclude
     @Getter
     @Setter
-    @ManyToOne(targetEntity = PersonServerEntity.class, fetch = FetchType.LAZY)
+    @ManyToOne(targetEntity = ServerPersonEntity.class, fetch = FetchType.LAZY)
     @JoinColumn(name = "PERSON_ID", nullable = false)
-    private PersonServerEntity person;
+    private ServerPersonEntity person;
 
     /**
      * Creates a new postal address.

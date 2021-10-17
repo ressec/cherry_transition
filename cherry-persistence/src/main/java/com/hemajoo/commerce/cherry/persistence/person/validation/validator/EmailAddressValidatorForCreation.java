@@ -14,10 +14,10 @@
  */
 package com.hemajoo.commerce.cherry.persistence.person.validation.validator;
 
-import com.hemajoo.commerce.cherry.model.person.entity.EmailAddress;
+import com.hemajoo.commerce.cherry.model.person.entity.ClientEmailAddressEntity;
 import com.hemajoo.commerce.cherry.model.person.exception.EmailAddressException;
 import com.hemajoo.commerce.cherry.persistence.person.entity.EmailAddressServerEntity;
-import com.hemajoo.commerce.cherry.persistence.person.entity.PersonServerEntity;
+import com.hemajoo.commerce.cherry.persistence.person.entity.ServerPersonEntity;
 import com.hemajoo.commerce.cherry.persistence.person.service.EmailAddressService;
 import com.hemajoo.commerce.cherry.persistence.person.service.PersonService;
 import com.hemajoo.commerce.cherry.persistence.person.validation.constraint.ValidEmailAddressForCreation;
@@ -33,7 +33,7 @@ import javax.validation.ConstraintValidatorContext;
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-public class EmailAddressValidatorForCreation implements ConstraintValidator<ValidEmailAddressForCreation, EmailAddress>
+public class EmailAddressValidatorForCreation implements ConstraintValidator<ValidEmailAddressForCreation, ClientEmailAddressEntity>
 {
     /**
      * Service for the email addresses.
@@ -54,7 +54,7 @@ public class EmailAddressValidatorForCreation implements ConstraintValidator<Val
     }
 
     @Override
-    public boolean isValid(EmailAddress emailAddress, ConstraintValidatorContext context)
+    public boolean isValid(ClientEmailAddressEntity emailAddress, ConstraintValidatorContext context)
     {
         try
         {
@@ -79,7 +79,7 @@ public class EmailAddressValidatorForCreation implements ConstraintValidator<Val
     {
         if (emailAddress.isDefaultEmail() && emailAddress.isActive())
         {
-            PersonServerEntity person = personService.findById(emailAddress.getPerson().getId());
+            ServerPersonEntity person = personService.findById(emailAddress.getPerson().getId());
             EmailAddressServerEntity defaultEmailAddress = person.getDefaultEmailAddress();
             if (defaultEmailAddress.getIdentity() != emailAddress.getIdentity() || emailAddress.getId() == null)
             {
@@ -99,7 +99,7 @@ public class EmailAddressValidatorForCreation implements ConstraintValidator<Val
      */
     public void checkUniqueness(final EmailAddressServerEntity emailAddress) throws EmailAddressException
     {
-        PersonServerEntity person = personService.findById(emailAddress.getPerson().getId());
+        ServerPersonEntity person = personService.findById(emailAddress.getPerson().getId());
         if (person.existEmail(emailAddress.getEmail()))
         {
             EmailAddressServerEntity emailById = person.getEmailById(emailAddress.getId());
