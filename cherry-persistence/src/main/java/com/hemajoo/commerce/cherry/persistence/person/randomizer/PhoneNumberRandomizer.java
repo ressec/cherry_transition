@@ -17,7 +17,7 @@ package com.hemajoo.commerce.cherry.persistence.person.randomizer;
 import com.hemajoo.commerce.cherry.model.person.entity.PhoneNumber;
 import com.hemajoo.commerce.cherry.model.person.type.PhoneNumberCategoryType;
 import com.hemajoo.commerce.cherry.model.person.type.PhoneNumberType;
-import com.hemajoo.commerce.cherry.persistence.base.randomizer.BaseServerEntityRandomizer;
+import com.hemajoo.commerce.cherry.persistence.base.randomizer.AbstractBaseServerEntityRandomizer;
 import com.hemajoo.commerce.cherry.persistence.person.entity.PhoneNumberServerEntity;
 import lombok.experimental.UtilityClass;
 import org.ressec.avocado.core.random.EnumRandomGenerator;
@@ -30,7 +30,7 @@ import java.util.UUID;
  * @version 1.0.0
  */
 @UtilityClass
-public final class PhoneNumberRandomizer extends BaseServerEntityRandomizer
+public final class PhoneNumberRandomizer extends AbstractBaseServerEntityRandomizer
 {
     /**
      * Phone number type enumeration generator.
@@ -51,7 +51,7 @@ public final class PhoneNumberRandomizer extends BaseServerEntityRandomizer
     public static PhoneNumberServerEntity generatePersistent(final boolean withRandomId)
     {
         var entity = new PhoneNumberServerEntity();
-        BaseServerEntityRandomizer.populateBaseFields(entity);
+        AbstractBaseServerEntityRandomizer.populateBaseFields(entity);
 
         if (withRandomId)
         {
@@ -76,7 +76,7 @@ public final class PhoneNumberRandomizer extends BaseServerEntityRandomizer
     public static PhoneNumber generateClient(final boolean withRandomId)
     {
         var entity = new PhoneNumber();
-        BaseServerEntityRandomizer.populateBaseFields(entity);
+        AbstractBaseServerEntityRandomizer.populateBaseFields(entity);
 
         if (withRandomId)
         {

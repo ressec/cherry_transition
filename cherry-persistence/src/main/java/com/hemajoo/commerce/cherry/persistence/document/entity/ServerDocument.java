@@ -12,40 +12,28 @@
  * Resse Christophe (christophe.resse@gmail.com).
  * -----------------------------------------------------------------------------------------------
  */
-package com.hemajoo.commerce.cherry.model.base.entity;
+package com.hemajoo.commerce.cherry.persistence.document.entity;
 
-import com.hemajoo.commerce.cherry.commons.type.StatusType;
-
-import java.util.Date;
+import com.hemajoo.commerce.cherry.model.base.entity.BaseEntity;
+import com.hemajoo.commerce.cherry.model.document.Document;
+import com.hemajoo.commerce.cherry.persistence.base.entity.ServerEntity;
 
 /**
- * Interface providing status behavior.
+ * Behavior of a server document entity.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-public interface StatusEntity extends AuditEntity
+public interface ServerDocument extends Document, ServerEntity
 {
     /**
-     * Returns the status type.
-     * @return Status type.
+     * Returns the owner entity of this server document.
+     * @return Owner entity.
      */
-    StatusType getStatusType();
+    BaseEntity getOwner();
 
     /**
-     * Sets the status type date.
-     * @param type Status type.
+     * Sets the owner entity of this server document.
+     * @param owner Owner entity.
      */
-    void setStatusType(final StatusType type);
-
-    /**
-     * Returns the inactivation date.
-     * @return Inactivation since date.
-     */
-    Date getSince();
-
-    /**
-     * Sets the since (inactivation) date.
-     * @param date Inactivation date.
-     */
-    void setSince(final Date date);
+    void setOwner(final BaseEntity owner);
 }

@@ -23,9 +23,9 @@ import com.hemajoo.commerce.cherry.model.person.type.GenderType;
 import com.hemajoo.commerce.cherry.model.person.type.PersonType;
 import com.hemajoo.commerce.cherry.persistence.base.entity.AbstractAuditServerEntity;
 import com.hemajoo.commerce.cherry.persistence.base.entity.AbstractStatusServerEntity;
-import com.hemajoo.commerce.cherry.persistence.base.entity.BaseServerEntity;
+import com.hemajoo.commerce.cherry.persistence.base.entity.ServerBaseEntity;
 import com.hemajoo.commerce.cherry.persistence.base.specification.GenericSpecification;
-import com.hemajoo.commerce.cherry.persistence.document.entity.DocumentServerEntity;
+import com.hemajoo.commerce.cherry.persistence.document.entity.ServerDocumentEntity;
 import com.hemajoo.commerce.cherry.persistence.document.repository.DocumentService;
 import com.hemajoo.commerce.cherry.persistence.person.entity.EmailAddressServerEntity;
 import com.hemajoo.commerce.cherry.persistence.person.entity.PersonServerEntity;
@@ -115,7 +115,7 @@ public class PersonServiceCore implements PersonService
         // REMINDER Important to save the underlying collections of entities that hold documents!
 
         // Save the documents directly attached to the person.
-        for (DocumentServerEntity document : person.getDocuments())
+        for (ServerDocumentEntity document : person.getDocuments())
         {
             try
             {
@@ -144,7 +144,7 @@ public class PersonServiceCore implements PersonService
     }
 
     @Override
-    public List<DocumentServerEntity> getDocuments(@NonNull BaseServerEntity entity)
+    public List<ServerDocumentEntity> getDocuments(@NonNull ServerBaseEntity entity)
     {
         return entity.getDocuments();
     }

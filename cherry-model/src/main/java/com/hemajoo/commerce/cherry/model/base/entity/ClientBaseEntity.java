@@ -16,7 +16,7 @@ package com.hemajoo.commerce.cherry.model.base.entity;
 
 import com.hemajoo.commerce.cherry.commons.entity.EntityIdentity;
 import com.hemajoo.commerce.cherry.commons.type.EntityType;
-import com.hemajoo.commerce.cherry.model.document.Document;
+import com.hemajoo.commerce.cherry.model.document.ClientDocumentEntity;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
@@ -26,14 +26,14 @@ import java.util.List;
 import java.util.UUID;
 
 /**
- * Represents the (abstract) base part of a (client) entity.
+ * Represents a client base entity.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-public class BaseClientEntity extends AbstractStatusClientEntity implements BaseEntity
+public class ClientBaseEntity extends AbstractStatusClientEntity implements BaseEntity
 {
     /**
      * Entity identifier.
@@ -71,13 +71,13 @@ public class BaseClientEntity extends AbstractStatusClientEntity implements Base
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     @ApiModelProperty(hidden = true)
-    private List<Document> documents = new ArrayList<>();
+    private List<ClientDocumentEntity> documents = new ArrayList<>();
 
     /**
      * Creates a new (client) base entity type
      * @param type Entity type.
      */
-    protected BaseClientEntity(final EntityType type)
+    protected ClientBaseEntity(final EntityType type)
     {
         this.entityType = type;
     }
@@ -98,7 +98,7 @@ public class BaseClientEntity extends AbstractStatusClientEntity implements Base
      * Adds a document to this entityDocumentEntity.
      * @param document Document.
      */
-    public final void addDocument(final @NonNull Document document)
+    public final void addDocument(final @NonNull ClientDocumentEntity document)
     {
         documents.add(document);
     }
@@ -107,7 +107,7 @@ public class BaseClientEntity extends AbstractStatusClientEntity implements Base
      * Returns the documents associated with this entity.
      * @return List of documents.
      */
-    public final List<Document> getDocuments()
+    public final List<ClientDocumentEntity> getDocuments()
     {
         if (entityType == EntityType.DOCUMENT)
         {

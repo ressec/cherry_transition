@@ -12,30 +12,14 @@
  * Resse Christophe (christophe.resse@gmail.com).
  * -----------------------------------------------------------------------------------------------
  */
-package com.hemajoo.commerce.cherry.commons.entity;
-
-import com.hemajoo.commerce.cherry.commons.type.EntityType;
-
-import java.io.Serializable;
-import java.util.UUID;
+package com.hemajoo.commerce.cherry.persistence.base.entity;
 
 /**
- * Interface providing the behavior for an entity to know its identity (its type and its unique identifier).
- * <p>
+ * Interface providing server entity behavior.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-public interface IEntityIdentity extends Serializable
+public interface ServerEntity
 {
-    /**
-     * Returns the identifier of the entity.
-     * @return Entity identifier.
-     */
-    UUID getId();
-
-    /**
-     * Returns the entity type.
-     * @return Entity type.
-     */
-    EntityType getEntityType();
+    // Marker interface.
 }

@@ -16,8 +16,8 @@ package com.hemajoo.commerce.cherry.persistence.base.randomizer;
 
 import com.github.javafaker.Faker;
 import com.hemajoo.commerce.cherry.commons.type.StatusType;
-import com.hemajoo.commerce.cherry.model.base.entity.BaseClientEntity;
-import com.hemajoo.commerce.cherry.persistence.base.entity.BaseServerEntity;
+import com.hemajoo.commerce.cherry.model.base.entity.ClientBaseEntity;
+import com.hemajoo.commerce.cherry.persistence.base.entity.ServerBaseEntity;
 import lombok.NonNull;
 import org.ressec.avocado.core.random.EnumRandomGenerator;
 
@@ -30,7 +30,7 @@ import java.util.concurrent.TimeUnit;
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-public abstract class BaseServerEntityRandomizer
+public abstract class AbstractBaseServerEntityRandomizer
 {
     /**
      * Default dependency bound.
@@ -55,7 +55,7 @@ public abstract class BaseServerEntityRandomizer
     /**
      * Creates a new base server entity randomizer.
      */
-    protected BaseServerEntityRandomizer()
+    protected AbstractBaseServerEntityRandomizer()
     {
         // Empty
     }
@@ -64,7 +64,7 @@ public abstract class BaseServerEntityRandomizer
      * Populates the base persistent entity with random values.
      * @param parent Parent entity.
      */
-    public static void populateBaseFields(final @NonNull BaseServerEntity parent)
+    public static void populateBaseFields(final @NonNull ServerBaseEntity parent)
     {
         String description = FAKER.hitchhikersGuideToTheGalaxy().marvinQuote();
         if (description.length() > 255)
@@ -84,7 +84,7 @@ public abstract class BaseServerEntityRandomizer
      * Populates the base client entity with random values.
      * @param parent Parent entity.
      */
-    public static void populateBaseFields(final @NonNull BaseClientEntity parent)
+    public static void populateBaseFields(final @NonNull ClientBaseEntity parent)
     {
         String description = FAKER.hitchhikersGuideToTheGalaxy().marvinQuote();
         if (description.length() > 255)

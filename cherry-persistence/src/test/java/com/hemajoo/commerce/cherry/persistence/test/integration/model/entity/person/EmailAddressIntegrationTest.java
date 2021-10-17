@@ -20,7 +20,7 @@ import com.hemajoo.commerce.cherry.model.document.DocumentException;
 import com.hemajoo.commerce.cherry.model.person.exception.EmailAddressException;
 import com.hemajoo.commerce.cherry.model.person.type.AddressType;
 import com.hemajoo.commerce.cherry.persistence.base.test.AbstractBaseDatabaseUnitTest;
-import com.hemajoo.commerce.cherry.persistence.document.entity.DocumentServerEntity;
+import com.hemajoo.commerce.cherry.persistence.document.entity.ServerDocumentEntity;
 import com.hemajoo.commerce.cherry.persistence.document.randomizer.DocumentRandomizer;
 import com.hemajoo.commerce.cherry.persistence.person.entity.EmailAddressServerEntity;
 import com.hemajoo.commerce.cherry.persistence.person.entity.PersonServerEntity;
@@ -80,7 +80,7 @@ class EmailAddressIntegrationTest extends AbstractBaseDatabaseUnitTest
     {
         // Generate random entities.
         EmailAddressServerEntity email = EmailAddressRandomizer.generatePersistent(false);
-        DocumentServerEntity document = DocumentRandomizer.generatePersistent(false);
+        ServerDocumentEntity document = DocumentRandomizer.generatePersistent(false);
         PersonServerEntity person = PersonRandomizer.generatePersistent(false);
         email.addDocument(document);
         person.addEmailAddress(email);

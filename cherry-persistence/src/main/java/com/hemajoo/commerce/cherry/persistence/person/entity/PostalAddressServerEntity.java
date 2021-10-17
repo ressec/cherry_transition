@@ -17,7 +17,7 @@ package com.hemajoo.commerce.cherry.persistence.person.entity;
 import com.hemajoo.commerce.cherry.commons.type.EntityType;
 import com.hemajoo.commerce.cherry.model.person.type.AddressCategoryType;
 import com.hemajoo.commerce.cherry.model.person.type.AddressType;
-import com.hemajoo.commerce.cherry.persistence.base.entity.BaseServerEntity;
+import com.hemajoo.commerce.cherry.persistence.base.entity.ServerBaseEntity;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -37,7 +37,7 @@ import javax.validation.constraints.NotNull;
 @Table(name = "POSTAL_ADDRESS")
 @Entity
 @EntityListeners(AuditingEntityListener.class)
-public class PostalAddressServerEntity extends BaseServerEntity
+public class PostalAddressServerEntity extends ServerBaseEntity
 {
     public static final String FIELD_IS_DEFAULT     = "isDefault";
     public static final String FIELD_ADDRESS_TYPE   = "addressType";

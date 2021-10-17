@@ -15,7 +15,7 @@
 package com.hemajoo.commerce.cherry.model.person.entity;
 
 import com.hemajoo.commerce.cherry.commons.type.EntityType;
-import com.hemajoo.commerce.cherry.model.base.entity.BaseClientEntity;
+import com.hemajoo.commerce.cherry.model.base.entity.ClientBaseEntity;
 import com.hemajoo.commerce.cherry.model.person.type.AddressCategoryType;
 import com.hemajoo.commerce.cherry.model.person.type.AddressType;
 import io.swagger.annotations.ApiModelProperty;
@@ -33,7 +33,7 @@ import javax.persistence.Enumerated;
 @Data
 //@Builder(setterPrefix = "with") // Does not work well with MapStruct!
 @EqualsAndHashCode(callSuper = false)
-public class PostalAddress extends BaseClientEntity
+public class PostalAddress extends ClientBaseEntity
 {
     /**
      * Postal address street name.

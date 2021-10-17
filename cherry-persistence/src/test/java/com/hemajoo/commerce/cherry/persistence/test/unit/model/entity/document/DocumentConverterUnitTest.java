@@ -14,11 +14,12 @@
  */
 package com.hemajoo.commerce.cherry.persistence.test.unit.model.entity.document;
 
+import com.hemajoo.commerce.cherry.model.document.ClientDocumentEntity;
 import com.hemajoo.commerce.cherry.model.document.Document;
 import com.hemajoo.commerce.cherry.model.document.DocumentContentException;
 import com.hemajoo.commerce.cherry.model.document.DocumentException;
 import com.hemajoo.commerce.cherry.persistence.document.converter.DocumentConverter;
-import com.hemajoo.commerce.cherry.persistence.document.entity.DocumentServerEntity;
+import com.hemajoo.commerce.cherry.persistence.document.entity.ServerDocumentEntity;
 import com.hemajoo.commerce.cherry.persistence.document.mapper.DocumentMapper;
 import com.hemajoo.commerce.cherry.persistence.document.randomizer.DocumentRandomizer;
 import com.hemajoo.commerce.cherry.persistence.test.unit.base.AbstractBaseMapperTest;
@@ -47,8 +48,8 @@ class DocumentConverterUnitTest extends AbstractBaseMapperTest
     @Test
     @DisplayName("Map a persistent document to a client document") final void testMapPersistentDocumentToClientDocument() throws DocumentContentException
     {
-        DocumentServerEntity persistent = DocumentRandomizer.generatePersistent(true);
-        Document client = DocumentConverter.fromServer(persistent);
+        ServerDocumentEntity persistent = DocumentRandomizer.generatePersistent(true);
+        ClientDocumentEntity client = DocumentConverter.fromServer(persistent);
         checkFields(persistent, client);
     }
 
@@ -56,13 +57,13 @@ class DocumentConverterUnitTest extends AbstractBaseMapperTest
     @DisplayName("Map a list of persistent documents to a list of client documents")
     final void testMapListPersistentDocumentToListClientDocument() throws DocumentContentException, DocumentException
     {
-        List<DocumentServerEntity> persistentList = new ArrayList<>();
+        List<ServerDocumentEntity> persistentList = new ArrayList<>();
         for (int i = 0; i < LIST_COUNT; i++)
         {
             persistentList.add(DocumentRandomizer.generatePersistent(true));
         }
 
-        List<Document> clientList = DocumentConverter.fromServerList(persistentList);
+        List<ClientDocumentEntity> clientList = DocumentConverter.fromServerList(persistentList);
         checkFields(persistentList, clientList);
     }
 
@@ -70,8 +71,8 @@ class DocumentConverterUnitTest extends AbstractBaseMapperTest
     @DisplayName("Map a client document to a persistent document")
     final void testMapClientDocumentToPersistentDocument() throws DocumentContentException
     {
-        Document client = DocumentRandomizer.generateClient(true);
-        DocumentServerEntity persistent = DocumentConverter.fromClient(client);
+        ClientDocumentEntity client = DocumentRandomizer.generateClient(true);
+        ServerDocumentEntity persistent = DocumentConverter.fromClient(client);
         checkFields(persistent, client);
     }
 
@@ -79,13 +80,13 @@ class DocumentConverterUnitTest extends AbstractBaseMapperTest
     @DisplayName("Map a list of client documents to a list of persistent documents")
     final void testMapListClientDocumentToListPersistentDocument() throws DocumentContentException, DocumentException
     {
-        List<Document> clientList = new ArrayList<>();
+        List<ClientDocumentEntity> clientList = new ArrayList<>();
         for (int i = 0; i < LIST_COUNT; i++)
         {
             clientList.add(DocumentRandomizer.generateClient(true));
         }
 
-        List<DocumentServerEntity> persistentList = DocumentConverter.fromClientList(clientList);
+        List<ServerDocumentEntity> persistentList = DocumentConverter.fromClientList(clientList);
         checkFields(persistentList, clientList);
     }
 
@@ -93,8 +94,8 @@ class DocumentConverterUnitTest extends AbstractBaseMapperTest
     @DisplayName("Create a deep copy of a client document")
     final void testDeepCopyClientDocument() throws DocumentContentException
     {
-        Document client = DocumentRandomizer.generateClient(true);
-        Document copy = DocumentConverter.copy(client);
+        ClientDocumentEntity client = DocumentRandomizer.generateClient(true);
+        ClientDocumentEntity copy = DocumentConverter.copy(client);
         checkFields(client, copy);
     }
 
@@ -102,129 +103,63 @@ class DocumentConverterUnitTest extends AbstractBaseMapperTest
     @DisplayName("Create a deep copy of a persistent document")
     final void testDeepCopyPersistentDocument() throws DocumentContentException, DocumentException
     {
-        DocumentServerEntity persistent = DocumentRandomizer.generatePersistent(true);
-        DocumentServerEntity copy = DocumentConverter.copy(persistent);
+        ServerDocumentEntity persistent = DocumentRandomizer.generatePersistent(true);
+        ServerDocumentEntity copy = DocumentConverter.copy(persistent);
         checkFields(persistent, copy);
     }
 
     /**
-     * Checks equality of fields between a persistent and a client entities.
-     * @param persistent Persistent entity.
-     * @param client Client entity.
+     * Checks equality of fields between two document entities.
+     * @param source Source entity.
+     * @param target Target entity.
      */
-    private void checkFields(final @NonNull DocumentServerEntity persistent, final @NonNull Document client)
+    private void checkFields(final @NonNull Document source, final @NonNull Document target)
     {
-        checkBaseFields(persistent, client);
+        checkBaseFields(source, target);
 
         // Do not test equality for transient fields and for owner!
-        assertThat(persistent.getFilename())
+        assertThat(source.getFilename())
                 .as("Filename should be equal!")
-                .isEqualTo(client.getFilename());
-        assertThat(persistent.getDocumentType())
+                .isEqualTo(target.getFilename());
+        assertThat(source.getDocumentType())
                 .as("Document type should be equal!")
-                .isEqualTo(client.getDocumentType());
-        assertThat(persistent.getTags())
+                .isEqualTo(target.getDocumentType());
+        assertThat(source.getTags())
                 .as("Tags type should be equal!")
-                .isEqualTo(client.getTags());
-        assertThat(persistent.getExtension())
+                .isEqualTo(target.getTags());
+        assertThat(source.getExtension())
                 .as("Extension type should be equal!")
-                .isEqualTo(client.getExtension());
-        assertThat(persistent.getContentId())
+                .isEqualTo(target.getExtension());
+        assertThat(source.getContentId())
                 .as("Content id type should be equal!")
-                .isEqualTo(client.getContentId());
-        assertThat(persistent.getContentPath())
+                .isEqualTo(target.getContentId());
+        assertThat(source.getContentPath())
                 .as("Content path type should be equal!")
-                .isEqualTo(client.getContentPath());
-        assertThat(persistent.getContentLength())
+                .isEqualTo(target.getContentPath());
+        assertThat(source.getContentLength())
                 .as("Content length type should be equal!")
-                .isEqualTo(client.getContentLength());
+                .isEqualTo(target.getContentLength());
     }
 
     /**
-     * Checks equality of fields between two client entities.
-     * @param client Client entity.
-     * @param copy Client entity.
-     */
-    private void checkFields(final @NonNull Document client, final @NonNull Document copy)
-    {
-        checkBaseFields(client, copy);
-
-        // Do not test equality for transient fields and for owner!
-        assertThat(client.getFilename())
-                .as("Filename should be equal!")
-                .isEqualTo(copy.getFilename());
-        assertThat(client.getDocumentType())
-                .as("Document type should be equal!")
-                .isEqualTo(copy.getDocumentType());
-        assertThat(client.getTags())
-                .as("Tags type should be equal!")
-                .isEqualTo(copy.getTags());
-        assertThat(client.getExtension())
-                .as("Extension type should be equal!")
-                .isEqualTo(copy.getExtension());
-        assertThat(client.getContentId())
-                .as("Content id type should be equal!")
-                .isEqualTo(copy.getContentId());
-        assertThat(client.getContentPath())
-                .as("Content path type should be equal!")
-                .isEqualTo(copy.getContentPath());
-        assertThat(client.getContentLength())
-                .as("Content length type should be equal!")
-                .isEqualTo(copy.getContentLength());
-    }
-
-    /**
-     * Checks equality of fields between two persistent entities.
-     * @param persistent Persistent entity.
-     * @param copy Persistent entity.
-     */
-    private void checkFields(final @NonNull DocumentServerEntity persistent, final @NonNull DocumentServerEntity copy)
-    {
-        checkBaseFields(persistent, copy);
-
-        // Do not test equality for transient fields and for owner!
-        assertThat(persistent.getFilename())
-                .as("Filename should be equal!")
-                .isEqualTo(copy.getFilename());
-        assertThat(persistent.getDocumentType())
-                .as("Document type should be equal!")
-                .isEqualTo(copy.getDocumentType());
-        assertThat(persistent.getTags())
-                .as("Tags type should be equal!")
-                .isEqualTo(copy.getTags());
-        assertThat(persistent.getExtension())
-                .as("Extension type should be equal!")
-                .isEqualTo(copy.getExtension());
-        assertThat(persistent.getContentId())
-                .as("Content id type should be equal!")
-                .isEqualTo(copy.getContentId());
-        assertThat(persistent.getContentPath())
-                .as("Content path type should be equal!")
-                .isEqualTo(copy.getContentPath());
-        assertThat(persistent.getContentLength())
-                .as("Content length type should be equal!")
-                .isEqualTo(copy.getContentLength());
-    }
-
-    /**
-     * Checks equality of fields between document entities.
-     * @param persistentList List of persistent documents.
-     * @param clientList List of client documents.
+     * Checks equality of fields between two list of document entities.
+     * @param source Source list of document entities.
+     * @param target Target list of document entities.
      * @throws DocumentException Thrown in case an error occurred finding a client document!
      */
-    private void checkFields(final @NonNull List<DocumentServerEntity> persistentList, final @NonNull List<Document> clientList) throws DocumentException
+    private void checkFields(final @NonNull List<? extends Document> source, final @NonNull List<? extends Document> target) throws DocumentException
     {
-        Optional<Document> client;
-        for (DocumentServerEntity persistent : persistentList)
+        Optional<Document> targetEntity;
+        for (Document sourceEntity : source)
         {
-            client = clientList.stream().filter(element -> element.getId().equals(persistent.getId())).findFirst();
-            if (client.isPresent())
+            targetEntity = (Optional<Document>) target.stream().filter(element -> element.getId().equals(sourceEntity.getId())).findFirst();
+            if (targetEntity.isPresent())
             {
-                checkBaseFields(persistent, client.get());
+                checkBaseFields(sourceEntity, targetEntity.get());
             }
             else
             {
-                throw new DocumentException(String.format("Cannot find client document with id: '%s'!", persistent.getId()));
+                throw new DocumentException(String.format("Cannot find client document with id: '%s'!", sourceEntity.getId()));
             }
         }
     }

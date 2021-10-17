@@ -15,7 +15,7 @@
 package com.hemajoo.commerce.cherry.model.base.search;
 
 import com.hemajoo.commerce.cherry.commons.entity.EntityIdentity;
-import com.hemajoo.commerce.cherry.commons.entity.IEntityIdentity;
+import com.hemajoo.commerce.cherry.commons.entity.Identity;
 import com.hemajoo.commerce.cherry.commons.entity.IdentityAware;
 import com.hemajoo.commerce.cherry.commons.type.EntityType;
 import com.hemajoo.commerce.cherry.commons.type.StatusType;
@@ -34,7 +34,7 @@ import java.util.UUID;
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-public class BaseSearch extends AbstractStatusSearch implements IEntityIdentity, IdentityAware
+public class BaseSearch extends AbstractStatusSearch implements Identity, IdentityAware
 {
     /**
      * Entity identifier.

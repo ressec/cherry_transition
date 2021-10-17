@@ -14,7 +14,7 @@
  */
 package com.hemajoo.commerce.cherry.model.base.converter;
 
-import com.hemajoo.commerce.cherry.commons.entity.IEntityIdentity;
+import com.hemajoo.commerce.cherry.commons.entity.Identity;
 import lombok.NonNull;
 import lombok.experimental.UtilityClass;
 
@@ -34,7 +34,7 @@ public class GenericEntityConverter
      * @param source List of entities.
      * @return List of UUIDs.
      */
-    public static List<String> toIdList(final @NonNull List<? extends IEntityIdentity> source)
+    public static List<String> toIdList(final @NonNull List<? extends Identity> source)
     {
         return source.stream()
                 .map(e -> e.getId().toString())

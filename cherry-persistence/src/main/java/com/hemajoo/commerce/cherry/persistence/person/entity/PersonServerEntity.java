@@ -22,7 +22,7 @@ import com.hemajoo.commerce.cherry.model.person.type.AddressType;
 import com.hemajoo.commerce.cherry.model.person.type.GenderType;
 import com.hemajoo.commerce.cherry.model.person.type.PersonType;
 import com.hemajoo.commerce.cherry.model.person.type.PhoneNumberType;
-import com.hemajoo.commerce.cherry.persistence.base.entity.BaseServerEntity;
+import com.hemajoo.commerce.cherry.persistence.base.entity.ServerBaseEntity;
 import io.swagger.v3.oas.annotations.Hidden;
 import lombok.*;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -45,7 +45,7 @@ import java.util.stream.Collectors;
 @Hidden
 @Table(name = "PERSON")
 @EntityListeners(AuditingEntityListener.class)
-public class PersonServerEntity extends BaseServerEntity
+public class PersonServerEntity extends ServerBaseEntity
 {
     /**
      * Minimal birthdate.

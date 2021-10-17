@@ -12,40 +12,30 @@
  * Resse Christophe (christophe.resse@gmail.com).
  * -----------------------------------------------------------------------------------------------
  */
-package com.hemajoo.commerce.cherry.model.base.entity;
+package com.hemajoo.commerce.cherry.commons.entity;
 
-import com.hemajoo.commerce.cherry.commons.type.StatusType;
+import com.hemajoo.commerce.cherry.commons.type.EntityType;
 
-import java.util.Date;
+import java.io.Serializable;
+import java.util.UUID;
 
 /**
- * Interface providing status behavior.
+ * Identity of an entity.
+ * <p>
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-public interface StatusEntity extends AuditEntity
+public interface Identity extends Serializable
 {
     /**
-     * Returns the status type.
-     * @return Status type.
+     * Returns the entity identifier.
+     * @return Entity identifier.
      */
-    StatusType getStatusType();
+    UUID getId();
 
     /**
-     * Sets the status type date.
-     * @param type Status type.
+     * Returns the entity type.
+     * @return Entity type.
      */
-    void setStatusType(final StatusType type);
-
-    /**
-     * Returns the inactivation date.
-     * @return Inactivation since date.
-     */
-    Date getSince();
-
-    /**
-     * Sets the since (inactivation) date.
-     * @param date Inactivation date.
-     */
-    void setSince(final Date date);
+    EntityType getEntityType();
 }

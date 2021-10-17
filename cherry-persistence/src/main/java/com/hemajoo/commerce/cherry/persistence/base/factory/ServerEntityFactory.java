@@ -14,8 +14,8 @@
  */
 package com.hemajoo.commerce.cherry.persistence.base.factory;
 
-import com.hemajoo.commerce.cherry.commons.entity.IEntityIdentity;
-import com.hemajoo.commerce.cherry.persistence.base.entity.BaseServerEntity;
+import com.hemajoo.commerce.cherry.commons.entity.Identity;
+import com.hemajoo.commerce.cherry.persistence.base.entity.ServerBaseEntity;
 import com.hemajoo.commerce.cherry.persistence.document.repository.DocumentService;
 import com.hemajoo.commerce.cherry.persistence.person.service.EmailAddressService;
 import com.hemajoo.commerce.cherry.persistence.person.service.PersonService;
@@ -44,7 +44,7 @@ public class ServerEntityFactory
     @Autowired
     private EmailAddressService emailAddressService;
 
-    public BaseServerEntity create(final @NonNull IEntityIdentity identity)
+    public ServerBaseEntity create(final @NonNull Identity identity)
     {
         switch (identity.getEntityType())
         {

@@ -17,7 +17,7 @@ package com.hemajoo.commerce.cherry.model.person.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.hemajoo.commerce.cherry.commons.type.EntityType;
 import com.hemajoo.commerce.cherry.commons.type.StatusType;
-import com.hemajoo.commerce.cherry.model.base.entity.BaseClientEntity;
+import com.hemajoo.commerce.cherry.model.base.entity.ClientBaseEntity;
 import com.hemajoo.commerce.cherry.model.person.type.AddressType;
 import com.hemajoo.commerce.cherry.model.person.type.GenderType;
 import com.hemajoo.commerce.cherry.model.person.type.PersonType;
@@ -48,7 +48,7 @@ import java.util.stream.Collectors;
 @ToString(callSuper = false)
 @EqualsAndHashCode(callSuper = false)
 @EntityListeners(AuditingEntityListener.class)
-public class Person extends BaseClientEntity
+public class Person extends ClientBaseEntity
 {
     /**
      * Minimal birthdate.

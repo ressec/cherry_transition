@@ -17,7 +17,7 @@ package com.hemajoo.commerce.cherry.persistence.base.entity;
 import com.hemajoo.commerce.cherry.commons.entity.EntityIdentity;
 import com.hemajoo.commerce.cherry.commons.type.EntityType;
 import com.hemajoo.commerce.cherry.model.base.entity.BaseEntity;
-import com.hemajoo.commerce.cherry.persistence.document.entity.DocumentServerEntity;
+import com.hemajoo.commerce.cherry.persistence.document.entity.ServerDocumentEntity;
 import lombok.*;
 import org.hibernate.annotations.Type;
 
@@ -27,7 +27,7 @@ import java.util.List;
 import java.util.UUID;
 
 /**
- * Represents the base part of a persistence entity of the {@code Cherry} data model.
+ * Represents a server base entity.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
@@ -37,7 +37,7 @@ import java.util.UUID;
 @Entity
 @Table(name = "ENTITY")
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-public class BaseServerEntity extends AbstractStatusServerEntity implements BaseEntity
+public class ServerBaseEntity extends AbstractStatusServerEntity implements BaseEntity, ServerEntity
 {
     public static final String FIELD_ID             = "id";
     public static final String FIELD_ENTITY_TYPE    = "entityType";
@@ -94,13 +94,13 @@ public class BaseServerEntity extends AbstractStatusServerEntity implements Base
 //    @ToString.Exclude
 //    @EqualsAndHashCode.Exclude
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-    private final List<DocumentServerEntity> documents = new ArrayList<>();
+    private final List<ServerDocumentEntity> documents = new ArrayList<>();
 
     /**
      * Creates a new base entity.
      * @param type Entity type.
      */
-    protected BaseServerEntity(final EntityType type)
+    protected ServerBaseEntity(final EntityType type)
     {
         this.entityType = type;
     }
@@ -109,7 +109,7 @@ public class BaseServerEntity extends AbstractStatusServerEntity implements Base
      * Adds a document to this entityDocumentEntity.
      * @param document Document.
      */
-    public final void addDocument(final @NonNull DocumentServerEntity document)
+    public final void addDocument(final @NonNull ServerDocumentEntity document)
     {
         documents.add(document);
         document.setOwner(this);
@@ -119,7 +119,7 @@ public class BaseServerEntity extends AbstractStatusServerEntity implements Base
      * Returns the documents associated to this entity.
      * @return List of documents.
      */
-    public List<DocumentServerEntity> getDocuments()
+    public List<ServerDocumentEntity> getDocuments()
     {
         if (entityType == EntityType.MEDIA)
         {

@@ -16,8 +16,8 @@ package com.hemajoo.commerce.cherry.persistence.person.service;
 
 import com.hemajoo.commerce.cherry.model.document.DocumentException;
 import com.hemajoo.commerce.cherry.model.person.search.PersonSearch;
-import com.hemajoo.commerce.cherry.persistence.base.entity.BaseServerEntity;
-import com.hemajoo.commerce.cherry.persistence.document.entity.DocumentServerEntity;
+import com.hemajoo.commerce.cherry.persistence.base.entity.ServerBaseEntity;
+import com.hemajoo.commerce.cherry.persistence.document.entity.ServerDocumentEntity;
 import com.hemajoo.commerce.cherry.persistence.person.entity.EmailAddressServerEntity;
 import com.hemajoo.commerce.cherry.persistence.person.entity.PersonServerEntity;
 import com.hemajoo.commerce.cherry.persistence.person.repository.PersonRepository;
@@ -83,7 +83,7 @@ public interface PersonService
 
     PersonServerEntity loadEmailAddresses(final @NonNull PersonServerEntity person);
 
-    List<DocumentServerEntity> getDocuments(final @NonNull BaseServerEntity entity);
+    List<ServerDocumentEntity> getDocuments(final @NonNull ServerBaseEntity entity);
 
     void saveAndFlush(final @NonNull PersonServerEntity person);
 }

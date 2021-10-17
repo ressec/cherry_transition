@@ -23,9 +23,9 @@ import com.hemajoo.commerce.cherry.model.person.search.EmailAddressSearch;
 import com.hemajoo.commerce.cherry.model.person.type.AddressType;
 import com.hemajoo.commerce.cherry.persistence.base.entity.AbstractAuditServerEntity;
 import com.hemajoo.commerce.cherry.persistence.base.entity.AbstractStatusServerEntity;
-import com.hemajoo.commerce.cherry.persistence.base.entity.BaseServerEntity;
+import com.hemajoo.commerce.cherry.persistence.base.entity.ServerBaseEntity;
 import com.hemajoo.commerce.cherry.persistence.base.specification.GenericSpecification;
-import com.hemajoo.commerce.cherry.persistence.document.entity.DocumentServerEntity;
+import com.hemajoo.commerce.cherry.persistence.document.entity.ServerDocumentEntity;
 import com.hemajoo.commerce.cherry.persistence.document.repository.DocumentService;
 import com.hemajoo.commerce.cherry.persistence.person.entity.EmailAddressServerEntity;
 import com.hemajoo.commerce.cherry.persistence.person.repository.EmailAddressRepository;
@@ -82,7 +82,7 @@ public class EmailAddressServiceCore implements EmailAddressService
         emailAddressRepository.save(emailAddress);
 
         // Save the document attached to the email address.
-        for (DocumentServerEntity document : emailAddress.getDocuments())
+        for (ServerDocumentEntity document : emailAddress.getDocuments())
         {
             try
             {
@@ -157,7 +157,7 @@ public class EmailAddressServiceCore implements EmailAddressService
         if (search.getId() != null)
         {
             specification.add(new SearchCriteria(
-                    BaseServerEntity.FIELD_ID,
+                    ServerBaseEntity.FIELD_ID,
                     UUID.fromString(search.getId().toString()),
                     SearchOperation.EQUAL));
         }
@@ -207,7 +207,7 @@ public class EmailAddressServiceCore implements EmailAddressService
      * @param document Document.
      * @throws DocumentException Thrown if an error occurred while trying to save the document content to the content store.
      */
-    private void saveDocumentContent(final @NonNull DocumentServerEntity document) throws DocumentException
+    private void saveDocumentContent(final @NonNull ServerDocumentEntity document) throws DocumentException
     {
         try
         {

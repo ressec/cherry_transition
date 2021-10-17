@@ -15,9 +15,10 @@
 package com.hemajoo.commerce.cherry.persistence.document.entity;
 
 import com.hemajoo.commerce.cherry.commons.type.EntityType;
+import com.hemajoo.commerce.cherry.model.base.entity.BaseEntity;
 import com.hemajoo.commerce.cherry.model.document.DocumentContentException;
 import com.hemajoo.commerce.cherry.model.document.DocumentType;
-import com.hemajoo.commerce.cherry.persistence.base.entity.BaseServerEntity;
+import com.hemajoo.commerce.cherry.persistence.base.entity.ServerBaseEntity;
 import lombok.*;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.tika.Tika;
@@ -34,7 +35,7 @@ import java.io.FileInputStream;
 import java.io.InputStream;
 
 /**
- * Represents a persistent document entity.
+ * Represents a server document entity.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
@@ -44,7 +45,7 @@ import java.io.InputStream;
 @Table(name = "DOCUMENT")
 @Entity
 @EntityListeners(AuditingEntityListener.class)
-public class DocumentServerEntity extends BaseServerEntity
+public class ServerDocumentEntity extends ServerBaseEntity implements ServerDocument
 {
     /**
      * Document type.
@@ -132,10 +133,13 @@ public class DocumentServerEntity extends BaseServerEntity
      */
     @ToString.Exclude
     @Getter
-    @Setter
-    @ManyToOne(targetEntity = BaseServerEntity.class, fetch = FetchType.EAGER)
-    private BaseServerEntity owner;
+    //@Setter
+    @ManyToOne(targetEntity = ServerBaseEntity.class, fetch = FetchType.EAGER)
+    private ServerBaseEntity owner;
 
+    /**
+     * Document content.
+     */
     @Transient
     @ToString.Exclude
     @Getter
@@ -144,7 +148,7 @@ public class DocumentServerEntity extends BaseServerEntity
     /**
      * Creates a new document.
      */
-    public DocumentServerEntity()
+    public ServerDocumentEntity()
     {
         super(EntityType.DOCUMENT);
     }
@@ -154,7 +158,7 @@ public class DocumentServerEntity extends BaseServerEntity
      * @param owner Document owner.
      * @param documentType Document type.
      */
-    public DocumentServerEntity(final @NonNull BaseServerEntity owner, final @NonNull DocumentType documentType)
+    public ServerDocumentEntity(final @NonNull ServerBaseEntity owner, final @NonNull DocumentType documentType)
     {
         super(EntityType.DOCUMENT);
 
@@ -171,7 +175,7 @@ public class DocumentServerEntity extends BaseServerEntity
      * @param filename File name.
      * @throws DocumentContentException Thrown in case an error occurred while processing the document content.
      */
-    public DocumentServerEntity(final @NonNull BaseServerEntity owner, final @NonNull DocumentType documentType, final @NonNull String filename) throws DocumentContentException
+    public ServerDocumentEntity(final @NonNull ServerBaseEntity owner, final @NonNull DocumentType documentType, final @NonNull String filename) throws DocumentContentException
     {
         this(owner, documentType);
 
@@ -189,7 +193,7 @@ public class DocumentServerEntity extends BaseServerEntity
      * @param file File.
      * @throws DocumentContentException Thrown in case an error occurred while processing the document content.
      */
-    public DocumentServerEntity(final @NonNull BaseServerEntity owner, final @NonNull DocumentType documentType, final @NonNull File file) throws DocumentContentException
+    public ServerDocumentEntity(final @NonNull ServerBaseEntity owner, final @NonNull DocumentType documentType, final @NonNull File file) throws DocumentContentException
     {
         this(owner, documentType);
 
@@ -204,10 +208,10 @@ public class DocumentServerEntity extends BaseServerEntity
      * Creates a new document given its path name.
      * @param owner Document owner.
      * @param documentType Document type.
-     * @param multiPartFile Multi part file.
+     * @param multiPartFile Multipart file.
      * @throws DocumentContentException Thrown in case an error occurred while processing the document content.
      */
-    public DocumentServerEntity(final @NonNull BaseServerEntity owner, final @NonNull DocumentType documentType, final @NonNull MultipartFile multiPartFile) throws DocumentContentException
+    public ServerDocumentEntity(final @NonNull ServerBaseEntity owner, final @NonNull DocumentType documentType, final @NonNull MultipartFile multiPartFile) throws DocumentContentException
     {
         this(owner, documentType);
 
@@ -322,7 +326,7 @@ public class DocumentServerEntity extends BaseServerEntity
 
     /**
      * Detects the media file {@code Mime} type.
-     * @param multiPartFile Multi part file.
+     * @param multiPartFile Multipart file.
      * @throws DocumentContentException Thrown in case an error occurred while processing the media file.
      */
     private void detectMimeType(final @NonNull MultipartFile multiPartFile) throws DocumentContentException
@@ -349,5 +353,11 @@ public class DocumentServerEntity extends BaseServerEntity
         return outputPath.endsWith(File.separator)
                 ? (outputPath + end)
                 : (outputPath + File.separator + end);
+    }
+
+    @Override
+    public void setOwner(BaseEntity owner)
+    {
+        this.owner = (ServerBaseEntity) owner;
     }
 }

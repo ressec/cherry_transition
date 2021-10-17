@@ -14,11 +14,11 @@
  */
 package com.hemajoo.commerce.cherry.persistence.document.randomizer;
 
-import com.hemajoo.commerce.cherry.model.document.Document;
+import com.hemajoo.commerce.cherry.model.document.ClientDocumentEntity;
 import com.hemajoo.commerce.cherry.model.document.DocumentContentException;
 import com.hemajoo.commerce.cherry.model.document.DocumentType;
-import com.hemajoo.commerce.cherry.persistence.base.randomizer.BaseServerEntityRandomizer;
-import com.hemajoo.commerce.cherry.persistence.document.entity.DocumentServerEntity;
+import com.hemajoo.commerce.cherry.persistence.base.randomizer.AbstractBaseServerEntityRandomizer;
+import com.hemajoo.commerce.cherry.persistence.document.entity.ServerDocumentEntity;
 import lombok.experimental.UtilityClass;
 import org.ressec.avocado.core.random.EnumRandomGenerator;
 
@@ -30,7 +30,7 @@ import java.util.UUID;
  * @version 1.0.0
  */
 @UtilityClass
-public final class DocumentRandomizer extends BaseServerEntityRandomizer
+public final class DocumentRandomizer extends AbstractBaseServerEntityRandomizer
 {
     /**
      * Document type enumeration generator.
@@ -43,10 +43,10 @@ public final class DocumentRandomizer extends BaseServerEntityRandomizer
      * @return Random document.
      * @throws DocumentContentException Raised in case an error occurred while trying to set the document content (media file)!
      */
-    public static DocumentServerEntity generatePersistent(final boolean withRandomId) throws DocumentContentException
+    public static ServerDocumentEntity generatePersistent(final boolean withRandomId) throws DocumentContentException
     {
-        var entity = new DocumentServerEntity();
-        BaseServerEntityRandomizer.populateBaseFields(entity);
+        var entity = new ServerDocumentEntity();
+        AbstractBaseServerEntityRandomizer.populateBaseFields(entity);
 
         if (withRandomId)
         {
@@ -67,10 +67,10 @@ public final class DocumentRandomizer extends BaseServerEntityRandomizer
      * @return Random document.
      * @throws DocumentContentException Raised in case an error occurred while trying to set the document content (media file)!
      */
-    public static Document generateClient(final boolean withRandomId) throws DocumentContentException
+    public static ClientDocumentEntity generateClient(final boolean withRandomId) throws DocumentContentException
     {
-        var entity = new Document();
-        BaseServerEntityRandomizer.populateBaseFields(entity);
+        var entity = new ClientDocumentEntity();
+        AbstractBaseServerEntityRandomizer.populateBaseFields(entity);
 
         if (withRandomId)
         {

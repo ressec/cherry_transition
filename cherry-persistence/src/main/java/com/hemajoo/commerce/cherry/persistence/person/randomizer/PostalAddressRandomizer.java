@@ -17,7 +17,7 @@ package com.hemajoo.commerce.cherry.persistence.person.randomizer;
 import com.hemajoo.commerce.cherry.model.person.entity.PostalAddress;
 import com.hemajoo.commerce.cherry.model.person.type.AddressCategoryType;
 import com.hemajoo.commerce.cherry.model.person.type.AddressType;
-import com.hemajoo.commerce.cherry.persistence.base.randomizer.BaseServerEntityRandomizer;
+import com.hemajoo.commerce.cherry.persistence.base.randomizer.AbstractBaseServerEntityRandomizer;
 import com.hemajoo.commerce.cherry.persistence.person.entity.PostalAddressServerEntity;
 import lombok.experimental.UtilityClass;
 import org.ressec.avocado.core.random.EnumRandomGenerator;
@@ -30,7 +30,7 @@ import java.util.UUID;
  * @version 1.0.0
  */
 @UtilityClass
-public final class PostalAddressRandomizer extends BaseServerEntityRandomizer
+public final class PostalAddressRandomizer extends AbstractBaseServerEntityRandomizer
 {
     /**
      * Address type enumeration generator.
@@ -51,7 +51,7 @@ public final class PostalAddressRandomizer extends BaseServerEntityRandomizer
     public static PostalAddressServerEntity generatePersistent(final boolean withRandomId)
     {
         var entity = new PostalAddressServerEntity();
-        BaseServerEntityRandomizer.populateBaseFields(entity);
+        AbstractBaseServerEntityRandomizer.populateBaseFields(entity);
 
         if (withRandomId)
         {
@@ -81,7 +81,7 @@ public final class PostalAddressRandomizer extends BaseServerEntityRandomizer
     public static PostalAddress generateClient(final boolean withRandomId)
     {
         var entity = new PostalAddress();
-        BaseServerEntityRandomizer.populateBaseFields(entity);
+        AbstractBaseServerEntityRandomizer.populateBaseFields(entity);
 
         if (withRandomId)
         {

@@ -16,7 +16,7 @@ package com.hemajoo.commerce.cherry.model.person.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.hemajoo.commerce.cherry.commons.type.EntityType;
-import com.hemajoo.commerce.cherry.model.base.entity.BaseClientEntity;
+import com.hemajoo.commerce.cherry.model.base.entity.ClientBaseEntity;
 import com.hemajoo.commerce.cherry.model.person.type.AddressType;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -37,7 +37,7 @@ import javax.validation.groups.Default;
 @ToString(callSuper = false)
 //@Builder(setterPrefix = "with") // Does not work well with MapStruct!
 @EqualsAndHashCode(callSuper = false)
-public class EmailAddress extends BaseClientEntity
+public class EmailAddress extends ClientBaseEntity
 {
     /**
      * Email address.

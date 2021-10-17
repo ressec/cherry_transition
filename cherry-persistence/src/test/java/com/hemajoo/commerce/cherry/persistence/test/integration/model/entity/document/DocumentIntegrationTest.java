@@ -17,7 +17,7 @@ package com.hemajoo.commerce.cherry.persistence.test.integration.model.entity.do
 import com.hemajoo.commerce.cherry.model.document.DocumentContentException;
 import com.hemajoo.commerce.cherry.model.document.DocumentException;
 import com.hemajoo.commerce.cherry.persistence.base.test.AbstractBaseDatabaseUnitTest;
-import com.hemajoo.commerce.cherry.persistence.document.entity.DocumentServerEntity;
+import com.hemajoo.commerce.cherry.persistence.document.entity.ServerDocumentEntity;
 import com.hemajoo.commerce.cherry.persistence.document.randomizer.DocumentRandomizer;
 import com.hemajoo.commerce.cherry.persistence.test.integration.SpringCherryForIntegrationTest;
 import com.hemajoo.commerce.cherry.persistence.test.integration.configuration.PersistenceConfigurationForIntegrationTest;
@@ -37,7 +37,7 @@ import java.util.UUID;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
- * Integration tests for the {@link DocumentServerEntity} persistent entity.
+ * Integration tests for the {@link ServerDocumentEntity} persistent entity.
  * <p>
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
@@ -55,7 +55,7 @@ class DocumentIntegrationTest extends AbstractBaseDatabaseUnitTest
     @DisplayName("Create a document") final void testCreateDocument() throws DocumentContentException, DocumentException
     {
         // Generate a random document.
-        DocumentServerEntity document = DocumentRandomizer.generatePersistent(false); // No id set!
+        ServerDocumentEntity document = DocumentRandomizer.generatePersistent(false); // No id set!
         documentService.save(document);
 
         assertThat(document)
@@ -74,7 +74,7 @@ class DocumentIntegrationTest extends AbstractBaseDatabaseUnitTest
         String contentFileName = "java-8-streams-cheat-sheet.pdf";
 
         // Generate a random document.
-        DocumentServerEntity document = DocumentRandomizer.generatePersistent(false);
+        ServerDocumentEntity document = DocumentRandomizer.generatePersistent(false);
         document.setContent(contentName);
 
         // Save it and store the associated media file.
@@ -96,7 +96,7 @@ class DocumentIntegrationTest extends AbstractBaseDatabaseUnitTest
     @DisplayName("Update a document") final void testUpdateDocument() throws DocumentContentException, DocumentException
     {
         // Generate a random document.
-        DocumentServerEntity document = DocumentRandomizer.generatePersistent(false);
+        ServerDocumentEntity document = DocumentRandomizer.generatePersistent(false);
         documentService.save(document);
 
         // Update the document 'tags'.
@@ -108,7 +108,7 @@ class DocumentIntegrationTest extends AbstractBaseDatabaseUnitTest
                 .isNotNull();
 
         // Assert the document has been updated in the database!
-        DocumentServerEntity other = documentService.findById(document.getId());
+        ServerDocumentEntity other = documentService.findById(document.getId());
 
         assertThat(other)
                 .as("Updated document should not be null!")
@@ -122,7 +122,7 @@ class DocumentIntegrationTest extends AbstractBaseDatabaseUnitTest
     @DisplayName("Update a document content") final void testUpdateDocumentContent() throws DocumentContentException, DocumentException
     {
         // Generate a random document.
-        DocumentServerEntity document = DocumentRandomizer.generatePersistent(false);
+        ServerDocumentEntity document = DocumentRandomizer.generatePersistent(false);
         document.setContent("./media/java-8-streams-cheat-sheet.pdf");
         long length = document.getContentLength();
         documentService.save(document);
@@ -132,7 +132,7 @@ class DocumentIntegrationTest extends AbstractBaseDatabaseUnitTest
         documentService.save(document);
 
         // Assert the document has been updated in the database!
-        DocumentServerEntity other = documentService.findById(document.getId());
+        ServerDocumentEntity other = documentService.findById(document.getId());
         assertThat(other)
                 .as("Updated document should not be null!")
                 .isNotNull();
@@ -145,7 +145,7 @@ class DocumentIntegrationTest extends AbstractBaseDatabaseUnitTest
     @DisplayName("Delete a document") final void testDeleteDocumentInDatabase() throws DocumentContentException, DocumentException
     {
         // Generate a random document.
-        DocumentServerEntity document = DocumentRandomizer.generatePersistent(false);
+        ServerDocumentEntity document = DocumentRandomizer.generatePersistent(false);
         document.setContent("./media/java-8-streams-cheat-sheet.pdf");
         documentService.save(document);
 
@@ -162,7 +162,7 @@ class DocumentIntegrationTest extends AbstractBaseDatabaseUnitTest
         // Fetch the document back and delete it from the database.
         documentService.deleteById(document.getId());
 
-        DocumentServerEntity other = documentService.findById(id);
+        ServerDocumentEntity other = documentService.findById(id);
         assertThat(other)
                 .as("Document should be null!")
                 .isNull();
@@ -172,9 +172,9 @@ class DocumentIntegrationTest extends AbstractBaseDatabaseUnitTest
     @Test
     @DisplayName("Delete multiple documents") final void testDeleteMultipleDocuments() throws DocumentContentException, DocumentException
     {
-        List<DocumentServerEntity> documents = new ArrayList<>();
+        List<ServerDocumentEntity> documents = new ArrayList<>();
         List<String> uuids = new ArrayList<>();
-        DocumentServerEntity document;
+        ServerDocumentEntity document;
 
         for (int i = 0; i < 100; i++)
         {
@@ -185,7 +185,7 @@ class DocumentIntegrationTest extends AbstractBaseDatabaseUnitTest
             uuids.add(document.getContentId());
         }
 
-        for (DocumentServerEntity element : documents)
+        for (ServerDocumentEntity element : documents)
         {
             documentService.deleteById(element.getId());
         }

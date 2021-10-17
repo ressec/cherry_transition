@@ -17,7 +17,7 @@ package com.hemajoo.commerce.cherry.persistence.test.integration.model.entity.pe
 import com.hemajoo.commerce.cherry.model.document.DocumentContentException;
 import com.hemajoo.commerce.cherry.model.document.DocumentException;
 import com.hemajoo.commerce.cherry.persistence.base.test.AbstractBaseDatabaseUnitTest;
-import com.hemajoo.commerce.cherry.persistence.document.entity.DocumentServerEntity;
+import com.hemajoo.commerce.cherry.persistence.document.entity.ServerDocumentEntity;
 import com.hemajoo.commerce.cherry.persistence.document.randomizer.DocumentRandomizer;
 import com.hemajoo.commerce.cherry.persistence.person.entity.PersonServerEntity;
 import com.hemajoo.commerce.cherry.persistence.person.randomizer.PersonRandomizer;
@@ -69,7 +69,7 @@ class PersonIntegrationTest extends AbstractBaseDatabaseUnitTest
     {
         // Generate random person and document.
         PersonServerEntity person = PersonRandomizer.generatePersistent(false);
-        DocumentServerEntity document = DocumentRandomizer.generatePersistent(false);
+        ServerDocumentEntity document = DocumentRandomizer.generatePersistent(false);
         person.addDocument(document);
 
         // Save the entities on database.
@@ -144,7 +144,7 @@ class PersonIntegrationTest extends AbstractBaseDatabaseUnitTest
     {
         // Generate a random person and document.
         PersonServerEntity person = PersonRandomizer.generatePersistent(false);
-        DocumentServerEntity document = DocumentRandomizer.generatePersistent(false);
+        ServerDocumentEntity document = DocumentRandomizer.generatePersistent(false);
         person.addDocument(document);
         personService.save(person);
 
@@ -155,7 +155,7 @@ class PersonIntegrationTest extends AbstractBaseDatabaseUnitTest
         personService.getRepository().saveAndFlush(person);
 
         // Check the document has been automatically removed in the database as it was an orphan.
-        DocumentServerEntity orphan = documentService.findById(document.getId());
+        ServerDocumentEntity orphan = documentService.findById(document.getId());
         assertThat(orphan)
                 .as(String.format("Document with id: %s should not exist anymore in the database!", document.getId()))
                 .isNull();

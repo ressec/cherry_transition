@@ -15,7 +15,7 @@
 package com.hemajoo.commerce.cherry.model.person.entity;
 
 import com.hemajoo.commerce.cherry.commons.type.EntityType;
-import com.hemajoo.commerce.cherry.model.base.entity.BaseClientEntity;
+import com.hemajoo.commerce.cherry.model.base.entity.ClientBaseEntity;
 import com.hemajoo.commerce.cherry.model.person.type.PhoneNumberCategoryType;
 import com.hemajoo.commerce.cherry.model.person.type.PhoneNumberType;
 import io.swagger.annotations.ApiModelProperty;
@@ -32,7 +32,7 @@ import javax.persistence.Enumerated;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class PhoneNumber extends BaseClientEntity
+public class PhoneNumber extends ClientBaseEntity
 {
     /**
      * Phone number.

@@ -17,7 +17,7 @@ package com.hemajoo.commerce.cherry.persistence.person.entity;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.hemajoo.commerce.cherry.commons.type.EntityType;
 import com.hemajoo.commerce.cherry.model.person.type.AddressType;
-import com.hemajoo.commerce.cherry.persistence.base.entity.BaseServerEntity;
+import com.hemajoo.commerce.cherry.persistence.base.entity.ServerBaseEntity;
 import com.hemajoo.commerce.cherry.persistence.base.validation.BasicValidation;
 import com.hemajoo.commerce.cherry.persistence.base.validation.ExtendedValidation;
 import lombok.EqualsAndHashCode;
@@ -43,7 +43,7 @@ import javax.validation.groups.Default;
 @Table(name = "EMAIL_ADDRESS")
 @Entity
 @EntityListeners(AuditingEntityListener.class)
-public class EmailAddressServerEntity extends BaseServerEntity
+public class EmailAddressServerEntity extends ServerBaseEntity
 {
     public static final String FIELD_EMAIL          = "email";
     public static final String FIELD_IS_DEFAULT     = "defaultEmail";

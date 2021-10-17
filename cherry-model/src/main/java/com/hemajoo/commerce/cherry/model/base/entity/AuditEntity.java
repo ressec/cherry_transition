@@ -12,12 +12,16 @@
  * Resse Christophe (christophe.resse@gmail.com).
  * -----------------------------------------------------------------------------------------------
  */
-
 package com.hemajoo.commerce.cherry.model.base.entity;
 
 import java.io.Serializable;
 import java.util.Date;
 
+/**
+ * Interface providing audit behavior.
+ * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
+ * @version 1.0.0
+ */
 public interface AuditEntity extends Serializable
 {
     /**
@@ -38,6 +42,10 @@ public interface AuditEntity extends Serializable
      */
     Date getModifiedDate();
 
+    /**
+     * Sets the last modification date.
+     * @param date Modification date.
+     */
     void setModifiedDate(final Date date);
 
     /**
@@ -46,6 +54,10 @@ public interface AuditEntity extends Serializable
      */
     String getCreatedBy();
 
+    /**
+     * Sets the creation author.
+     * @param author Creation author.
+     */
     void setCreatedBy(final String author);
 
     /**
@@ -54,5 +66,9 @@ public interface AuditEntity extends Serializable
      */
     String getModifiedBy();
 
+    /**
+     * Sets the last modification author.
+     * @param author Modification author.
+     */
     void setModifiedBy(final String author);
 }

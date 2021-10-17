@@ -14,38 +14,12 @@
  */
 package com.hemajoo.commerce.cherry.model.base.entity;
 
-import com.hemajoo.commerce.cherry.commons.type.StatusType;
-
-import java.util.Date;
-
 /**
- * Interface providing status behavior.
+ * Behavior of a client entity.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-public interface StatusEntity extends AuditEntity
+public interface ClientEntity
 {
-    /**
-     * Returns the status type.
-     * @return Status type.
-     */
-    StatusType getStatusType();
-
-    /**
-     * Sets the status type date.
-     * @param type Status type.
-     */
-    void setStatusType(final StatusType type);
-
-    /**
-     * Returns the inactivation date.
-     * @return Inactivation since date.
-     */
-    Date getSince();
-
-    /**
-     * Sets the since (inactivation) date.
-     * @param date Inactivation date.
-     */
-    void setSince(final Date date);
+    // Marker interface.
 }

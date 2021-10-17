@@ -18,7 +18,7 @@ import com.hemajoo.commerce.cherry.model.person.entity.Person;
 import com.hemajoo.commerce.cherry.model.person.exception.EmailAddressException;
 import com.hemajoo.commerce.cherry.model.person.type.GenderType;
 import com.hemajoo.commerce.cherry.model.person.type.PersonType;
-import com.hemajoo.commerce.cherry.persistence.base.randomizer.BaseServerEntityRandomizer;
+import com.hemajoo.commerce.cherry.persistence.base.randomizer.AbstractBaseServerEntityRandomizer;
 import com.hemajoo.commerce.cherry.persistence.person.entity.PersonServerEntity;
 import lombok.experimental.UtilityClass;
 import org.ressec.avocado.core.random.EnumRandomGenerator;
@@ -31,7 +31,7 @@ import java.util.UUID;
  * @version 1.0.0
  */
 @UtilityClass
-public final class PersonRandomizer extends BaseServerEntityRandomizer
+public final class PersonRandomizer extends AbstractBaseServerEntityRandomizer
 {
     /**
      * Person type enumeration generator.
@@ -51,7 +51,7 @@ public final class PersonRandomizer extends BaseServerEntityRandomizer
     public static PersonServerEntity generatePersistent(final boolean withRandomId)
     {
         var entity = new PersonServerEntity();
-        BaseServerEntityRandomizer.populateBaseFields(entity);
+        AbstractBaseServerEntityRandomizer.populateBaseFields(entity);
 
         if (withRandomId)
         {
@@ -76,7 +76,7 @@ public final class PersonRandomizer extends BaseServerEntityRandomizer
     public static Person generateClient(final boolean withRandomId)
     {
         var entity = new Person();
-        BaseServerEntityRandomizer.populateBaseFields(entity);
+        AbstractBaseServerEntityRandomizer.populateBaseFields(entity);
    
         if (withRandomId)
         {
@@ -104,7 +104,7 @@ public final class PersonRandomizer extends BaseServerEntityRandomizer
     {
         var person = generatePersistent(withRandomId);
 
-        int count = bound > 0 ? bound : BaseServerEntityRandomizer.DEFAULT_DEPENDENCY_BOUND;
+        int count = bound > 0 ? bound : AbstractBaseServerEntityRandomizer.DEFAULT_DEPENDENCY_BOUND;
         for (var i = 0; i < count; i++)
         {
             person.addEmailAddress(EmailAddressRandomizer.generatePersistent(withRandomId));
