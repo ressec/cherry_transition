@@ -47,10 +47,10 @@ public interface EmailAddressRepository extends JpaRepository<ServerEmailAddress
 
     /**
      * Returns a list of default or not default email addresses.
-     * @param defaultEmail Is the default email address?
+     * @param isDefaultEmail Is the default email address?
      * @return List of matching email addresses.
      */
-    List<ServerEmailAddressEntity> findByDefaultEmail(boolean defaultEmail);
+    List<ServerEmailAddressEntity> findByIsDefaultEmail(Boolean isDefaultEmail);
 
     /**
      * Returns a list of email addresses belonging to a person.

@@ -81,10 +81,10 @@ public interface EmailAddressService
 
     /**
      * Returns a list of default or not default email addresses.
-     * @param defaultEmail Is it the default email address?
+     * @param isDefaultEmail Is it the default email address?
      * @return List of matching email addresses.
      */
-    List<ServerEmailAddressEntity> findByDefaultEmail(boolean defaultEmail);
+    List<ServerEmailAddressEntity> findByIsDefaultEmail(Boolean isDefaultEmail);
 
     /**
      * Returns a list of email addresses belonging to a person.

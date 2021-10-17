@@ -110,6 +110,7 @@ public interface DocumentMapper
     @Named("fromIdentity")
     default ServerDocumentEntity fromIdentity(final /*EntityIdentity*/ Identity identity) throws DocumentException // TODO Should return a ServerDocument interface instead of a DocumentServerEntity class!
     {
+//        return (ServerDocumentEntity) ServerEntityFactory.from(identity);
         if (identity != null)
         {
             ServerEntityFactory factory = new ServerEntityFactory();

@@ -29,22 +29,23 @@ public class ServerEntityFactory
      * Person persistence service.
      */
     @Autowired
-    private PersonService personService;
+    private static PersonService personService;
 
     /**
      * Document persistence service.
      */
     @Autowired
-    private DocumentService documentService;
+    private static DocumentService documentService;
 
     /**
      * Email persistence service.
      */
     @Autowired
-    private EmailAddressService emailAddressService;
+    private static EmailAddressService emailAddressService;
 
 //    public final <T extends ServerEntity> T from(final Identity identity) // TODO Try to transform to a static method
     public final ServerBaseEntity from(final Identity identity) // TODO Try to transform to a static method
+//    public static ServerBaseEntity from(final Identity identity)
     {
         if (identity != null)
         {

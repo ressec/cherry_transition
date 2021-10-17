@@ -47,12 +47,6 @@ import java.util.UUID;
 public class EmailAddressServiceCore implements EmailAddressService
 {
     /**
-     * Service for the persons.
-     */
-    @Autowired
-    private PersonService personService;
-
-    /**
      * Repository of the email addresses.
      */
     @Autowired
@@ -122,9 +116,9 @@ public class EmailAddressServiceCore implements EmailAddressService
     }
 
     @Override
-    public List<ServerEmailAddressEntity> findByDefaultEmail(final boolean defaultEmail)
+    public List<ServerEmailAddressEntity> findByIsDefaultEmail(final Boolean isDefaultEmail)
     {
-        return emailAddressRepository.findByDefaultEmail(defaultEmail);
+        return emailAddressRepository.findByIsDefaultEmail(isDefaultEmail);
     }
 
     @Override

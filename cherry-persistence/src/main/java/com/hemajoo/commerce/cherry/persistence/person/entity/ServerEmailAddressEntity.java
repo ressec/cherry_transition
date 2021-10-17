@@ -48,7 +48,7 @@ import javax.validation.groups.Default;
 public class ServerEmailAddressEntity extends ServerBaseEntity implements EmailAddress, ServerEntity
 {
     public static final String FIELD_EMAIL          = "email";
-    public static final String FIELD_IS_DEFAULT     = "defaultEmail";
+    public static final String FIELD_IS_DEFAULT     = "isDefaultEmail";
     public static final String FIELD_ADDRESS_TYPE   = "addressType";
 
     public static final String FIELD_PERSON         = "person";
