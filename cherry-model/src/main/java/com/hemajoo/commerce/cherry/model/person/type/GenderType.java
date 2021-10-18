@@ -22,11 +22,6 @@ package com.hemajoo.commerce.cherry.model.person.type;
 public enum GenderType
 {
     /**
-     * Unspecified gender type.
-     */
-    UNSPECIFIED,
-
-    /**
      * Male gender type.
      */
     MALE,

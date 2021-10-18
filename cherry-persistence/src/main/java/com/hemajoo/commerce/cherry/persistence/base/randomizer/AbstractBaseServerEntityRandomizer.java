@@ -50,7 +50,7 @@ public abstract class AbstractBaseServerEntityRandomizer
     /**
      * Entity status type enumeration generator.
      */
-    protected static final EnumRandomGenerator STATUS_TYPE_GENERATOR = new EnumRandomGenerator(StatusType.class).exclude(StatusType.UNSPECIFIED);
+    protected static final EnumRandomGenerator STATUS_TYPE_GENERATOR = new EnumRandomGenerator(StatusType.class);
 
     /**
      * Creates a new base server entity randomizer.

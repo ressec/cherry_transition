@@ -14,6 +14,7 @@
  */
 package com.hemajoo.commerce.cherry.model.person.search;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.hemajoo.commerce.cherry.commons.type.EntityType;
 import com.hemajoo.commerce.cherry.model.base.search.BaseSearch;
 import com.hemajoo.commerce.cherry.model.person.type.AddressType;
@@ -36,25 +37,29 @@ public final class SearchEmailAddress extends BaseSearch
     /**
      * Email address.
      */
+    @JsonProperty("email")
     @ApiModelProperty(value = "Email address", allowEmptyValue = true)
     private String email;
 
     /**
      * Is it the default email address?
      */
-    @ApiModelProperty(value = "Is default email address?", required = true, example = "true")
-    private boolean defaultEmail;
+    @JsonProperty("isDefaultEmail")
+    @ApiModelProperty(value = "Is default email address?")
+    private Boolean isDefaultEmail;
 
     /**
      * Email address type.
      */
+    @JsonProperty("addressType")
     @Enumerated(EnumType.STRING)
-    @ApiModelProperty(name = "type", value = "Email address type", notes = "Address type", allowEmptyValue = true)
+    @ApiModelProperty(value = "Email address type", notes = "Address type", allowEmptyValue = true)
     private AddressType addressType;
 
     /**
      * The person identifier this email address belongs to.
      */
+    @JsonProperty("personId")
     @ApiModelProperty(value = "Person identifier (UUID) owning the email address(es)", hidden = false)
     private String personId;
 

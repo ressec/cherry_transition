@@ -129,7 +129,7 @@ public class PhoneNumberServiceCore implements PhoneNumberService
                     SearchOperation.MATCH));
         }
 
-        if (phoneNumber.getStatusType() != null && phoneNumber.getStatusType() != StatusType.UNSPECIFIED)
+        if (phoneNumber.getStatusType() != null)
         {
             specification.add(new SearchCriteria(
                     AbstractStatusServerEntity.FIELD_STATUS_TYPE,
@@ -153,7 +153,7 @@ public class PhoneNumberServiceCore implements PhoneNumberService
                     SearchOperation.EQUAL));
         }
 
-        if (phoneNumber.getPhoneType() != null && phoneNumber.getPhoneType() != PhoneNumberType.UNSPECIFIED)
+        if (phoneNumber.getPhoneType() != null)
         {
             specification.add(new SearchCriteria(
                     ServerPhoneNumberEntity.FIELD_PHONE_TYPE,
@@ -169,7 +169,7 @@ public class PhoneNumberServiceCore implements PhoneNumberService
                     SearchOperation.EQUAL));
         }
 
-        if (phoneNumber.getCategoryType() != null && phoneNumber.getCategoryType() != PhoneNumberCategoryType.UNSPECIFIED)
+        if (phoneNumber.getCategoryType() != null)
         {
             specification.add(new SearchCriteria(
                     ServerPhoneNumberEntity.FIELD_PHONE_CATEGORY_TYPE,

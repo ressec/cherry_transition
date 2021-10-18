@@ -22,11 +22,6 @@ package com.hemajoo.commerce.cherry.model.person.type;
 public enum AddressType
 {
     /**
-     * Address type is not specified.
-     */
-    UNSPECIFIED,
-
-    /**
      * Address is a private one.
      */
     PRIVATE,

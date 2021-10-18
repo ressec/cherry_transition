@@ -36,12 +36,12 @@ public final class PersonRandomizer extends AbstractBaseServerEntityRandomizer
     /**
      * Person type enumeration generator.
      */
-    private static final EnumRandomGenerator PERSON_TYPE_GENERATOR = new EnumRandomGenerator(PersonType.class).exclude(PersonType.UNSPECIFIED);
+    private static final EnumRandomGenerator PERSON_TYPE_GENERATOR = new EnumRandomGenerator(PersonType.class);
 
     /**
      * Gender type enumeration generator.
      */
-    private static final EnumRandomGenerator GENDER_TYPE_GENERATOR = new EnumRandomGenerator(GenderType.class).exclude(GenderType.UNSPECIFIED);
+    private static final EnumRandomGenerator GENDER_TYPE_GENERATOR = new EnumRandomGenerator(GenderType.class);
 
     /**
      * Generates a new random persistent person.

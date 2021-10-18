@@ -18,7 +18,6 @@ import com.hemajoo.commerce.cherry.commons.type.StatusType;
 import com.hemajoo.commerce.cherry.model.base.search.criteria.SearchCriteria;
 import com.hemajoo.commerce.cherry.model.base.search.criteria.SearchOperation;
 import com.hemajoo.commerce.cherry.model.person.search.SearchPostalAddress;
-import com.hemajoo.commerce.cherry.model.person.type.AddressCategoryType;
 import com.hemajoo.commerce.cherry.model.person.type.AddressType;
 import com.hemajoo.commerce.cherry.persistence.base.entity.AbstractAuditServerEntity;
 import com.hemajoo.commerce.cherry.persistence.base.entity.AbstractStatusServerEntity;
@@ -123,7 +122,7 @@ public class PostalAddressServiceCore implements PostalAddressService
                     SearchOperation.MATCH));
         }
 
-        if (postalAddress.getStatusType() != null && postalAddress.getStatusType() != StatusType.UNSPECIFIED)
+        if (postalAddress.getStatusType() != null)
         {
             specification.add(new SearchCriteria(
                     AbstractStatusServerEntity.FIELD_STATUS_TYPE,
@@ -147,7 +146,7 @@ public class PostalAddressServiceCore implements PostalAddressService
                     SearchOperation.EQUAL));
         }
 
-        if (postalAddress.getAddressType() != null && postalAddress.getAddressType() != AddressType.UNSPECIFIED)
+        if (postalAddress.getAddressType() != null)
         {
             specification.add(new SearchCriteria(
                     ServerPostalAddressEntity.FIELD_ADDRESS_TYPE,
@@ -163,7 +162,7 @@ public class PostalAddressServiceCore implements PostalAddressService
                     SearchOperation.EQUAL));
         }
 
-        if (postalAddress.getCategoryType() != null && postalAddress.getCategoryType() != AddressCategoryType.UNSPECIFIED)
+        if (postalAddress.getCategoryType() != null)
         {
             specification.add(new SearchCriteria(
                     ServerPostalAddressEntity.FIELD_CATEGORY_TYPE,

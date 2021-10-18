@@ -35,12 +35,12 @@ public final class PhoneNumberRandomizer extends AbstractBaseServerEntityRandomi
     /**
      * Phone number type enumeration generator.
      */
-    private static final EnumRandomGenerator PHONE_NUMBER_TYPE_GENERATOR = new EnumRandomGenerator(PhoneNumberType.class).exclude(PhoneNumberType.UNSPECIFIED);
+    private static final EnumRandomGenerator PHONE_NUMBER_TYPE_GENERATOR = new EnumRandomGenerator(PhoneNumberType.class);
 
     /**
      * Phone number category type enumeration generator.
      */
-    private static final EnumRandomGenerator PHONE_NUMBER_CATEGORY_TYPE_GENERATOR = new EnumRandomGenerator(PhoneNumberCategoryType.class).exclude(PhoneNumberCategoryType.UNSPECIFIED);
+    private static final EnumRandomGenerator PHONE_NUMBER_CATEGORY_TYPE_GENERATOR = new EnumRandomGenerator(PhoneNumberCategoryType.class);
 
     /**
      * Generates a new random persistent phone number.

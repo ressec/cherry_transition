@@ -35,12 +35,12 @@ public final class PostalAddressRandomizer extends AbstractBaseServerEntityRando
     /**
      * Address type enumeration generator.
      */
-    private static final EnumRandomGenerator ADDRESS_TYPE_GENERATOR = new EnumRandomGenerator(AddressType.class).exclude(AddressType.UNSPECIFIED);
+    private static final EnumRandomGenerator ADDRESS_TYPE_GENERATOR = new EnumRandomGenerator(AddressType.class);
 
     /**
      * Address category type enumeration generator.
      */
-    private static final EnumRandomGenerator ADDRESS_CATEGORY_TYPE_GENERATOR = new EnumRandomGenerator(AddressCategoryType.class).exclude(AddressCategoryType.UNSPECIFIED);
+    private static final EnumRandomGenerator ADDRESS_CATEGORY_TYPE_GENERATOR = new EnumRandomGenerator(AddressCategoryType.class);
 
     /**
      * Create a random persistent postal address.

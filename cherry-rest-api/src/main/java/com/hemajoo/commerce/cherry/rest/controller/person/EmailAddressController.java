@@ -14,6 +14,7 @@
  */
 package com.hemajoo.commerce.cherry.rest.controller.person;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.hemajoo.commerce.cherry.model.base.converter.GenericEntityConverter;
 import com.hemajoo.commerce.cherry.model.document.exception.DocumentException;
 import com.hemajoo.commerce.cherry.model.person.entity.ClientEmailAddressEntity;
@@ -81,7 +82,7 @@ public class EmailAddressController
 //    private EmailAddressValidatorForUpdate emailAddressValidator;
 
     /**
-     * {@code REST API} service to retrieve the total number of email addresses.
+     * Returns the total number of email addresses.
      * @return Number of email addresses.
      */
     @ApiOperation(value = "Count the number of email addresses.", notes = "Count the total number of email addresses.")
@@ -187,79 +188,38 @@ public class EmailAddressController
      */
     @ApiOperation(value = "Delete an email address.", notes = "Delete an email address given its identifier.")
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<RestApiResponse> delete(
-            @ApiParam(value = "Email address identifier", required = true, example = "523cd226-49e4-4034-85dd-d0768af29512")
+    public ResponseEntity<?> delete(
+            @ApiParam(value = "Email address identifier", required = true)
             @NotNull @Valid @ValidEmailAddressId @PathVariable String id)
     {
-        RestApiResponse response;
+        emailAddressService.deleteById(UUID.fromString(id));
 
-        try
-        {
-            emailAddressService.deleteById(UUID.fromString(id));
-            response = RestApiResponse.ok();
-        }
-        catch (Exception e)
-        {
-            response = RestApiResponse.ko(HttpStatus.BAD_REQUEST, e.getMessage());
-        }
-
-        return response.getEntity();
-    }
-
-    /**
-     * Endpoint service to retrieve all email addresses.
-     * @return Response.
-     */
-    @ApiOperation(value = "Find all email addresses.", notes = "Find all email addresses.")
-    @GetMapping("/findAll")
-    public List<ClientEmailAddressEntity> findAll()
-    {
-
-        // TODO We should only return a list of the email address ids!
-
-//        RestApiResponse response = RestApiResponse.ok();
-//        ResponseEntity<RestApiResponse> entity = response.getEntity();
-
-        List<ClientEmailAddressEntity> list = EmailAddressConverter.convertPersistenceList(emailAddressService.findAll());
-
-        return list;
+        return ResponseEntity.ok(HttpStatus.OK);
     }
 
     /**
      * Searches for email addresses given criteria.
      * @param search Email address search object.
-     * @return List of email identifiers matching the given criteria.
+     * @return List of email identifiers matching the given criteria if some have been found, an empty list otherwise.
      */
     @ApiOperation(value = "Search for email addresses.", notes = "Search for email addresses matching the given predicates. Fill only the fields you want to be taken into account for the search.")
     @GetMapping("/search")
-    public ResponseEntity<List<String>> search(final @NonNull SearchEmailAddress search)
+    public ResponseEntity<List<String>> search(final @RequestBody @NonNull SearchEmailAddress search) throws JsonProcessingException
     {
         List<ClientEmailAddressEntity> entities = EmailAddressConverter.convertPersistenceList(emailAddressService.search(search));
-        List<String> ids = GenericEntityConverter.toIdList(entities);
 
-        return ResponseEntity.ok(ids);
+        return ResponseEntity.ok(GenericEntityConverter.toIdList(entities));
     }
 
     /**
      * Endpoint service to query email addresses given criteria.
      * @param search Email address search object.
-     * @return Response.
+     * @return List of client email addresses if some have been found, an empty list otherwise.
      */
-    @ApiOperation(value = "Query email addresses", notes = "Query email addresses matching the given predicates.")
+    @ApiOperation(value = "Query email addresses", notes = "Returns a list of email addresses matching the given criteria.")
     @GetMapping("/query")
-    public ResponseEntity<RestApiResponse> query(final @NonNull SearchEmailAddress search)
+    public ResponseEntity<List<ClientEmailAddressEntity>> query(final @RequestBody @NonNull SearchEmailAddress search)
     {
-        RestApiResponse response;
-
-        try
-        {
-            response = RestApiResponse.ok(EmailAddressConverter.convertPersistenceList(emailAddressService.search(search)));
-        }
-        catch (Exception e)
-        {
-            response = RestApiResponse.ko(HttpStatus.BAD_REQUEST, e.getMessage());
-        }
-
-        return response.getEntity();
+        return ResponseEntity.ok(EmailAddressConverter.convertPersistenceList(emailAddressService.search(search)));
     }
 }

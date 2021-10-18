@@ -113,6 +113,11 @@ public final class GenericSpecification<T> implements Specification<T>
         list.add(criteria);
     }
 
+    public int count()
+    {
+        return list.size();
+    }
+
     /**
      * Substitutes special characters from the list of received criteria.
      */

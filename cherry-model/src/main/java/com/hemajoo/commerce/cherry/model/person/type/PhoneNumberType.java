@@ -22,11 +22,6 @@ package com.hemajoo.commerce.cherry.model.person.type;
 public enum PhoneNumberType
 {
     /**
-     * Unspecified phone number.
-     */
-    UNSPECIFIED,
-
-    /**
      * Private phone number.
      */
     PRIVATE,

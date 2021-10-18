@@ -14,6 +14,8 @@
  */
 package com.hemajoo.commerce.cherry.model.base.search;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.hemajoo.commerce.cherry.commons.type.StatusType;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -35,6 +37,7 @@ public abstract class AbstractStatusSearch extends AbstractAuditSearch
     /**
      * Email address status.
      */
+    @JsonProperty("statusType")
     @Enumerated(EnumType.STRING)
     @ApiModelProperty(value = "Status type", allowEmptyValue = true)
     private StatusType statusType;
@@ -42,6 +45,7 @@ public abstract class AbstractStatusSearch extends AbstractAuditSearch
     /**
      * Inactivity time stamp information (server time) that must be filled when the email address becomes inactive.
      */
+    @JsonIgnore
     @ApiModelProperty(hidden = true) // TODO Would be good to have this property integrated to the search!
     private Date since;
 

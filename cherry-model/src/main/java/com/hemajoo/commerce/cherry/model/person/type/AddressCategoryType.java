@@ -22,11 +22,6 @@ package com.hemajoo.commerce.cherry.model.person.type;
 public enum AddressCategoryType
 {
     /**
-     * Unspecified postal address category.
-     */
-    UNSPECIFIED,
-
-    /**
      * Postal address category.
      */
     POSTAL,

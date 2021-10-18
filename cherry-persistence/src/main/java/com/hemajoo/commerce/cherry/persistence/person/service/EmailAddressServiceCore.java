@@ -156,12 +156,15 @@ public class EmailAddressServiceCore implements EmailAddressService
                     SearchOperation.EQUAL));
         }
 
-        specification.add(new SearchCriteria(
-                ServerEmailAddressEntity.FIELD_IS_DEFAULT,
-                search.isDefaultEmail(),
-                SearchOperation.EQUAL));
+        if (search.getIsDefaultEmail() != null)
+        {
+            specification.add(new SearchCriteria(
+                    ServerEmailAddressEntity.FIELD_IS_DEFAULT,
+                    search.getIsDefaultEmail(),
+                    SearchOperation.EQUAL));
+        }
 
-        if (search.getAddressType() != null && search.getAddressType() != AddressType.UNSPECIFIED)
+        if (search.getAddressType() != null)
         {
             specification.add(new SearchCriteria(
                     ServerEmailAddressEntity.FIELD_ADDRESS_TYPE,
@@ -169,7 +172,7 @@ public class EmailAddressServiceCore implements EmailAddressService
                     SearchOperation.EQUAL));
         }
 
-        if (search.getStatusType() != null && search.getStatusType() != StatusType.UNSPECIFIED)
+        if (search.getStatusType() != null)
         {
             specification.add(new SearchCriteria(
                     AbstractStatusServerEntity.FIELD_STATUS_TYPE,
@@ -190,6 +193,14 @@ public class EmailAddressServiceCore implements EmailAddressService
             specification.add(new SearchCriteria(
                     ServerEmailAddressEntity.FIELD_PERSON,
                     search.getPersonId(),
+                    SearchOperation.EQUAL_OBJECT_UUID));
+        }
+
+        if (specification.count() == 0)
+        {
+            specification.add(new SearchCriteria(
+                    ServerEmailAddressEntity.FIELD_PERSON,
+                    "00000000-0000-0000-0000-000000000000",
                     SearchOperation.EQUAL_OBJECT_UUID));
         }
 

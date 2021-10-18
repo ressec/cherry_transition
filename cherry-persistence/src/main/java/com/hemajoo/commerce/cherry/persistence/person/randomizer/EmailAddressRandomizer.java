@@ -38,7 +38,7 @@ public final class EmailAddressRandomizer extends AbstractBaseServerEntityRandom
     /**
      * Address type enumeration generator.
      */
-    private static final EnumRandomGenerator ADDRESS_TYPE_GENERATOR = new EnumRandomGenerator(AddressType.class).exclude(AddressType.UNSPECIFIED);
+    private static final EnumRandomGenerator ADDRESS_TYPE_GENERATOR = new EnumRandomGenerator(AddressType.class);
 
     /**
      * Create a random persistent email address.

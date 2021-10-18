@@ -22,11 +22,6 @@ package com.hemajoo.commerce.cherry.model.person.type;
 public enum PhoneNumberCategoryType
 {
     /**
-     * Unspecified phone number category.
-     */
-    UNSPECIFIED,
-
-    /**
      * Fix phone number category.
      */
     FIX,

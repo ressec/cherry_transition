@@ -14,13 +14,10 @@
  */
 package com.hemajoo.commerce.cherry.persistence.person.service;
 
-import com.hemajoo.commerce.cherry.commons.type.StatusType;
 import com.hemajoo.commerce.cherry.model.base.search.criteria.SearchCriteria;
 import com.hemajoo.commerce.cherry.model.base.search.criteria.SearchOperation;
 import com.hemajoo.commerce.cherry.model.document.exception.DocumentException;
 import com.hemajoo.commerce.cherry.model.person.search.SearchPerson;
-import com.hemajoo.commerce.cherry.model.person.type.GenderType;
-import com.hemajoo.commerce.cherry.model.person.type.PersonType;
 import com.hemajoo.commerce.cherry.persistence.base.entity.AbstractAuditServerEntity;
 import com.hemajoo.commerce.cherry.persistence.base.entity.AbstractStatusServerEntity;
 import com.hemajoo.commerce.cherry.persistence.base.entity.ServerBaseEntity;
@@ -197,7 +194,7 @@ public class PersonServiceCore implements PersonService
                     SearchOperation.EQUAL));
         }
 
-        if (person.getPersonType() != null && person.getPersonType() != PersonType.UNSPECIFIED)
+        if (person.getPersonType() != null)
         {
             specification.add(new SearchCriteria(
                     ServerPersonEntity.FIELD_PERSON_TYPE,
@@ -205,7 +202,7 @@ public class PersonServiceCore implements PersonService
                     SearchOperation.EQUAL));
         }
 
-        if (person.getStatusType() != null && person.getStatusType() != StatusType.UNSPECIFIED)
+        if (person.getStatusType() != null)
         {
             specification.add(new SearchCriteria(
                     AbstractStatusServerEntity.FIELD_STATUS_TYPE,
@@ -213,7 +210,7 @@ public class PersonServiceCore implements PersonService
                     SearchOperation.EQUAL));
         }
 
-        if (person.getGenderType() != null && person.getGenderType() != GenderType.UNSPECIFIED)
+        if (person.getGenderType() != null)
         {
             specification.add(new SearchCriteria(
                     ServerPersonEntity.FIELD_GENDER_TYPE,

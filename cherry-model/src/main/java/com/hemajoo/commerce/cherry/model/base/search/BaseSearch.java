@@ -14,6 +14,8 @@
  */
 package com.hemajoo.commerce.cherry.model.base.search;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.hemajoo.commerce.cherry.commons.entity.EntityIdentity;
 import com.hemajoo.commerce.cherry.commons.entity.Identity;
 import com.hemajoo.commerce.cherry.commons.entity.IdentityAware;
@@ -39,24 +41,28 @@ public class BaseSearch extends AbstractStatusSearch implements Identity, Identi
     /**
      * Entity identifier.
      */
+    @JsonProperty("id")
     @ApiModelProperty(value = "Email address identifier (UUID)")
     private String id;
 
     /**
      * Entity type.
      */
+    @JsonIgnore
     @ApiModelProperty(hidden = true)
     private EntityType entityType;
 
     /**
      * Entity name.
      */
+    @JsonIgnore
     @ApiModelProperty(hidden = true)
     private String name;
 
     /**
      * Entity description.
      */
+    @JsonIgnore
     @ApiModelProperty(hidden = true)
     private String description;
 
