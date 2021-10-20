@@ -16,7 +16,7 @@ package com.hemajoo.commerce.cherry.persistence.person.repository;
 
 import com.hemajoo.commerce.cherry.commons.type.StatusType;
 import com.hemajoo.commerce.cherry.model.person.type.AddressType;
-import com.hemajoo.commerce.cherry.persistence.person.entity.PostalAddressServerEntity;
+import com.hemajoo.commerce.cherry.persistence.person.entity.ServerPostalAddressEntity;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
@@ -29,65 +29,65 @@ import java.util.UUID;
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-public interface PostalAddressRepository extends JpaRepository<PostalAddressServerEntity, UUID>, JpaSpecificationExecutor<PostalAddressServerEntity>
+public interface PostalAddressRepository extends JpaRepository<ServerPostalAddressEntity, UUID>, JpaSpecificationExecutor<ServerPostalAddressEntity>
 {
     /**
-     * Returns a list of {@link PostalAddressServerEntity} matching a given address type.
+     * Returns a list of {@link ServerPostalAddressEntity} matching a given address type.
      * @param type Address type.
      * @return List of postal addresses.
      * @see AddressType
      */
-    List<PostalAddressServerEntity> findByAddressType(AddressType type);
+    List<ServerPostalAddressEntity> findByAddressType(AddressType type);
 
     /**
-     * Returns a list of {@link PostalAddressServerEntity} matching a given status type.
+     * Returns a list of {@link ServerPostalAddressEntity} matching a given status type.
      * @param statusType Status type.
      * @return List of postal addresses.
      * @see StatusType
      */
-    List<PostalAddressServerEntity> findByStatusType(StatusType statusType);
+    List<ServerPostalAddressEntity> findByStatusType(StatusType statusType);
 
     /**
-     * Returns a list of {@link PostalAddressServerEntity} matching a given country code.
+     * Returns a list of {@link ServerPostalAddressEntity} matching a given country code.
      * @param countryCode Country code (ISO Alpha-3).
      * @return List of postal addresses.
      */
-    List<PostalAddressServerEntity> findByCountryCode(String countryCode);
+    List<ServerPostalAddressEntity> findByCountryCode(String countryCode);
 
     /**
-     * Returns a list of {@link PostalAddressServerEntity} matching a given locality.
+     * Returns a list of {@link ServerPostalAddressEntity} matching a given locality.
      * @param locality Locality.
      * @return List of postal addresses.
      */
-    List<PostalAddressServerEntity> findByLocality(String locality);
+    List<ServerPostalAddressEntity> findByLocality(String locality);
 
     /**
-     * Returns a list of {@link PostalAddressServerEntity} matching a given zip code.
+     * Returns a list of {@link ServerPostalAddressEntity} matching a given zip code.
      * @param zipCode Zip or postal code.
      * @return List of postal addresses.
      */
-    List<PostalAddressServerEntity> findByZipCode(String zipCode);
+    List<ServerPostalAddressEntity> findByZipCode(String zipCode);
 
     /**
-     * Returns a list of {@link PostalAddressServerEntity} matching a given area.
+     * Returns a list of {@link ServerPostalAddressEntity} matching a given area.
      * @param area Area.
      * @return List of postal addresses.
      */
-    List<PostalAddressServerEntity> findByArea(String area);
+    List<ServerPostalAddressEntity> findByArea(String area);
 
     /**
      * Returns a list of default or not default postal addresses.
      * @param isDefault Is default postal address?
      * @return List of postal addresses.
      */
-    List<PostalAddressServerEntity> findByIsDefault(boolean isDefault);
+    List<ServerPostalAddressEntity> findByIsDefault(boolean isDefault);
 
     /**
      * Returns a list of postal addresses belonging to a person.
      * @param personId Person identifier.
      * @return List of postal addresses.
      */
-    List<PostalAddressServerEntity> findByPersonId(long personId);
+    List<ServerPostalAddressEntity> findByPersonId(long personId);
 
 //    /**
 //     * Returns a list of postal addresses matching the given set of criteria.
@@ -128,5 +128,5 @@ public interface PostalAddressRepository extends JpaRepository<PostalAddressServ
      * @param specification Specification of the predicates.
      * @return List of matching postal addresses.
      */
-    List<PostalAddressServerEntity> findAll(final Specification<PostalAddressServerEntity> specification);
+    List<ServerPostalAddressEntity> findAll(final Specification<ServerPostalAddressEntity> specification);
 }

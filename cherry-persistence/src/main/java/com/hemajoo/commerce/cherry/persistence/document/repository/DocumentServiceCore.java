@@ -14,9 +14,9 @@
  */
 package com.hemajoo.commerce.cherry.persistence.document.repository;
 
-import com.hemajoo.commerce.cherry.model.document.DocumentException;
+import com.hemajoo.commerce.cherry.model.document.exception.DocumentException;
 import com.hemajoo.commerce.cherry.persistence.content.DocumentStore;
-import com.hemajoo.commerce.cherry.persistence.document.entity.DocumentServerEntity;
+import com.hemajoo.commerce.cherry.persistence.document.entity.ServerDocumentEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -50,13 +50,13 @@ public class DocumentServiceCore implements DocumentService
     }
 
     @Override
-    public DocumentServerEntity findById(UUID id)
+    public ServerDocumentEntity findById(UUID id)
     {
         return documentRepository.findById(id).orElse(null);
     }
 
     @Override
-    public DocumentServerEntity save(DocumentServerEntity document)
+    public ServerDocumentEntity save(ServerDocumentEntity document)
     {
         document = documentRepository.save(document);
 
@@ -72,7 +72,7 @@ public class DocumentServiceCore implements DocumentService
     @Override
     public void deleteById(UUID id)
     {
-        DocumentServerEntity document = findById(id);
+        ServerDocumentEntity document = findById(id);
 
         // If a content file is associated, then delete it!
         if (document != null && document.getContentId() != null)
@@ -84,14 +84,14 @@ public class DocumentServiceCore implements DocumentService
     }
 
     @Override
-    public List<DocumentServerEntity> findAll()
+    public List<ServerDocumentEntity> findAll()
     {
         // TODO We should for each document inject its content such as for the findById
         return documentRepository.findAll();
     }
 
     @Override
-    public void loadContent(DocumentServerEntity document)
+    public void loadContent(ServerDocumentEntity document)
     {
         document.setContent(documentStore.getContent(document));
     }
@@ -99,7 +99,7 @@ public class DocumentServiceCore implements DocumentService
     @Override
     public void loadContent(UUID documentId) throws DocumentException
     {
-        DocumentServerEntity document = findById(documentId);
+        ServerDocumentEntity document = findById(documentId);
         if (document != null)
         {
             loadContent(document);

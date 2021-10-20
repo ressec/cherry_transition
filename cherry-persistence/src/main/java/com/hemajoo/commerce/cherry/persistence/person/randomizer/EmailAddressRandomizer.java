@@ -14,14 +14,14 @@
  */
 package com.hemajoo.commerce.cherry.persistence.person.randomizer;
 
-import com.hemajoo.commerce.cherry.model.document.Document;
-import com.hemajoo.commerce.cherry.model.document.DocumentContentException;
-import com.hemajoo.commerce.cherry.model.person.entity.EmailAddress;
+import com.hemajoo.commerce.cherry.model.document.ClientDocumentEntity;
+import com.hemajoo.commerce.cherry.model.document.exception.DocumentContentException;
+import com.hemajoo.commerce.cherry.model.person.entity.ClientEmailAddressEntity;
 import com.hemajoo.commerce.cherry.model.person.type.AddressType;
-import com.hemajoo.commerce.cherry.persistence.base.randomizer.BaseServerEntityRandomizer;
-import com.hemajoo.commerce.cherry.persistence.document.entity.DocumentServerEntity;
+import com.hemajoo.commerce.cherry.persistence.base.randomizer.AbstractBaseServerEntityRandomizer;
+import com.hemajoo.commerce.cherry.persistence.document.entity.ServerDocumentEntity;
 import com.hemajoo.commerce.cherry.persistence.document.randomizer.DocumentRandomizer;
-import com.hemajoo.commerce.cherry.persistence.person.entity.EmailAddressServerEntity;
+import com.hemajoo.commerce.cherry.persistence.person.entity.ServerEmailAddressEntity;
 import lombok.experimental.UtilityClass;
 import org.ressec.avocado.core.random.EnumRandomGenerator;
 
@@ -33,12 +33,12 @@ import java.util.UUID;
  * @version 1.0.0
  */
 @UtilityClass
-public final class EmailAddressRandomizer extends BaseServerEntityRandomizer
+public final class EmailAddressRandomizer extends AbstractBaseServerEntityRandomizer
 {
     /**
      * Address type enumeration generator.
      */
-    private static final EnumRandomGenerator ADDRESS_TYPE_GENERATOR = new EnumRandomGenerator(AddressType.class).exclude(AddressType.UNSPECIFIED);
+    private static final EnumRandomGenerator ADDRESS_TYPE_GENERATOR = new EnumRandomGenerator(AddressType.class);
 
     /**
      * Create a random persistent email address.
@@ -46,10 +46,10 @@ public final class EmailAddressRandomizer extends BaseServerEntityRandomizer
      * <br>Generally set to {@code true} only for unit tests.
      * @return Email address.
      */
-    public static EmailAddressServerEntity generatePersistent(final boolean withRandomId)
+    public static ServerEmailAddressEntity generatePersistent(final boolean withRandomId)
     {
-        var entity = new EmailAddressServerEntity();
-        BaseServerEntityRandomizer.populateBaseFields(entity);
+        var entity = new ServerEmailAddressEntity();
+        AbstractBaseServerEntityRandomizer.populateBaseFields(entity);
 
         if (withRandomId)
         {
@@ -58,7 +58,7 @@ public final class EmailAddressRandomizer extends BaseServerEntityRandomizer
 
         entity.setEmail(FAKER.internet().emailAddress());
         entity.setAddressType((AddressType) ADDRESS_TYPE_GENERATOR.gen());
-        entity.setDefaultEmail(RANDOM.nextBoolean());
+        entity.setIsDefaultEmail(RANDOM.nextBoolean());
 
         return entity;
     }
@@ -71,11 +71,11 @@ public final class EmailAddressRandomizer extends BaseServerEntityRandomizer
      * @return Email address.
      * @throws DocumentContentException Thrown in case an error occurred while trying to generate a document.
      */
-    public static EmailAddressServerEntity generatePersistentWithDocument(final boolean withRandomId, final int count) throws DocumentContentException
+    public static ServerEmailAddressEntity generatePersistentWithDocument(final boolean withRandomId, final int count) throws DocumentContentException
     {
-        var entity = new EmailAddressServerEntity();
-        DocumentServerEntity document;
-        BaseServerEntityRandomizer.populateBaseFields(entity);
+        var entity = new ServerEmailAddressEntity();
+        ServerDocumentEntity document;
+        AbstractBaseServerEntityRandomizer.populateBaseFields(entity);
 
         if (withRandomId)
         {
@@ -90,7 +90,7 @@ public final class EmailAddressRandomizer extends BaseServerEntityRandomizer
 
         entity.setEmail(FAKER.internet().emailAddress());
         entity.setAddressType((AddressType) ADDRESS_TYPE_GENERATOR.gen());
-        entity.setDefaultEmail(RANDOM.nextBoolean());
+        entity.setIsDefaultEmail(RANDOM.nextBoolean());
 
         return entity;
     }
@@ -101,10 +101,10 @@ public final class EmailAddressRandomizer extends BaseServerEntityRandomizer
      * <br>Generally set to {@code true} only for unit tests.
      * @return Email address.
      */
-    public static EmailAddress generateClient(final boolean withRandomId)
+    public static ClientEmailAddressEntity generateClient(final boolean withRandomId)
     {
-        var entity = new EmailAddress();
-        BaseServerEntityRandomizer.populateBaseFields(entity);
+        var entity = new ClientEmailAddressEntity();
+        AbstractBaseServerEntityRandomizer.populateBaseFields(entity);
 
         if (withRandomId)
         {
@@ -113,7 +113,7 @@ public final class EmailAddressRandomizer extends BaseServerEntityRandomizer
 
         entity.setEmail(FAKER.internet().emailAddress());
         entity.setAddressType((AddressType) ADDRESS_TYPE_GENERATOR.gen());
-        entity.setDefaultEmail(RANDOM.nextBoolean());
+        entity.setIsDefaultEmail(RANDOM.nextBoolean());
 
         return entity;
     }
@@ -126,11 +126,11 @@ public final class EmailAddressRandomizer extends BaseServerEntityRandomizer
      * @return Email address.
      * @throws DocumentContentException Thrown in case an error occurred while trying to generate a document.
      */
-    public static EmailAddress generateClientWithDocument(final boolean withRandomId, final int count) throws DocumentContentException
+    public static ClientEmailAddressEntity generateClientWithDocument(final boolean withRandomId, final int count) throws DocumentContentException
     {
-        Document document;
-        EmailAddress entity = new EmailAddress();
-        BaseServerEntityRandomizer.populateBaseFields(entity);
+        ClientDocumentEntity document;
+        ClientEmailAddressEntity entity = new ClientEmailAddressEntity();
+        AbstractBaseServerEntityRandomizer.populateBaseFields(entity);
 
         if (withRandomId)
         {
@@ -145,7 +145,7 @@ public final class EmailAddressRandomizer extends BaseServerEntityRandomizer
 
         entity.setEmail(FAKER.internet().emailAddress());
         entity.setAddressType((AddressType) ADDRESS_TYPE_GENERATOR.gen());
-        entity.setDefaultEmail(RANDOM.nextBoolean());
+        entity.setIsDefaultEmail(RANDOM.nextBoolean());
 
         return entity;
     }

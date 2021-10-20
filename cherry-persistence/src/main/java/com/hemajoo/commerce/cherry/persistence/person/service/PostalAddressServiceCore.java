@@ -17,13 +17,12 @@ package com.hemajoo.commerce.cherry.persistence.person.service;
 import com.hemajoo.commerce.cherry.commons.type.StatusType;
 import com.hemajoo.commerce.cherry.model.base.search.criteria.SearchCriteria;
 import com.hemajoo.commerce.cherry.model.base.search.criteria.SearchOperation;
-import com.hemajoo.commerce.cherry.model.person.search.PostalAddressSearch;
-import com.hemajoo.commerce.cherry.model.person.type.AddressCategoryType;
+import com.hemajoo.commerce.cherry.model.person.search.SearchPostalAddress;
 import com.hemajoo.commerce.cherry.model.person.type.AddressType;
 import com.hemajoo.commerce.cherry.persistence.base.entity.AbstractAuditServerEntity;
 import com.hemajoo.commerce.cherry.persistence.base.entity.AbstractStatusServerEntity;
 import com.hemajoo.commerce.cherry.persistence.base.specification.GenericSpecification;
-import com.hemajoo.commerce.cherry.persistence.person.entity.PostalAddressServerEntity;
+import com.hemajoo.commerce.cherry.persistence.person.entity.ServerPostalAddressEntity;
 import com.hemajoo.commerce.cherry.persistence.person.repository.PostalAddressRepository;
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,13 +53,13 @@ public class PostalAddressServiceCore implements PostalAddressService
     }
 
     @Override
-    public PostalAddressServerEntity findById(UUID id)
+    public ServerPostalAddressEntity findById(UUID id)
     {
         return postalAddressRepository.findById(id).orElse(null);
     }
 
     @Override
-    public PostalAddressServerEntity save(PostalAddressServerEntity postalAddress)
+    public ServerPostalAddressEntity save(ServerPostalAddressEntity postalAddress)
     {
         return postalAddressRepository.save(postalAddress);
     }
@@ -72,39 +71,39 @@ public class PostalAddressServiceCore implements PostalAddressService
     }
 
     @Override
-    public List<PostalAddressServerEntity> findAll()
+    public List<ServerPostalAddressEntity> findAll()
     {
         return postalAddressRepository.findAll();
     }
 
     @Override
-    public List<PostalAddressServerEntity> findByAddressType(AddressType type)
+    public List<ServerPostalAddressEntity> findByAddressType(AddressType type)
     {
         return postalAddressRepository.findByAddressType(type);
     }
 
     @Override
-    public List<PostalAddressServerEntity> findByStatus(StatusType status)
+    public List<ServerPostalAddressEntity> findByStatus(StatusType status)
     {
         return postalAddressRepository.findByStatusType(status);
     }
 
     @Override
-    public List<PostalAddressServerEntity> findByIsDefault(boolean isDefault)
+    public List<ServerPostalAddressEntity> findByIsDefault(boolean isDefault)
     {
         return postalAddressRepository.findByIsDefault(isDefault);
     }
 
     @Override
-    public List<PostalAddressServerEntity> findByPersonId(long personId)
+    public List<ServerPostalAddressEntity> findByPersonId(long personId)
     {
         return postalAddressRepository.findByPersonId(personId);
     }
 
     @Override
-    public List<PostalAddressServerEntity> search(@NonNull PostalAddressSearch postalAddress)
+    public List<ServerPostalAddressEntity> search(@NonNull SearchPostalAddress postalAddress)
     {
-        GenericSpecification<PostalAddressServerEntity> specification = new GenericSpecification<>();
+        GenericSpecification<ServerPostalAddressEntity> specification = new GenericSpecification<>();
 
         // Inherited fields
         if (postalAddress.getCreatedBy() != null)
@@ -123,7 +122,7 @@ public class PostalAddressServiceCore implements PostalAddressService
                     SearchOperation.MATCH));
         }
 
-        if (postalAddress.getStatusType() != null && postalAddress.getStatusType() != StatusType.UNSPECIFIED)
+        if (postalAddress.getStatusType() != null)
         {
             specification.add(new SearchCriteria(
                     AbstractStatusServerEntity.FIELD_STATUS_TYPE,
@@ -134,7 +133,7 @@ public class PostalAddressServiceCore implements PostalAddressService
         if (postalAddress.getId() != null)
         {
             specification.add(new SearchCriteria(
-                    PostalAddressServerEntity.FIELD_ID,
+                    ServerPostalAddressEntity.FIELD_ID,
                     postalAddress.getId(),
                     SearchOperation.EQUAL));
         }
@@ -142,15 +141,15 @@ public class PostalAddressServiceCore implements PostalAddressService
         if (postalAddress.getIsDefault() != null)
         {
             specification.add(new SearchCriteria(
-                    PostalAddressServerEntity.FIELD_IS_DEFAULT,
+                    ServerPostalAddressEntity.FIELD_IS_DEFAULT,
                     postalAddress.getIsDefault(),
                     SearchOperation.EQUAL));
         }
 
-        if (postalAddress.getAddressType() != null && postalAddress.getAddressType() != AddressType.UNSPECIFIED)
+        if (postalAddress.getAddressType() != null)
         {
             specification.add(new SearchCriteria(
-                    PostalAddressServerEntity.FIELD_ADDRESS_TYPE,
+                    ServerPostalAddressEntity.FIELD_ADDRESS_TYPE,
                     postalAddress.getAddressType(),
                     SearchOperation.EQUAL));
         }
@@ -158,15 +157,15 @@ public class PostalAddressServiceCore implements PostalAddressService
         if (postalAddress.getPersonId() != null)
         {
             specification.add(new SearchCriteria(
-                    PostalAddressServerEntity.FIELD_PERSON_ID,
+                    ServerPostalAddressEntity.FIELD_PERSON_ID,
                     postalAddress.getPersonId(),
                     SearchOperation.EQUAL));
         }
 
-        if (postalAddress.getCategoryType() != null && postalAddress.getCategoryType() != AddressCategoryType.UNSPECIFIED)
+        if (postalAddress.getCategoryType() != null)
         {
             specification.add(new SearchCriteria(
-                    PostalAddressServerEntity.FIELD_CATEGORY_TYPE,
+                    ServerPostalAddressEntity.FIELD_CATEGORY_TYPE,
                     postalAddress.getCategoryType(),
                     SearchOperation.EQUAL));
         }
@@ -174,7 +173,7 @@ public class PostalAddressServiceCore implements PostalAddressService
         if (postalAddress.getArea() != null)
         {
             specification.add(new SearchCriteria(
-                    PostalAddressServerEntity.FIELD_AREA,
+                    ServerPostalAddressEntity.FIELD_AREA,
                     postalAddress.getArea(),
                     SearchOperation.MATCH));
         }
@@ -182,7 +181,7 @@ public class PostalAddressServiceCore implements PostalAddressService
         if (postalAddress.getCountryCode() != null)
         {
             specification.add(new SearchCriteria(
-                    PostalAddressServerEntity.FIELD_COUNTRY_CODE,
+                    ServerPostalAddressEntity.FIELD_COUNTRY_CODE,
                     postalAddress.getCountryCode(),
                     SearchOperation.MATCH));
         }
@@ -190,7 +189,7 @@ public class PostalAddressServiceCore implements PostalAddressService
         if (postalAddress.getLocality() != null)
         {
             specification.add(new SearchCriteria(
-                    PostalAddressServerEntity.FIELD_LOCALITY,
+                    ServerPostalAddressEntity.FIELD_LOCALITY,
                     postalAddress.getLocality(),
                     SearchOperation.MATCH));
         }
@@ -198,7 +197,7 @@ public class PostalAddressServiceCore implements PostalAddressService
         if (postalAddress.getStreetName() != null)
         {
             specification.add(new SearchCriteria(
-                    PostalAddressServerEntity.FIELD_STREET_NAME,
+                    ServerPostalAddressEntity.FIELD_STREET_NAME,
                     postalAddress.getStreetName(),
                     SearchOperation.MATCH));
         }
@@ -206,7 +205,7 @@ public class PostalAddressServiceCore implements PostalAddressService
         if (postalAddress.getStreetNumber() != null)
         {
             specification.add(new SearchCriteria(
-                    PostalAddressServerEntity.FIELD_STREET_NUMBER,
+                    ServerPostalAddressEntity.FIELD_STREET_NUMBER,
                     postalAddress.getStreetNumber(),
                     SearchOperation.MATCH));
         }
@@ -214,7 +213,7 @@ public class PostalAddressServiceCore implements PostalAddressService
         if (postalAddress.getZipCode() != null)
         {
             specification.add(new SearchCriteria(
-                    PostalAddressServerEntity.FIELD_ZIP_CODE,
+                    ServerPostalAddressEntity.FIELD_ZIP_CODE,
                     postalAddress.getZipCode(),
                     SearchOperation.MATCH));
         }

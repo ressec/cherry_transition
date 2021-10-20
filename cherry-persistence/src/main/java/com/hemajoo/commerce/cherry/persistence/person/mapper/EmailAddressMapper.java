@@ -14,20 +14,21 @@
  */
 package com.hemajoo.commerce.cherry.persistence.person.mapper;
 
-import com.hemajoo.commerce.cherry.model.person.entity.EmailAddress;
+import com.hemajoo.commerce.cherry.commons.entity.Identity;
+import com.hemajoo.commerce.cherry.model.document.exception.DocumentException;
+import com.hemajoo.commerce.cherry.model.person.entity.ClientEmailAddressEntity;
+import com.hemajoo.commerce.cherry.persistence.base.factory.ServerEntityFactory;
 import com.hemajoo.commerce.cherry.persistence.base.mapper.CycleAvoidingMappingContext;
 import com.hemajoo.commerce.cherry.persistence.document.mapper.DocumentMapper;
-import com.hemajoo.commerce.cherry.persistence.person.entity.EmailAddressServerEntity;
-import org.mapstruct.CollectionMappingStrategy;
-import org.mapstruct.Context;
-import org.mapstruct.Mapper;
-import org.mapstruct.ReportingPolicy;
+import com.hemajoo.commerce.cherry.persistence.person.entity.ServerEmailAddressEntity;
+import com.hemajoo.commerce.cherry.persistence.person.entity.ServerPerson;
+import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
 
 import java.util.List;
 
 /**
- * A mapper interface providing services to map between {@link EmailAddress} and {@link EmailAddressServerEntity} and vice-versa.
+ * A mapper interface providing services to map between {@link ClientEmailAddressEntity} and {@link ServerEmailAddressEntity} and vice-versa.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
@@ -48,7 +49,8 @@ public interface EmailAddressMapper
      * @param context Context object.
      * @return Mapped persistent entity.
      */
-    EmailAddressServerEntity fromClient(EmailAddress entity, @Context CycleAvoidingMappingContext context);
+    //@Mapping(source = "entity.person", target = "person", qualifiedByName = "fromIdentity")
+    ServerEmailAddressEntity mapClient(ClientEmailAddressEntity entity, @Context CycleAvoidingMappingContext context);
 
     /**
      * Maps a list of client entities to a list of persistent entities.
@@ -56,7 +58,7 @@ public interface EmailAddressMapper
      * @param context Context object.
      * @return Mapped list of persistent entities.
      */
-    List<EmailAddressServerEntity> fromClientList(List<EmailAddress> list, @Context CycleAvoidingMappingContext context);
+    List<ServerEmailAddressEntity> mapClientList(List<ClientEmailAddressEntity> list, @Context CycleAvoidingMappingContext context);
 
     /**
      * Maps from a persistent entity to a client entity.
@@ -64,7 +66,8 @@ public interface EmailAddressMapper
      * @param context Context object.
      * @return Mapped client entity.
      */
-    EmailAddress fromServer(EmailAddressServerEntity entity, @Context CycleAvoidingMappingContext context);
+    //@Mapping(source = "entity.person", target = "person", qualifiedByName = "toIdentity")
+    ClientEmailAddressEntity mapPersistence(ServerEmailAddressEntity entity, @Context CycleAvoidingMappingContext context);
 
     /**
      * Maps from a list of persistent entities to a list of client entities.
@@ -72,7 +75,7 @@ public interface EmailAddressMapper
      * @param context Context object.
      * @return Mapped list of client entities.
      */
-    List<EmailAddress> fromServerList(List<EmailAddressServerEntity> list, @Context CycleAvoidingMappingContext context);
+    List<ClientEmailAddressEntity> mapPersistenceList(List<ServerEmailAddressEntity> list, @Context CycleAvoidingMappingContext context);
 
     /**
      * Copy a persistent entity.
@@ -80,7 +83,7 @@ public interface EmailAddressMapper
      * @param context Context object.
      * @return Copied persistent entity.
      */
-    EmailAddressServerEntity copy(EmailAddressServerEntity entity, @Context CycleAvoidingMappingContext context);
+    ServerEmailAddressEntity copy(ServerEmailAddressEntity entity, @Context CycleAvoidingMappingContext context);
 
     /**
      * Copy a client entity.
@@ -88,5 +91,28 @@ public interface EmailAddressMapper
      * @param context Context object.
      * @return Copied client entity.
      */
-    EmailAddress copy(EmailAddress entity, @Context CycleAvoidingMappingContext context);
+    ClientEmailAddressEntity copy(ClientEmailAddressEntity entity, @Context CycleAvoidingMappingContext context);
+
+    /**
+     * Converts a server person to an entity identity.
+     * @param person Server email address entity.
+     * @return Entity identity.
+     */
+    @Named("toIdentity")
+    default Identity toIdentity(final ServerPerson person)
+    {
+        return person != null ? person.getIdentity() : null;
+    }
+
+    /**
+     * Converts an entity identity to a server person entity.
+     * @param identity Entity identity.
+     * @return Server entity.
+     * @throws DocumentException Thrown in case an error occurred with a document.
+     */
+    @Named("fromIdentity")
+    default ServerPerson fromIdentity(final Identity identity) throws DocumentException
+    {
+        return (ServerPerson) new ServerEntityFactory().from(identity);
+    }
 }

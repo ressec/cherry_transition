@@ -22,12 +22,12 @@ import lombok.ToString;
 import java.util.UUID;
 
 /**
- * Entity identity contains minimal information of the identity of an entity (its type and its identifier).
+ * Entity identity contains minimal information of the identity of an entity.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
 @ToString
-public class EntityIdentity implements IEntityIdentity
+public class EntityIdentity implements Identity
 {
     /**
      * Entity type.

@@ -14,7 +14,7 @@
  */
 package com.hemajoo.commerce.cherry.persistence.person.validation.validator;
 
-import com.hemajoo.commerce.cherry.model.person.entity.EmailAddress;
+import com.hemajoo.commerce.cherry.model.person.entity.ClientEmailAddressEntity;
 import com.hemajoo.commerce.cherry.persistence.person.validation.constraint.ValidEmailAddressForUpdate;
 import com.hemajoo.commerce.cherry.persistence.person.validation.engine.EmailAddressRuleEngine;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +28,7 @@ import javax.validation.ConstraintValidatorContext;
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-public class EmailAddressValidatorForUpdate implements ConstraintValidator<ValidEmailAddressForUpdate, EmailAddress>
+public class EmailAddressValidatorForUpdate implements ConstraintValidator<ValidEmailAddressForUpdate, ClientEmailAddressEntity>
 {
     /**
      * Email address rule engine.
@@ -43,7 +43,7 @@ public class EmailAddressValidatorForUpdate implements ConstraintValidator<Valid
     }
 
     @Override
-    public boolean isValid(EmailAddress emailAddress, ConstraintValidatorContext context)
+    public boolean isValid(ClientEmailAddressEntity emailAddress, ConstraintValidatorContext context)
     {
         try
         {

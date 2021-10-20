@@ -14,12 +14,12 @@
  */
 package com.hemajoo.commerce.cherry.persistence.test.integration.model.entity.person;
 
-import com.hemajoo.commerce.cherry.model.document.DocumentContentException;
-import com.hemajoo.commerce.cherry.model.document.DocumentException;
+import com.hemajoo.commerce.cherry.model.document.exception.DocumentContentException;
+import com.hemajoo.commerce.cherry.model.document.exception.DocumentException;
 import com.hemajoo.commerce.cherry.persistence.base.test.AbstractBaseDatabaseUnitTest;
-import com.hemajoo.commerce.cherry.persistence.document.entity.DocumentServerEntity;
+import com.hemajoo.commerce.cherry.persistence.document.entity.ServerDocumentEntity;
 import com.hemajoo.commerce.cherry.persistence.document.randomizer.DocumentRandomizer;
-import com.hemajoo.commerce.cherry.persistence.person.entity.PersonServerEntity;
+import com.hemajoo.commerce.cherry.persistence.person.entity.ServerPersonEntity;
 import com.hemajoo.commerce.cherry.persistence.person.randomizer.PersonRandomizer;
 import com.hemajoo.commerce.cherry.persistence.test.integration.SpringCherryForIntegrationTest;
 import com.hemajoo.commerce.cherry.persistence.test.integration.configuration.PersistenceConfigurationForIntegrationTest;
@@ -37,7 +37,7 @@ import java.util.UUID;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
- * Integration tests for the {@link PersonServerEntity} persistent entity.
+ * Integration tests for the {@link ServerPersonEntity} persistent entity.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
@@ -54,11 +54,11 @@ class PersonIntegrationTest extends AbstractBaseDatabaseUnitTest
     @DisplayName("Create a persistent person (without document)") final void testCreatePersonWithoutDocument() throws DocumentException
     {
         // Generate random person.
-        PersonServerEntity person = PersonRandomizer.generatePersistent(false);
+        ServerPersonEntity person = PersonRandomizer.generatePersistent(false);
         personService.save(person);
 
         // Load the persisted person using its id.
-        PersonServerEntity persistent = personService.findById(person.getId());
+        ServerPersonEntity persistent = personService.findById(person.getId());
         assertThat(person)
                 .as("Person must not be null!")
                 .isNotNull();
@@ -68,15 +68,15 @@ class PersonIntegrationTest extends AbstractBaseDatabaseUnitTest
     @DisplayName("Create a persistent person (with a document)") final void testCreatePersonWithDocument() throws DocumentException, DocumentContentException
     {
         // Generate random person and document.
-        PersonServerEntity person = PersonRandomizer.generatePersistent(false);
-        DocumentServerEntity document = DocumentRandomizer.generatePersistent(false);
+        ServerPersonEntity person = PersonRandomizer.generatePersistent(false);
+        ServerDocumentEntity document = DocumentRandomizer.generatePersistent(false);
         person.addDocument(document);
 
         // Save the entities on database.
         personService.save(person);
 
         // Load the saved person.
-        PersonServerEntity persistent = personService.findById(person.getId());
+        ServerPersonEntity persistent = personService.findById(person.getId());
 
         assertThat(person)
                 .as("Person must not be null!")
@@ -95,7 +95,7 @@ class PersonIntegrationTest extends AbstractBaseDatabaseUnitTest
         String lastname = "Hugo";
 
         // Generate random person.
-        PersonServerEntity person = PersonRandomizer.generatePersistent(false);
+        ServerPersonEntity person = PersonRandomizer.generatePersistent(false);
         personService.save(person);
 
         // Load the saved person and change its names.
@@ -104,7 +104,7 @@ class PersonIntegrationTest extends AbstractBaseDatabaseUnitTest
         person.setLastName(lastname);
         personService.save(person);
 
-        PersonServerEntity persistent = personService.findById(person.getId());
+        ServerPersonEntity persistent = personService.findById(person.getId());
 
         assertThat(person)
                 .as("Person must not be null!")
@@ -122,7 +122,7 @@ class PersonIntegrationTest extends AbstractBaseDatabaseUnitTest
     @DisplayName("Delete a persistent person") final void testDeletePerson() throws DocumentException
     {
         // Generate a random person.
-        PersonServerEntity person = PersonRandomizer.generatePersistent(false);
+        ServerPersonEntity person = PersonRandomizer.generatePersistent(false);
         personService.save(person);
         UUID id = person.getId();
 
@@ -133,7 +133,7 @@ class PersonIntegrationTest extends AbstractBaseDatabaseUnitTest
         // Load the person from the database.
         personService.deleteById(person.getId());
 
-        PersonServerEntity other = personService.findById(id);
+        ServerPersonEntity other = personService.findById(id);
         assertThat(other)
                 .as("Person should be null!")
                 .isNull();
@@ -143,8 +143,8 @@ class PersonIntegrationTest extends AbstractBaseDatabaseUnitTest
     @DisplayName("Orphan document should be automatically removed") final void testOrphanDocumentRemoval() throws DocumentException, DocumentContentException
     {
         // Generate a random person and document.
-        PersonServerEntity person = PersonRandomizer.generatePersistent(false);
-        DocumentServerEntity document = DocumentRandomizer.generatePersistent(false);
+        ServerPersonEntity person = PersonRandomizer.generatePersistent(false);
+        ServerDocumentEntity document = DocumentRandomizer.generatePersistent(false);
         person.addDocument(document);
         personService.save(person);
 
@@ -155,7 +155,7 @@ class PersonIntegrationTest extends AbstractBaseDatabaseUnitTest
         personService.getRepository().saveAndFlush(person);
 
         // Check the document has been automatically removed in the database as it was an orphan.
-        DocumentServerEntity orphan = documentService.findById(document.getId());
+        ServerDocumentEntity orphan = documentService.findById(document.getId());
         assertThat(orphan)
                 .as(String.format("Document with id: %s should not exist anymore in the database!", document.getId()))
                 .isNull();

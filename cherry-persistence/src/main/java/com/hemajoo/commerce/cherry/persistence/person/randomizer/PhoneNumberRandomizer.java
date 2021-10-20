@@ -14,11 +14,11 @@
  */
 package com.hemajoo.commerce.cherry.persistence.person.randomizer;
 
-import com.hemajoo.commerce.cherry.model.person.entity.PhoneNumber;
+import com.hemajoo.commerce.cherry.model.person.entity.ClientPhoneNumberEntity;
 import com.hemajoo.commerce.cherry.model.person.type.PhoneNumberCategoryType;
 import com.hemajoo.commerce.cherry.model.person.type.PhoneNumberType;
-import com.hemajoo.commerce.cherry.persistence.base.randomizer.BaseServerEntityRandomizer;
-import com.hemajoo.commerce.cherry.persistence.person.entity.PhoneNumberServerEntity;
+import com.hemajoo.commerce.cherry.persistence.base.randomizer.AbstractBaseServerEntityRandomizer;
+import com.hemajoo.commerce.cherry.persistence.person.entity.ServerPhoneNumberEntity;
 import lombok.experimental.UtilityClass;
 import org.ressec.avocado.core.random.EnumRandomGenerator;
 
@@ -30,17 +30,17 @@ import java.util.UUID;
  * @version 1.0.0
  */
 @UtilityClass
-public final class PhoneNumberRandomizer extends BaseServerEntityRandomizer
+public final class PhoneNumberRandomizer extends AbstractBaseServerEntityRandomizer
 {
     /**
      * Phone number type enumeration generator.
      */
-    private static final EnumRandomGenerator PHONE_NUMBER_TYPE_GENERATOR = new EnumRandomGenerator(PhoneNumberType.class).exclude(PhoneNumberType.UNSPECIFIED);
+    private static final EnumRandomGenerator PHONE_NUMBER_TYPE_GENERATOR = new EnumRandomGenerator(PhoneNumberType.class);
 
     /**
      * Phone number category type enumeration generator.
      */
-    private static final EnumRandomGenerator PHONE_NUMBER_CATEGORY_TYPE_GENERATOR = new EnumRandomGenerator(PhoneNumberCategoryType.class).exclude(PhoneNumberCategoryType.UNSPECIFIED);
+    private static final EnumRandomGenerator PHONE_NUMBER_CATEGORY_TYPE_GENERATOR = new EnumRandomGenerator(PhoneNumberCategoryType.class);
 
     /**
      * Generates a new random persistent phone number.
@@ -48,10 +48,10 @@ public final class PhoneNumberRandomizer extends BaseServerEntityRandomizer
      * <br>Generally set to {@code true} only for unit tests.
      * @return Phone number.
      */
-    public static PhoneNumberServerEntity generatePersistent(final boolean withRandomId)
+    public static ServerPhoneNumberEntity generatePersistent(final boolean withRandomId)
     {
-        var entity = new PhoneNumberServerEntity();
-        BaseServerEntityRandomizer.populateBaseFields(entity);
+        var entity = new ServerPhoneNumberEntity();
+        AbstractBaseServerEntityRandomizer.populateBaseFields(entity);
 
         if (withRandomId)
         {
@@ -73,10 +73,10 @@ public final class PhoneNumberRandomizer extends BaseServerEntityRandomizer
      * <br>Generally set to {@code true} only for unit tests.
      * @return Phone number.
      */
-    public static PhoneNumber generateClient(final boolean withRandomId)
+    public static ClientPhoneNumberEntity generateClient(final boolean withRandomId)
     {
-        var entity = new PhoneNumber();
-        BaseServerEntityRandomizer.populateBaseFields(entity);
+        var entity = new ClientPhoneNumberEntity();
+        AbstractBaseServerEntityRandomizer.populateBaseFields(entity);
 
         if (withRandomId)
         {

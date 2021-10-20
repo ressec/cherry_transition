@@ -14,21 +14,18 @@
  */
 package com.hemajoo.commerce.cherry.persistence.person.service;
 
-import com.hemajoo.commerce.cherry.commons.type.StatusType;
 import com.hemajoo.commerce.cherry.model.base.search.criteria.SearchCriteria;
 import com.hemajoo.commerce.cherry.model.base.search.criteria.SearchOperation;
-import com.hemajoo.commerce.cherry.model.document.DocumentException;
-import com.hemajoo.commerce.cherry.model.person.search.PersonSearch;
-import com.hemajoo.commerce.cherry.model.person.type.GenderType;
-import com.hemajoo.commerce.cherry.model.person.type.PersonType;
+import com.hemajoo.commerce.cherry.model.document.exception.DocumentException;
+import com.hemajoo.commerce.cherry.model.person.search.SearchPerson;
 import com.hemajoo.commerce.cherry.persistence.base.entity.AbstractAuditServerEntity;
 import com.hemajoo.commerce.cherry.persistence.base.entity.AbstractStatusServerEntity;
-import com.hemajoo.commerce.cherry.persistence.base.entity.BaseServerEntity;
+import com.hemajoo.commerce.cherry.persistence.base.entity.ServerBaseEntity;
 import com.hemajoo.commerce.cherry.persistence.base.specification.GenericSpecification;
-import com.hemajoo.commerce.cherry.persistence.document.entity.DocumentServerEntity;
+import com.hemajoo.commerce.cherry.persistence.document.entity.ServerDocumentEntity;
 import com.hemajoo.commerce.cherry.persistence.document.repository.DocumentService;
-import com.hemajoo.commerce.cherry.persistence.person.entity.EmailAddressServerEntity;
-import com.hemajoo.commerce.cherry.persistence.person.entity.PersonServerEntity;
+import com.hemajoo.commerce.cherry.persistence.person.entity.ServerEmailAddressEntity;
+import com.hemajoo.commerce.cherry.persistence.person.entity.ServerPersonEntity;
 import com.hemajoo.commerce.cherry.persistence.person.repository.EmailAddressRepository;
 import com.hemajoo.commerce.cherry.persistence.person.repository.PersonRepository;
 import com.hemajoo.commerce.cherry.persistence.person.repository.PhoneNumberRepository;
@@ -98,14 +95,14 @@ public class PersonServiceCore implements PersonService
     }
 
     @Override
-    public PersonServerEntity findById(UUID id)
+    public ServerPersonEntity findById(UUID id)
     {
         return personRepository.findById(id).orElse(null);
     }
 
     @Override
     @Transactional(rollbackOn = DocumentException.class)
-    public PersonServerEntity save(PersonServerEntity person) throws DocumentException
+    public ServerPersonEntity save(ServerPersonEntity person) throws DocumentException
     {
         if (person.getId() == null)
         {
@@ -115,7 +112,7 @@ public class PersonServiceCore implements PersonService
         // REMINDER Important to save the underlying collections of entities that hold documents!
 
         // Save the documents directly attached to the person.
-        for (DocumentServerEntity document : person.getDocuments())
+        for (ServerDocumentEntity document : person.getDocuments())
         {
             try
             {
@@ -128,7 +125,7 @@ public class PersonServiceCore implements PersonService
         }
 
         // Save the email addresses directly attached to the person.
-        for (EmailAddressServerEntity email : person.getEmailAddresses())
+        for (ServerEmailAddressEntity email : person.getEmailAddresses())
         {
             try
             {
@@ -144,13 +141,13 @@ public class PersonServiceCore implements PersonService
     }
 
     @Override
-    public List<DocumentServerEntity> getDocuments(@NonNull BaseServerEntity entity)
+    public List<ServerDocumentEntity> getDocuments(@NonNull ServerBaseEntity entity)
     {
         return entity.getDocuments();
     }
 
     @Override
-    public void saveAndFlush(@NonNull PersonServerEntity person)
+    public void saveAndFlush(@NonNull ServerPersonEntity person)
     {
         personRepository.saveAndFlush(person);
     }
@@ -162,15 +159,15 @@ public class PersonServiceCore implements PersonService
     }
 
     @Override
-    public List<PersonServerEntity> findAll()
+    public List<ServerPersonEntity> findAll()
     {
         return personRepository.findAll();
     }
 
     @Override
-    public List<PersonServerEntity> search(@NonNull PersonSearch person)
+    public List<ServerPersonEntity> search(@NonNull SearchPerson person)
     {
-        GenericSpecification<PersonServerEntity> specification = new GenericSpecification<>();
+        GenericSpecification<ServerPersonEntity> specification = new GenericSpecification<>();
 
         // Inherited fields
         if (person.getCreatedBy() != null)
@@ -192,20 +189,20 @@ public class PersonServiceCore implements PersonService
         if (person.getId() != null)
         {
             specification.add(new SearchCriteria(
-                    PersonServerEntity.FIELD_ID,
+                    ServerPersonEntity.FIELD_ID,
                     person.getId(),
                     SearchOperation.EQUAL));
         }
 
-        if (person.getPersonType() != null && person.getPersonType() != PersonType.UNSPECIFIED)
+        if (person.getPersonType() != null)
         {
             specification.add(new SearchCriteria(
-                    PersonServerEntity.FIELD_PERSON_TYPE,
+                    ServerPersonEntity.FIELD_PERSON_TYPE,
                     person.getPersonType(),
                     SearchOperation.EQUAL));
         }
 
-        if (person.getStatusType() != null && person.getStatusType() != StatusType.UNSPECIFIED)
+        if (person.getStatusType() != null)
         {
             specification.add(new SearchCriteria(
                     AbstractStatusServerEntity.FIELD_STATUS_TYPE,
@@ -213,10 +210,10 @@ public class PersonServiceCore implements PersonService
                     SearchOperation.EQUAL));
         }
 
-        if (person.getGenderType() != null && person.getGenderType() != GenderType.UNSPECIFIED)
+        if (person.getGenderType() != null)
         {
             specification.add(new SearchCriteria(
-                    PersonServerEntity.FIELD_GENDER_TYPE,
+                    ServerPersonEntity.FIELD_GENDER_TYPE,
                     person.getGenderType(),
                     SearchOperation.EQUAL));
         }
@@ -224,7 +221,7 @@ public class PersonServiceCore implements PersonService
         if (person.getBirthDate() != null)
         {
             specification.add(new SearchCriteria(
-                    PersonServerEntity.FIELD_BIRTHDATE,
+                    ServerPersonEntity.FIELD_BIRTHDATE,
                     person.getBirthDate(),
                     SearchOperation.EQUAL));
         }
@@ -232,7 +229,7 @@ public class PersonServiceCore implements PersonService
         if (person.getLastName() != null)
         {
             specification.add(new SearchCriteria(
-                    PersonServerEntity.FIELD_LASTNAME,
+                    ServerPersonEntity.FIELD_LASTNAME,
                     person.getLastName(),
                     SearchOperation.MATCH));
         }
@@ -240,7 +237,7 @@ public class PersonServiceCore implements PersonService
         if (person.getFirstName() != null)
         {
             specification.add(new SearchCriteria(
-                    PersonServerEntity.FIELD_FIRSTNAME,
+                    ServerPersonEntity.FIELD_FIRSTNAME,
                     person.getFirstName(),
                     SearchOperation.MATCH));
         }
@@ -249,13 +246,13 @@ public class PersonServiceCore implements PersonService
     }
 
     @Override
-    public List<EmailAddressServerEntity> getEmailAddresses(final @NonNull PersonServerEntity person)
+    public List<ServerEmailAddressEntity> getEmailAddresses(final @NonNull ServerPersonEntity person)
     {
         return emailAddressRepository.findByPersonId(person.getId());
     }
 
     @Override
-    public PersonServerEntity loadEmailAddresses(final @NonNull PersonServerEntity person)
+    public ServerPersonEntity loadEmailAddresses(final @NonNull ServerPersonEntity person)
     {
         person.setEmailAddresses(getEmailAddresses(person));
 

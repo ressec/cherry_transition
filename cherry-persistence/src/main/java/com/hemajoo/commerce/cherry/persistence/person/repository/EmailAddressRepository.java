@@ -16,7 +16,7 @@ package com.hemajoo.commerce.cherry.persistence.person.repository;
 
 import com.hemajoo.commerce.cherry.commons.type.StatusType;
 import com.hemajoo.commerce.cherry.model.person.type.AddressType;
-import com.hemajoo.commerce.cherry.persistence.person.entity.EmailAddressServerEntity;
+import com.hemajoo.commerce.cherry.persistence.person.entity.ServerEmailAddressEntity;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
@@ -29,35 +29,35 @@ import java.util.UUID;
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-public interface EmailAddressRepository extends JpaRepository<EmailAddressServerEntity, UUID>, JpaSpecificationExecutor<EmailAddressServerEntity>
+public interface EmailAddressRepository extends JpaRepository<ServerEmailAddressEntity, UUID>, JpaSpecificationExecutor<ServerEmailAddressEntity>
 {
     /**
      * Returns a list of email addresses given an address type.
      * @param addressType Address type.
      * @return List of matching email addresses.
      */
-    List<EmailAddressServerEntity> findByAddressType(AddressType addressType);
+    List<ServerEmailAddressEntity> findByAddressType(AddressType addressType);
 
     /**
      * Returns a list of email addresses given a status type.
      * @param statusType Status type.
      * @return List of matching email addresses.
      */
-    List<EmailAddressServerEntity> findByStatusType(StatusType statusType);
+    List<ServerEmailAddressEntity> findByStatusType(StatusType statusType);
 
     /**
      * Returns a list of default or not default email addresses.
-     * @param defaultEmail Is the default email address?
+     * @param isDefaultEmail Is the default email address?
      * @return List of matching email addresses.
      */
-    List<EmailAddressServerEntity> findByDefaultEmail(boolean defaultEmail);
+    List<ServerEmailAddressEntity> findByIsDefaultEmail(Boolean isDefaultEmail);
 
     /**
      * Returns a list of email addresses belonging to a person.
      * @param personId Person identifier.
      * @return List of matching email addresses.
      */
-    List<EmailAddressServerEntity> findByPersonId(UUID personId);
+    List<ServerEmailAddressEntity> findByPersonId(UUID personId);
 
 //    /**
 //     * Returns a list of email addresses matching the given set of criteria.
@@ -79,5 +79,5 @@ public interface EmailAddressRepository extends JpaRepository<EmailAddressServer
 //            @Param(value = "status") String status,
 //            @Param(value = "personId") Long personId);
 
-    List<EmailAddressServerEntity> findAll(final Specification<EmailAddressServerEntity> specification);
+    List<ServerEmailAddressEntity> findAll(final Specification<ServerEmailAddressEntity> specification);
 }

@@ -14,11 +14,15 @@
  */
 package com.hemajoo.commerce.cherry.persistence.person.mapper;
 
-import com.hemajoo.commerce.cherry.model.person.entity.Person;
-import com.hemajoo.commerce.cherry.model.person.search.PersonSearch;
+import com.hemajoo.commerce.cherry.commons.entity.Identity;
+import com.hemajoo.commerce.cherry.model.document.exception.DocumentException;
+import com.hemajoo.commerce.cherry.model.person.entity.ClientPersonEntity;
+import com.hemajoo.commerce.cherry.model.person.search.SearchPerson;
+import com.hemajoo.commerce.cherry.persistence.base.factory.ServerEntityFactory;
 import com.hemajoo.commerce.cherry.persistence.base.mapper.CycleAvoidingMappingContext;
 import com.hemajoo.commerce.cherry.persistence.document.mapper.DocumentMapper;
-import com.hemajoo.commerce.cherry.persistence.person.entity.PersonServerEntity;
+import com.hemajoo.commerce.cherry.persistence.person.entity.ServerPerson;
+import com.hemajoo.commerce.cherry.persistence.person.entity.ServerPersonEntity;
 import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
 
@@ -26,7 +30,7 @@ import java.util.List;
 import java.util.UUID;
 
 /**
- * A mapper interface providing services to map between {@link Person} and {@link PersonServerEntity} and vice-versa.
+ * A mapper interface providing services to map between {@link ClientPersonEntity} and {@link ServerPersonEntity} and vice-versa.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
@@ -47,7 +51,7 @@ public interface PersonMapper
      * @param context Context object.
      * @return Mapped client entity.
      */
-    Person fromServer(PersonServerEntity persistent, @Context CycleAvoidingMappingContext context);
+    ClientPersonEntity mapPersistence(ServerPersonEntity persistent, @Context CycleAvoidingMappingContext context);
 
     /**
      * Maps from a list of persistent entities to a list of client entities.
@@ -55,7 +59,7 @@ public interface PersonMapper
      * @param context Context object.
      * @return Mapped list of client entities.
      */
-    List<Person> fromServerList(List<PersonServerEntity> list, @Context CycleAvoidingMappingContext context);
+    List<ClientPersonEntity> mapPersistenceList(List<ServerPersonEntity> list, @Context CycleAvoidingMappingContext context);
 
     /**
      * Maps from a client entity to a persistent entity.
@@ -63,7 +67,7 @@ public interface PersonMapper
      * @param context Context object.
      * @return Mapped persistent entity.
      */
-    PersonServerEntity fromClient(Person entity, @Context CycleAvoidingMappingContext context);
+    ServerPersonEntity mapClient(ClientPersonEntity entity, @Context CycleAvoidingMappingContext context);
 
     /**
      * Maps a list of client entities to a list of persistent entities.
@@ -71,7 +75,7 @@ public interface PersonMapper
      * @param context Context object.
      * @return Mapped list of persistent entities.
      */
-    List<PersonServerEntity> fromClientList(List<Person> list, @Context CycleAvoidingMappingContext context);
+    List<ServerPersonEntity> mapClientList(List<ClientPersonEntity> list, @Context CycleAvoidingMappingContext context);
 
     /**
      * Copy a persistent entity.
@@ -79,7 +83,7 @@ public interface PersonMapper
      * @param context Context object.
      * @return Copied persistent entity.
      */
-    PersonServerEntity copy(PersonServerEntity persistent, @Context CycleAvoidingMappingContext context);
+    ServerPersonEntity copy(ServerPersonEntity persistent, @Context CycleAvoidingMappingContext context);
 
     /**
      * Copy a client entity.
@@ -87,7 +91,7 @@ public interface PersonMapper
      * @param context Context object.
      * @return Copied client entity.
      */
-    Person copy(Person entity, @Context CycleAvoidingMappingContext context);
+    ClientPersonEntity copy(ClientPersonEntity entity, @Context CycleAvoidingMappingContext context);
 
     /**
      * Maps from a persistent entity to a search entity.
@@ -96,7 +100,30 @@ public interface PersonMapper
      * @return Person (search).
      */
     @Mapping(source = "id", target = "id", qualifiedByName = "uuidToString")
-    PersonSearch toSearch(PersonServerEntity entity, @Context CycleAvoidingMappingContext context);
+    SearchPerson toSearch(ServerPersonEntity entity, @Context CycleAvoidingMappingContext context);
+
+    /**
+     * Converts a server person to an entity identity.
+     * @param person Server person entity.
+     * @return Entity identity.
+     */
+    @Named("toIdentity")
+    default Identity toIdentity(final ServerPerson person)
+    {
+        return person != null ? person.getIdentity() : null;
+    }
+
+    /**
+     * Converts an entity identity to a server entity.
+     * @param identity Entity identity.
+     * @return Server entity.
+     * @throws DocumentException Thrown in case an error occurred with a document.
+     */
+    @Named("fromIdentity")
+    default ServerPerson fromIdentity(final Identity identity) throws DocumentException
+    {
+        return (ServerPerson) new ServerEntityFactory().from(identity);
+    }
 
     @Named("stringToUuid")
     default UUID stringToUuid(String uuid)

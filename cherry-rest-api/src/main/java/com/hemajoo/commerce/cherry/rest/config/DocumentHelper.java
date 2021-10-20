@@ -14,9 +14,9 @@
  */
 package com.hemajoo.commerce.cherry.rest.config;
 
-import com.hemajoo.commerce.cherry.model.document.DocumentException;
+import com.hemajoo.commerce.cherry.model.document.exception.DocumentException;
 import com.hemajoo.commerce.cherry.persistence.content.DocumentStore;
-import com.hemajoo.commerce.cherry.persistence.document.entity.DocumentServerEntity;
+import com.hemajoo.commerce.cherry.persistence.document.entity.ServerDocumentEntity;
 import lombok.NonNull;
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +34,7 @@ public class DocumentHelper
     @Autowired
     private DocumentStore store;
 
-    public void saveAs(final @NonNull DocumentServerEntity document, final @NonNull String outputPath) throws DocumentException
+    public void saveAs(final @NonNull ServerDocumentEntity document, final @NonNull String outputPath) throws DocumentException
     {
         try
         {

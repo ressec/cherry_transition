@@ -15,9 +15,9 @@
 package com.hemajoo.commerce.cherry.persistence.person.service;
 
 import com.hemajoo.commerce.cherry.commons.type.StatusType;
-import com.hemajoo.commerce.cherry.model.person.search.PostalAddressSearch;
+import com.hemajoo.commerce.cherry.model.person.search.SearchPostalAddress;
 import com.hemajoo.commerce.cherry.model.person.type.AddressType;
-import com.hemajoo.commerce.cherry.persistence.person.entity.PostalAddressServerEntity;
+import com.hemajoo.commerce.cherry.persistence.person.entity.ServerPostalAddressEntity;
 import lombok.NonNull;
 
 import java.util.List;
@@ -41,14 +41,14 @@ public interface PostalAddressService
      * @param id Postal address identifier.
      * @return Postal address if found, null otherwise.
      */
-    PostalAddressServerEntity findById(UUID id);
+    ServerPostalAddressEntity findById(UUID id);
 
     /**
      * Saves a postal address.
      * @param postalAddress Postal address.
      * @return Saved postal address.
      */
-    PostalAddressServerEntity save(PostalAddressServerEntity postalAddress);
+    ServerPostalAddressEntity save(ServerPostalAddressEntity postalAddress);
 
     /**
      * Deletes a postal address given its identifier.
@@ -60,40 +60,40 @@ public interface PostalAddressService
      * Returns the postal addresses.
      * @return List of postal addresses.
      */
-    List<PostalAddressServerEntity> findAll();
+    List<ServerPostalAddressEntity> findAll();
 
     /**
      * Returns a list of postal addresses given an address type.
      * @param type Address type.
      * @return List of matching postal addresses.
      */
-    List<PostalAddressServerEntity> findByAddressType(AddressType type);
+    List<ServerPostalAddressEntity> findByAddressType(AddressType type);
 
     /**
      * Returns a list of postal addresses given a status type.
      * @param status Status type.
      * @return List of matching postal addresses.
      */
-    List<PostalAddressServerEntity> findByStatus(StatusType status);
+    List<ServerPostalAddressEntity> findByStatus(StatusType status);
 
     /**
      * Returns a list of default or not default postal addresses.
      * @param isDefault Is it a default postal address?
      * @return List of matching postal addresses.
      */
-    List<PostalAddressServerEntity> findByIsDefault(boolean isDefault);
+    List<ServerPostalAddressEntity> findByIsDefault(boolean isDefault);
 
     /**
      * Returns a list of postal addresses belonging to a person.
      * @param personId Person identifier.
      * @return List of matching email addresses.
      */
-    List<PostalAddressServerEntity> findByPersonId(long personId);
+    List<ServerPostalAddressEntity> findByPersonId(long personId);
 
     /**
      * Returns the postal addresses matching the given set of predicates.
      * @param postalAddress Postal address search object containing the predicates.
      * @return List of postal addresses matching the given predicates.
      */
-    List<PostalAddressServerEntity> search(final @NonNull PostalAddressSearch postalAddress);
+    List<ServerPostalAddressEntity> search(final @NonNull SearchPostalAddress postalAddress);
 }

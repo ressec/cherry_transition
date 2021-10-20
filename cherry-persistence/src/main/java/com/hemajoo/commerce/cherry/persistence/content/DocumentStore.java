@@ -14,7 +14,7 @@
  */
 package com.hemajoo.commerce.cherry.persistence.content;
 
-import com.hemajoo.commerce.cherry.persistence.document.entity.DocumentServerEntity;
+import com.hemajoo.commerce.cherry.persistence.document.entity.ServerDocumentEntity;
 import org.springframework.content.commons.repository.ContentStore;
 import org.springframework.content.rest.StoreRestResource;
 
@@ -24,7 +24,7 @@ import org.springframework.content.rest.StoreRestResource;
  * @version 1.0.0
  */
 @StoreRestResource
-public interface DocumentStore extends ContentStore<DocumentServerEntity, String>
+public interface DocumentStore extends ContentStore<ServerDocumentEntity, String>
 {
     // Empty.
 }

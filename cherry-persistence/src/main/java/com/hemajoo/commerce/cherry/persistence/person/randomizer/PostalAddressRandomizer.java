@@ -14,11 +14,11 @@
  */
 package com.hemajoo.commerce.cherry.persistence.person.randomizer;
 
-import com.hemajoo.commerce.cherry.model.person.entity.PostalAddress;
+import com.hemajoo.commerce.cherry.model.person.entity.ClientPostalAddressEntity;
 import com.hemajoo.commerce.cherry.model.person.type.AddressCategoryType;
 import com.hemajoo.commerce.cherry.model.person.type.AddressType;
-import com.hemajoo.commerce.cherry.persistence.base.randomizer.BaseServerEntityRandomizer;
-import com.hemajoo.commerce.cherry.persistence.person.entity.PostalAddressServerEntity;
+import com.hemajoo.commerce.cherry.persistence.base.randomizer.AbstractBaseServerEntityRandomizer;
+import com.hemajoo.commerce.cherry.persistence.person.entity.ServerPostalAddressEntity;
 import lombok.experimental.UtilityClass;
 import org.ressec.avocado.core.random.EnumRandomGenerator;
 
@@ -30,17 +30,17 @@ import java.util.UUID;
  * @version 1.0.0
  */
 @UtilityClass
-public final class PostalAddressRandomizer extends BaseServerEntityRandomizer
+public final class PostalAddressRandomizer extends AbstractBaseServerEntityRandomizer
 {
     /**
      * Address type enumeration generator.
      */
-    private static final EnumRandomGenerator ADDRESS_TYPE_GENERATOR = new EnumRandomGenerator(AddressType.class).exclude(AddressType.UNSPECIFIED);
+    private static final EnumRandomGenerator ADDRESS_TYPE_GENERATOR = new EnumRandomGenerator(AddressType.class);
 
     /**
      * Address category type enumeration generator.
      */
-    private static final EnumRandomGenerator ADDRESS_CATEGORY_TYPE_GENERATOR = new EnumRandomGenerator(AddressCategoryType.class).exclude(AddressCategoryType.UNSPECIFIED);
+    private static final EnumRandomGenerator ADDRESS_CATEGORY_TYPE_GENERATOR = new EnumRandomGenerator(AddressCategoryType.class);
 
     /**
      * Create a random persistent postal address.
@@ -48,10 +48,10 @@ public final class PostalAddressRandomizer extends BaseServerEntityRandomizer
      * <br>Generally set to {@code true} only for unit tests.
      * @return Postal address.
      */
-    public static PostalAddressServerEntity generatePersistent(final boolean withRandomId)
+    public static ServerPostalAddressEntity generatePersistent(final boolean withRandomId)
     {
-        var entity = new PostalAddressServerEntity();
-        BaseServerEntityRandomizer.populateBaseFields(entity);
+        var entity = new ServerPostalAddressEntity();
+        AbstractBaseServerEntityRandomizer.populateBaseFields(entity);
 
         if (withRandomId)
         {
@@ -78,10 +78,10 @@ public final class PostalAddressRandomizer extends BaseServerEntityRandomizer
      * <br>Generally set to {@code true} only for unit tests.
      * @return Postal address.
      */
-    public static PostalAddress generateClient(final boolean withRandomId)
+    public static ClientPostalAddressEntity generateClient(final boolean withRandomId)
     {
-        var entity = new PostalAddress();
-        BaseServerEntityRandomizer.populateBaseFields(entity);
+        var entity = new ClientPostalAddressEntity();
+        AbstractBaseServerEntityRandomizer.populateBaseFields(entity);
 
         if (withRandomId)
         {

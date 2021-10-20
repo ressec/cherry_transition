@@ -14,7 +14,7 @@
  */
 package com.hemajoo.commerce.cherry.persistence.content;
 
-import com.hemajoo.commerce.cherry.persistence.document.entity.DocumentServerEntity;
+import com.hemajoo.commerce.cherry.persistence.document.entity.ServerDocumentEntity;
 import lombok.NonNull;
 import org.springframework.content.fs.config.FilesystemStoreConfigurer;
 import org.springframework.context.annotation.Bean;
@@ -40,10 +40,10 @@ public class DocumentStoreConfigurer
             @Override
             public void configureFilesystemStoreConverters(ConverterRegistry registry)
             {
-                registry.addConverter(new Converter<DocumentServerEntity, String>()
+                registry.addConverter(new Converter<ServerDocumentEntity, String>()
                 {
                     @Override
-                    public String convert(final @NonNull DocumentServerEntity document)
+                    public String convert(final @NonNull ServerDocumentEntity document)
                     {
 //                        return File.separator + document.getOwner().getId().toString() + File.separator + document.getContentId();
                         return File.separator + document.getContentId();

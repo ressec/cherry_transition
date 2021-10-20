@@ -14,12 +14,11 @@
  */
 package com.hemajoo.commerce.cherry.persistence.base.factory;
 
-import com.hemajoo.commerce.cherry.commons.entity.IEntityIdentity;
-import com.hemajoo.commerce.cherry.persistence.base.entity.BaseServerEntity;
+import com.hemajoo.commerce.cherry.commons.entity.Identity;
+import com.hemajoo.commerce.cherry.persistence.base.entity.ServerBaseEntity;
 import com.hemajoo.commerce.cherry.persistence.document.repository.DocumentService;
 import com.hemajoo.commerce.cherry.persistence.person.service.EmailAddressService;
 import com.hemajoo.commerce.cherry.persistence.person.service.PersonService;
-import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -30,37 +29,42 @@ public class ServerEntityFactory
      * Person persistence service.
      */
     @Autowired
-    private PersonService personService;
+    private static PersonService personService;
 
     /**
      * Document persistence service.
      */
     @Autowired
-    private DocumentService documentService;
+    private static DocumentService documentService;
 
     /**
      * Email persistence service.
      */
     @Autowired
-    private EmailAddressService emailAddressService;
+    private static EmailAddressService emailAddressService;
 
-    public BaseServerEntity create(final @NonNull IEntityIdentity identity)
+//    public final <T extends ServerEntity> T from(final Identity identity) // TODO Try to transform to a static method
+    public final ServerBaseEntity from(final Identity identity) // TODO Try to transform to a static method
+//    public static ServerBaseEntity from(final Identity identity)
     {
-        switch (identity.getEntityType())
+        if (identity != null)
         {
-            case DOCUMENT:
-                return documentService.findById(identity.getId());
+            switch (identity.getEntityType())
+            {
+                case DOCUMENT:
+                    return documentService.findById(identity.getId());
 
-            case PERSON:
-                return personService.findById(identity.getId());
+                case PERSON:
+                    return personService.findById(identity.getId());
 
-            case EMAIL_ADDRESS:
-                return emailAddressService.findById(identity.getId());
+                case EMAIL_ADDRESS:
+                    return emailAddressService.findById(identity.getId());
 
-            default:
-                System.err.println("Unhandled entity type: " + identity.getEntityType());
+                default:
+//                    throw new ServerEntityFactory("Unhandled entity type: " + identity.getEntityType());
+            }
         }
 
-        return null; // TODO Thrown an exception!
+        return null;
     }
 }

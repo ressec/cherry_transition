@@ -14,22 +14,24 @@
  */
 package com.hemajoo.commerce.cherry.persistence.person.mapper;
 
-import com.hemajoo.commerce.cherry.model.person.entity.EmailAddress;
-import com.hemajoo.commerce.cherry.model.person.entity.PhoneNumber;
+import com.hemajoo.commerce.cherry.commons.entity.Identity;
+import com.hemajoo.commerce.cherry.model.document.exception.DocumentException;
+import com.hemajoo.commerce.cherry.model.person.entity.ClientEmailAddressEntity;
+import com.hemajoo.commerce.cherry.model.person.entity.ClientPhoneNumberEntity;
+import com.hemajoo.commerce.cherry.persistence.base.entity.ServerBaseEntity;
+import com.hemajoo.commerce.cherry.persistence.base.factory.ServerEntityFactory;
 import com.hemajoo.commerce.cherry.persistence.base.mapper.CycleAvoidingMappingContext;
 import com.hemajoo.commerce.cherry.persistence.document.mapper.DocumentMapper;
-import com.hemajoo.commerce.cherry.persistence.person.entity.EmailAddressServerEntity;
-import com.hemajoo.commerce.cherry.persistence.person.entity.PhoneNumberServerEntity;
-import org.mapstruct.CollectionMappingStrategy;
-import org.mapstruct.Context;
-import org.mapstruct.Mapper;
-import org.mapstruct.ReportingPolicy;
+import com.hemajoo.commerce.cherry.persistence.person.entity.ServerEmailAddressEntity;
+import com.hemajoo.commerce.cherry.persistence.person.entity.ServerPerson;
+import com.hemajoo.commerce.cherry.persistence.person.entity.ServerPhoneNumberEntity;
+import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
 
 import java.util.List;
 
 /**
- * A mapper interface providing services to map between {@link EmailAddress} and {@link EmailAddressServerEntity} and vice-versa.
+ * A mapper interface providing services to map between {@link ClientEmailAddressEntity} and {@link ServerEmailAddressEntity} and vice-versa.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
@@ -50,7 +52,8 @@ public interface PhoneNumberMapper
      * @param context Context object.
      * @return Client entity.
      */
-    PhoneNumber fromServer(PhoneNumberServerEntity entity, @Context CycleAvoidingMappingContext context);
+    //@Mapping(source = "entity.person", target = "person", qualifiedByName = "toIdentity")
+    ClientPhoneNumberEntity mapPersistence(ServerPhoneNumberEntity entity, @Context CycleAvoidingMappingContext context);
 
     /**
      * Maps from a list of persistent entities to a list of client entities.
@@ -58,7 +61,7 @@ public interface PhoneNumberMapper
      * @param context Context object.
      * @return List of client entities.
      */
-    List<PhoneNumber> fromServerList(List<PhoneNumberServerEntity> list, @Context CycleAvoidingMappingContext context);
+    List<ClientPhoneNumberEntity> mapPersistenceList(List<ServerPhoneNumberEntity> list, @Context CycleAvoidingMappingContext context);
 
     /**
      * Maps from a client entity to a persistent entity.
@@ -66,7 +69,8 @@ public interface PhoneNumberMapper
      * @param context Context object.
      * @return Persistent entity.
      */
-    PhoneNumberServerEntity fromClient(PhoneNumber entity, @Context CycleAvoidingMappingContext context);
+    //@Mapping(source = "entity.person", target = "person", qualifiedByName = "fromIdentity")
+    ServerPhoneNumberEntity mapClient(ClientPhoneNumberEntity entity, @Context CycleAvoidingMappingContext context);
 
     /**
      * Maps from a list of client entities to a list of persistent entities.
@@ -74,7 +78,7 @@ public interface PhoneNumberMapper
      * @param context Context object.
      * @return List of persistent entities.
      */
-    List<PhoneNumberServerEntity> fromClientList(List<PhoneNumber> list, @Context CycleAvoidingMappingContext context);
+    List<ServerPhoneNumberEntity> mapClientList(List<ClientPhoneNumberEntity> list, @Context CycleAvoidingMappingContext context);
 
     /**
      * Copy a persistent entity.
@@ -82,7 +86,7 @@ public interface PhoneNumberMapper
      * @param context Context object.
      * @return Copy.
      */
-    PhoneNumberServerEntity copy(PhoneNumberServerEntity entity, @Context CycleAvoidingMappingContext context);
+    ServerPhoneNumberEntity copy(ServerPhoneNumberEntity entity, @Context CycleAvoidingMappingContext context);
 
     /**
      * Copy a client entity.
@@ -90,5 +94,28 @@ public interface PhoneNumberMapper
      * @param context Context object.
      * @return Copy.
      */
-    PhoneNumber copy(PhoneNumber entity, @Context CycleAvoidingMappingContext context);
+    ClientPhoneNumberEntity copy(ClientPhoneNumberEntity entity, @Context CycleAvoidingMappingContext context);
+
+    /**
+     * Converts a server person to an entity identity.
+     * @param person Server person entity.
+     * @return Entity identity.
+     */
+    @Named("toIdentity")
+    default Identity toIdentity(final ServerPerson person)
+    {
+        return person != null ? person.getIdentity() : null;
+    }
+
+    /**
+     * Converts an entity identity to a server entity.
+     * @param identity Entity identity.
+     * @return Server entity.
+     * @throws DocumentException Thrown in case an error occurred with a document.
+     */
+    @Named("fromIdentity")
+    default ServerBaseEntity fromIdentity(final Identity identity) throws DocumentException
+    {
+        return new ServerEntityFactory().from(identity);
+    }
 }

@@ -14,16 +14,16 @@
  */
 package com.hemajoo.commerce.cherry.persistence.person.converter;
 
-import com.hemajoo.commerce.cherry.model.person.entity.EmailAddress;
+import com.hemajoo.commerce.cherry.model.person.entity.ClientEmailAddressEntity;
 import com.hemajoo.commerce.cherry.persistence.base.mapper.CycleAvoidingMappingContext;
-import com.hemajoo.commerce.cherry.persistence.person.entity.EmailAddressServerEntity;
+import com.hemajoo.commerce.cherry.persistence.person.entity.ServerEmailAddressEntity;
 import com.hemajoo.commerce.cherry.persistence.person.mapper.EmailAddressMapper;
 import lombok.experimental.UtilityClass;
 
 import java.util.List;
 
 /**
- * Utility class to convert {@link EmailAddress} to {@link EmailAddressServerEntity} and vice-versa.
+ * Utility class to convert {@link ClientEmailAddressEntity} to {@link ServerEmailAddressEntity} and vice-versa.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
@@ -35,9 +35,9 @@ public final class EmailAddressConverter
      * @param entity Client entity to map.
      * @return Mapped persistent entity.
      */
-    public static EmailAddressServerEntity fromClient(EmailAddress entity)
+    public static ServerEmailAddressEntity convertClient(ClientEmailAddressEntity entity)
     {
-        return EmailAddressMapper.INSTANCE.fromClient(entity, new CycleAvoidingMappingContext());
+        return EmailAddressMapper.INSTANCE.mapClient(entity, new CycleAvoidingMappingContext());
     }
 
     /**
@@ -45,9 +45,9 @@ public final class EmailAddressConverter
      * @param list List of client entities to map.
      * @return Converted list of persistent entities.
      */
-    public static List<EmailAddressServerEntity> fromClientList(List<EmailAddress> list)
+    public static List<ServerEmailAddressEntity> convertClientList(List<ClientEmailAddressEntity> list)
     {
-        return EmailAddressMapper.INSTANCE.fromClientList(list, new CycleAvoidingMappingContext());
+        return EmailAddressMapper.INSTANCE.mapClientList(list, new CycleAvoidingMappingContext());
     }
 
     /**
@@ -55,9 +55,9 @@ public final class EmailAddressConverter
      * @param entity Persistent entity to map.
      * @return Mapped client entity.
      */
-    public static EmailAddress fromPersistent(EmailAddressServerEntity entity)
+    public static ClientEmailAddressEntity convertPersistence(ServerEmailAddressEntity entity)
     {
-        return EmailAddressMapper.INSTANCE.fromServer(entity, new CycleAvoidingMappingContext());
+        return EmailAddressMapper.INSTANCE.mapPersistence(entity, new CycleAvoidingMappingContext());
     }
 
     /**
@@ -65,9 +65,9 @@ public final class EmailAddressConverter
      * @param list List of persistent entities to map.
      * @return Mapped list of client entities.
      */
-    public static List<EmailAddress> fromPersistentList(List<EmailAddressServerEntity> list)
+    public static List<ClientEmailAddressEntity> convertPersistenceList(List<ServerEmailAddressEntity> list)
     {
-        return EmailAddressMapper.INSTANCE.fromServerList(list, new CycleAvoidingMappingContext());
+        return EmailAddressMapper.INSTANCE.mapPersistenceList(list, new CycleAvoidingMappingContext());
     }
 
     /**
@@ -75,7 +75,7 @@ public final class EmailAddressConverter
      * @param entity Persistent source entity to copy.
      * @return Copied persistent entity.
      */
-    public static EmailAddressServerEntity copy(EmailAddressServerEntity entity)
+    public static ServerEmailAddressEntity copy(ServerEmailAddressEntity entity)
     {
         return EmailAddressMapper.INSTANCE.copy(entity, new CycleAvoidingMappingContext());
     }
@@ -85,7 +85,7 @@ public final class EmailAddressConverter
      * @param entity Client source entity to copy.
      * @return Copied client entity.
      */
-    public static EmailAddress copy(EmailAddress entity)
+    public static ClientEmailAddressEntity copy(ClientEmailAddressEntity entity)
     {
         return EmailAddressMapper.INSTANCE.copy(entity, new CycleAvoidingMappingContext());
     }

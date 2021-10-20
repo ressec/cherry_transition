@@ -14,7 +14,7 @@
  */
 package com.hemajoo.commerce.cherry.persistence.document.repository;
 
-import com.hemajoo.commerce.cherry.persistence.document.entity.DocumentServerEntity;
+import com.hemajoo.commerce.cherry.persistence.document.entity.ServerDocumentEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
@@ -25,12 +25,12 @@ import java.util.UUID;
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-public interface DocumentRepository extends JpaRepository<DocumentServerEntity, UUID>
+public interface DocumentRepository extends JpaRepository<ServerDocumentEntity, UUID>
 {
     /**
      * Returns a list of documents belonging to the given owner identifier.
      * @param id Owner identifier.
      * @return List of documents.
      */
-    List<DocumentServerEntity> findByOwnerId(UUID id);
+    List<ServerDocumentEntity> findByOwnerId(UUID id);
 }

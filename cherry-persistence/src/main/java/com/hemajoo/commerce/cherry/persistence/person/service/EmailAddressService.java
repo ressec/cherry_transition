@@ -15,11 +15,11 @@
 package com.hemajoo.commerce.cherry.persistence.person.service;
 
 import com.hemajoo.commerce.cherry.commons.type.StatusType;
-import com.hemajoo.commerce.cherry.model.document.DocumentException;
+import com.hemajoo.commerce.cherry.model.document.exception.DocumentException;
 import com.hemajoo.commerce.cherry.model.person.exception.EmailAddressException;
-import com.hemajoo.commerce.cherry.model.person.search.EmailAddressSearch;
+import com.hemajoo.commerce.cherry.model.person.search.SearchEmailAddress;
 import com.hemajoo.commerce.cherry.model.person.type.AddressType;
-import com.hemajoo.commerce.cherry.persistence.person.entity.EmailAddressServerEntity;
+import com.hemajoo.commerce.cherry.persistence.person.entity.ServerEmailAddressEntity;
 import lombok.NonNull;
 
 import java.util.List;
@@ -43,7 +43,7 @@ public interface EmailAddressService
      * @param id Email address identifier.
      * @return Email address if found, null otherwise.
      */
-    EmailAddressServerEntity findById(UUID id);
+    ServerEmailAddressEntity findById(UUID id);
 
     /**
      * Saves an email address.
@@ -51,7 +51,7 @@ public interface EmailAddressService
      * @return Saved email address.
      * @throws EmailAddressException Thrown in case an error occurred while trying to save the email address.
      */
-    EmailAddressServerEntity save(EmailAddressServerEntity emailAddress) throws EmailAddressException, DocumentException;
+    ServerEmailAddressEntity save(ServerEmailAddressEntity emailAddress) throws EmailAddressException, DocumentException;
 
     /**
      * Deletes an email address given its identifier.
@@ -63,40 +63,40 @@ public interface EmailAddressService
      * Returns the email addresses.
      * @return List of email addresses.
      */
-    List<EmailAddressServerEntity> findAll();
+    List<ServerEmailAddressEntity> findAll();
 
     /**
      * Returns a list of email addresses given an address type.
      * @param type Address type.
      * @return List of matching email addresses.
      */
-    List<EmailAddressServerEntity> findByAddressType(AddressType type);
+    List<ServerEmailAddressEntity> findByAddressType(AddressType type);
 
     /**
      * Returns a list of email addresses given a status type.
      * @param status Status type.
      * @return List of matching email addresses.
      */
-    List<EmailAddressServerEntity> findByStatus(StatusType status);
+    List<ServerEmailAddressEntity> findByStatus(StatusType status);
 
     /**
      * Returns a list of default or not default email addresses.
-     * @param defaultEmail Is it the default email address?
+     * @param isDefaultEmail Is it the default email address?
      * @return List of matching email addresses.
      */
-    List<EmailAddressServerEntity> findByDefaultEmail(boolean defaultEmail);
+    List<ServerEmailAddressEntity> findByIsDefaultEmail(Boolean isDefaultEmail);
 
     /**
      * Returns a list of email addresses belonging to a person.
      * @param personId Person identifier.
      * @return List of matching email addresses.
      */
-    List<EmailAddressServerEntity> findByPersonId(UUID personId);
+    List<ServerEmailAddressEntity> findByPersonId(UUID personId);
 
     /**
      * Returns the email addresses matching the given set of predicates.
      * @param emailAddress Email address search object containing the predicates.
      * @return List of email addresses matching the given predicates.
      */
-    List<EmailAddressServerEntity> search(final @NonNull EmailAddressSearch emailAddress);
+    List<ServerEmailAddressEntity> search(final @NonNull SearchEmailAddress emailAddress);
 }

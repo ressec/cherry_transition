@@ -14,14 +14,15 @@
  */
 package com.hemajoo.commerce.cherry.rest.controller.person;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.hemajoo.commerce.cherry.model.base.converter.GenericEntityConverter;
-import com.hemajoo.commerce.cherry.model.document.DocumentException;
-import com.hemajoo.commerce.cherry.model.person.entity.EmailAddress;
+import com.hemajoo.commerce.cherry.model.document.exception.DocumentException;
+import com.hemajoo.commerce.cherry.model.person.entity.ClientEmailAddressEntity;
 import com.hemajoo.commerce.cherry.model.person.exception.EmailAddressException;
-import com.hemajoo.commerce.cherry.model.person.search.EmailAddressSearch;
+import com.hemajoo.commerce.cherry.model.person.search.SearchEmailAddress;
 import com.hemajoo.commerce.cherry.persistence.person.converter.EmailAddressConverter;
-import com.hemajoo.commerce.cherry.persistence.person.entity.EmailAddressServerEntity;
-import com.hemajoo.commerce.cherry.persistence.person.entity.PersonServerEntity;
+import com.hemajoo.commerce.cherry.persistence.person.entity.ServerEmailAddressEntity;
+import com.hemajoo.commerce.cherry.persistence.person.entity.ServerPersonEntity;
 import com.hemajoo.commerce.cherry.persistence.person.randomizer.EmailAddressRandomizer;
 import com.hemajoo.commerce.cherry.persistence.person.service.EmailAddressService;
 import com.hemajoo.commerce.cherry.persistence.person.service.EmailAddressServiceCore;
@@ -81,7 +82,7 @@ public class EmailAddressController
 //    private EmailAddressValidatorForUpdate emailAddressValidator;
 
     /**
-     * {@code REST API} service to retrieve the total number of email addresses.
+     * Returns the total number of email addresses.
      * @return Number of email addresses.
      */
     @ApiOperation(value = "Count the number of email addresses.", notes = "Count the total number of email addresses.")
@@ -98,14 +99,14 @@ public class EmailAddressController
      */
     @ApiOperation(value = "Retrieve an email address given its identifier.", notes = "Retrieve an email address given its identifier.")
     @GetMapping("/get/{id}")
-    public ResponseEntity<EmailAddress> get(
+    public ResponseEntity<ClientEmailAddressEntity> get(
             @ApiParam(value = "Email address identifier", required = true, example = "356fb9b0-61c8-11de-99e1-4b55c7f2e1b5")
             @Valid @ValidEmailAddressId // Handles email id validation automatically
             @NotNull
             @PathVariable String id)
     {
-        EmailAddressServerEntity serverEmailAddress = emailAddressService.findById(UUID.fromString(id));
-        return ResponseEntity.ok(EmailAddressConverter.fromPersistent(serverEmailAddress));
+        ServerEmailAddressEntity serverEmailAddress = emailAddressService.findById(UUID.fromString(id));
+        return ResponseEntity.ok(EmailAddressConverter.convertPersistence(serverEmailAddress));
     }
 
     /**
@@ -116,34 +117,34 @@ public class EmailAddressController
     @ApiOperation(value = "Create a new email address.",
             notes = "Notes: <i>No need to set the postal address identifier (id) as it is automatically generated. If set, it will be ignored!</i>")
     @PostMapping("/create")
-    public ResponseEntity<EmailAddress> create(
+    public ResponseEntity<ClientEmailAddressEntity> create(
             @ApiParam(value = "Email address", required = true)
-            @Valid @ValidEmailAddressForCreation @RequestBody EmailAddress emailAddress)
+            @Valid @ValidEmailAddressForCreation @RequestBody ClientEmailAddressEntity emailAddress)
     {
-        EmailAddressServerEntity serverEmailAddress = EmailAddressConverter.fromClient(emailAddress);
+        ServerEmailAddressEntity serverEmailAddress = EmailAddressConverter.convertClient(emailAddress);
         emailAddressService.save(serverEmailAddress);
 
-        return ResponseEntity.ok(EmailAddressConverter.fromPersistent(serverEmailAddress));
+        return ResponseEntity.ok(EmailAddressConverter.convertPersistence(serverEmailAddress));
     }
 
     /**
      * Endpoint service to create a random email address for a given person identifier.
      * @param personId Person identifier.
-     * @return Response entity containing the randomly generated {@link EmailAddress}.
+     * @return Response entity containing the randomly generated {@link ClientEmailAddressEntity}.
      */
     @ApiOperation(value = "Create a new random email address for the given person identifier.")
     @PostMapping("/random")
-    public ResponseEntity<EmailAddress> random(
+    public ResponseEntity<ClientEmailAddressEntity> random(
             @ApiParam(value = "Person identifier (UUID)", name = "personId", required = true, example = "523cd226-49e4-4034-85dd-d0768af295da")
             @Valid @ValidPersonId @NotNull @RequestParam String personId)
     {
-        EmailAddressServerEntity serverEmail = EmailAddressRandomizer.generatePersistent(false);
+        ServerEmailAddressEntity serverEmail = EmailAddressRandomizer.generatePersistent(false);
 
-        PersonServerEntity person = personService.findById(UUID.fromString(personId));
+        ServerPersonEntity person = personService.findById(UUID.fromString(personId));
         serverEmail.setPerson(person);
         emailAddressService.save(serverEmail);
 
-        return ResponseEntity.ok(EmailAddressConverter.fromPersistent(serverEmail));
+        return ResponseEntity.ok(EmailAddressConverter.convertPersistence(serverEmail));
     }
 
     /**
@@ -154,7 +155,7 @@ public class EmailAddressController
     @ApiOperation(value = "Update an email address.", notes = "Update an email address given the new values.")
     @PutMapping("/update")
     @Transactional
-    public ResponseEntity<RestApiResponse> update(@Valid @ValidEmailAddressForUpdate @RequestBody EmailAddress email)
+    public ResponseEntity<RestApiResponse> update(@Valid @ValidEmailAddressForUpdate @RequestBody ClientEmailAddressEntity email)
     {
         RestApiResponse response;
 
@@ -168,7 +169,7 @@ public class EmailAddressController
 
         try
         {
-            EmailAddressServerEntity emailAddress = emailAddressService.save(EmailAddressConverter.fromClient(email));
+            ServerEmailAddressEntity emailAddress = emailAddressService.save(EmailAddressConverter.convertClient(email));
             response = RestApiResponse.ok();
 //            response = RestApiResponse.ok(String.format("Successfully updated email address with id: %s", emailAddress.getId().toString()));
         }
@@ -187,79 +188,38 @@ public class EmailAddressController
      */
     @ApiOperation(value = "Delete an email address.", notes = "Delete an email address given its identifier.")
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<RestApiResponse> delete(
-            @ApiParam(value = "Email address identifier", required = true, example = "523cd226-49e4-4034-85dd-d0768af29512")
+    public ResponseEntity<?> delete(
+            @ApiParam(value = "Email address identifier", required = true)
             @NotNull @Valid @ValidEmailAddressId @PathVariable String id)
     {
-        RestApiResponse response;
+        emailAddressService.deleteById(UUID.fromString(id));
 
-        try
-        {
-            emailAddressService.deleteById(UUID.fromString(id));
-            response = RestApiResponse.ok();
-        }
-        catch (Exception e)
-        {
-            response = RestApiResponse.ko(HttpStatus.BAD_REQUEST, e.getMessage());
-        }
-
-        return response.getEntity();
-    }
-
-    /**
-     * Endpoint service to retrieve all email addresses.
-     * @return Response.
-     */
-    @ApiOperation(value = "Find all email addresses.", notes = "Find all email addresses.")
-    @GetMapping("/findAll")
-    public List<EmailAddress> findAll()
-    {
-
-        // TODO We should only return a list of the email address ids!
-
-//        RestApiResponse response = RestApiResponse.ok();
-//        ResponseEntity<RestApiResponse> entity = response.getEntity();
-
-        List<EmailAddress> list = EmailAddressConverter.fromPersistentList(emailAddressService.findAll());
-
-        return list;
+        return ResponseEntity.ok(HttpStatus.OK);
     }
 
     /**
      * Searches for email addresses given criteria.
      * @param search Email address search object.
-     * @return List of email identifiers matching the given criteria.
+     * @return List of email identifiers matching the given criteria if some have been found, an empty list otherwise.
      */
     @ApiOperation(value = "Search for email addresses.", notes = "Search for email addresses matching the given predicates. Fill only the fields you want to be taken into account for the search.")
     @GetMapping("/search")
-    public ResponseEntity<List<String>> search(final @NonNull EmailAddressSearch search)
+    public ResponseEntity<List<String>> search(final @RequestBody @NonNull SearchEmailAddress search) throws JsonProcessingException
     {
-        List<EmailAddress> entities = EmailAddressConverter.fromPersistentList(emailAddressService.search(search));
-        List<String> ids = GenericEntityConverter.toIdList(entities);
+        List<ClientEmailAddressEntity> entities = EmailAddressConverter.convertPersistenceList(emailAddressService.search(search));
 
-        return ResponseEntity.ok(ids);
+        return ResponseEntity.ok(GenericEntityConverter.toIdList(entities));
     }
 
     /**
      * Endpoint service to query email addresses given criteria.
      * @param search Email address search object.
-     * @return Response.
+     * @return List of client email addresses if some have been found, an empty list otherwise.
      */
-    @ApiOperation(value = "Query email addresses", notes = "Query email addresses matching the given predicates.")
+    @ApiOperation(value = "Query email addresses", notes = "Returns a list of email addresses matching the given criteria.")
     @GetMapping("/query")
-    public ResponseEntity<RestApiResponse> query(final @NonNull EmailAddressSearch search)
+    public ResponseEntity<List<ClientEmailAddressEntity>> query(final @RequestBody @NonNull SearchEmailAddress search)
     {
-        RestApiResponse response;
-
-        try
-        {
-            response = RestApiResponse.ok(EmailAddressConverter.fromPersistentList(emailAddressService.search(search)));
-        }
-        catch (Exception e)
-        {
-            response = RestApiResponse.ko(HttpStatus.BAD_REQUEST, e.getMessage());
-        }
-
-        return response.getEntity();
+        return ResponseEntity.ok(EmailAddressConverter.convertPersistenceList(emailAddressService.search(search)));
     }
 }

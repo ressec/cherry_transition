@@ -14,12 +14,12 @@
  */
 package com.hemajoo.commerce.cherry.persistence.person.service;
 
-import com.hemajoo.commerce.cherry.model.document.DocumentException;
-import com.hemajoo.commerce.cherry.model.person.search.PersonSearch;
-import com.hemajoo.commerce.cherry.persistence.base.entity.BaseServerEntity;
-import com.hemajoo.commerce.cherry.persistence.document.entity.DocumentServerEntity;
-import com.hemajoo.commerce.cherry.persistence.person.entity.EmailAddressServerEntity;
-import com.hemajoo.commerce.cherry.persistence.person.entity.PersonServerEntity;
+import com.hemajoo.commerce.cherry.model.document.exception.DocumentException;
+import com.hemajoo.commerce.cherry.model.person.search.SearchPerson;
+import com.hemajoo.commerce.cherry.persistence.base.entity.ServerBaseEntity;
+import com.hemajoo.commerce.cherry.persistence.document.entity.ServerDocumentEntity;
+import com.hemajoo.commerce.cherry.persistence.person.entity.ServerEmailAddressEntity;
+import com.hemajoo.commerce.cherry.persistence.person.entity.ServerPersonEntity;
 import com.hemajoo.commerce.cherry.persistence.person.repository.PersonRepository;
 import lombok.NonNull;
 
@@ -50,7 +50,7 @@ public interface PersonService
      * @param id Person identifier.
      * @return Person if found, null otherwise.
      */
-    PersonServerEntity findById(UUID id);
+    ServerPersonEntity findById(UUID id);
 
     /**
      * Saves a person.
@@ -58,7 +58,7 @@ public interface PersonService
      * @return Saved person.
      * @throws DocumentException Thrown in case an error occurred with one of the document when trying to save the person!
      */
-    PersonServerEntity save(PersonServerEntity person) throws DocumentException;
+    ServerPersonEntity save(ServerPersonEntity person) throws DocumentException;
 
     /**
      * Deletes a person given its identifier.
@@ -70,20 +70,20 @@ public interface PersonService
      * Returns the persons.
      * @return List of persons.
      */
-    List<PersonServerEntity> findAll();
+    List<ServerPersonEntity> findAll();
 
     /**
      * Returns the persons matching the given set of predicates.
      * @param person Person search object containing the predicates.
      * @return List of persons matching the given predicates.
      */
-    List<PersonServerEntity> search(final @NonNull PersonSearch person);
+    List<ServerPersonEntity> search(final @NonNull SearchPerson person);
 
-    List<EmailAddressServerEntity> getEmailAddresses(final @NonNull PersonServerEntity person);
+    List<ServerEmailAddressEntity> getEmailAddresses(final @NonNull ServerPersonEntity person);
 
-    PersonServerEntity loadEmailAddresses(final @NonNull PersonServerEntity person);
+    ServerPersonEntity loadEmailAddresses(final @NonNull ServerPersonEntity person);
 
-    List<DocumentServerEntity> getDocuments(final @NonNull BaseServerEntity entity);
+    List<ServerDocumentEntity> getDocuments(final @NonNull ServerBaseEntity entity);
 
-    void saveAndFlush(final @NonNull PersonServerEntity person);
+    void saveAndFlush(final @NonNull ServerPersonEntity person);
 }

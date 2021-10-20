@@ -17,13 +17,13 @@ package com.hemajoo.commerce.cherry.persistence.person.service;
 import com.hemajoo.commerce.cherry.commons.type.StatusType;
 import com.hemajoo.commerce.cherry.model.base.search.criteria.SearchCriteria;
 import com.hemajoo.commerce.cherry.model.base.search.criteria.SearchOperation;
-import com.hemajoo.commerce.cherry.model.person.search.PhoneNumberSearch;
+import com.hemajoo.commerce.cherry.model.person.search.SearchPhoneNumber;
 import com.hemajoo.commerce.cherry.model.person.type.PhoneNumberCategoryType;
 import com.hemajoo.commerce.cherry.model.person.type.PhoneNumberType;
 import com.hemajoo.commerce.cherry.persistence.base.entity.AbstractAuditServerEntity;
 import com.hemajoo.commerce.cherry.persistence.base.entity.AbstractStatusServerEntity;
 import com.hemajoo.commerce.cherry.persistence.base.specification.GenericSpecification;
-import com.hemajoo.commerce.cherry.persistence.person.entity.PhoneNumberServerEntity;
+import com.hemajoo.commerce.cherry.persistence.person.entity.ServerPhoneNumberEntity;
 import com.hemajoo.commerce.cherry.persistence.person.repository.PhoneNumberRepository;
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,13 +54,13 @@ public class PhoneNumberServiceCore implements PhoneNumberService
     }
 
     @Override
-    public PhoneNumberServerEntity findById(UUID id)
+    public ServerPhoneNumberEntity findById(UUID id)
     {
         return phoneNumberRepository.findById(id).orElse(null);
     }
 
     @Override
-    public PhoneNumberServerEntity save(PhoneNumberServerEntity phoneNumber)
+    public ServerPhoneNumberEntity save(ServerPhoneNumberEntity phoneNumber)
     {
         return phoneNumberRepository.save(phoneNumber);
     }
@@ -72,45 +72,45 @@ public class PhoneNumberServiceCore implements PhoneNumberService
     }
 
     @Override
-    public List<PhoneNumberServerEntity> findAll()
+    public List<ServerPhoneNumberEntity> findAll()
     {
         return phoneNumberRepository.findAll();
     }
 
     @Override
-    public List<PhoneNumberServerEntity> findByPhoneType(PhoneNumberType type)
+    public List<ServerPhoneNumberEntity> findByPhoneType(PhoneNumberType type)
     {
         return phoneNumberRepository.findByPhoneType(type);
     }
 
     @Override
-    public List<PhoneNumberServerEntity> findByCategoryType(PhoneNumberCategoryType category)
+    public List<ServerPhoneNumberEntity> findByCategoryType(PhoneNumberCategoryType category)
     {
         return phoneNumberRepository.findByCategoryType(category);
     }
 
     @Override
-    public List<PhoneNumberServerEntity> findByStatus(StatusType status)
+    public List<ServerPhoneNumberEntity> findByStatus(StatusType status)
     {
         return phoneNumberRepository.findByStatusType(status);
     }
 
     @Override
-    public List<PhoneNumberServerEntity> findByIsDefault(boolean isDefault)
+    public List<ServerPhoneNumberEntity> findByIsDefault(boolean isDefault)
     {
         return phoneNumberRepository.findByIsDefault(isDefault);
     }
 
     @Override
-    public List<PhoneNumberServerEntity> findByPersonId(long personId)
+    public List<ServerPhoneNumberEntity> findByPersonId(long personId)
     {
         return phoneNumberRepository.findByPersonId(personId);
     }
 
     @Override
-    public List<PhoneNumberServerEntity> search(@NonNull PhoneNumberSearch phoneNumber)
+    public List<ServerPhoneNumberEntity> search(@NonNull SearchPhoneNumber phoneNumber)
     {
-        GenericSpecification<PhoneNumberServerEntity> specification = new GenericSpecification<>();
+        GenericSpecification<ServerPhoneNumberEntity> specification = new GenericSpecification<>();
 
         // Inherited fields
         if (phoneNumber.getCreatedBy() != null)
@@ -129,7 +129,7 @@ public class PhoneNumberServiceCore implements PhoneNumberService
                     SearchOperation.MATCH));
         }
 
-        if (phoneNumber.getStatusType() != null && phoneNumber.getStatusType() != StatusType.UNSPECIFIED)
+        if (phoneNumber.getStatusType() != null)
         {
             specification.add(new SearchCriteria(
                     AbstractStatusServerEntity.FIELD_STATUS_TYPE,
@@ -140,7 +140,7 @@ public class PhoneNumberServiceCore implements PhoneNumberService
         if (phoneNumber.getId() != null)
         {
             specification.add(new SearchCriteria(
-                    PhoneNumberServerEntity.FIELD_ID,
+                    ServerPhoneNumberEntity.FIELD_ID,
                     phoneNumber.getId(),
                     SearchOperation.EQUAL));
         }
@@ -148,15 +148,15 @@ public class PhoneNumberServiceCore implements PhoneNumberService
         if (phoneNumber.getIsDefault() != null)
         {
             specification.add(new SearchCriteria(
-                    PhoneNumberServerEntity.FIELD_IS_DEFAULT,
+                    ServerPhoneNumberEntity.FIELD_IS_DEFAULT,
                     phoneNumber.getIsDefault(),
                     SearchOperation.EQUAL));
         }
 
-        if (phoneNumber.getPhoneType() != null && phoneNumber.getPhoneType() != PhoneNumberType.UNSPECIFIED)
+        if (phoneNumber.getPhoneType() != null)
         {
             specification.add(new SearchCriteria(
-                    PhoneNumberServerEntity.FIELD_PHONE_TYPE,
+                    ServerPhoneNumberEntity.FIELD_PHONE_TYPE,
                     phoneNumber.getPhoneType(),
                     SearchOperation.EQUAL));
         }
@@ -164,15 +164,15 @@ public class PhoneNumberServiceCore implements PhoneNumberService
         if (phoneNumber.getPersonId() != null)
         {
             specification.add(new SearchCriteria(
-                    PhoneNumberServerEntity.FIELD_PERSON_ID,
+                    ServerPhoneNumberEntity.FIELD_PERSON_ID,
                     phoneNumber.getPersonId(),
                     SearchOperation.EQUAL));
         }
 
-        if (phoneNumber.getCategoryType() != null && phoneNumber.getCategoryType() != PhoneNumberCategoryType.UNSPECIFIED)
+        if (phoneNumber.getCategoryType() != null)
         {
             specification.add(new SearchCriteria(
-                    PhoneNumberServerEntity.FIELD_PHONE_CATEGORY_TYPE,
+                    ServerPhoneNumberEntity.FIELD_PHONE_CATEGORY_TYPE,
                     phoneNumber.getCategoryType(),
                     SearchOperation.EQUAL));
         }
@@ -180,7 +180,7 @@ public class PhoneNumberServiceCore implements PhoneNumberService
         if (phoneNumber.getCountryCode() != null)
         {
             specification.add(new SearchCriteria(
-                    PhoneNumberServerEntity.FIELD_COUNTRY_CODE,
+                    ServerPhoneNumberEntity.FIELD_COUNTRY_CODE,
                     phoneNumber.getCountryCode(),
                     SearchOperation.MATCH));
         }
@@ -188,7 +188,7 @@ public class PhoneNumberServiceCore implements PhoneNumberService
         if (phoneNumber.getNumber() != null)
         {
             specification.add(new SearchCriteria(
-                    PhoneNumberServerEntity.FIELD_NUMBER,
+                    ServerPhoneNumberEntity.FIELD_NUMBER,
                     phoneNumber.getNumber(),
                     SearchOperation.MATCH));
         }

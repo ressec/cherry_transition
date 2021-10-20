@@ -14,20 +14,20 @@
  */
 package com.hemajoo.commerce.cherry.persistence.document.mapper;
 
-import com.hemajoo.commerce.cherry.commons.entity.EntityIdentity;
-import com.hemajoo.commerce.cherry.model.document.Document;
-import com.hemajoo.commerce.cherry.model.document.DocumentException;
-import com.hemajoo.commerce.cherry.persistence.base.entity.BaseServerEntity;
+import com.hemajoo.commerce.cherry.commons.entity.Identity;
+import com.hemajoo.commerce.cherry.model.document.ClientDocumentEntity;
+import com.hemajoo.commerce.cherry.model.document.exception.DocumentException;
+import com.hemajoo.commerce.cherry.persistence.base.entity.ServerBaseEntity;
 import com.hemajoo.commerce.cherry.persistence.base.factory.ServerEntityFactory;
 import com.hemajoo.commerce.cherry.persistence.base.mapper.CycleAvoidingMappingContext;
-import com.hemajoo.commerce.cherry.persistence.document.entity.DocumentServerEntity;
+import com.hemajoo.commerce.cherry.persistence.document.entity.ServerDocumentEntity;
 import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
 
 import java.util.List;
 
 /**
- * A mapper interface providing services to map between {@link Document} and {@link DocumentServerEntity} and vice-versa.
+ * A mapper interface providing services to map between {@link ClientDocumentEntity} and {@link ServerDocumentEntity} and vice-versa.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
@@ -46,7 +46,7 @@ public interface DocumentMapper
      * @return Converted client entity.
      */
     @Mapping(source = "entity.owner", target = "owner", qualifiedByName = "toIdentity")
-    Document fromServer(DocumentServerEntity entity, @Context CycleAvoidingMappingContext context);
+    ClientDocumentEntity mapPersistence(ServerDocumentEntity entity, @Context CycleAvoidingMappingContext context);
 
     /**
      * Maps a list of persistent entities to a list of client entities.
@@ -54,8 +54,7 @@ public interface DocumentMapper
      * @param context Context object.
      * @return Converted list of client entities.
      */
-    //@Mapping(target = "entity.owner", qualifiedByName = "toIdentity")
-    List<Document> fromServerList(List<DocumentServerEntity> list, @Context CycleAvoidingMappingContext context);
+    List<ClientDocumentEntity> mapPersistenceList(List<ServerDocumentEntity> list, @Context CycleAvoidingMappingContext context);
 
     /**
      * Maps from a client entity to a persistent entity.
@@ -64,7 +63,7 @@ public interface DocumentMapper
      * @return Converted persistent entity.
      */
     @Mapping(source = "entity.owner", target = "owner", qualifiedByName = "fromIdentity")
-    DocumentServerEntity fromClient(Document entity, @Context CycleAvoidingMappingContext context);
+    ServerDocumentEntity mapClient(ClientDocumentEntity entity, @Context CycleAvoidingMappingContext context);
 
     /**
      * Maps a list of client entities to a list of persistent entities.
@@ -72,8 +71,7 @@ public interface DocumentMapper
      * @param context Context object.
      * @return Converted list of persistent entities.
      */
-    //@Mapping(target = "entity.owner", qualifiedByName = "fromIdentity")
-    List<DocumentServerEntity> fromClientList(List<Document> list, @Context CycleAvoidingMappingContext context);
+    List<ServerDocumentEntity> mapClientList(List<ClientDocumentEntity> list, @Context CycleAvoidingMappingContext context);
 
     /**
      * Copy a persistent entity.
@@ -82,7 +80,7 @@ public interface DocumentMapper
      * @return Copy.
      * @throws DocumentException raised if the given document cannot be copied!
      */
-    DocumentServerEntity copy(DocumentServerEntity entity, @Context CycleAvoidingMappingContext context) throws DocumentException;
+    ServerDocumentEntity copy(ServerDocumentEntity entity, @Context CycleAvoidingMappingContext context) throws DocumentException;
 
     /**
      * Copy a client entity.
@@ -90,16 +88,16 @@ public interface DocumentMapper
      * @param context Context object.
      * @return Copy.
      */
-    Document copy(Document entity, @Context CycleAvoidingMappingContext context);
+    ClientDocumentEntity copy(ClientDocumentEntity entity, @Context CycleAvoidingMappingContext context);
 
     /**
      * Converts a document owner server entity to an identity.
-     * @param <T> Class that extends {@link BaseServerEntity}.
      * @param entity Document server entity.
      * @return Document server identity.
      */
     @Named("toIdentity")
-    default <T extends BaseServerEntity> EntityIdentity toIdentity(final T entity)
+//    default <T extends BaseServerEntity> EntityIdentity toIdentity(final T entity)
+    default Identity toIdentity(final ServerBaseEntity entity) // TODO Should have as parameter a ServerEntity interface instead of a BaseServerEntity class!
     {
         return entity != null ? entity.getIdentity() : null;
     }
@@ -110,12 +108,13 @@ public interface DocumentMapper
      * @return Document server entity.
      */
     @Named("fromIdentity")
-    default DocumentServerEntity fromIdentity(final EntityIdentity identity) throws DocumentException
+    default ServerDocumentEntity fromIdentity(final /*EntityIdentity*/ Identity identity) throws DocumentException // TODO Should return a ServerDocument interface instead of a DocumentServerEntity class!
     {
+//        return (ServerDocumentEntity) ServerEntityFactory.from(identity);
         if (identity != null)
         {
             ServerEntityFactory factory = new ServerEntityFactory();
-            return (DocumentServerEntity) factory.create(identity);
+            return (ServerDocumentEntity) factory.from(identity);
         }
 
         return null;

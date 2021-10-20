@@ -14,12 +14,12 @@
  */
 package com.hemajoo.commerce.cherry.persistence.person.randomizer;
 
-import com.hemajoo.commerce.cherry.model.person.entity.Person;
+import com.hemajoo.commerce.cherry.model.person.entity.ClientPersonEntity;
 import com.hemajoo.commerce.cherry.model.person.exception.EmailAddressException;
 import com.hemajoo.commerce.cherry.model.person.type.GenderType;
 import com.hemajoo.commerce.cherry.model.person.type.PersonType;
-import com.hemajoo.commerce.cherry.persistence.base.randomizer.BaseServerEntityRandomizer;
-import com.hemajoo.commerce.cherry.persistence.person.entity.PersonServerEntity;
+import com.hemajoo.commerce.cherry.persistence.base.randomizer.AbstractBaseServerEntityRandomizer;
+import com.hemajoo.commerce.cherry.persistence.person.entity.ServerPersonEntity;
 import lombok.experimental.UtilityClass;
 import org.ressec.avocado.core.random.EnumRandomGenerator;
 
@@ -31,27 +31,27 @@ import java.util.UUID;
  * @version 1.0.0
  */
 @UtilityClass
-public final class PersonRandomizer extends BaseServerEntityRandomizer
+public final class PersonRandomizer extends AbstractBaseServerEntityRandomizer
 {
     /**
      * Person type enumeration generator.
      */
-    private static final EnumRandomGenerator PERSON_TYPE_GENERATOR = new EnumRandomGenerator(PersonType.class).exclude(PersonType.UNSPECIFIED);
+    private static final EnumRandomGenerator PERSON_TYPE_GENERATOR = new EnumRandomGenerator(PersonType.class);
 
     /**
      * Gender type enumeration generator.
      */
-    private static final EnumRandomGenerator GENDER_TYPE_GENERATOR = new EnumRandomGenerator(GenderType.class).exclude(GenderType.UNSPECIFIED);
+    private static final EnumRandomGenerator GENDER_TYPE_GENERATOR = new EnumRandomGenerator(GenderType.class);
 
     /**
      * Generates a new random persistent person.
      * @param withRandomId Do we need to generate a random identifier? False by default.
      * @return Random person.
      */
-    public static PersonServerEntity generatePersistent(final boolean withRandomId)
+    public static ServerPersonEntity generatePersistent(final boolean withRandomId)
     {
-        var entity = new PersonServerEntity();
-        BaseServerEntityRandomizer.populateBaseFields(entity);
+        var entity = new ServerPersonEntity();
+        AbstractBaseServerEntityRandomizer.populateBaseFields(entity);
 
         if (withRandomId)
         {
@@ -73,10 +73,10 @@ public final class PersonRandomizer extends BaseServerEntityRandomizer
      * <br>Generally set to {@code true} only for unit tests.
      * @return Random person.
      */
-    public static Person generateClient(final boolean withRandomId)
+    public static ClientPersonEntity generateClient(final boolean withRandomId)
     {
-        var entity = new Person();
-        BaseServerEntityRandomizer.populateBaseFields(entity);
+        var entity = new ClientPersonEntity();
+        AbstractBaseServerEntityRandomizer.populateBaseFields(entity);
    
         if (withRandomId)
         {
@@ -100,11 +100,11 @@ public final class PersonRandomizer extends BaseServerEntityRandomizer
      * @return Person.
      * @throws EmailAddressException Raised in case an error occurred when trying to create an email address!
      */
-    public static PersonServerEntity generateWithDependencies(final boolean withRandomId, final int bound) throws EmailAddressException
+    public static ServerPersonEntity generateWithDependencies(final boolean withRandomId, final int bound) throws EmailAddressException
     {
         var person = generatePersistent(withRandomId);
 
-        int count = bound > 0 ? bound : BaseServerEntityRandomizer.DEFAULT_DEPENDENCY_BOUND;
+        int count = bound > 0 ? bound : AbstractBaseServerEntityRandomizer.DEFAULT_DEPENDENCY_BOUND;
         for (var i = 0; i < count; i++)
         {
             person.addEmailAddress(EmailAddressRandomizer.generatePersistent(withRandomId));

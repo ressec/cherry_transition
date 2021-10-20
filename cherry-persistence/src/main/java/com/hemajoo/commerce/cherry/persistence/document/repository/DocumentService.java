@@ -14,8 +14,8 @@
  */
 package com.hemajoo.commerce.cherry.persistence.document.repository;
 
-import com.hemajoo.commerce.cherry.model.document.DocumentException;
-import com.hemajoo.commerce.cherry.persistence.document.entity.DocumentServerEntity;
+import com.hemajoo.commerce.cherry.model.document.exception.DocumentException;
+import com.hemajoo.commerce.cherry.persistence.document.entity.ServerDocumentEntity;
 
 import java.util.List;
 import java.util.UUID;
@@ -39,7 +39,7 @@ public interface DocumentService
      * @return Document if found, null otherwise.
      * @throws DocumentException raised if the given document id has not been found!
      */
-    DocumentServerEntity findById(UUID id) throws DocumentException;
+    ServerDocumentEntity findById(UUID id) throws DocumentException;
 
     /**
      * Saves a document.
@@ -47,7 +47,7 @@ public interface DocumentService
      * @return Saved document.
      * @throws DocumentException Raised if an error occurred while trying to save the document.
      */
-    DocumentServerEntity save(DocumentServerEntity document) throws DocumentException;
+    ServerDocumentEntity save(ServerDocumentEntity document) throws DocumentException;
 
     /**
      * Deletes a document given its identifier.
@@ -60,14 +60,14 @@ public interface DocumentService
      * Returns all the documents.
      * @return List of documents.
      */
-    List<DocumentServerEntity> findAll();
+    List<ServerDocumentEntity> findAll();
 
     /**
      * Loads the content (media file) of the document.
      * @param document Document.
      * @throws DocumentException Raised if an error occurred while trying to load the document.
      */
-    void loadContent(DocumentServerEntity document) throws DocumentException;
+    void loadContent(ServerDocumentEntity document) throws DocumentException;
 
     /**
      * Loads the content (media file) of the document.

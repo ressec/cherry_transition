@@ -22,11 +22,6 @@ package com.hemajoo.commerce.cherry.model.person.type;
 public enum PersonType
 {
     /**
-     * Unspecified person type.
-     */
-    UNSPECIFIED,
-
-    /**
      * Physical person type.
      */
     PHYSICAL,

@@ -22,11 +22,6 @@ package com.hemajoo.commerce.cherry.commons.type;
 public enum StatusType
 {
     /**
-     * The entity status is not specified.
-     */
-    UNSPECIFIED,
-
-    /**
      * The entity is active.
      */
     ACTIVE,

@@ -14,10 +14,10 @@
  */
 package com.hemajoo.commerce.cherry.persistence.person.validation.validator;
 
-import com.hemajoo.commerce.cherry.model.person.entity.EmailAddress;
+import com.hemajoo.commerce.cherry.model.person.entity.ClientEmailAddressEntity;
 import com.hemajoo.commerce.cherry.model.person.exception.EmailAddressException;
-import com.hemajoo.commerce.cherry.persistence.person.entity.EmailAddressServerEntity;
-import com.hemajoo.commerce.cherry.persistence.person.entity.PersonServerEntity;
+import com.hemajoo.commerce.cherry.persistence.person.entity.ServerEmailAddressEntity;
+import com.hemajoo.commerce.cherry.persistence.person.entity.ServerPersonEntity;
 import com.hemajoo.commerce.cherry.persistence.person.service.EmailAddressService;
 import com.hemajoo.commerce.cherry.persistence.person.service.PersonService;
 import com.hemajoo.commerce.cherry.persistence.person.validation.constraint.ValidEmailAddressForCreation;
@@ -33,7 +33,7 @@ import javax.validation.ConstraintValidatorContext;
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-public class EmailAddressValidatorForCreation implements ConstraintValidator<ValidEmailAddressForCreation, EmailAddress>
+public class EmailAddressValidatorForCreation implements ConstraintValidator<ValidEmailAddressForCreation, ClientEmailAddressEntity>
 {
     /**
      * Service for the email addresses.
@@ -54,7 +54,7 @@ public class EmailAddressValidatorForCreation implements ConstraintValidator<Val
     }
 
     @Override
-    public boolean isValid(EmailAddress emailAddress, ConstraintValidatorContext context)
+    public boolean isValid(ClientEmailAddressEntity emailAddress, ConstraintValidatorContext context)
     {
         try
         {
@@ -75,12 +75,12 @@ public class EmailAddressValidatorForCreation implements ConstraintValidator<Val
      * @param emailAddress Email address persistent entity.
      * @throws EmailAddressException Thrown in case the underlying person already has an active default email address set!
      */
-    public void checkActiveAndDefaultUniqueness(EmailAddressServerEntity emailAddress) throws EmailAddressException
+    public void checkActiveAndDefaultUniqueness(ServerEmailAddressEntity emailAddress) throws EmailAddressException
     {
-        if (emailAddress.isDefaultEmail() && emailAddress.isActive())
+        if (Boolean.TRUE.equals(emailAddress.getIsDefaultEmail()) && emailAddress.isActive())
         {
-            PersonServerEntity person = personService.findById(emailAddress.getPerson().getId());
-            EmailAddressServerEntity defaultEmailAddress = person.getDefaultEmailAddress();
+            ServerPersonEntity person = personService.findById(emailAddress.getPerson().getId());
+            ServerEmailAddressEntity defaultEmailAddress = person.getDefaultEmailAddress();
             if (defaultEmailAddress.getIdentity() != emailAddress.getIdentity() || emailAddress.getId() == null)
             {
                 throw new EmailAddressException(
@@ -97,12 +97,12 @@ public class EmailAddressValidatorForCreation implements ConstraintValidator<Val
      * @param emailAddress Email address persistent entity.
      * @throws EmailAddressException Thrown in case the underlying person already holds such an email address!
      */
-    public void checkUniqueness(final EmailAddressServerEntity emailAddress) throws EmailAddressException
+    public void checkUniqueness(final ServerEmailAddressEntity emailAddress) throws EmailAddressException
     {
-        PersonServerEntity person = personService.findById(emailAddress.getPerson().getId());
+        ServerPersonEntity person = personService.findById(emailAddress.getPerson().getId());
         if (person.existEmail(emailAddress.getEmail()))
         {
-            EmailAddressServerEntity emailById = person.getEmailById(emailAddress.getId());
+            ServerEmailAddressEntity emailById = person.getEmailById(emailAddress.getId());
             // TODO Services to implement
 //            EmailAddressEntity emailByName = person.getEmailByName(emailAddress.getName());
 //            List<EmailAddressEntity> emailsByType = person.getEmails(emailAddress.getAddressType());

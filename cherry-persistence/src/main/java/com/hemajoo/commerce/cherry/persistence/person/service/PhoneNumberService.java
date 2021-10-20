@@ -15,10 +15,10 @@
 package com.hemajoo.commerce.cherry.persistence.person.service;
 
 import com.hemajoo.commerce.cherry.commons.type.StatusType;
-import com.hemajoo.commerce.cherry.model.person.search.PhoneNumberSearch;
+import com.hemajoo.commerce.cherry.model.person.search.SearchPhoneNumber;
 import com.hemajoo.commerce.cherry.model.person.type.PhoneNumberCategoryType;
 import com.hemajoo.commerce.cherry.model.person.type.PhoneNumberType;
-import com.hemajoo.commerce.cherry.persistence.person.entity.PhoneNumberServerEntity;
+import com.hemajoo.commerce.cherry.persistence.person.entity.ServerPhoneNumberEntity;
 import lombok.NonNull;
 
 import java.util.List;
@@ -42,14 +42,14 @@ public interface PhoneNumberService
      * @param id Phone number identifier.
      * @return Phone number if found, null otherwise.
      */
-    PhoneNumberServerEntity findById(UUID id);
+    ServerPhoneNumberEntity findById(UUID id);
 
     /**
      * Saves a phone number.
      * @param phoneNumber Phone number.
      * @return Saved phone number.
      */
-    PhoneNumberServerEntity save(PhoneNumberServerEntity phoneNumber);
+    ServerPhoneNumberEntity save(ServerPhoneNumberEntity phoneNumber);
 
     /**
      * Deletes a phone number given its identifier.
@@ -61,47 +61,47 @@ public interface PhoneNumberService
      * Returns the phone numbers.
      * @return List of phone numbers.
      */
-    List<PhoneNumberServerEntity> findAll();
+    List<ServerPhoneNumberEntity> findAll();
 
     /**
      * Returns a list of phone numbers given a phone number type.
      * @param type Phone number type.
      * @return List of matching phone numbers.
      */
-    List<PhoneNumberServerEntity> findByPhoneType(PhoneNumberType type);
+    List<ServerPhoneNumberEntity> findByPhoneType(PhoneNumberType type);
 
     /**
      * Returns a list of phone numbers given a phone number category type.
      * @param category Phone number category type.
      * @return List of matching phone numbers.
      */
-    List<PhoneNumberServerEntity> findByCategoryType(PhoneNumberCategoryType category);
+    List<ServerPhoneNumberEntity> findByCategoryType(PhoneNumberCategoryType category);
 
     /**
      * Returns a list of phone numbers given a status type.
      * @param status Status type.
      * @return List of matching phone numbers.
      */
-    List<PhoneNumberServerEntity> findByStatus(StatusType status);
+    List<ServerPhoneNumberEntity> findByStatus(StatusType status);
 
     /**
      * Returns a list of default or not default phone numbers.
      * @param isDefault Is it a default phone number?
      * @return List of matching phone numbers.
      */
-    List<PhoneNumberServerEntity> findByIsDefault(boolean isDefault);
+    List<ServerPhoneNumberEntity> findByIsDefault(boolean isDefault);
 
     /**
      * Returns a list of phone numbers belonging to a person.
      * @param personId Person identifier.
      * @return List of matching phone numbers.
      */
-    List<PhoneNumberServerEntity> findByPersonId(long personId);
+    List<ServerPhoneNumberEntity> findByPersonId(long personId);
 
     /**
      * Returns the phone numbers matching the given set of predicates.
      * @param phoneNumber Phone number search object containing the predicates.
      * @return List of phone numbers matching the given predicates.
      */
-    List<PhoneNumberServerEntity> search(final @NonNull PhoneNumberSearch phoneNumber);
+    List<ServerPhoneNumberEntity> search(final @NonNull SearchPhoneNumber phoneNumber);
 }
