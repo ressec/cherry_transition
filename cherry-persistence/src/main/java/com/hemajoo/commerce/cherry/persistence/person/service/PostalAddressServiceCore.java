@@ -19,8 +19,8 @@ import com.hemajoo.commerce.cherry.model.base.search.criteria.SearchCriteria;
 import com.hemajoo.commerce.cherry.model.base.search.criteria.SearchOperation;
 import com.hemajoo.commerce.cherry.model.person.search.SearchPostalAddress;
 import com.hemajoo.commerce.cherry.model.person.type.AddressType;
-import com.hemajoo.commerce.cherry.persistence.base.entity.AbstractAuditServerEntity;
-import com.hemajoo.commerce.cherry.persistence.base.entity.AbstractStatusServerEntity;
+import com.hemajoo.commerce.cherry.persistence.base.entity.AbstractServerAuditEntity;
+import com.hemajoo.commerce.cherry.persistence.base.entity.AbstractServerStatusEntity;
 import com.hemajoo.commerce.cherry.persistence.base.specification.GenericSpecification;
 import com.hemajoo.commerce.cherry.persistence.person.entity.ServerPostalAddressEntity;
 import com.hemajoo.commerce.cherry.persistence.person.repository.PostalAddressRepository;
@@ -109,7 +109,7 @@ public class PostalAddressServiceCore implements PostalAddressService
         if (postalAddress.getCreatedBy() != null)
         {
             specification.add(new SearchCriteria(
-                    AbstractAuditServerEntity.FIELD_CREATED_BY,
+                    AbstractServerAuditEntity.FIELD_CREATED_BY,
                     postalAddress.getCreatedBy(),
                     SearchOperation.MATCH));
         }
@@ -117,7 +117,7 @@ public class PostalAddressServiceCore implements PostalAddressService
         if (postalAddress.getModifiedBy() != null)
         {
             specification.add(new SearchCriteria(
-                    AbstractAuditServerEntity.FIELD_MODIFIED_BY,
+                    AbstractServerAuditEntity.FIELD_MODIFIED_BY,
                     postalAddress.getModifiedBy(),
                     SearchOperation.MATCH));
         }
@@ -125,7 +125,7 @@ public class PostalAddressServiceCore implements PostalAddressService
         if (postalAddress.getStatusType() != null)
         {
             specification.add(new SearchCriteria(
-                    AbstractStatusServerEntity.FIELD_STATUS_TYPE,
+                    AbstractServerStatusEntity.FIELD_STATUS_TYPE,
                     postalAddress.getStatusType(),
                     SearchOperation.EQUAL));
         }

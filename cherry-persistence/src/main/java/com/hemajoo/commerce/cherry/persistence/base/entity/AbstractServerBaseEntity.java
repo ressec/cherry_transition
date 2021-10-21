@@ -38,7 +38,7 @@ import java.util.UUID;
 @Entity
 @Table(name = "ENTITY")
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-public abstract class AbstractBaseServerEntity extends AbstractStatusServerEntity implements BaseEntity, ServerEntity
+public abstract class AbstractServerBaseEntity extends AbstractServerStatusEntity implements BaseEntity, ServerEntity
 {
     public static final String FIELD_ID             = "id";
     public static final String FIELD_ENTITY_TYPE    = "entityType";
@@ -101,7 +101,7 @@ public abstract class AbstractBaseServerEntity extends AbstractStatusServerEntit
      * Creates a new base entity.
      * @param type Entity type.
      */
-    protected AbstractBaseServerEntity(final EntityType type)
+    protected AbstractServerBaseEntity(final EntityType type)
     {
         this.entityType = type;
     }

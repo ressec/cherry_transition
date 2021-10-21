@@ -34,7 +34,7 @@ import java.util.Date;
 @NoArgsConstructor
 @EqualsAndHashCode
 @MappedSuperclass
-public abstract class AbstractAuditServerEntity implements AuditEntity
+public abstract class AbstractServerAuditEntity implements AuditEntity
 {
     public static final String FIELD_CREATED_DATE   = "createdDate";
     public static final String FIELD_MODIFIED_DATE  = "modifiedDate";

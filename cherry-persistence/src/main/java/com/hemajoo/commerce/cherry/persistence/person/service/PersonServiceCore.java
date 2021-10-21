@@ -18,9 +18,9 @@ import com.hemajoo.commerce.cherry.model.base.search.criteria.SearchCriteria;
 import com.hemajoo.commerce.cherry.model.base.search.criteria.SearchOperation;
 import com.hemajoo.commerce.cherry.model.document.exception.DocumentException;
 import com.hemajoo.commerce.cherry.model.person.search.SearchPerson;
-import com.hemajoo.commerce.cherry.persistence.base.entity.AbstractAuditServerEntity;
-import com.hemajoo.commerce.cherry.persistence.base.entity.AbstractBaseServerEntity;
-import com.hemajoo.commerce.cherry.persistence.base.entity.AbstractStatusServerEntity;
+import com.hemajoo.commerce.cherry.persistence.base.entity.AbstractServerAuditEntity;
+import com.hemajoo.commerce.cherry.persistence.base.entity.AbstractServerBaseEntity;
+import com.hemajoo.commerce.cherry.persistence.base.entity.AbstractServerStatusEntity;
 import com.hemajoo.commerce.cherry.persistence.base.specification.GenericSpecification;
 import com.hemajoo.commerce.cherry.persistence.document.entity.ServerDocumentEntity;
 import com.hemajoo.commerce.cherry.persistence.document.repository.DocumentService;
@@ -143,7 +143,7 @@ public class PersonServiceCore implements PersonService
     }
 
     @Override
-    public List<ServerDocumentEntity> getDocuments(@NonNull AbstractBaseServerEntity entity)
+    public List<ServerDocumentEntity> getDocuments(@NonNull AbstractServerBaseEntity entity)
     {
         return entity.getDocuments();
     }
@@ -175,7 +175,7 @@ public class PersonServiceCore implements PersonService
         if (person.getCreatedBy() != null)
         {
             specification.add(new SearchCriteria(
-                    AbstractAuditServerEntity.FIELD_CREATED_BY,
+                    AbstractServerAuditEntity.FIELD_CREATED_BY,
                     person.getCreatedBy(),
                     SearchOperation.MATCH));
         }
@@ -183,7 +183,7 @@ public class PersonServiceCore implements PersonService
         if (person.getModifiedBy() != null)
         {
             specification.add(new SearchCriteria(
-                    AbstractAuditServerEntity.FIELD_MODIFIED_BY,
+                    AbstractServerAuditEntity.FIELD_MODIFIED_BY,
                     person.getModifiedBy(),
                     SearchOperation.MATCH));
         }
@@ -207,7 +207,7 @@ public class PersonServiceCore implements PersonService
         if (person.getStatusType() != null)
         {
             specification.add(new SearchCriteria(
-                    AbstractStatusServerEntity.FIELD_STATUS_TYPE,
+                    AbstractServerStatusEntity.FIELD_STATUS_TYPE,
                     person.getStatusType(),
                     SearchOperation.EQUAL));
         }

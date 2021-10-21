@@ -18,7 +18,7 @@ import com.hemajoo.commerce.cherry.commons.type.EntityType;
 import com.hemajoo.commerce.cherry.model.base.entity.BaseEntity;
 import com.hemajoo.commerce.cherry.model.document.exception.DocumentContentException;
 import com.hemajoo.commerce.cherry.model.document.type.DocumentType;
-import com.hemajoo.commerce.cherry.persistence.base.entity.AbstractBaseServerEntity;
+import com.hemajoo.commerce.cherry.persistence.base.entity.AbstractServerBaseEntity;
 import lombok.*;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.tika.Tika;
@@ -44,7 +44,7 @@ import java.io.InputStream;
 @Table(name = "DOCUMENT")
 @Entity
 @EntityListeners(AuditingEntityListener.class)
-public class ServerDocumentEntity extends AbstractBaseServerEntity implements ServerDocument
+public class ServerDocumentEntity extends AbstractServerBaseEntity implements ServerDocument
 {
     /**
      * Document type.
@@ -135,8 +135,8 @@ public class ServerDocumentEntity extends AbstractBaseServerEntity implements Se
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     @Getter
-    @ManyToOne(targetEntity = AbstractBaseServerEntity.class, fetch = FetchType.EAGER)
-    private AbstractBaseServerEntity owner;
+    @ManyToOne(targetEntity = AbstractServerBaseEntity.class, fetch = FetchType.EAGER)
+    private AbstractServerBaseEntity owner;
 
     /**
      * Document content.
@@ -160,7 +160,7 @@ public class ServerDocumentEntity extends AbstractBaseServerEntity implements Se
      * @param owner Document owner.
      * @param documentType Document type.
      */
-    public ServerDocumentEntity(final @NonNull AbstractBaseServerEntity owner, final @NonNull DocumentType documentType)
+    public ServerDocumentEntity(final @NonNull AbstractServerBaseEntity owner, final @NonNull DocumentType documentType)
     {
         super(EntityType.DOCUMENT);
 
@@ -177,7 +177,7 @@ public class ServerDocumentEntity extends AbstractBaseServerEntity implements Se
      * @param filename File name.
      * @throws DocumentContentException Thrown in case an error occurred while processing the document content.
      */
-    public ServerDocumentEntity(final @NonNull AbstractBaseServerEntity owner, final @NonNull DocumentType documentType, final @NonNull String filename) throws DocumentContentException
+    public ServerDocumentEntity(final @NonNull AbstractServerBaseEntity owner, final @NonNull DocumentType documentType, final @NonNull String filename) throws DocumentContentException
     {
         this(owner, documentType);
 
@@ -195,7 +195,7 @@ public class ServerDocumentEntity extends AbstractBaseServerEntity implements Se
      * @param file File.
      * @throws DocumentContentException Thrown in case an error occurred while processing the document content.
      */
-    public ServerDocumentEntity(final @NonNull AbstractBaseServerEntity owner, final @NonNull DocumentType documentType, final @NonNull File file) throws DocumentContentException
+    public ServerDocumentEntity(final @NonNull AbstractServerBaseEntity owner, final @NonNull DocumentType documentType, final @NonNull File file) throws DocumentContentException
     {
         this(owner, documentType);
 
@@ -213,7 +213,7 @@ public class ServerDocumentEntity extends AbstractBaseServerEntity implements Se
      * @param multiPartFile Multipart file.
      * @throws DocumentContentException Thrown in case an error occurred while processing the document content.
      */
-    public ServerDocumentEntity(final @NonNull AbstractBaseServerEntity owner, final @NonNull DocumentType documentType, final @NonNull MultipartFile multiPartFile) throws DocumentContentException
+    public ServerDocumentEntity(final @NonNull AbstractServerBaseEntity owner, final @NonNull DocumentType documentType, final @NonNull MultipartFile multiPartFile) throws DocumentContentException
     {
         this(owner, documentType);
 
@@ -360,6 +360,6 @@ public class ServerDocumentEntity extends AbstractBaseServerEntity implements Se
     @Override
     public void setOwner(BaseEntity owner)
     {
-        this.owner = (AbstractBaseServerEntity) owner;
+        this.owner = (AbstractServerBaseEntity) owner;
     }
 }

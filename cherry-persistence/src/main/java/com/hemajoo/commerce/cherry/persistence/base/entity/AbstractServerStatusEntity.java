@@ -31,7 +31,7 @@ import java.util.Date;
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
 @MappedSuperclass
-public abstract class AbstractStatusServerEntity extends AbstractAuditServerEntity implements StatusEntity, ServerEntity
+public abstract class AbstractServerStatusEntity extends AbstractServerAuditEntity implements StatusEntity, ServerEntity
 {
     public static final String FIELD_STATUS_TYPE    = "statusType";
     public static final String FIELD_SINCE          = "since";
