@@ -29,7 +29,6 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
-import javax.validation.groups.Default;
 
 /**
  * Represents a server side email address entity.
@@ -37,8 +36,8 @@ import javax.validation.groups.Default;
  * @version 1.0.0
  */
 //@GroupSequence( { ServerEmailAddressEntity.class, BasicValidation.class, ExtendedValidation.class } )
-//@ToString(callSuper = false)
-//@EqualsAndHashCode(callSuper = false)
+@ToString(callSuper = true)
+@EqualsAndHashCode(callSuper = true)
 @Table(name = "EMAIL_ADDRESS")
 @Entity
 @EntityListeners(AuditingEntityListener.class)
@@ -56,7 +55,7 @@ public class ServerEmailAddressEntity extends ServerBaseEntity implements EmailA
     @Getter
     @Setter
     @NotNull(message = "Email address: 'email' cannot be null!")
-    @Email(message = "Email address: '${validatedValue}' is not a valid email!", groups = { Default.class })
+    @Email(message = "Email address: '${validatedValue}' is not a valid email!")
     @Column(name = "EMAIL")
     private String email;
 
