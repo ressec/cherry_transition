@@ -14,13 +14,13 @@
  */
 package com.hemajoo.commerce.cherry.persistence.test.unit.model.entity.document;
 
+import com.hemajoo.commerce.cherry.commons.type.StatusType;
 import com.hemajoo.commerce.cherry.model.document.ClientDocumentEntity;
 import com.hemajoo.commerce.cherry.model.document.base.Document;
 import com.hemajoo.commerce.cherry.model.document.exception.DocumentContentException;
 import com.hemajoo.commerce.cherry.model.document.exception.DocumentException;
 import com.hemajoo.commerce.cherry.persistence.document.converter.DocumentConverter;
 import com.hemajoo.commerce.cherry.persistence.document.entity.ServerDocumentEntity;
-import com.hemajoo.commerce.cherry.persistence.document.mapper.DocumentMapper;
 import com.hemajoo.commerce.cherry.persistence.document.randomizer.DocumentRandomizer;
 import com.hemajoo.commerce.cherry.persistence.test.unit.base.AbstractBaseMapperTest;
 import lombok.NonNull;
@@ -28,13 +28,14 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
- * Test the {@link DocumentMapper} class.
+ * Test the {@link ServerDocumentEntity} class.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
@@ -46,7 +47,102 @@ class DocumentConverterUnitTest extends AbstractBaseMapperTest
     private final int LIST_COUNT = 10;
 
     @Test
-    @DisplayName("Map a persistent document to a client document") final void testMapPersistentDocumentToClientDocument() throws DocumentContentException
+    @DisplayName("Test server document entities equality for audit fields")
+    final void testServerDocumentAuditEquality() throws DocumentContentException
+    {
+        ServerDocumentEntity document = DocumentRandomizer.generatePersistent(true);
+        ServerDocumentEntity copy = DocumentConverter.copy(document);
+        assertThat(document)
+                .as("Both document instances should be equal!")
+                .isEqualTo(copy);
+
+        copy = DocumentConverter.copy(document);
+        copy.setCreatedBy("john doe");
+        assertThat(document)
+                .as("Both document instances should not be equal!")
+                .isNotEqualTo(copy);
+
+        copy = DocumentConverter.copy(document);
+        copy.setCreatedDate(new Date());
+        assertThat(document)
+                .as("Both document instances should not be equal!")
+                .isNotEqualTo(copy);
+
+        copy = DocumentConverter.copy(document);
+        copy.setModifiedBy("jane doe");
+        assertThat(document)
+                .as("Both document instances should not be equal!")
+                .isNotEqualTo(copy);
+
+        copy = DocumentConverter.copy(document);
+        copy.setModifiedDate(new Date());
+        assertThat(document)
+                .as("Both document instances should not be equal!")
+                .isNotEqualTo(copy);
+    }
+
+    @Test
+    @DisplayName("Test server document entities equality for status fields")
+    final void testServerDocumentStatusEquality() throws DocumentContentException
+    {
+        ServerDocumentEntity document = DocumentRandomizer.generatePersistent(true);
+        ServerDocumentEntity copy = DocumentConverter.copy(document);
+        assertThat(document)
+                .as("Both document instances should be equal!")
+                .isEqualTo(copy);
+
+        copy = DocumentConverter.copy(document);
+        copy.setSince(new Date());
+        assertThat(document)
+                .as("Both document instances should not be equal!")
+                .isNotEqualTo(copy);
+
+        copy = DocumentConverter.copy(document);
+        copy.setStatusType(document.getStatusType() == StatusType.ACTIVE ? StatusType.INACTIVE : StatusType.ACTIVE);
+        assertThat(document)
+                .as("Both document instances should not be equal!")
+                .isNotEqualTo(copy);
+    }
+
+    @Test
+    @DisplayName("Test server document entities equality for id field")
+    final void testServerDocumentIdEquality() throws DocumentContentException
+    {
+        ServerDocumentEntity document = DocumentRandomizer.generatePersistent(true);
+        ServerDocumentEntity copy = DocumentConverter.copy(document);
+
+        assertThat(document)
+                .as("Both document instances should be equal!")
+                .isEqualTo(copy);
+
+
+        document = DocumentRandomizer.generatePersistent(true);
+        copy = DocumentConverter.copy(document);
+        copy.setId(null);
+
+        assertThat(document)
+                .as("Both document instances should be different!")
+                .isNotEqualTo(copy);
+    }
+
+    @Test
+    @DisplayName("Test server document entities equality for owner field")
+    final void testServerDocumentOwnerEquality() throws DocumentContentException
+    {
+        // Even if two documents have different owners, they should be considered the same if all other non-transient fields are the same.
+        ServerDocumentEntity document = DocumentRandomizer.generatePersistent(true);
+        ServerDocumentEntity copy = DocumentConverter.copy(document);
+        copy.setOwner(document);
+
+        assertThat(document)
+                .as("Both document instances should be equal!")
+                .isEqualTo(copy);
+    }
+
+
+    @Test
+    @DisplayName("Map a persistent document to a client document")
+    final void testMapServerDocumentToClientDocument() throws DocumentContentException
     {
         ServerDocumentEntity persistent = DocumentRandomizer.generatePersistent(true);
         ClientDocumentEntity client = DocumentConverter.fromServer(persistent);
@@ -55,7 +151,7 @@ class DocumentConverterUnitTest extends AbstractBaseMapperTest
 
     @Test
     @DisplayName("Map a list of persistent documents to a list of client documents")
-    final void testMapListPersistentDocumentToListClientDocument() throws DocumentContentException, DocumentException
+    final void testMapListServerDocumentToListClientDocument() throws DocumentContentException, DocumentException
     {
         List<ServerDocumentEntity> persistentList = new ArrayList<>();
         for (int i = 0; i < LIST_COUNT; i++)
@@ -101,7 +197,7 @@ class DocumentConverterUnitTest extends AbstractBaseMapperTest
 
     @Test
     @DisplayName("Create a deep copy of a persistent document")
-    final void testDeepCopyPersistentDocument() throws DocumentContentException, DocumentException
+    final void testDeepCopyServerDocument() throws DocumentContentException, DocumentException
     {
         ServerDocumentEntity persistent = DocumentRandomizer.generatePersistent(true);
         ServerDocumentEntity copy = DocumentConverter.copy(persistent);

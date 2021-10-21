@@ -37,6 +37,8 @@ import org.springframework.test.annotation.Commit;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.UUID;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
@@ -48,7 +50,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 //@ActiveProfiles("prod") // Will search for: application-<profile>.properties
 @ExtendWith(SpringExtension.class)
 @Import(value = { PersistenceConfigurationForIntegrationTest.class })
-//@Transactional // All test methods will be transactional
 @Commit // Change default behavior for Spring Test which is normally to rollback transaction at the end of the test!
 @DisplayName("Test the email address entity")
 class EmailAddressIntegrationTest extends AbstractBaseDatabaseUnitTest
@@ -104,6 +105,29 @@ class EmailAddressIntegrationTest extends AbstractBaseDatabaseUnitTest
                         "Email address: %s should contain at least one document!",
                         persistent.getEmailAddresses().get(0).getEmail()))
                 .isPositive();
+    }
+
+    @Transactional
+    @Test
+    @DisplayName("Email address with a document should be deleted when email address is deleted")
+    final void testValidateEmailAddressDocumentOrphanRemove() throws DocumentException, DocumentContentException, EmailAddressException
+    {
+        ServerEmailAddressEntity email = EmailAddressRandomizer.generatePersistent(false);
+        ServerDocumentEntity document = DocumentRandomizer.generatePersistent(false);
+        ServerPersonEntity person = PersonRandomizer.generatePersistent(false);
+        email.addDocument(document);
+        person.addEmailAddress(email);
+        personService.save(person);
+        UUID documentId = document.getId();
+
+        // By deleting the email address, the child document should be removed!
+        person.removeEmailAddress(email);
+        emailAddressService.deleteById(email.getId());
+        personService.save(person);
+
+        assertThat(documentService.findById(documentId))
+                .as("Child document should have been deleted!")
+                .isNull();
     }
 
     @Transactional

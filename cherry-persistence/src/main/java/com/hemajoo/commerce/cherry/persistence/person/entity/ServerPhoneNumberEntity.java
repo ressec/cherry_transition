@@ -18,7 +18,7 @@ import com.hemajoo.commerce.cherry.commons.type.EntityType;
 import com.hemajoo.commerce.cherry.model.person.entity.base.PhoneNumber;
 import com.hemajoo.commerce.cherry.model.person.type.PhoneNumberCategoryType;
 import com.hemajoo.commerce.cherry.model.person.type.PhoneNumberType;
-import com.hemajoo.commerce.cherry.persistence.base.entity.ServerBaseEntity;
+import com.hemajoo.commerce.cherry.persistence.base.entity.AbstractBaseServerEntity;
 import com.hemajoo.commerce.cherry.persistence.base.entity.ServerEntity;
 import com.hemajoo.commerce.cherry.persistence.base.validation.BasicValidation;
 import com.hemajoo.commerce.cherry.persistence.base.validation.ExtendedValidation;
@@ -43,7 +43,7 @@ import javax.validation.constraints.NotNull;
 @Table(name = "PHONE_NUMBER")
 @Entity
 @EntityListeners(AuditingEntityListener.class)
-public class ServerPhoneNumberEntity extends ServerBaseEntity implements PhoneNumber, ServerEntity
+public class ServerPhoneNumberEntity extends AbstractBaseServerEntity implements PhoneNumber, ServerEntity
 {
     public static final String FIELD_IS_DEFAULT             = "isDefault";
     public static final String FIELD_NUMBER                 = "number";

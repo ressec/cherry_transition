@@ -23,6 +23,7 @@ import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
@@ -31,13 +32,13 @@ import java.util.UUID;
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-//@NoArgsConstructor
+@NoArgsConstructor
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
 @Entity
 @Table(name = "ENTITY")
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-public class ServerBaseEntity extends AbstractStatusServerEntity implements BaseEntity, ServerEntity
+public abstract class AbstractBaseServerEntity extends AbstractStatusServerEntity implements BaseEntity, ServerEntity
 {
     public static final String FIELD_ID             = "id";
     public static final String FIELD_ENTITY_TYPE    = "entityType";
@@ -91,16 +92,16 @@ public class ServerBaseEntity extends AbstractStatusServerEntity implements Base
     /**
      * Documents associated with this entity.
      */
-//    @ToString.Exclude
-//    @EqualsAndHashCode.Exclude
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-    private final List<ServerDocumentEntity> documents = new ArrayList<>();
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL/*, orphanRemoval = true*/)
+    private List<ServerDocumentEntity> documents = null;
 
     /**
      * Creates a new base entity.
      * @param type Entity type.
      */
-    protected ServerBaseEntity(final EntityType type)
+    protected AbstractBaseServerEntity(final EntityType type)
     {
         this.entityType = type;
     }
@@ -111,6 +112,11 @@ public class ServerBaseEntity extends AbstractStatusServerEntity implements Base
      */
     public final void addDocument(final @NonNull ServerDocumentEntity document)
     {
+        if (documents == null)
+        {
+            documents = new ArrayList<>();
+        }
+
         documents.add(document);
         document.setOwner(this);
     }
@@ -126,7 +132,7 @@ public class ServerBaseEntity extends AbstractStatusServerEntity implements Base
             return new ArrayList<>();
         }
 
-        return documents;
+        return documents != null ? Collections.unmodifiableList(documents) : null;
     }
 
     @Override

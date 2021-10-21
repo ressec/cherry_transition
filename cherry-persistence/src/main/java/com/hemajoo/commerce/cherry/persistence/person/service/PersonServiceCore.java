@@ -19,8 +19,8 @@ import com.hemajoo.commerce.cherry.model.base.search.criteria.SearchOperation;
 import com.hemajoo.commerce.cherry.model.document.exception.DocumentException;
 import com.hemajoo.commerce.cherry.model.person.search.SearchPerson;
 import com.hemajoo.commerce.cherry.persistence.base.entity.AbstractAuditServerEntity;
+import com.hemajoo.commerce.cherry.persistence.base.entity.AbstractBaseServerEntity;
 import com.hemajoo.commerce.cherry.persistence.base.entity.AbstractStatusServerEntity;
-import com.hemajoo.commerce.cherry.persistence.base.entity.ServerBaseEntity;
 import com.hemajoo.commerce.cherry.persistence.base.specification.GenericSpecification;
 import com.hemajoo.commerce.cherry.persistence.document.entity.ServerDocumentEntity;
 import com.hemajoo.commerce.cherry.persistence.document.repository.DocumentService;
@@ -110,17 +110,19 @@ public class PersonServiceCore implements PersonService
         }
 
         // REMINDER Important to save the underlying collections of entities that hold documents!
-
-        // Save the documents directly attached to the person.
-        for (ServerDocumentEntity document : person.getDocuments())
+        if (person.getDocuments() != null)
         {
-            try
+            // Save the documents directly attached to the person.
+            for (ServerDocumentEntity document : person.getDocuments())
             {
-                documentService.save(document);
-            }
-            catch (Exception e)
-            {
-                throw new DocumentException(e.getMessage());
+                try
+                {
+                    documentService.save(document);
+                }
+                catch (Exception e)
+                {
+                    throw new DocumentException(e.getMessage());
+                }
             }
         }
 
@@ -141,7 +143,7 @@ public class PersonServiceCore implements PersonService
     }
 
     @Override
-    public List<ServerDocumentEntity> getDocuments(@NonNull ServerBaseEntity entity)
+    public List<ServerDocumentEntity> getDocuments(@NonNull AbstractBaseServerEntity entity)
     {
         return entity.getDocuments();
     }

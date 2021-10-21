@@ -18,7 +18,7 @@ import com.hemajoo.commerce.cherry.commons.type.EntityType;
 import com.hemajoo.commerce.cherry.model.base.entity.BaseEntity;
 import com.hemajoo.commerce.cherry.model.document.exception.DocumentContentException;
 import com.hemajoo.commerce.cherry.model.document.type.DocumentType;
-import com.hemajoo.commerce.cherry.persistence.base.entity.ServerBaseEntity;
+import com.hemajoo.commerce.cherry.persistence.base.entity.AbstractBaseServerEntity;
 import lombok.*;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.tika.Tika;
@@ -39,21 +39,20 @@ import java.io.InputStream;
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
+@ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
-@ToString
-//@NoArgsConstructor
 @Table(name = "DOCUMENT")
 @Entity
 @EntityListeners(AuditingEntityListener.class)
-public class ServerDocumentEntity extends ServerBaseEntity implements ServerDocument
+public class ServerDocumentEntity extends AbstractBaseServerEntity implements ServerDocument
 {
     /**
      * Document type.
      */
-    @Enumerated(EnumType.STRING)
-    @Column(name = "DOCUMENT_TYPE", length = 50)
     @Getter
     @Setter
+    @Enumerated(EnumType.STRING)
+    @Column(name = "DOCUMENT_TYPE", length = 50)
     private DocumentType documentType;
 
     /**
@@ -82,6 +81,7 @@ public class ServerDocumentEntity extends ServerBaseEntity implements ServerDocu
     /**
      * Multipart file.
      */
+    @ToString.Exclude
     @EqualsAndHashCode.Exclude
     @Getter
     @Transient
@@ -90,6 +90,7 @@ public class ServerDocumentEntity extends ServerBaseEntity implements ServerDocu
     /**
      * Base file name.
      */
+    @ToString.Exclude
     @EqualsAndHashCode.Exclude
     @Getter
     @Transient
@@ -132,16 +133,17 @@ public class ServerDocumentEntity extends ServerBaseEntity implements ServerDocu
      * Document owner.
      */
     @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     @Getter
-    //@Setter
-    @ManyToOne(targetEntity = ServerBaseEntity.class, fetch = FetchType.EAGER)
-    private ServerBaseEntity owner;
+    @ManyToOne(targetEntity = AbstractBaseServerEntity.class, fetch = FetchType.EAGER)
+    private AbstractBaseServerEntity owner;
 
     /**
      * Document content.
      */
     @Transient
     @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     @Getter
     private transient InputStream content;
 
@@ -158,7 +160,7 @@ public class ServerDocumentEntity extends ServerBaseEntity implements ServerDocu
      * @param owner Document owner.
      * @param documentType Document type.
      */
-    public ServerDocumentEntity(final @NonNull ServerBaseEntity owner, final @NonNull DocumentType documentType)
+    public ServerDocumentEntity(final @NonNull AbstractBaseServerEntity owner, final @NonNull DocumentType documentType)
     {
         super(EntityType.DOCUMENT);
 
@@ -175,7 +177,7 @@ public class ServerDocumentEntity extends ServerBaseEntity implements ServerDocu
      * @param filename File name.
      * @throws DocumentContentException Thrown in case an error occurred while processing the document content.
      */
-    public ServerDocumentEntity(final @NonNull ServerBaseEntity owner, final @NonNull DocumentType documentType, final @NonNull String filename) throws DocumentContentException
+    public ServerDocumentEntity(final @NonNull AbstractBaseServerEntity owner, final @NonNull DocumentType documentType, final @NonNull String filename) throws DocumentContentException
     {
         this(owner, documentType);
 
@@ -193,7 +195,7 @@ public class ServerDocumentEntity extends ServerBaseEntity implements ServerDocu
      * @param file File.
      * @throws DocumentContentException Thrown in case an error occurred while processing the document content.
      */
-    public ServerDocumentEntity(final @NonNull ServerBaseEntity owner, final @NonNull DocumentType documentType, final @NonNull File file) throws DocumentContentException
+    public ServerDocumentEntity(final @NonNull AbstractBaseServerEntity owner, final @NonNull DocumentType documentType, final @NonNull File file) throws DocumentContentException
     {
         this(owner, documentType);
 
@@ -211,7 +213,7 @@ public class ServerDocumentEntity extends ServerBaseEntity implements ServerDocu
      * @param multiPartFile Multipart file.
      * @throws DocumentContentException Thrown in case an error occurred while processing the document content.
      */
-    public ServerDocumentEntity(final @NonNull ServerBaseEntity owner, final @NonNull DocumentType documentType, final @NonNull MultipartFile multiPartFile) throws DocumentContentException
+    public ServerDocumentEntity(final @NonNull AbstractBaseServerEntity owner, final @NonNull DocumentType documentType, final @NonNull MultipartFile multiPartFile) throws DocumentContentException
     {
         this(owner, documentType);
 
@@ -358,6 +360,6 @@ public class ServerDocumentEntity extends ServerBaseEntity implements ServerDocu
     @Override
     public void setOwner(BaseEntity owner)
     {
-        this.owner = (ServerBaseEntity) owner;
+        this.owner = (AbstractBaseServerEntity) owner;
     }
 }

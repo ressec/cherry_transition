@@ -22,7 +22,7 @@ import com.hemajoo.commerce.cherry.model.person.type.AddressType;
 import com.hemajoo.commerce.cherry.model.person.type.GenderType;
 import com.hemajoo.commerce.cherry.model.person.type.PersonType;
 import com.hemajoo.commerce.cherry.model.person.type.PhoneNumberType;
-import com.hemajoo.commerce.cherry.persistence.base.entity.ServerBaseEntity;
+import com.hemajoo.commerce.cherry.persistence.base.entity.AbstractBaseServerEntity;
 import com.hemajoo.commerce.cherry.persistence.base.entity.ServerEntity;
 import io.swagger.v3.oas.annotations.Hidden;
 import lombok.*;
@@ -46,7 +46,7 @@ import java.util.stream.Collectors;
 @Hidden
 @Table(name = "PERSON")
 @EntityListeners(AuditingEntityListener.class)
-public class ServerPersonEntity extends ServerBaseEntity implements ServerPerson, ServerEntity
+public class ServerPersonEntity extends AbstractBaseServerEntity implements ServerPerson, ServerEntity
 {
     /**
      * Minimal birthdate.

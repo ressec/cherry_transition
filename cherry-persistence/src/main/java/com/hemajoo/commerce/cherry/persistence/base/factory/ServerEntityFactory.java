@@ -15,7 +15,7 @@
 package com.hemajoo.commerce.cherry.persistence.base.factory;
 
 import com.hemajoo.commerce.cherry.commons.entity.Identity;
-import com.hemajoo.commerce.cherry.persistence.base.entity.ServerBaseEntity;
+import com.hemajoo.commerce.cherry.persistence.base.entity.AbstractBaseServerEntity;
 import com.hemajoo.commerce.cherry.persistence.document.repository.DocumentService;
 import com.hemajoo.commerce.cherry.persistence.person.service.EmailAddressService;
 import com.hemajoo.commerce.cherry.persistence.person.service.PersonService;
@@ -29,22 +29,22 @@ public class ServerEntityFactory
      * Person persistence service.
      */
     @Autowired
-    private static PersonService personService;
+    private PersonService personService;
 
     /**
      * Document persistence service.
      */
     @Autowired
-    private static DocumentService documentService;
+    private DocumentService documentService;
 
     /**
      * Email persistence service.
      */
     @Autowired
-    private static EmailAddressService emailAddressService;
+    private EmailAddressService emailAddressService;
 
 //    public final <T extends ServerEntity> T from(final Identity identity) // TODO Try to transform to a static method
-    public final ServerBaseEntity from(final Identity identity) // TODO Try to transform to a static method
+    public final AbstractBaseServerEntity from(final Identity identity) // TODO Try to transform to a static method
 //    public static ServerBaseEntity from(final Identity identity)
     {
         if (identity != null)

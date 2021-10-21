@@ -15,11 +15,9 @@
 package com.hemajoo.commerce.cherry.persistence.base.entity;
 
 import com.hemajoo.commerce.cherry.commons.type.StatusType;
+import com.hemajoo.commerce.cherry.model.base.entity.StatusEntity;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -29,12 +27,11 @@ import java.util.Date;
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-@Data
 @NoArgsConstructor
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
 @MappedSuperclass
-public abstract class AbstractStatusServerEntity extends AbstractAuditServerEntity implements ServerEntity
+public abstract class AbstractStatusServerEntity extends AbstractAuditServerEntity implements StatusEntity, ServerEntity
 {
     public static final String FIELD_STATUS_TYPE    = "statusType";
     public static final String FIELD_SINCE          = "since";
@@ -42,6 +39,7 @@ public abstract class AbstractStatusServerEntity extends AbstractAuditServerEnti
     /**
      * Entity status.
      */
+    @Getter
     @Enumerated(EnumType.STRING)
     @Column(name = "STATUS_TYPE", length = 50)
     private StatusType statusType;
@@ -49,6 +47,8 @@ public abstract class AbstractStatusServerEntity extends AbstractAuditServerEnti
     /**
      * Inactivity time stamp information (server time) that must be filled when the entity becomes inactive.
      */
+    @Getter
+    @Setter
     @ApiModelProperty(hidden = true)
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "SINCE", length = 26)
@@ -58,7 +58,6 @@ public abstract class AbstractStatusServerEntity extends AbstractAuditServerEnti
      * Returns if this entity is active?
      * @return {@code True} if the entity is active, {@code false} otherwise.
      */
-    @ApiModelProperty(hidden = true) // STATUS is used instead!
     public final boolean isActive()
     {
         return statusType == StatusType.ACTIVE;
