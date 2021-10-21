@@ -17,7 +17,7 @@ package com.hemajoo.commerce.cherry.persistence.document.mapper;
 import com.hemajoo.commerce.cherry.commons.entity.Identity;
 import com.hemajoo.commerce.cherry.model.document.ClientDocumentEntity;
 import com.hemajoo.commerce.cherry.model.document.exception.DocumentException;
-import com.hemajoo.commerce.cherry.persistence.base.entity.AbstractServerBaseEntity;
+import com.hemajoo.commerce.cherry.persistence.base.entity.ServerBaseEntity;
 import com.hemajoo.commerce.cherry.persistence.base.factory.ServerEntityFactory;
 import com.hemajoo.commerce.cherry.persistence.base.mapper.CycleAvoidingMappingContext;
 import com.hemajoo.commerce.cherry.persistence.document.entity.ServerDocumentEntity;
@@ -95,9 +95,9 @@ public interface DocumentMapper
      * @param entity Document server entity.
      * @return Document server identity.
      */
-    @Named("toIdentity")
 //    default <T extends BaseServerEntity> EntityIdentity toIdentity(final T entity)
-    default Identity toIdentity(final AbstractServerBaseEntity entity) // TODO Should have as parameter a ServerEntity interface instead of a BaseServerEntity class!
+    @Named("toIdentity")
+    default Identity toIdentity(final ServerBaseEntity entity) // TODO Should have as parameter a ServerEntity interface instead of a BaseServerEntity class!
     {
         return entity != null ? entity.getIdentity() : null;
     }

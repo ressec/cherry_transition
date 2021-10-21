@@ -22,8 +22,8 @@ import com.hemajoo.commerce.cherry.model.person.exception.EmailAddressException;
 import com.hemajoo.commerce.cherry.model.person.search.SearchEmailAddress;
 import com.hemajoo.commerce.cherry.model.person.type.AddressType;
 import com.hemajoo.commerce.cherry.persistence.base.entity.AbstractServerAuditEntity;
-import com.hemajoo.commerce.cherry.persistence.base.entity.AbstractServerBaseEntity;
 import com.hemajoo.commerce.cherry.persistence.base.entity.AbstractServerStatusEntity;
+import com.hemajoo.commerce.cherry.persistence.base.entity.ServerBaseEntity;
 import com.hemajoo.commerce.cherry.persistence.base.specification.GenericSpecification;
 import com.hemajoo.commerce.cherry.persistence.document.entity.ServerDocumentEntity;
 import com.hemajoo.commerce.cherry.persistence.document.repository.DocumentService;
@@ -151,7 +151,7 @@ public class EmailAddressServiceCore implements EmailAddressService
         if (search.getId() != null)
         {
             specification.add(new SearchCriteria(
-                    AbstractServerBaseEntity.FIELD_ID,
+                    ServerBaseEntity.FIELD_ID,
                     UUID.fromString(search.getId().toString()),
                     SearchOperation.EQUAL));
         }

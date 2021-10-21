@@ -18,7 +18,7 @@ import com.hemajoo.commerce.cherry.commons.entity.Identity;
 import com.hemajoo.commerce.cherry.model.document.exception.DocumentException;
 import com.hemajoo.commerce.cherry.model.person.entity.ClientEmailAddressEntity;
 import com.hemajoo.commerce.cherry.model.person.entity.ClientPhoneNumberEntity;
-import com.hemajoo.commerce.cherry.persistence.base.entity.AbstractServerBaseEntity;
+import com.hemajoo.commerce.cherry.persistence.base.entity.ServerBaseEntity;
 import com.hemajoo.commerce.cherry.persistence.base.factory.ServerEntityFactory;
 import com.hemajoo.commerce.cherry.persistence.base.mapper.CycleAvoidingMappingContext;
 import com.hemajoo.commerce.cherry.persistence.document.mapper.DocumentMapper;
@@ -114,7 +114,7 @@ public interface PhoneNumberMapper
      * @throws DocumentException Thrown in case an error occurred with a document.
      */
     @Named("fromIdentity")
-    default AbstractServerBaseEntity fromIdentity(final Identity identity) throws DocumentException
+    default ServerBaseEntity fromIdentity(final Identity identity) throws DocumentException
     {
         return new ServerEntityFactory().from(identity);
     }

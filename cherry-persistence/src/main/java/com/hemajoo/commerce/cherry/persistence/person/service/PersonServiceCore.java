@@ -19,8 +19,8 @@ import com.hemajoo.commerce.cherry.model.base.search.criteria.SearchOperation;
 import com.hemajoo.commerce.cherry.model.document.exception.DocumentException;
 import com.hemajoo.commerce.cherry.model.person.search.SearchPerson;
 import com.hemajoo.commerce.cherry.persistence.base.entity.AbstractServerAuditEntity;
-import com.hemajoo.commerce.cherry.persistence.base.entity.AbstractServerBaseEntity;
 import com.hemajoo.commerce.cherry.persistence.base.entity.AbstractServerStatusEntity;
+import com.hemajoo.commerce.cherry.persistence.base.entity.ServerBaseEntity;
 import com.hemajoo.commerce.cherry.persistence.base.specification.GenericSpecification;
 import com.hemajoo.commerce.cherry.persistence.document.entity.ServerDocumentEntity;
 import com.hemajoo.commerce.cherry.persistence.document.repository.DocumentService;
@@ -126,24 +126,24 @@ public class PersonServiceCore implements PersonService
             }
         }
 
-        // Save the email addresses directly attached to the person.
-        for (ServerEmailAddressEntity email : person.getEmailAddresses())
-        {
-            try
-            {
-                emailAddressService.save(email);
-            }
-            catch (Exception e)
-            {
-                throw new DocumentException(e.getMessage());
-            }
-        }
+//        // Save the email addresses directly attached to the person.
+//        for (ServerEmailAddressEntity email : person.getEmailAddresses())
+//        {
+//            try
+//            {
+//                emailAddressService.save(email);
+//            }
+//            catch (Exception e)
+//            {
+//                throw new DocumentException(e.getMessage());
+//            }
+//        }
 
         return person;
     }
 
     @Override
-    public List<ServerDocumentEntity> getDocuments(@NonNull AbstractServerBaseEntity entity)
+    public List<ServerDocumentEntity> getDocuments(@NonNull ServerBaseEntity entity)
     {
         return entity.getDocuments();
     }

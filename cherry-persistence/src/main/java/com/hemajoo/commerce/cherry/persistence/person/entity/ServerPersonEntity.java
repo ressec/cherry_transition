@@ -22,7 +22,7 @@ import com.hemajoo.commerce.cherry.model.person.type.AddressType;
 import com.hemajoo.commerce.cherry.model.person.type.GenderType;
 import com.hemajoo.commerce.cherry.model.person.type.PersonType;
 import com.hemajoo.commerce.cherry.model.person.type.PhoneNumberType;
-import com.hemajoo.commerce.cherry.persistence.base.entity.AbstractServerBaseEntity;
+import com.hemajoo.commerce.cherry.persistence.base.entity.ServerBaseEntity;
 import com.hemajoo.commerce.cherry.persistence.base.entity.ServerEntity;
 import io.swagger.v3.oas.annotations.Hidden;
 import lombok.*;
@@ -46,7 +46,7 @@ import java.util.stream.Collectors;
 @Hidden
 @Table(name = "PERSON")
 @EntityListeners(AuditingEntityListener.class)
-public class ServerPersonEntity extends AbstractServerBaseEntity implements ServerPerson, ServerEntity
+public class ServerPersonEntity extends ServerBaseEntity implements ServerPerson, ServerEntity
 {
     /**
      * Minimal birthdate.
@@ -107,8 +107,8 @@ public class ServerPersonEntity extends AbstractServerBaseEntity implements Serv
      */
     @Getter
     @Setter
-//    @ToString.Exclude
-//    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     @JsonIgnoreProperties("person")
     @OneToMany(targetEntity = ServerPostalAddressEntity.class, mappedBy = "person", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<ServerPostalAddressEntity> postalAddresses = new ArrayList<>();
@@ -118,8 +118,8 @@ public class ServerPersonEntity extends AbstractServerBaseEntity implements Serv
      */
     @Getter
     @Setter
-//    @ToString.Exclude
-//    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     @JsonIgnoreProperties("person")
     @OneToMany(targetEntity = ServerPhoneNumberEntity.class, mappedBy = "person", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<ServerPhoneNumberEntity> phoneNumbers = new ArrayList<>();
@@ -129,8 +129,8 @@ public class ServerPersonEntity extends AbstractServerBaseEntity implements Serv
      */
     @Getter
     @Setter
-//    @ToString.Exclude
-//    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     @JsonIgnoreProperties("person")
     @OneToMany(targetEntity = ServerEmailAddressEntity.class, mappedBy = "person", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ServerEmailAddressEntity> emailAddresses = new ArrayList<>();

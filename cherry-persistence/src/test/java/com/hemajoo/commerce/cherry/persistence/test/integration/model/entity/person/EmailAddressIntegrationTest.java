@@ -55,7 +55,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 class EmailAddressIntegrationTest extends AbstractBaseDatabaseUnitTest
 {
     @Test
-    @DisplayName("Create an email address (without document)") final void testCreateEmailAddressWithoutDocument() throws DocumentException, EmailAddressException
+    @DisplayName("Create an email address (without document)")
+    final void testCreateEmailAddressWithoutDocument() throws DocumentException, EmailAddressException
     {
         // Generate random person & email address.
         ServerPersonEntity person = PersonRandomizer.generatePersistent(false);
@@ -77,7 +78,8 @@ class EmailAddressIntegrationTest extends AbstractBaseDatabaseUnitTest
 
     @Transactional
     @Test
-    @DisplayName("Create an email address (with a document)") final void testCreateEmailAddressWithDocument() throws DocumentException, DocumentContentException, EmailAddressException
+    @DisplayName("Create an email address (with a document)")
+    final void testCreateEmailAddressWithDocument() throws DocumentException, DocumentContentException, EmailAddressException
     {
         // Generate random entities.
         ServerEmailAddressEntity email = EmailAddressRandomizer.generatePersistent(false);
@@ -132,7 +134,8 @@ class EmailAddressIntegrationTest extends AbstractBaseDatabaseUnitTest
 
     @Transactional
     @Test
-    @DisplayName("Update an email address") final void testUpdateEmailAddress() throws DocumentException, EmailAddressException
+    @DisplayName("Update an email address")
+    final void testUpdateEmailAddress() throws DocumentException, EmailAddressException
     {
         String referenceEmailAddress = "victor.hugo@gmail.com";
 
@@ -167,7 +170,8 @@ class EmailAddressIntegrationTest extends AbstractBaseDatabaseUnitTest
 
     @Transactional
     @Test
-    @DisplayName("Delete an email address") final void testDeleteEmailAddress() throws DocumentException, EmailAddressException
+    @DisplayName("Delete an email address")
+    final void testDeleteEmailAddress() throws DocumentException, EmailAddressException
     {
         // Generate a person and an email address.
         ServerPersonEntity person = PersonRandomizer.generatePersistent(false);
@@ -193,7 +197,8 @@ class EmailAddressIntegrationTest extends AbstractBaseDatabaseUnitTest
 
     @Transactional
     @Test
-    @DisplayName("Orphan email address removal") final void testRemovalOrphanEmailAddress() throws DocumentException, EmailAddressException
+    @DisplayName("Orphan email address removal")
+    final void testRemovalOrphanEmailAddress() throws DocumentException, EmailAddressException
     {
         // Generate a person and an email address.
         ServerPersonEntity person = PersonRandomizer.generatePersistent(false);
