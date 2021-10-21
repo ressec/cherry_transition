@@ -18,8 +18,9 @@ import com.hemajoo.commerce.cherry.commons.entity.Identity;
 import com.hemajoo.commerce.cherry.commons.entity.IdentityAware;
 
 /**
- * Interface providing behavior of a base entity.
+ * Interface providing the behavior of a base entity.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
+ * @since Cherry 0.1.0
  * @version 1.0.0
  */
 public interface BaseEntity extends StatusEntity, Identity, IdentityAware

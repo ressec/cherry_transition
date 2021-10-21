@@ -18,27 +18,22 @@ import com.hemajoo.commerce.cherry.model.person.entity.base.EmailAddress;
 import com.hemajoo.commerce.cherry.persistence.base.entity.ServerEntity;
 
 /**
- * Behavior of a server email address entity.
+ * Interface providing the behavior of a server email address entity.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
+ * @since Cherry 0.1.0
  * @version 1.0.0
  */
 public interface ServerEmailAddress extends EmailAddress, ServerEntity
 {
-//    /**
-//     * Returns the owner of this entity.
-//     * @param <T> Type of the owner entity.
-//     * @return Owner entity.
-//     */
-//    <T extends ServerEntity & Person> T getPerson();
-//
-//    /**
-//     * Sets the owner of this entity.
-//     * @param owner Owner entity.
-//     * @param <T> Type of the owner entity.
-//     */
-//    <T extends ServerEntity & Person> void setPerson(final T owner);
+    /**
+     * Returns the person owning this email address.
+     * @return Person.
+     */
+    ServerPerson getPerson();
 
-    ServerPersonEntity getPerson();
-
-    void setPerson(final ServerPersonEntity owner);
+    /**
+     * Sets the person owning this email address.
+     * @param owner Person.
+     */
+    void setPerson(final ServerPerson owner);
 }

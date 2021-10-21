@@ -18,8 +18,9 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * Interface providing audit behavior.
+ * Interface providing the behavior of an audit entity.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
+ * @since Cherry 0.1.0
  * @version 1.0.0
  */
 public interface AuditEntity extends Serializable

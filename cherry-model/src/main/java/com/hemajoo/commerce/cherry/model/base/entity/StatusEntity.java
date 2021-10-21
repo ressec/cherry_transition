@@ -19,8 +19,9 @@ import com.hemajoo.commerce.cherry.commons.type.StatusType;
 import java.util.Date;
 
 /**
- * Interface providing status behavior.
+ * Interface providing the behavior of a status entity.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
+ * @since Cherry 0.1.0
  * @version 1.0.0
  */
 public interface StatusEntity extends AuditEntity
