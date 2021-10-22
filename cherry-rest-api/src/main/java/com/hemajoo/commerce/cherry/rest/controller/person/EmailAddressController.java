@@ -105,7 +105,7 @@ public class EmailAddressController
             @PathVariable String id)
     {
         ServerEmailAddressEntity serverEmailAddress = emailAddressService.findById(UUID.fromString(id));
-        return ResponseEntity.ok(EmailAddressConverter.convertPersistence(serverEmailAddress));
+        return ResponseEntity.ok(EmailAddressConverter.convertServer(serverEmailAddress));
     }
 
     /**
@@ -123,7 +123,7 @@ public class EmailAddressController
         ServerEmailAddressEntity serverEmailAddress = EmailAddressConverter.convertClient(emailAddress);
         emailAddressService.save(serverEmailAddress);
 
-        return ResponseEntity.ok(EmailAddressConverter.convertPersistence(serverEmailAddress));
+        return ResponseEntity.ok(EmailAddressConverter.convertServer(serverEmailAddress));
     }
 
     /**
@@ -143,7 +143,7 @@ public class EmailAddressController
         serverEmail.setPerson(person);
         emailAddressService.save(serverEmail);
 
-        return ResponseEntity.ok(EmailAddressConverter.convertPersistence(serverEmail));
+        return ResponseEntity.ok(EmailAddressConverter.convertServer(serverEmail));
     }
 
     /**
@@ -205,7 +205,7 @@ public class EmailAddressController
     @GetMapping("/search")
     public ResponseEntity<List<String>> search(final @RequestBody @NonNull SearchEmailAddress search)
     {
-        List<ClientEmailAddressEntity> entities = EmailAddressConverter.convertPersistenceList(emailAddressService.search(search));
+        List<ClientEmailAddressEntity> entities = EmailAddressConverter.convertServerList(emailAddressService.search(search));
 
         return ResponseEntity.ok(GenericEntityConverter.toIdList(entities));
     }
@@ -219,6 +219,6 @@ public class EmailAddressController
     @GetMapping("/query")
     public ResponseEntity<List<ClientEmailAddressEntity>> query(final @RequestBody @NonNull SearchEmailAddress search)
     {
-        return ResponseEntity.ok(EmailAddressConverter.convertPersistenceList(emailAddressService.search(search)));
+        return ResponseEntity.ok(EmailAddressConverter.convertServerList(emailAddressService.search(search)));
     }
 }

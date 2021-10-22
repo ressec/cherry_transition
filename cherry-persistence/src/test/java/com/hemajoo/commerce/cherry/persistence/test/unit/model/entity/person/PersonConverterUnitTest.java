@@ -48,7 +48,7 @@ class PersonConverterUnitTest extends AbstractBaseMapperTest
     final void testMapPersistentToClient()
     {
         ServerPersonEntity persistent = PersonRandomizer.generatePersistent(true);
-        ClientPersonEntity client = PersonConverter.convertPersistence(persistent);
+        ClientPersonEntity client = PersonConverter.convertServer(persistent);
         checkFields(persistent, client);
     }
 
@@ -62,7 +62,7 @@ class PersonConverterUnitTest extends AbstractBaseMapperTest
             persistentList.add(PersonRandomizer.generatePersistent(true));
         }
 
-        List<ClientPersonEntity> clientList = PersonConverter.convertPersistenceList(persistentList);
+        List<ClientPersonEntity> clientList = PersonConverter.convertServerList(persistentList);
         checkFields(persistentList, clientList);
     }
 
