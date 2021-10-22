@@ -12,17 +12,14 @@
 # Resse Christophe (christophe.resse@gmail.com).
 # -----------------------------------------------------------------------------------------------
 # Notes:
-#  This CI workflow file is used to:
-#  - build project with Maven,
-#  - deploy project artifacts to Github Packages
-#  for the 'main' branch.
+#  This CI workflow action is used to build the project when some code is pushed through a pull
+#  request into the 'feat' branch.
 # -----------------------------------------------------------------------------------------------
-name: "Maven Deploy"
+name: "Feat"
 
 on:
   pull_request:
-    branches:
-      - main
+    branches: [ feat ]
 
 jobs:
 
@@ -44,49 +41,6 @@ jobs:
           java-version: '11'
           distribution: 'adopt'
 
-      # Step: Cache maven packages
-      - name: Cache Maven packages
-        uses: actions/cache@v1
-        with:
-          path: ~/.m2
-          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
-          restore-keys: ${{ runner.os }}-m2
-
-      # Step: Maven clean & package goals
-      - name: Package with Maven
-        run: mvn -B clean package -f cherry-parent/pom.xml
-
-  # ----------------------------------------
-  # Deploy artifacts to GitHub Packages
-  # ----------------------------------------
-  deploy:
-    name: Deploy
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      packages: write
-    needs: [build]
-    steps:
-      - uses: actions/checkout@v2
-        with:
-          fetch-depth: 0 # Shallow clones should be disabled for a better relevancy of analysis
-
-      # Step: Setup adopt JDK 11
-      - name: Set up JDK 11
-        uses: actions/setup-java@v2
-        with:
-          java-version: '11'
-          distribution: 'adopt'
-        if: contains(github.base_ref, 'main')
-
-      # Step: Cache maven packages
-      - name: Cache Maven packages
-        uses: actions/cache@v1
-        with:
-          path: ~/.m2
-          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
-          restore-keys: ${{ runner.os }}-m2
-
       # Step - Cache sonar packages
       - name: Cache SonarCloud packages
         uses: actions/cache@v1
@@ -95,9 +49,14 @@ jobs:
           key: ${{ runner.os }}-sonar
           restore-keys: ${{ runner.os }}-sonar
 
-      # Step: Maven deploy goal
-      - name: Deploy to Github Packages with Maven
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: mvn --batch-mode deploy -f cherry-parent/pom.xml # Only for a PR on main branch
-        if: contains(github.base_ref, 'main')
+      # Step: Cache maven packages
+      - name: Cache Maven packages
+        uses: actions/cache@v1
+        with:
+          path: ~/.m2
+          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+          restore-keys: ${{ runner.os }}-m2
+
+      # Step: Maven goals: clean & package
+      - name: Build with Maven
+        run: mvn -B clean package -f cherry-parent/pom.xml
