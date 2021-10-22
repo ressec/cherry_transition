@@ -95,7 +95,6 @@ public class ClientPostalAddressEntity extends ClientBaseEntity implements Clien
      * The person identifier this postal address belongs to.
      */
     @ApiModelProperty(name = "personId", notes = "Person identifier this postal address belongs to", value = "1")
-//    private ClientPersonEntity person;
     private ClientPersonEntity person;
 
     /**

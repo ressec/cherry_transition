@@ -57,7 +57,7 @@ public final class EmailAddressConverter
      */
     public static ClientEmailAddressEntity convertServer(ServerEmailAddressEntity entity)
     {
-        return EmailAddressMapper.INSTANCE.mapPersistence(entity, new CycleAvoidingMappingContext());
+        return EmailAddressMapper.INSTANCE.mapServer(entity, new CycleAvoidingMappingContext());
     }
 
     /**
@@ -67,7 +67,7 @@ public final class EmailAddressConverter
      */
     public static List<ClientEmailAddressEntity> convertServerList(List<ServerEmailAddressEntity> list)
     {
-        return EmailAddressMapper.INSTANCE.mapPersistenceList(list, new CycleAvoidingMappingContext());
+        return EmailAddressMapper.INSTANCE.mapServerList(list, new CycleAvoidingMappingContext());
     }
 
     /**

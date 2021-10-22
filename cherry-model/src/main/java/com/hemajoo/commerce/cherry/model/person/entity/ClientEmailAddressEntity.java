@@ -29,7 +29,7 @@ import javax.validation.constraints.Email;
 import javax.validation.groups.Default;
 
 /**
- * Represents an email address client entity.
+ * Represents a client email address entity.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
@@ -65,9 +65,12 @@ public class ClientEmailAddressEntity extends ClientBaseEntity implements Client
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     @JsonIgnoreProperties("emailAddresses")
-    @ApiModelProperty(name = "ownerId", notes = "Entity identifier this email address belongs to", value = "1")
+    @ApiModelProperty(name = "personId", notes = "Entity identifier this email address belongs to", value = "1")
     private ClientPersonEntity person;
 
+    /**
+     * Creates a new client email address entity.
+     */
     public ClientEmailAddressEntity()
     {
         super(EntityType.EMAIL_ADDRESS);
