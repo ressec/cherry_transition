@@ -88,7 +88,7 @@ public interface PostalAddressService
      * @param personId Person identifier.
      * @return List of matching email addresses.
      */
-    List<ServerPostalAddressEntity> findByPersonId(long personId);
+    List<ServerPostalAddressEntity> findByPersonId(UUID personId);
 
     /**
      * Returns the postal addresses matching the given set of predicates.
