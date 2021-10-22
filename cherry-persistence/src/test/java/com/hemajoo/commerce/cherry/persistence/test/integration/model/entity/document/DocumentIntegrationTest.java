@@ -46,7 +46,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 //@ActiveProfiles("test") // Will search for: application-test.properties
 @ExtendWith(SpringExtension.class)
 @Import(value = {PersistenceConfigurationForIntegrationTest.class})
-//@Transactional
 @Commit // Change default behavior for Spring Test which is normally to rollback transaction at the end of the test!
 @DisplayName("Test the document model entity in database")
 class DocumentIntegrationTest extends AbstractBaseDatabaseUnitTest

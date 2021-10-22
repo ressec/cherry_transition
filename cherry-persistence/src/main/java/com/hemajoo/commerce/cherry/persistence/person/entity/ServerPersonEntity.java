@@ -107,8 +107,8 @@ public class ServerPersonEntity extends ServerBaseEntity implements ServerPerson
      */
     @Getter
     @Setter
-//    @ToString.Exclude
-//    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     @JsonIgnoreProperties("person")
     @OneToMany(targetEntity = ServerPostalAddressEntity.class, mappedBy = "person", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<ServerPostalAddressEntity> postalAddresses = new ArrayList<>();
@@ -118,8 +118,8 @@ public class ServerPersonEntity extends ServerBaseEntity implements ServerPerson
      */
     @Getter
     @Setter
-//    @ToString.Exclude
-//    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     @JsonIgnoreProperties("person")
     @OneToMany(targetEntity = ServerPhoneNumberEntity.class, mappedBy = "person", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<ServerPhoneNumberEntity> phoneNumbers = new ArrayList<>();
@@ -129,8 +129,8 @@ public class ServerPersonEntity extends ServerBaseEntity implements ServerPerson
      */
     @Getter
     @Setter
-//    @ToString.Exclude
-//    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     @JsonIgnoreProperties("person")
     @OneToMany(targetEntity = ServerEmailAddressEntity.class, mappedBy = "person", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ServerEmailAddressEntity> emailAddresses = new ArrayList<>();

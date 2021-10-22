@@ -20,8 +20,6 @@ import com.hemajoo.commerce.cherry.model.person.entity.base.EmailAddress;
 import com.hemajoo.commerce.cherry.model.person.type.AddressType;
 import com.hemajoo.commerce.cherry.persistence.base.entity.ServerBaseEntity;
 import com.hemajoo.commerce.cherry.persistence.base.entity.ServerEntity;
-import com.hemajoo.commerce.cherry.persistence.base.validation.BasicValidation;
-import com.hemajoo.commerce.cherry.persistence.base.validation.ExtendedValidation;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -29,19 +27,17 @@ import lombok.ToString;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
-import javax.validation.GroupSequence;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
-import javax.validation.groups.Default;
 
 /**
- * Represents a server email address entity.
+ * Represents a server side email address entity.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-@GroupSequence( { ServerEmailAddressEntity.class, BasicValidation.class, ExtendedValidation.class } )
-@ToString(callSuper = false)
-@EqualsAndHashCode(callSuper = false)
+//@GroupSequence( { ServerEmailAddressEntity.class, BasicValidation.class, ExtendedValidation.class } )
+@ToString(callSuper = true)
+@EqualsAndHashCode(callSuper = true)
 @Table(name = "EMAIL_ADDRESS")
 @Entity
 @EntityListeners(AuditingEntityListener.class)
@@ -59,7 +55,7 @@ public class ServerEmailAddressEntity extends ServerBaseEntity implements EmailA
     @Getter
     @Setter
     @NotNull(message = "Email address: 'email' cannot be null!")
-    @Email(message = "Email address: '${validatedValue}' is not a valid email!", groups = { Default.class })
+    @Email(message = "Email address: '${validatedValue}' is not a valid email!")
     @Column(name = "EMAIL")
     private String email;
 
@@ -99,6 +95,10 @@ public class ServerEmailAddressEntity extends ServerBaseEntity implements EmailA
         super(EntityType.EMAIL_ADDRESS);
     }
 
+    /**
+     * Sets the person.
+     * @param person Person owning this email address.
+     */
     public void setPerson(final ServerPersonEntity person)
     {
         if (person != null)

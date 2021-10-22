@@ -20,8 +20,8 @@ import com.hemajoo.commerce.cherry.model.base.search.criteria.SearchOperation;
 import com.hemajoo.commerce.cherry.model.person.search.SearchPhoneNumber;
 import com.hemajoo.commerce.cherry.model.person.type.PhoneNumberCategoryType;
 import com.hemajoo.commerce.cherry.model.person.type.PhoneNumberType;
-import com.hemajoo.commerce.cherry.persistence.base.entity.AbstractAuditServerEntity;
-import com.hemajoo.commerce.cherry.persistence.base.entity.AbstractStatusServerEntity;
+import com.hemajoo.commerce.cherry.persistence.base.entity.AbstractServerAuditEntity;
+import com.hemajoo.commerce.cherry.persistence.base.entity.AbstractServerStatusEntity;
 import com.hemajoo.commerce.cherry.persistence.base.specification.GenericSpecification;
 import com.hemajoo.commerce.cherry.persistence.person.entity.ServerPhoneNumberEntity;
 import com.hemajoo.commerce.cherry.persistence.person.repository.PhoneNumberRepository;
@@ -116,7 +116,7 @@ public class PhoneNumberServiceCore implements PhoneNumberService
         if (phoneNumber.getCreatedBy() != null)
         {
             specification.add(new SearchCriteria(
-                    AbstractAuditServerEntity.FIELD_CREATED_BY,
+                    AbstractServerAuditEntity.FIELD_CREATED_BY,
                     phoneNumber.getCreatedBy(),
                     SearchOperation.MATCH));
         }
@@ -124,7 +124,7 @@ public class PhoneNumberServiceCore implements PhoneNumberService
         if (phoneNumber.getModifiedBy() != null)
         {
             specification.add(new SearchCriteria(
-                    AbstractAuditServerEntity.FIELD_MODIFIED_BY,
+                    AbstractServerAuditEntity.FIELD_MODIFIED_BY,
                     phoneNumber.getModifiedBy(),
                     SearchOperation.MATCH));
         }
@@ -132,7 +132,7 @@ public class PhoneNumberServiceCore implements PhoneNumberService
         if (phoneNumber.getStatusType() != null)
         {
             specification.add(new SearchCriteria(
-                    AbstractStatusServerEntity.FIELD_STATUS_TYPE,
+                    AbstractServerStatusEntity.FIELD_STATUS_TYPE,
                     phoneNumber.getStatusType(),
                     SearchOperation.EQUAL));
         }

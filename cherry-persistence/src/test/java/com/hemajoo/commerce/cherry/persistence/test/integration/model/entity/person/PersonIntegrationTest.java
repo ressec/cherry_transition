@@ -45,13 +45,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 //@ActiveProfiles("prod") // Will search for: application-<profile>.properties
 @ExtendWith(SpringExtension.class)
 @Import(value = { PersistenceConfigurationForIntegrationTest.class })
-//@Transactional // All test methods will be transactional
 @Commit // Change default behavior for Spring Test which is normally to rollback transaction at the end of the test!
 @DisplayName("Integration tests for person entity")
 class PersonIntegrationTest extends AbstractBaseDatabaseUnitTest
 {
     @Test
-    @DisplayName("Create a persistent person (without document)") final void testCreatePersonWithoutDocument() throws DocumentException
+    @DisplayName("Create a persistent person (without document)")
+    final void testCreatePersonWithoutDocument() throws DocumentException
     {
         // Generate random person.
         ServerPersonEntity person = PersonRandomizer.generatePersistent(false);
@@ -65,7 +65,8 @@ class PersonIntegrationTest extends AbstractBaseDatabaseUnitTest
     }
 
     @Test
-    @DisplayName("Create a persistent person (with a document)") final void testCreatePersonWithDocument() throws DocumentException, DocumentContentException
+    @DisplayName("Create a persistent person (with a document)")
+    final void testCreatePersonWithDocument() throws DocumentException, DocumentContentException
     {
         // Generate random person and document.
         ServerPersonEntity person = PersonRandomizer.generatePersistent(false);
@@ -89,7 +90,8 @@ class PersonIntegrationTest extends AbstractBaseDatabaseUnitTest
 
     @Transactional
     @Test
-    @DisplayName("Update a persistent person") final void testUpdatePerson() throws DocumentException
+    @DisplayName("Update a persistent person")
+    final void testUpdatePerson() throws DocumentException
     {
         String firstname = "Victor";
         String lastname = "Hugo";
@@ -119,7 +121,8 @@ class PersonIntegrationTest extends AbstractBaseDatabaseUnitTest
     }
 
     @Test
-    @DisplayName("Delete a persistent person") final void testDeletePerson() throws DocumentException
+    @DisplayName("Delete a persistent person")
+    final void testDeletePerson() throws DocumentException
     {
         // Generate a random person.
         ServerPersonEntity person = PersonRandomizer.generatePersistent(false);
@@ -140,24 +143,22 @@ class PersonIntegrationTest extends AbstractBaseDatabaseUnitTest
     }
 
     @Test
-    @DisplayName("Orphan document should be automatically removed") final void testOrphanDocumentRemoval() throws DocumentException, DocumentContentException
+    @DisplayName("Document attached to a person should be automatically deleted if the person is deleted")
+    final void testChildDocumentRemoval() throws DocumentException, DocumentContentException
     {
-        // Generate a random person and document.
         ServerPersonEntity person = PersonRandomizer.generatePersistent(false);
         ServerDocumentEntity document = DocumentRandomizer.generatePersistent(false);
         person.addDocument(document);
         personService.save(person);
 
-        // Remove the document and save back the person.
-        person.getDocuments().remove(document);
+        UUID documentId = document.getId();
+        UUID personId = person.getId();
 
-        // Commit the change to the database as we want the orphan mechanism to remove the orphan document dynamically!
-        personService.getRepository().saveAndFlush(person);
-
-        // Check the document has been automatically removed in the database as it was an orphan.
-        ServerDocumentEntity orphan = documentService.findById(document.getId());
-        assertThat(orphan)
-                .as(String.format("Document with id: %s should not exist anymore in the database!", document.getId()))
+        personService.deleteById(person.getId());
+        assertThat(documentService.findById(documentId))
+                .as(String.format("Document with id: %s should have been deleted as parent person with id: %s has been deleted!",
+                        documentId,
+                        personId))
                 .isNull();
     }
 }

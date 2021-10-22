@@ -131,7 +131,7 @@
              General purpose library providing low level entities.
           -->
         <dependency>
-            <groupId>org.ressec.avocado</groupId>
+            <groupId>org.ressec</groupId>
             <artifactId>avocado-core</artifactId>
         </dependency>
 

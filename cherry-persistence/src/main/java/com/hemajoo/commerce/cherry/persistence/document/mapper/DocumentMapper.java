@@ -95,8 +95,8 @@ public interface DocumentMapper
      * @param entity Document server entity.
      * @return Document server identity.
      */
-    @Named("toIdentity")
 //    default <T extends BaseServerEntity> EntityIdentity toIdentity(final T entity)
+    @Named("toIdentity")
     default Identity toIdentity(final ServerBaseEntity entity) // TODO Should have as parameter a ServerEntity interface instead of a BaseServerEntity class!
     {
         return entity != null ? entity.getIdentity() : null;

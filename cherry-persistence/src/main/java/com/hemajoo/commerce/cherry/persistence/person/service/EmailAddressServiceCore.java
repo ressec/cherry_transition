@@ -21,8 +21,8 @@ import com.hemajoo.commerce.cherry.model.document.exception.DocumentException;
 import com.hemajoo.commerce.cherry.model.person.exception.EmailAddressException;
 import com.hemajoo.commerce.cherry.model.person.search.SearchEmailAddress;
 import com.hemajoo.commerce.cherry.model.person.type.AddressType;
-import com.hemajoo.commerce.cherry.persistence.base.entity.AbstractAuditServerEntity;
-import com.hemajoo.commerce.cherry.persistence.base.entity.AbstractStatusServerEntity;
+import com.hemajoo.commerce.cherry.persistence.base.entity.AbstractServerAuditEntity;
+import com.hemajoo.commerce.cherry.persistence.base.entity.AbstractServerStatusEntity;
 import com.hemajoo.commerce.cherry.persistence.base.entity.ServerBaseEntity;
 import com.hemajoo.commerce.cherry.persistence.base.specification.GenericSpecification;
 import com.hemajoo.commerce.cherry.persistence.document.entity.ServerDocumentEntity;
@@ -136,14 +136,14 @@ public class EmailAddressServiceCore implements EmailAddressService
         if (search.getCreatedBy() != null)
         {
             specification.add(new SearchCriteria(
-                    AbstractAuditServerEntity.FIELD_CREATED_BY,
+                    AbstractServerAuditEntity.FIELD_CREATED_BY,
                     search.getCreatedBy(),
                     SearchOperation.MATCH));
         }
         if (search.getModifiedBy() != null)
         {
             specification.add(new SearchCriteria(
-                    AbstractAuditServerEntity.FIELD_MODIFIED_BY,
+                    AbstractServerAuditEntity.FIELD_MODIFIED_BY,
                     search.getModifiedBy(),
                     SearchOperation.MATCH));
         }
@@ -175,7 +175,7 @@ public class EmailAddressServiceCore implements EmailAddressService
         if (search.getStatusType() != null)
         {
             specification.add(new SearchCriteria(
-                    AbstractStatusServerEntity.FIELD_STATUS_TYPE,
+                    AbstractServerStatusEntity.FIELD_STATUS_TYPE,
                     search.getStatusType(),
                     SearchOperation.EQUAL));
         }

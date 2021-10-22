@@ -39,9 +39,8 @@ import java.io.InputStream;
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
+@ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
-@ToString
-//@NoArgsConstructor
 @Table(name = "DOCUMENT")
 @Entity
 @EntityListeners(AuditingEntityListener.class)
@@ -50,10 +49,10 @@ public class ServerDocumentEntity extends ServerBaseEntity implements ServerDocu
     /**
      * Document type.
      */
-    @Enumerated(EnumType.STRING)
-    @Column(name = "DOCUMENT_TYPE", length = 50)
     @Getter
     @Setter
+    @Enumerated(EnumType.STRING)
+    @Column(name = "DOCUMENT_TYPE", length = 50)
     private DocumentType documentType;
 
     /**
@@ -82,6 +81,7 @@ public class ServerDocumentEntity extends ServerBaseEntity implements ServerDocu
     /**
      * Multipart file.
      */
+    @ToString.Exclude
     @EqualsAndHashCode.Exclude
     @Getter
     @Transient
@@ -90,6 +90,7 @@ public class ServerDocumentEntity extends ServerBaseEntity implements ServerDocu
     /**
      * Base file name.
      */
+    @ToString.Exclude
     @EqualsAndHashCode.Exclude
     @Getter
     @Transient
@@ -132,8 +133,8 @@ public class ServerDocumentEntity extends ServerBaseEntity implements ServerDocu
      * Document owner.
      */
     @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     @Getter
-    //@Setter
     @ManyToOne(targetEntity = ServerBaseEntity.class, fetch = FetchType.EAGER)
     private ServerBaseEntity owner;
 
@@ -142,6 +143,7 @@ public class ServerDocumentEntity extends ServerBaseEntity implements ServerDocu
      */
     @Transient
     @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     @Getter
     private transient InputStream content;
 

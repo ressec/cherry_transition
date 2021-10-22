@@ -38,7 +38,15 @@ public interface ServerPhoneNumber extends PhoneNumber, ServerEntity
 //     */
 //    <T extends ServerEntity & Person> void setPerson(final T owner);
 
-    ServerPersonEntity getPerson();
+    /**
+     * Returns the person owning this phone number.
+     * @return Person.
+     */
+    ServerPerson getPerson();
 
-    void setPerson(final ServerPersonEntity owner);
+    /**
+     * Sets the person owning this phone number.
+     * @param owner Person.
+     */
+    void setPerson(final ServerPerson owner);
 }

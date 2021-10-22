@@ -15,9 +15,7 @@
 package com.hemajoo.commerce.cherry.persistence.base.entity;
 
 import com.hemajoo.commerce.cherry.model.base.entity.AuditEntity;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
+import lombok.*;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
@@ -32,11 +30,11 @@ import java.util.Date;
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-@Data
 @ToString
+@NoArgsConstructor
 @EqualsAndHashCode
 @MappedSuperclass
-public abstract class AbstractAuditServerEntity implements AuditEntity
+public abstract class AbstractServerAuditEntity implements AuditEntity
 {
     public static final String FIELD_CREATED_DATE   = "createdDate";
     public static final String FIELD_MODIFIED_DATE  = "modifiedDate";
@@ -46,6 +44,8 @@ public abstract class AbstractAuditServerEntity implements AuditEntity
     /**
      * Entity creation date.
      */
+    @Getter
+    @Setter
     @Column(name = "CREATED_DATE", length = 26)
     @CreatedDate
     private Date createdDate;
@@ -53,6 +53,8 @@ public abstract class AbstractAuditServerEntity implements AuditEntity
     /**
      * Entity modification date.
      */
+    @Getter
+    @Setter
     @Column(name = "MODIFIED_DATE", length = 26)
     @LastModifiedDate
     private Date modifiedDate;
@@ -60,6 +62,8 @@ public abstract class AbstractAuditServerEntity implements AuditEntity
     /**
      * Entity author.
      */
+    @Getter
+    @Setter
     @Column(name = "CREATED_BY", length = 50)
     @CreatedBy
     private String createdBy;
@@ -67,6 +71,8 @@ public abstract class AbstractAuditServerEntity implements AuditEntity
     /**
      * Entity last modification author.
      */
+    @Getter
+    @Setter
     @Column(name = "MODIFIED_BY", length = 50)
     @LastModifiedBy
     private String modifiedBy;

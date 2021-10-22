@@ -18,8 +18,8 @@ import com.hemajoo.commerce.cherry.model.base.search.criteria.SearchCriteria;
 import com.hemajoo.commerce.cherry.model.base.search.criteria.SearchOperation;
 import com.hemajoo.commerce.cherry.model.document.exception.DocumentException;
 import com.hemajoo.commerce.cherry.model.person.search.SearchPerson;
-import com.hemajoo.commerce.cherry.persistence.base.entity.AbstractAuditServerEntity;
-import com.hemajoo.commerce.cherry.persistence.base.entity.AbstractStatusServerEntity;
+import com.hemajoo.commerce.cherry.persistence.base.entity.AbstractServerAuditEntity;
+import com.hemajoo.commerce.cherry.persistence.base.entity.AbstractServerStatusEntity;
 import com.hemajoo.commerce.cherry.persistence.base.entity.ServerBaseEntity;
 import com.hemajoo.commerce.cherry.persistence.base.specification.GenericSpecification;
 import com.hemajoo.commerce.cherry.persistence.document.entity.ServerDocumentEntity;
@@ -110,32 +110,34 @@ public class PersonServiceCore implements PersonService
         }
 
         // REMINDER Important to save the underlying collections of entities that hold documents!
-
-        // Save the documents directly attached to the person.
-        for (ServerDocumentEntity document : person.getDocuments())
+        if (person.getDocuments() != null)
         {
-            try
+            // Save the documents directly attached to the person.
+            for (ServerDocumentEntity document : person.getDocuments())
             {
-                documentService.save(document);
-            }
-            catch (Exception e)
-            {
-                throw new DocumentException(e.getMessage());
+                try
+                {
+                    documentService.save(document);
+                }
+                catch (Exception e)
+                {
+                    throw new DocumentException(e.getMessage());
+                }
             }
         }
 
-        // Save the email addresses directly attached to the person.
-        for (ServerEmailAddressEntity email : person.getEmailAddresses())
-        {
-            try
-            {
-                emailAddressService.save(email);
-            }
-            catch (Exception e)
-            {
-                throw new DocumentException(e.getMessage());
-            }
-        }
+//        // Save the email addresses directly attached to the person.
+//        for (ServerEmailAddressEntity email : person.getEmailAddresses())
+//        {
+//            try
+//            {
+//                emailAddressService.save(email);
+//            }
+//            catch (Exception e)
+//            {
+//                throw new DocumentException(e.getMessage());
+//            }
+//        }
 
         return person;
     }
@@ -173,7 +175,7 @@ public class PersonServiceCore implements PersonService
         if (person.getCreatedBy() != null)
         {
             specification.add(new SearchCriteria(
-                    AbstractAuditServerEntity.FIELD_CREATED_BY,
+                    AbstractServerAuditEntity.FIELD_CREATED_BY,
                     person.getCreatedBy(),
                     SearchOperation.MATCH));
         }
@@ -181,7 +183,7 @@ public class PersonServiceCore implements PersonService
         if (person.getModifiedBy() != null)
         {
             specification.add(new SearchCriteria(
-                    AbstractAuditServerEntity.FIELD_MODIFIED_BY,
+                    AbstractServerAuditEntity.FIELD_MODIFIED_BY,
                     person.getModifiedBy(),
                     SearchOperation.MATCH));
         }
@@ -205,7 +207,7 @@ public class PersonServiceCore implements PersonService
         if (person.getStatusType() != null)
         {
             specification.add(new SearchCriteria(
-                    AbstractStatusServerEntity.FIELD_STATUS_TYPE,
+                    AbstractServerStatusEntity.FIELD_STATUS_TYPE,
                     person.getStatusType(),
                     SearchOperation.EQUAL));
         }

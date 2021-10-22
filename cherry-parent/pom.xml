@@ -57,7 +57,7 @@
         <version.plugin.maven.jacoco>0.8.7</version.plugin.maven.jacoco>
 
         <!-- Dependencies version properties -->
-        <version.ressec.avocado>0.1.0-SNAPSHOT</version.ressec.avocado>
+        <version.ressec.avocado>0.1.0</version.ressec.avocado>
         <version.spring.boot>2.5.5</version.spring.boot>
         <version.swagger>3.0.0</version.swagger>
         <version.google.gson>2.8.6</version.google.gson>
@@ -264,7 +264,7 @@
 
             <!-- Avocado: https://github.com/ressec/Avocado -->
             <dependency>
-                <groupId>org.ressec.avocado</groupId>
+                <groupId>org.ressec</groupId>
                 <artifactId>avocado-core</artifactId>
                 <version>${version.ressec.avocado}</version>
             </dependency>

@@ -17,8 +17,9 @@ package com.hemajoo.commerce.cherry.persistence.base.entity;
 import com.hemajoo.commerce.cherry.model.base.entity.BaseEntity;
 
 /**
- * Interface providing server entity behavior.
+ * Interface providing the behavior of a server entity.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
+ * @since Cherry 0.1.0
  * @version 1.0.0
  */
 public interface ServerEntity extends BaseEntity

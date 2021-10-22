@@ -37,6 +37,8 @@ import org.springframework.test.annotation.Commit;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.UUID;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
@@ -48,13 +50,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 //@ActiveProfiles("prod") // Will search for: application-<profile>.properties
 @ExtendWith(SpringExtension.class)
 @Import(value = { PersistenceConfigurationForIntegrationTest.class })
-//@Transactional // All test methods will be transactional
 @Commit // Change default behavior for Spring Test which is normally to rollback transaction at the end of the test!
 @DisplayName("Test the email address entity")
 class EmailAddressIntegrationTest extends AbstractBaseDatabaseUnitTest
 {
     @Test
-    @DisplayName("Create an email address (without document)") final void testCreateEmailAddressWithoutDocument() throws DocumentException, EmailAddressException
+    @DisplayName("Create an email address (without document)")
+    final void testCreateEmailAddressWithoutDocument() throws DocumentException, EmailAddressException
     {
         // Generate random person & email address.
         ServerPersonEntity person = PersonRandomizer.generatePersistent(false);
@@ -76,7 +78,8 @@ class EmailAddressIntegrationTest extends AbstractBaseDatabaseUnitTest
 
     @Transactional
     @Test
-    @DisplayName("Create an email address (with a document)") final void testCreateEmailAddressWithDocument() throws DocumentException, DocumentContentException, EmailAddressException
+    @DisplayName("Create an email address (with a document)")
+    final void testCreateEmailAddressWithDocument() throws DocumentException, DocumentContentException, EmailAddressException
     {
         // Generate random entities.
         ServerEmailAddressEntity email = EmailAddressRandomizer.generatePersistent(false);
@@ -108,7 +111,31 @@ class EmailAddressIntegrationTest extends AbstractBaseDatabaseUnitTest
 
     @Transactional
     @Test
-    @DisplayName("Update an email address") final void testUpdateEmailAddress() throws DocumentException, EmailAddressException
+    @DisplayName("Email address with a document should be deleted when email address is deleted")
+    final void testValidateEmailAddressDocumentOrphanRemove() throws DocumentException, DocumentContentException, EmailAddressException
+    {
+        ServerEmailAddressEntity email = EmailAddressRandomizer.generatePersistent(false);
+        ServerDocumentEntity document = DocumentRandomizer.generatePersistent(false);
+        ServerPersonEntity person = PersonRandomizer.generatePersistent(false);
+        email.addDocument(document);
+        person.addEmailAddress(email);
+        personService.save(person);
+        UUID documentId = document.getId();
+
+        // By deleting the email address, the child document should be removed!
+        person.removeEmailAddress(email);
+        emailAddressService.deleteById(email.getId());
+        personService.save(person);
+
+        assertThat(documentService.findById(documentId))
+                .as("Child document should have been deleted!")
+                .isNull();
+    }
+
+    @Transactional
+    @Test
+    @DisplayName("Update an email address")
+    final void testUpdateEmailAddress() throws DocumentException, EmailAddressException
     {
         String referenceEmailAddress = "victor.hugo@gmail.com";
 
@@ -143,7 +170,8 @@ class EmailAddressIntegrationTest extends AbstractBaseDatabaseUnitTest
 
     @Transactional
     @Test
-    @DisplayName("Delete an email address") final void testDeleteEmailAddress() throws DocumentException, EmailAddressException
+    @DisplayName("Delete an email address")
+    final void testDeleteEmailAddress() throws DocumentException, EmailAddressException
     {
         // Generate a person and an email address.
         ServerPersonEntity person = PersonRandomizer.generatePersistent(false);
@@ -169,7 +197,8 @@ class EmailAddressIntegrationTest extends AbstractBaseDatabaseUnitTest
 
     @Transactional
     @Test
-    @DisplayName("Orphan email address removal") final void testRemovalOrphanEmailAddress() throws DocumentException, EmailAddressException
+    @DisplayName("Orphan email address removal")
+    final void testRemovalOrphanEmailAddress() throws DocumentException, EmailAddressException
     {
         // Generate a person and an email address.
         ServerPersonEntity person = PersonRandomizer.generatePersistent(false);
