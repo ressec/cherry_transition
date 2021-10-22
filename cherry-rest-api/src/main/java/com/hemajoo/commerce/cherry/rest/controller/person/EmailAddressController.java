@@ -14,7 +14,6 @@
  */
 package com.hemajoo.commerce.cherry.rest.controller.person;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.hemajoo.commerce.cherry.model.base.converter.GenericEntityConverter;
 import com.hemajoo.commerce.cherry.model.document.exception.DocumentException;
 import com.hemajoo.commerce.cherry.model.person.entity.ClientEmailAddressEntity;
@@ -204,7 +203,7 @@ public class EmailAddressController
      */
     @ApiOperation(value = "Search for email addresses.", notes = "Search for email addresses matching the given predicates. Fill only the fields you want to be taken into account for the search.")
     @GetMapping("/search")
-    public ResponseEntity<List<String>> search(final @RequestBody @NonNull SearchEmailAddress search) throws JsonProcessingException
+    public ResponseEntity<List<String>> search(final @RequestBody @NonNull SearchEmailAddress search)
     {
         List<ClientEmailAddressEntity> entities = EmailAddressConverter.convertPersistenceList(emailAddressService.search(search));
 

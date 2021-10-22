@@ -23,7 +23,7 @@ import com.hemajoo.commerce.cherry.persistence.person.service.PersonService;
 import lombok.Getter;
 import org.flywaydb.core.Flyway;
 import org.junit.jupiter.api.BeforeEach;
-import org.ressec.avocado.core.junit.BaseUnitTest;
+import org.ressec.avocado.core.junit.AbstractBaseUnitTest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 
@@ -35,7 +35,7 @@ import java.util.logging.Logger;
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-public abstract class AbstractBaseDatabaseUnitTest extends BaseUnitTest
+public abstract class AbstractBaseDatabaseUnitTest extends AbstractBaseUnitTest
 {
     /**
      * Logger.

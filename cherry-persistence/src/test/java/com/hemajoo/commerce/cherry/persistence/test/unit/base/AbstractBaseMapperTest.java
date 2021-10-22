@@ -16,7 +16,7 @@ package com.hemajoo.commerce.cherry.persistence.test.unit.base;
 
 import com.hemajoo.commerce.cherry.model.base.entity.BaseEntity;
 import lombok.NonNull;
-import org.ressec.avocado.core.junit.BaseUnitTest;
+import org.ressec.avocado.core.junit.AbstractBaseUnitTest;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -25,7 +25,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-public abstract class AbstractBaseMapperTest extends BaseUnitTest
+public abstract class AbstractBaseMapperTest extends AbstractBaseUnitTest
 {
     /**
      * Checks equality of base fields.

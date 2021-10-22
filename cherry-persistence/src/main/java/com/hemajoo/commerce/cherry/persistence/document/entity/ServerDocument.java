@@ -33,6 +33,7 @@ public interface ServerDocument extends Document, ServerEntity
 
     /**
      * Returns the owner entity of this document.
+     * @param <T> Type of the owner.
      * @return Owner entity.
      */
     <T extends BaseEntity & ServerEntity> T getOwner();
@@ -45,6 +46,7 @@ public interface ServerDocument extends Document, ServerEntity
 
     /**
      * Sets the owner entity of this document.
+     * @param <T> Type of the owner.
      * @param owner Owner entity.
      */
     <T extends BaseEntity & ServerEntity> void setOwner(final T owner);
