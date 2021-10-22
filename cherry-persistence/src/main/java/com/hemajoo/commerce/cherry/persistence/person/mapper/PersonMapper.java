@@ -30,7 +30,7 @@ import java.util.List;
 import java.util.UUID;
 
 /**
- * A mapper interface providing services to map between {@link ClientPersonEntity} and {@link ServerPersonEntity} and vice-versa.
+ * A mapper interface providing services to map between client person and server person entities and vice-versa.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
@@ -51,7 +51,7 @@ public interface PersonMapper
      * @param context Context object.
      * @return Mapped client entity.
      */
-    ClientPersonEntity mapPersistence(ServerPersonEntity persistent, @Context CycleAvoidingMappingContext context);
+    ClientPersonEntity mapServer(ServerPersonEntity persistent, @Context CycleAvoidingMappingContext context);
 
     /**
      * Maps from a list of persistent entities to a list of client entities.
@@ -59,7 +59,7 @@ public interface PersonMapper
      * @param context Context object.
      * @return Mapped list of client entities.
      */
-    List<ClientPersonEntity> mapPersistenceList(List<ServerPersonEntity> list, @Context CycleAvoidingMappingContext context);
+    List<ClientPersonEntity> mapServerList(List<ServerPersonEntity> list, @Context CycleAvoidingMappingContext context);
 
     /**
      * Maps from a client entity to a persistent entity.

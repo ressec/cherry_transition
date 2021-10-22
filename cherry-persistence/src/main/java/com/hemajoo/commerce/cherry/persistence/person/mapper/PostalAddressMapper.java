@@ -28,9 +28,7 @@ import org.mapstruct.factory.Mappers;
 import java.util.List;
 
 /**
- * Mapper interface providing services to map between {@link ClientPostalAddressEntity} and {@link ServerPostalAddressEntity} and vice-versa.
- * <hr>
- * It is dynamically (at compilation time) used by the {@code MapStruct} library to create implementation of the underlying mapper class.
+ * Mapper interface providing services to map between client postal address and server postal address entities and vice-versa.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
@@ -52,7 +50,7 @@ public interface PostalAddressMapper
      * @return Client entity.
      */
     //@Mapping(source = "entity.person", target = "person", qualifiedByName = "toIdentity")
-    ClientPostalAddressEntity mapPersistence(ServerPostalAddressEntity entity, @Context CycleAvoidingMappingContext context);
+    ClientPostalAddressEntity mapServer(ServerPostalAddressEntity entity, @Context CycleAvoidingMappingContext context);
 
     /**
      * Maps from a list of persistent entities to a list of client entities.
@@ -60,7 +58,7 @@ public interface PostalAddressMapper
      * @param context Context object.
      * @return List of client entities.
      */
-    List<ClientPostalAddressEntity> mapPersistenceList(List<ServerPostalAddressEntity> list, @Context CycleAvoidingMappingContext context);
+    List<ClientPostalAddressEntity> mapServerList(List<ServerPostalAddressEntity> list, @Context CycleAvoidingMappingContext context);
 
     /**
      * Maps from a client entity to a persistent entity.

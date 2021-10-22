@@ -19,20 +19,22 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import java.util.Date;
 
 /**
- * Represents the (abstract) status part of a base (client) entity.
+ * Represents a client abstract status entity.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
 @Data
 @NoArgsConstructor
+@ToString
 @EqualsAndHashCode(callSuper = true)
-public abstract class AbstractStatusClientEntity extends AbstractAuditClientEntity
+public abstract class AbstractClientStatusEntity extends AbstractClientAuditEntity
 {
     /**
      * Email address status.

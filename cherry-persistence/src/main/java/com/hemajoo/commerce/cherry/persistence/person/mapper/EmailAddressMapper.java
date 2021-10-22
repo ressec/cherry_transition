@@ -28,7 +28,7 @@ import org.mapstruct.factory.Mappers;
 import java.util.List;
 
 /**
- * A mapper interface providing services to map between {@link ClientEmailAddressEntity} and {@link ServerEmailAddressEntity} and vice-versa.
+ * A mapper interface providing services to map between client email address and server email address entities and vice-versa.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
@@ -67,7 +67,7 @@ public interface EmailAddressMapper
      * @return Mapped client entity.
      */
     //@Mapping(source = "entity.person", target = "person", qualifiedByName = "toIdentity")
-    ClientEmailAddressEntity mapPersistence(ServerEmailAddressEntity entity, @Context CycleAvoidingMappingContext context);
+    ClientEmailAddressEntity mapServer(ServerEmailAddressEntity entity, @Context CycleAvoidingMappingContext context);
 
     /**
      * Maps from a list of persistent entities to a list of client entities.
@@ -75,7 +75,7 @@ public interface EmailAddressMapper
      * @param context Context object.
      * @return Mapped list of client entities.
      */
-    List<ClientEmailAddressEntity> mapPersistenceList(List<ServerEmailAddressEntity> list, @Context CycleAvoidingMappingContext context);
+    List<ClientEmailAddressEntity> mapServerList(List<ServerEmailAddressEntity> list, @Context CycleAvoidingMappingContext context);
 
     /**
      * Copy a persistent entity.

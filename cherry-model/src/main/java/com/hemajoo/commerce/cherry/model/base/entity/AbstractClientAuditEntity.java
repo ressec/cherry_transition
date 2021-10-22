@@ -17,17 +17,19 @@ package com.hemajoo.commerce.cherry.model.base.entity;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 import java.util.Date;
 
 /**
- * Represents the (abstract) audit part of a base (client) entity.
+ * Represents a client abstract audit entity.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
 @Data
+@ToString
 @EqualsAndHashCode(callSuper = false)
-public abstract class AbstractAuditClientEntity
+public abstract class AbstractClientAuditEntity implements AuditEntity
 {
     /**
      * Entity creation date.

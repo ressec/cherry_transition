@@ -57,7 +57,7 @@ public final class PersonConverter
      */
     public static ClientPersonEntity convertServer(ServerPersonEntity entity)
     {
-        return PersonMapper.INSTANCE.mapPersistence(entity, new CycleAvoidingMappingContext());
+        return PersonMapper.INSTANCE.mapServer(entity, new CycleAvoidingMappingContext());
     }
 
     /**
@@ -67,7 +67,7 @@ public final class PersonConverter
      */
     public static List<ClientPersonEntity> convertServerList(List<ServerPersonEntity> list)
     {
-        return PersonMapper.INSTANCE.mapPersistenceList(list, new CycleAvoidingMappingContext());
+        return PersonMapper.INSTANCE.mapServerList(list, new CycleAvoidingMappingContext());
     }
 
     /**
