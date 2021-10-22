@@ -26,7 +26,7 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 
 /**
- * Represents a client postal address entity.
+ * Represents a postal address client entity.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */

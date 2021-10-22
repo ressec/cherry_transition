@@ -29,7 +29,7 @@ import javax.validation.constraints.Email;
 import javax.validation.groups.Default;
 
 /**
- * Represents an email address (associated to a person).
+ * Represents an email address client entity.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */

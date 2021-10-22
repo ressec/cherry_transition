@@ -26,7 +26,7 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 
 /**
- * Represents a phone number.
+ * Represents a phone number client entity.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
