@@ -70,7 +70,6 @@ public class ClientPhoneNumberEntity extends ClientBaseEntity implements ClientP
      * The person identifier this phone number belongs to.
      */
     @ApiModelProperty(name = "personId", notes = "Person identifier this phone number belongs to", value = "1")
-//    private ClientPersonEntity person;
     private ClientPersonEntity person;
 
     /**
