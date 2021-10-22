@@ -23,7 +23,7 @@ import lombok.experimental.UtilityClass;
 import java.util.List;
 
 /**
- * Utility class to convert between {@link ClientPersonEntity} and {@link ServerPersonEntity} and vice-versa.
+ * Utility class to convert between client person and server person entities and vice-versa.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
@@ -55,7 +55,7 @@ public final class PersonConverter
      * @param entity Persistent entity to map.
      * @return Mapped client entity.
      */
-    public static ClientPersonEntity convertPersistence(ServerPersonEntity entity)
+    public static ClientPersonEntity convertServer(ServerPersonEntity entity)
     {
         return PersonMapper.INSTANCE.mapPersistence(entity, new CycleAvoidingMappingContext());
     }
@@ -65,7 +65,7 @@ public final class PersonConverter
      * @param list List of persistent entities to map.
      * @return Mapped list of client entities.
      */
-    public static List<ClientPersonEntity> convertPersistenceList(List<ServerPersonEntity> list)
+    public static List<ClientPersonEntity> convertServerList(List<ServerPersonEntity> list)
     {
         return PersonMapper.INSTANCE.mapPersistenceList(list, new CycleAvoidingMappingContext());
     }

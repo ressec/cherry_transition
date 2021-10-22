@@ -23,7 +23,7 @@ import lombok.experimental.UtilityClass;
 import java.util.List;
 
 /**
- * Utility class to convert {@link ClientEmailAddressEntity} to {@link ServerEmailAddressEntity} and vice-versa.
+ * Utility class to convert client email address to server email address entities and vice-versa.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
@@ -55,7 +55,7 @@ public final class EmailAddressConverter
      * @param entity Persistent entity to map.
      * @return Mapped client entity.
      */
-    public static ClientEmailAddressEntity convertPersistence(ServerEmailAddressEntity entity)
+    public static ClientEmailAddressEntity convertServer(ServerEmailAddressEntity entity)
     {
         return EmailAddressMapper.INSTANCE.mapPersistence(entity, new CycleAvoidingMappingContext());
     }
@@ -65,7 +65,7 @@ public final class EmailAddressConverter
      * @param list List of persistent entities to map.
      * @return Mapped list of client entities.
      */
-    public static List<ClientEmailAddressEntity> convertPersistenceList(List<ServerEmailAddressEntity> list)
+    public static List<ClientEmailAddressEntity> convertServerList(List<ServerEmailAddressEntity> list)
     {
         return EmailAddressMapper.INSTANCE.mapPersistenceList(list, new CycleAvoidingMappingContext());
     }
