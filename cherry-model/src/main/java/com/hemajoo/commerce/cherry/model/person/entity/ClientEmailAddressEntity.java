@@ -29,14 +29,14 @@ import javax.validation.constraints.Email;
 import javax.validation.groups.Default;
 
 /**
- * Represents an email address (associated to a person).
+ * Represents an email address client entity.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
 @Data
-@ToString(callSuper = false)
+@ToString(callSuper = true)
 //@Builder(setterPrefix = "with") // Does not work well with MapStruct!
-@EqualsAndHashCode(callSuper = false)
+@EqualsAndHashCode(callSuper = true)
 public class ClientEmailAddressEntity extends ClientBaseEntity implements ClientEmailAddress
 {
     /**
@@ -62,11 +62,10 @@ public class ClientEmailAddressEntity extends ClientBaseEntity implements Client
     /**
      * The person identifier this email address belongs to.
      */
-    @ApiModelProperty(name = "ownerId", notes = "Entity identifier this email address belongs to", value = "1")
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     @JsonIgnoreProperties("emailAddresses")
-//    private ClientPersonEntity person; // TODO Should be replaced by ClientPerson interface!
+    @ApiModelProperty(name = "ownerId", notes = "Entity identifier this email address belongs to", value = "1")
     private ClientPersonEntity person;
 
     public ClientEmailAddressEntity()

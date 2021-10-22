@@ -14,30 +14,25 @@
  */
 package com.hemajoo.commerce.cherry.model.person.entity;
 
-import com.hemajoo.commerce.cherry.model.base.entity.BaseEntity;
 import com.hemajoo.commerce.cherry.model.base.entity.ClientEntity;
 import com.hemajoo.commerce.cherry.model.person.entity.base.PhoneNumber;
 
 /**
- * Behavior of a client phone number entity.
+ * Interface providing the behavior of a client phone number entity.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-public interface ClientPhoneNumber extends PhoneNumber, ClientEntity, BaseEntity
+public interface ClientPhoneNumber extends PhoneNumber, ClientEntity
 {
-//    /**
-//     * Returns the entity owner identity.
-//     * @return Owner entity identity.
-//     */
-//    Identity getOwner();
-//
-//    /**
-//     * Sets the entity owner identity.
-//     * @param owner Owner entity identity.
-//     */
-//    void setOwner(final Identity owner);
-
+    /**
+     * Returns the person owning this phone number.
+     * @return Person.
+     */
     ClientPersonEntity getPerson();
 
-    void setPerson(final ClientPersonEntity person);
+    /**
+     * Sets the person owning this phone number.
+     * @param owner Person.
+     */
+    void setPerson(final ClientPersonEntity owner);
 }

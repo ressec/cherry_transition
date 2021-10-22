@@ -26,7 +26,7 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 
 /**
- * Represents a phone number.
+ * Represents a phone number client entity.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
@@ -70,7 +70,6 @@ public class ClientPhoneNumberEntity extends ClientBaseEntity implements ClientP
      * The person identifier this phone number belongs to.
      */
     @ApiModelProperty(name = "personId", notes = "Person identifier this phone number belongs to", value = "1")
-//    private ClientPersonEntity person;
     private ClientPersonEntity person;
 
     /**

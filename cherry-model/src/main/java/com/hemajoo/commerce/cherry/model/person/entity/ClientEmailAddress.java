@@ -18,25 +18,21 @@ import com.hemajoo.commerce.cherry.model.base.entity.ClientEntity;
 import com.hemajoo.commerce.cherry.model.person.entity.base.EmailAddress;
 
 /**
- * Behavior of a client email address entity.
+ * Interface providing the behavior of a client email address entity.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
 public interface ClientEmailAddress extends EmailAddress, ClientEntity
 {
-//    /**
-//     * Returns the entity owner identity.
-//     * @return Owner entity identity.
-//     */
-//    Identity getOwner();
-//
-//    /**
-//     * Sets the entity owner identity.
-//     * @param owner Owner entity identity.
-//     */
-//    void setOwner(final Identity owner);
-
+    /**
+     * Returns the person owning this email address.
+     * @return Person.
+     */
     ClientPersonEntity getPerson();
 
-    void setPerson(final ClientPersonEntity person);
+    /**
+     * Sets the person owning this email address.
+     * @param owner Person.
+     */
+    void setPerson(final ClientPersonEntity owner);
 }
