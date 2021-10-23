@@ -27,33 +27,33 @@ import java.util.List;
 import java.util.UUID;
 
 /**
- * Person persistence service.
+ * Provides the behavior of the person persistence service.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
 public interface PersonService
 {
     /**
-     * Returns the person JPA repository.
-     * @return Person JPA repository.
+     * Returns the person repository.
+     * @return Person repository.
      */
     PersonRepository getRepository();
 
     /**
-     * Returns the number of persons.
+     * Returns the total number of persons.
      * @return Number of persons.
      */
     Long count();
 
     /**
-     * Finds a person given its identifier.
+     * Returns the person matching the given identifier.
      * @param id Person identifier.
-     * @return Person if found, null otherwise.
+     * @return Person.
      */
     ServerPersonEntity findById(UUID id);
 
     /**
-     * Saves a person.
+     * Saves the person.
      * @param person Person.
      * @return Saved person.
      * @throws DocumentException Thrown in case an error occurred with one of the document when trying to save the person!
@@ -61,29 +61,43 @@ public interface PersonService
     ServerPersonEntity save(ServerPersonEntity person) throws DocumentException;
 
     /**
-     * Deletes a person given its identifier.
+     * Deletes the person matching the given identifier.
      * @param id Person identifier.
      */
     void deleteById(UUID id);
 
     /**
-     * Returns the persons.
+     * Returns all the persons.
      * @return List of persons.
      */
     List<ServerPersonEntity> findAll();
 
     /**
-     * Returns the persons matching the given set of predicates.
-     * @param person Person search object containing the predicates.
-     * @return List of persons matching the given predicates.
+     * Returns the list of persons matching the given specification.
+     * @param person Person specification.
+     * @return List of persons.
      */
     List<ServerPersonEntity> search(final @NonNull SearchPerson person);
 
+    /**
+     * Returns the list of email addresses owned by the given person.
+     * @param person Person.
+     * @return List of email addresses.
+     */
     List<ServerEmailAddressEntity> getEmailAddresses(final @NonNull ServerPersonEntity person);
 
-    ServerPersonEntity loadEmailAddresses(final @NonNull ServerPersonEntity person);
+//    ServerPersonEntity loadEmailAddresses(final @NonNull ServerPersonEntity person);
 
+    /**
+     * Returns the list of documents owned by the given base entity.
+     * @param entity Base entity.
+     * @return List of documents.
+     */
     List<ServerDocumentEntity> getDocuments(final @NonNull ServerBaseEntity entity);
 
+    /**
+     * Saves the person and flush.
+     * @param person Person to save.
+     */
     void saveAndFlush(final @NonNull ServerPersonEntity person);
 }

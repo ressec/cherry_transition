@@ -47,25 +47,25 @@ import java.util.UUID;
 public class PersonServiceCore implements PersonService
 {
     /**
-     * Repository for the persons.
+     * Person repository.
      */
     @Autowired
     private PersonRepository personRepository;
 
     /**
-     * Repository for the email addresses.
+     * Email address repository.
      */
     @Autowired
     private EmailAddressRepository emailAddressRepository;
 
     /**
-     * Repository for the postal addresses.
+     * Postal address repository.
      */
     @Autowired
     private PostalAddressRepository postalAddressRepository;
 
     /**
-     * Repository for the phone numbers.
+     * Phone number repository.
      */
     @Autowired
     private PhoneNumberRepository phoneNumberRepository;
@@ -253,13 +253,13 @@ public class PersonServiceCore implements PersonService
         return emailAddressRepository.findByPersonId(person.getId());
     }
 
-    @Override
-    public ServerPersonEntity loadEmailAddresses(final @NonNull ServerPersonEntity person)
-    {
-        person.setEmailAddresses(getEmailAddresses(person));
-
-        return person;
-    }
+//    @Override
+//    public ServerPersonEntity loadEmailAddresses(final @NonNull ServerPersonEntity person)
+//    {
+//        person.setEmailAddresses(getEmailAddresses(person));
+//
+//        return person;
+//    }
 
 //    private void saveDocument(final @NonNull DocumentServerEntity document) throws DocumentException
 //    {
