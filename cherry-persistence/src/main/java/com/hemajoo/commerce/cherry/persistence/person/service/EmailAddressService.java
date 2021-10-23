@@ -33,20 +33,20 @@ import java.util.UUID;
 public interface EmailAddressService
 {
     /**
-     * Returns the number of email addresses.
-     * @return Number of email addresses.
+     * Returns the total number of email addresses.
+     * @return Total number of email addresses.
      */
     Long count();
 
     /**
-     * Finds an email address given its identifier.
+     * Returns the email address matching the given identifier.
      * @param id Email address identifier.
-     * @return Email address if found, null otherwise.
+     * @return Email address.
      */
     ServerEmailAddressEntity findById(UUID id);
 
     /**
-     * Saves an email address.
+     * Saves the given email address.
      * @param emailAddress Email address.
      * @return Saved email address.
      * @throws EmailAddressException Thrown in case an error occurred while trying to save the email address.
@@ -54,40 +54,40 @@ public interface EmailAddressService
     ServerEmailAddressEntity save(ServerEmailAddressEntity emailAddress) throws EmailAddressException, DocumentException;
 
     /**
-     * Deletes an email address given its identifier.
-     * @param id Email address identfier.
+     * Deletes the email address matching the given identifier.
+     * @param id Email address identifier.
      */
     void deleteById(UUID id);
 
     /**
-     * Returns the email addresses.
+     * Returns all email addresses.
      * @return List of email addresses.
      */
     List<ServerEmailAddressEntity> findAll();
 
     /**
-     * Returns a list of email addresses given an address type.
+     * Returns the list of email addresses matching the given address type.
      * @param type Address type.
-     * @return List of matching email addresses.
+     * @return List of email addresses.
      */
     List<ServerEmailAddressEntity> findByAddressType(AddressType type);
 
     /**
-     * Returns a list of email addresses given a status type.
+     * Returns the list of email addresses matching the given status type.
      * @param status Status type.
-     * @return List of matching email addresses.
+     * @return List of email addresses.
      */
     List<ServerEmailAddressEntity> findByStatus(StatusType status);
 
     /**
-     * Returns a list of default or not default email addresses.
+     * Returns the list of default or not default email addresses.
      * @param isDefaultEmail Is it the default email address?
      * @return List of matching email addresses.
      */
     List<ServerEmailAddressEntity> findByIsDefaultEmail(Boolean isDefaultEmail);
 
     /**
-     * Returns a list of email addresses belonging to a person.
+     * Returns the list of email addresses belonging to a person.
      * @param personId Person identifier.
      * @return List of matching email addresses.
      */

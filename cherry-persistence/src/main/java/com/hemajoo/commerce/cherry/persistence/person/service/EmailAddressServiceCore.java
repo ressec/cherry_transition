@@ -30,6 +30,7 @@ import com.hemajoo.commerce.cherry.persistence.document.repository.DocumentServi
 import com.hemajoo.commerce.cherry.persistence.person.entity.ServerEmailAddressEntity;
 import com.hemajoo.commerce.cherry.persistence.person.repository.EmailAddressRepository;
 import lombok.NonNull;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
@@ -44,16 +45,17 @@ import java.util.UUID;
  */
 @Validated
 @Service
+@Log4j2
 public class EmailAddressServiceCore implements EmailAddressService
 {
     /**
-     * Repository of the email addresses.
+     * Email address repository.
      */
     @Autowired
     private EmailAddressRepository emailAddressRepository;
 
     /**
-     * Document service.
+     * Document (content store) service.
      */
     @Autowired
     private DocumentService documentService;
@@ -75,18 +77,8 @@ public class EmailAddressServiceCore implements EmailAddressService
     {
         emailAddressRepository.save(emailAddress);
 
-        // Save the document attached to the email address.
-        for (ServerDocumentEntity document : emailAddress.getDocuments())
-        {
-            try
-            {
-                saveDocumentContent(document);
-            }
-            catch (Exception e)
-            {
-                throw new DocumentException(e.getMessage());
-            }
-        }
+        // Save the documents attached to the email address.
+        emailAddress.getDocuments().forEach(this::saveDocumentContent);
 
         return emailAddress;
     }
@@ -223,6 +215,11 @@ public class EmailAddressServiceCore implements EmailAddressService
         }
         catch (Exception e)
         {
+            LOGGER.info(String.format("Cannot save document content id: %s for owner of type: %s, identifier: %s due to: %s",
+                    document.getContentId(),
+                    document.getOwner().getEntityType(),
+                    document.getOwner().getId(),
+                    e.getMessage()), e);
             throw new DocumentException(e.getMessage());
         }
     }
