@@ -18,9 +18,11 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.hemajoo.commerce.cherry.commons.type.EntityType;
 import com.hemajoo.commerce.cherry.model.base.search.BaseSearch;
 import com.hemajoo.commerce.cherry.model.person.type.AddressType;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -30,7 +32,9 @@ import javax.persistence.Enumerated;
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
+@ApiModel(value = "EmailAddressSearch", description = "Specification object used to search for email addresses.")
 @Data
+@ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
 public final class SearchEmailAddress extends BaseSearch
 {

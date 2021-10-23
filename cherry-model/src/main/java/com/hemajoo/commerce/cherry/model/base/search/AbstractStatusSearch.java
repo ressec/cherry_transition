@@ -20,6 +20,7 @@ import com.hemajoo.commerce.cherry.commons.type.StatusType;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -31,6 +32,7 @@ import java.util.Date;
  * @version 1.0.0
  */
 @Data
+@ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
 public abstract class AbstractStatusSearch extends AbstractAuditSearch
 {
