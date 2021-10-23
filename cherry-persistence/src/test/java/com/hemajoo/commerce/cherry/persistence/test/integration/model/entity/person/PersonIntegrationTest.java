@@ -54,7 +54,7 @@ class PersonIntegrationTest extends AbstractBaseDatabaseUnitTest
     final void testCreatePersonWithoutDocument() throws DocumentException
     {
         // Generate random person.
-        ServerPersonEntity person = PersonRandomizer.generatePersistent(false);
+        ServerPersonEntity person = PersonRandomizer.generateServer(false);
         personService.save(person);
 
         // Load the persisted person using its id.
@@ -69,7 +69,7 @@ class PersonIntegrationTest extends AbstractBaseDatabaseUnitTest
     final void testCreatePersonWithDocument() throws DocumentException, DocumentContentException
     {
         // Generate random person and document.
-        ServerPersonEntity person = PersonRandomizer.generatePersistent(false);
+        ServerPersonEntity person = PersonRandomizer.generateServer(false);
         ServerDocumentEntity document = DocumentRandomizer.generatePersistent(false);
         person.addDocument(document);
 
@@ -97,7 +97,7 @@ class PersonIntegrationTest extends AbstractBaseDatabaseUnitTest
         String lastname = "Hugo";
 
         // Generate random person.
-        ServerPersonEntity person = PersonRandomizer.generatePersistent(false);
+        ServerPersonEntity person = PersonRandomizer.generateServer(false);
         personService.save(person);
 
         // Load the saved person and change its names.
@@ -125,7 +125,7 @@ class PersonIntegrationTest extends AbstractBaseDatabaseUnitTest
     final void testDeletePerson() throws DocumentException
     {
         // Generate a random person.
-        ServerPersonEntity person = PersonRandomizer.generatePersistent(false);
+        ServerPersonEntity person = PersonRandomizer.generateServer(false);
         personService.save(person);
         UUID id = person.getId();
 
@@ -146,7 +146,7 @@ class PersonIntegrationTest extends AbstractBaseDatabaseUnitTest
     @DisplayName("Document attached to a person should be automatically deleted if the person is deleted")
     final void testChildDocumentRemoval() throws DocumentException, DocumentContentException
     {
-        ServerPersonEntity person = PersonRandomizer.generatePersistent(false);
+        ServerPersonEntity person = PersonRandomizer.generateServer(false);
         ServerDocumentEntity document = DocumentRandomizer.generatePersistent(false);
         person.addDocument(document);
         personService.save(person);
