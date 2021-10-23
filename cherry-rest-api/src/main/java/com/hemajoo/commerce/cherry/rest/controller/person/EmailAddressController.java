@@ -137,7 +137,7 @@ public class EmailAddressController
             @ApiParam(value = "Person identifier (UUID)", name = "personId", required = true, example = "523cd226-49e4-4034-85dd-d0768af295da")
             @Valid @ValidPersonId @NotNull @RequestParam String personId)
     {
-        ServerEmailAddressEntity serverEmail = EmailAddressRandomizer.generatePersistent(false);
+        ServerEmailAddressEntity serverEmail = EmailAddressRandomizer.generateServer(false);
 
         ServerPersonEntity person = personService.findById(UUID.fromString(personId));
         serverEmail.setPerson(person);

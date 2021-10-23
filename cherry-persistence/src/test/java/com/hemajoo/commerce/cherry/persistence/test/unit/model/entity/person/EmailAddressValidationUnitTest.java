@@ -42,7 +42,7 @@ class EmailAddressValidationUnitTest
     @DisplayName("Email address should not be null")
     final void testNullEmailAddress() throws EmailAddressException
     {
-        ServerEmailAddressEntity email = EmailAddressRandomizer.generatePersistent(true);
+        ServerEmailAddressEntity email = EmailAddressRandomizer.generateServer(true);
         email.setEmail(null);
 
         Set<ConstraintViolation<ServerEmailAddressEntity>> violations = validator.validate(email);
@@ -56,7 +56,7 @@ class EmailAddressValidationUnitTest
     @DisplayName("Email address should be valid")
     final void testValidEmailAddress() throws EmailAddressException
     {
-        ServerEmailAddressEntity email = EmailAddressRandomizer.generatePersistent(true);
+        ServerEmailAddressEntity email = EmailAddressRandomizer.generateServer(true);
         email.setEmail("john.doe#gmail.com");
 
         Set<ConstraintViolation<ServerEmailAddressEntity>> violations = validator.validate(email);

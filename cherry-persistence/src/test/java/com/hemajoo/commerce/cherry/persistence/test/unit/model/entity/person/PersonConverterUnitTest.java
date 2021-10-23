@@ -47,7 +47,7 @@ class PersonConverterUnitTest extends AbstractBaseMapperTest
     @DisplayName("Map a persistent person to a client person")
     final void testMapPersistentToClient()
     {
-        ServerPersonEntity persistent = PersonRandomizer.generatePersistent(true);
+        ServerPersonEntity persistent = PersonRandomizer.generateServer(true);
         ClientPersonEntity client = PersonConverter.convertServer(persistent);
         checkFields(persistent, client);
     }
@@ -59,7 +59,7 @@ class PersonConverterUnitTest extends AbstractBaseMapperTest
         List<ServerPersonEntity> persistentList = new ArrayList<>();
         for (int i = 0; i < LIST_COUNT; i++)
         {
-            persistentList.add(PersonRandomizer.generatePersistent(true));
+            persistentList.add(PersonRandomizer.generateServer(true));
         }
 
         List<ClientPersonEntity> clientList = PersonConverter.convertServerList(persistentList);
@@ -102,7 +102,7 @@ class PersonConverterUnitTest extends AbstractBaseMapperTest
     @DisplayName("Create a deep copy of a persistent person")
     final void testCopyPersistent()
     {
-        ServerPersonEntity persistent = PersonRandomizer.generatePersistent(true);
+        ServerPersonEntity persistent = PersonRandomizer.generateServer(true);
         ServerPersonEntity copy = PersonConverter.copy(persistent);
         checkFields(persistent, copy);
     }

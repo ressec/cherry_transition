@@ -26,11 +26,11 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 /**
- * Base server entity randomizer.
+ * Abstract base entity randomizer.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-public abstract class AbstractBaseServerEntityRandomizer
+public abstract class AbstractBaseEntityRandomizer
 {
     /**
      * Default dependency bound.
@@ -53,9 +53,9 @@ public abstract class AbstractBaseServerEntityRandomizer
     protected static final EnumRandomGenerator STATUS_TYPE_GENERATOR = new EnumRandomGenerator(StatusType.class);
 
     /**
-     * Creates a new base server entity randomizer.
+     * Creates a new base entity randomizer.
      */
-    protected AbstractBaseServerEntityRandomizer()
+    protected AbstractBaseEntityRandomizer()
     {
         // Empty
     }

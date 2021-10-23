@@ -17,7 +17,7 @@ package com.hemajoo.commerce.cherry.persistence.document.randomizer;
 import com.hemajoo.commerce.cherry.model.document.ClientDocumentEntity;
 import com.hemajoo.commerce.cherry.model.document.exception.DocumentContentException;
 import com.hemajoo.commerce.cherry.model.document.type.DocumentType;
-import com.hemajoo.commerce.cherry.persistence.base.randomizer.AbstractBaseServerEntityRandomizer;
+import com.hemajoo.commerce.cherry.persistence.base.randomizer.AbstractBaseEntityRandomizer;
 import com.hemajoo.commerce.cherry.persistence.document.entity.ServerDocumentEntity;
 import lombok.experimental.UtilityClass;
 import org.ressec.avocado.core.random.EnumRandomGenerator;
@@ -30,7 +30,7 @@ import java.util.UUID;
  * @version 1.0.0
  */
 @UtilityClass
-public final class DocumentRandomizer extends AbstractBaseServerEntityRandomizer
+public final class DocumentRandomizer extends AbstractBaseEntityRandomizer
 {
     /**
      * Document type enumeration generator.
@@ -46,7 +46,7 @@ public final class DocumentRandomizer extends AbstractBaseServerEntityRandomizer
     public static ServerDocumentEntity generatePersistent(final boolean withRandomId) throws DocumentContentException
     {
         var entity = new ServerDocumentEntity();
-        AbstractBaseServerEntityRandomizer.populateBaseFields(entity);
+        AbstractBaseEntityRandomizer.populateBaseFields(entity);
 
         if (withRandomId)
         {
@@ -70,7 +70,7 @@ public final class DocumentRandomizer extends AbstractBaseServerEntityRandomizer
     public static ClientDocumentEntity generateClient(final boolean withRandomId) throws DocumentContentException
     {
         var entity = new ClientDocumentEntity();
-        AbstractBaseServerEntityRandomizer.populateBaseFields(entity);
+        AbstractBaseEntityRandomizer.populateBaseFields(entity);
 
         if (withRandomId)
         {
