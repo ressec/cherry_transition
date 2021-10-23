@@ -18,6 +18,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -28,6 +29,7 @@ import java.util.Date;
  * @version 1.0.0
  */
 @Data
+@ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = false)
 public abstract class AbstractAuditSearch implements Serializable
 {
