@@ -37,7 +37,6 @@ import io.swagger.annotations.ApiParam;
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -174,13 +173,13 @@ public class EmailAddressController
      */
     @ApiOperation(value = "Delete an email address.", notes = "Delete an email address given its identifier.")
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<?> delete(
+    public ResponseEntity<String> delete(
             @ApiParam(value = "Email address identifier", required = true)
             @NotNull @Valid @ValidEmailAddressId @PathVariable String id)
     {
         entityFactory.getEmailAddressService().deleteById(UUID.fromString(id));
 
-        return ResponseEntity.ok(HttpStatus.OK);
+        return ResponseEntity.ok(String.format("Email address id: '%s' has been deleted successfully!", id));
     }
 
     /**
