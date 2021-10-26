@@ -49,17 +49,12 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler
      * @param request Web request.
      * @return Response entity containing the errors.
      */
-    @ExceptionHandler(ConstraintViolationException.class)
-    @ResponseStatus(HttpStatus.NOT_FOUND)
     @ResponseBody
     @NotNull
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(ConstraintViolationException.class)
     public static ResponseEntity<String> handleConstraintViolationException(ConstraintViolationException exception, WebRequest request)
     {
-//        for (ConstraintViolation<?> violation : exception.getConstraintViolations())
-//        {
-//            response.addError(violation.getMessage());
-//        }
-//
-        return new ResponseEntity<>(exception.getMessage(), HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(exception.getMessage(), HttpStatus.BAD_REQUEST);
     }
 }

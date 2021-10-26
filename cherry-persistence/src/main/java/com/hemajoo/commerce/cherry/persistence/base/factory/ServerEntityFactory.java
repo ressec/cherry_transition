@@ -19,6 +19,9 @@ import com.hemajoo.commerce.cherry.persistence.base.entity.ServerBaseEntity;
 import com.hemajoo.commerce.cherry.persistence.document.repository.DocumentService;
 import com.hemajoo.commerce.cherry.persistence.person.service.EmailAddressService;
 import com.hemajoo.commerce.cherry.persistence.person.service.PersonService;
+import com.hemajoo.commerce.cherry.persistence.person.service.PhoneNumberService;
+import com.hemajoo.commerce.cherry.persistence.person.service.PostalAddressService;
+import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -28,22 +31,39 @@ public class ServerEntityFactory
     /**
      * Person persistence service.
      */
+    @Getter
     @Autowired
     private PersonService personService;
 
     /**
      * Document persistence service.
      */
+    @Getter
     @Autowired
     private DocumentService documentService;
 
     /**
      * Email persistence service.
      */
+    @Getter
     @Autowired
     private EmailAddressService emailAddressService;
 
-//    public final <T extends ServerEntity> T from(final Identity identity) // TODO Try to transform to a static method
+    /**
+     * Phone number persistence service.
+     */
+    @Getter
+    @Autowired
+    private PhoneNumberService phoneNumberService;
+
+    /**
+     * Postal address persistence service.
+     */
+    @Getter
+    @Autowired
+    private PostalAddressService postalAddressService;
+
+    //    public final <T extends ServerEntity> T from(final Identity identity) // TODO Try to transform to a static method
     public final ServerBaseEntity from(final Identity identity) // TODO Try to transform to a static method
 //    public static ServerBaseEntity from(final Identity identity)
     {
@@ -59,6 +79,12 @@ public class ServerEntityFactory
 
                 case EMAIL_ADDRESS:
                     return emailAddressService.findById(identity.getId());
+
+                case PHONE_NUMBER:
+                    return phoneNumberService.findById(identity.getId());
+
+                case POSTAL_ADDRESS:
+                    return postalAddressService.findById(identity.getId());
 
                 default:
 //                    throw new ServerEntityFactory("Unhandled entity type: " + identity.getEntityType());

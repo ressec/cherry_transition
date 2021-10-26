@@ -23,6 +23,7 @@ import com.hemajoo.commerce.cherry.persistence.base.mapper.CycleAvoidingMappingC
 import com.hemajoo.commerce.cherry.persistence.document.entity.ServerDocumentEntity;
 import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
@@ -34,6 +35,9 @@ import java.util.List;
 @Mapper(unmappedTargetPolicy = ReportingPolicy.ERROR)
 public interface DocumentMapper
 {
+    @Autowired
+    ServerEntityFactory entityFactory = null;
+
     /**
      * Instance to this bean mapper.
      */
@@ -45,7 +49,7 @@ public interface DocumentMapper
      * @param context Context object.
      * @return Converted client entity.
      */
-    @Mapping(source = "entity.owner", target = "owner", qualifiedByName = "toIdentity")
+    @Mapping(source = "entity.owner", target = "owner", qualifiedByName = "toIdentityDoc")
     ClientDocumentEntity mapPersistence(ServerDocumentEntity entity, @Context CycleAvoidingMappingContext context);
 
     /**
@@ -62,7 +66,7 @@ public interface DocumentMapper
      * @param context Context object.
      * @return Converted persistent entity.
      */
-    @Mapping(source = "entity.owner", target = "owner", qualifiedByName = "fromIdentity")
+    @Mapping(source = "entity.owner", target = "owner", qualifiedByName = "fromIdentityDoc")
     ServerDocumentEntity mapClient(ClientDocumentEntity entity, @Context CycleAvoidingMappingContext context);
 
     /**
@@ -96,7 +100,7 @@ public interface DocumentMapper
      * @return Document server identity.
      */
 //    default <T extends BaseServerEntity> EntityIdentity toIdentity(final T entity)
-    @Named("toIdentity")
+    @Named("toIdentityDoc")
     default Identity toIdentity(final ServerBaseEntity entity) // TODO Should have as parameter a ServerEntity interface instead of a BaseServerEntity class!
     {
         return entity != null ? entity.getIdentity() : null;
@@ -107,14 +111,13 @@ public interface DocumentMapper
      * @param identity Document server identity.
      * @return Document server entity.
      */
-    @Named("fromIdentity")
+    @Named("fromIdentityDoc")
     default ServerDocumentEntity fromIdentity(final /*EntityIdentity*/ Identity identity) throws DocumentException // TODO Should return a ServerDocument interface instead of a DocumentServerEntity class!
     {
 //        return (ServerDocumentEntity) ServerEntityFactory.from(identity);
         if (identity != null)
         {
-            ServerEntityFactory factory = new ServerEntityFactory();
-            return (ServerDocumentEntity) factory.from(identity);
+            return (ServerDocumentEntity) entityFactory.from(identity);
         }
 
         return null;

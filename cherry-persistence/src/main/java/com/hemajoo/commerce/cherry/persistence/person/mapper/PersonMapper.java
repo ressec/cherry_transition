@@ -37,7 +37,13 @@ import java.util.UUID;
 @Mapper(
         unmappedTargetPolicy = ReportingPolicy.ERROR,
         collectionMappingStrategy = CollectionMappingStrategy.ADDER_PREFERRED,
-        uses = DocumentMapper.class)
+        uses = {
+                DocumentMapper.class,
+                EmailAddressMapper.class,
+                PhoneNumberMapper.class,
+                PostalAddressMapper.class
+        }
+)
 public interface PersonMapper
 {
     /**
@@ -51,6 +57,7 @@ public interface PersonMapper
      * @param context Context object.
      * @return Mapped client entity.
      */
+    //@Mapping(source = "person", target = "owner", qualifiedByName = "toIdentity")
     ClientPersonEntity mapServer(ServerPersonEntity persistent, @Context CycleAvoidingMappingContext context);
 
     /**
@@ -67,7 +74,7 @@ public interface PersonMapper
      * @param context Context object.
      * @return Mapped persistent entity.
      */
-    ServerPersonEntity mapClient(ClientPersonEntity entity, @Context CycleAvoidingMappingContext context);
+    ServerPersonEntity mapClient(ClientPersonEntity entity, @Context CycleAvoidingMappingContext context, @Context ServerEntityFactory factory);
 
     /**
      * Maps a list of client entities to a list of persistent entities.
@@ -75,7 +82,7 @@ public interface PersonMapper
      * @param context Context object.
      * @return Mapped list of persistent entities.
      */
-    List<ServerPersonEntity> mapClientList(List<ClientPersonEntity> list, @Context CycleAvoidingMappingContext context);
+    List<ServerPersonEntity> mapClientList(List<ClientPersonEntity> list, @Context CycleAvoidingMappingContext context, @Context ServerEntityFactory factory);
 
     /**
      * Copy a persistent entity.
@@ -120,9 +127,9 @@ public interface PersonMapper
      * @throws DocumentException Thrown in case an error occurred with a document.
      */
     @Named("fromIdentity")
-    default ServerPerson fromIdentity(final Identity identity) throws DocumentException
+    default ServerPersonEntity fromIdentity(final Identity identity, @Context ServerEntityFactory factory) throws DocumentException
     {
-        return (ServerPerson) new ServerEntityFactory().from(identity);
+        return (ServerPersonEntity) factory.from(identity);
     }
 
     @Named("stringToUuid")

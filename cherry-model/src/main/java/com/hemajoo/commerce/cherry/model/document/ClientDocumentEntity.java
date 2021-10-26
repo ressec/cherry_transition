@@ -15,7 +15,6 @@
 package com.hemajoo.commerce.cherry.model.document;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.hemajoo.commerce.cherry.commons.entity.EntityIdentity;
 import com.hemajoo.commerce.cherry.commons.entity.Identity;
 import com.hemajoo.commerce.cherry.commons.type.EntityType;
 import com.hemajoo.commerce.cherry.model.base.entity.ClientBaseEntity;
@@ -105,8 +104,7 @@ public class ClientDocumentEntity extends ClientBaseEntity implements Document, 
      * Document owner identity.
      */
     @Getter
-    //@Setter
-    private /*EntityIdentity*/ Identity owner;
+    private Identity owner;
 
     @ToString.Exclude
     @Getter
@@ -328,6 +326,6 @@ public class ClientDocumentEntity extends ClientBaseEntity implements Document, 
     @Override
     public void setOwner(Identity owner)
     {
-        this.owner = (EntityIdentity) owner;
+        this.owner = owner;
     }
 }

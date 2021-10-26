@@ -21,6 +21,7 @@ import com.hemajoo.commerce.cherry.persistence.base.factory.ServerEntityFactory;
 import com.hemajoo.commerce.cherry.persistence.base.mapper.CycleAvoidingMappingContext;
 import com.hemajoo.commerce.cherry.persistence.document.mapper.DocumentMapper;
 import com.hemajoo.commerce.cherry.persistence.person.entity.ServerPerson;
+import com.hemajoo.commerce.cherry.persistence.person.entity.ServerPersonEntity;
 import com.hemajoo.commerce.cherry.persistence.person.entity.ServerPostalAddressEntity;
 import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
@@ -49,7 +50,7 @@ public interface PostalAddressMapper
      * @param context Context object.
      * @return Client entity.
      */
-    //@Mapping(source = "entity.person", target = "person", qualifiedByName = "toIdentity")
+    @Mapping(source = "person", target = "owner", qualifiedByName = "postalAddressToIdentity")
     ClientPostalAddressEntity mapServer(ServerPostalAddressEntity entity, @Context CycleAvoidingMappingContext context);
 
     /**
@@ -66,7 +67,7 @@ public interface PostalAddressMapper
      * @param context Context object.
      * @return Persistent entity.
      */
-    //@Mapping(source = "entity.person", target = "person", qualifiedByName = "fromIdentity")
+    @Mapping(source = "entity.owner", target = "person", qualifiedByName = "postalAddressFromIdentity")
     ServerPostalAddressEntity mapClient(ClientPostalAddressEntity entity, @Context CycleAvoidingMappingContext context);
 
     /**
@@ -98,7 +99,7 @@ public interface PostalAddressMapper
      * @param person Server person entity.
      * @return Entity identity.
      */
-    @Named("toIdentity")
+    @Named("postalAddressToIdentity")
     default Identity toIdentity(final ServerPerson person)
     {
         return person != null ? person.getIdentity() : null;
@@ -110,9 +111,9 @@ public interface PostalAddressMapper
      * @return Server entity.
      * @throws DocumentException Thrown in case an error occurred with a document.
      */
-    @Named("fromIdentity")
-    default ServerPerson fromIdentity(final Identity identity) throws DocumentException
+    @Named("postalAddressFromIdentity")
+    default ServerPersonEntity fromIdentity(final Identity identity) throws DocumentException
     {
-        return (ServerPerson) new ServerEntityFactory().from(identity);
+        return (ServerPersonEntity) new ServerEntityFactory().from(identity);
     }
 }

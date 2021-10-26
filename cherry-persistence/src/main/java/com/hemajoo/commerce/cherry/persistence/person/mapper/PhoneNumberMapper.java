@@ -17,11 +17,11 @@ package com.hemajoo.commerce.cherry.persistence.person.mapper;
 import com.hemajoo.commerce.cherry.commons.entity.Identity;
 import com.hemajoo.commerce.cherry.model.document.exception.DocumentException;
 import com.hemajoo.commerce.cherry.model.person.entity.ClientPhoneNumberEntity;
-import com.hemajoo.commerce.cherry.persistence.base.entity.ServerBaseEntity;
 import com.hemajoo.commerce.cherry.persistence.base.factory.ServerEntityFactory;
 import com.hemajoo.commerce.cherry.persistence.base.mapper.CycleAvoidingMappingContext;
 import com.hemajoo.commerce.cherry.persistence.document.mapper.DocumentMapper;
 import com.hemajoo.commerce.cherry.persistence.person.entity.ServerPerson;
+import com.hemajoo.commerce.cherry.persistence.person.entity.ServerPersonEntity;
 import com.hemajoo.commerce.cherry.persistence.person.entity.ServerPhoneNumberEntity;
 import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
@@ -50,7 +50,7 @@ public interface PhoneNumberMapper
      * @param context Context object.
      * @return Client entity.
      */
-    //@Mapping(source = "entity.person", target = "person", qualifiedByName = "toIdentity")
+    @Mapping(source = "person", target = "owner", qualifiedByName = "phoneNumberToIdentity")
     ClientPhoneNumberEntity mapServer(ServerPhoneNumberEntity entity, @Context CycleAvoidingMappingContext context);
 
     /**
@@ -67,7 +67,7 @@ public interface PhoneNumberMapper
      * @param context Context object.
      * @return Persistent entity.
      */
-    //@Mapping(source = "entity.person", target = "person", qualifiedByName = "fromIdentity")
+    @Mapping(source = "owner", target = "person", qualifiedByName = "phoneNumberFromIdentity")
     ServerPhoneNumberEntity mapClient(ClientPhoneNumberEntity entity, @Context CycleAvoidingMappingContext context);
 
     /**
@@ -99,7 +99,7 @@ public interface PhoneNumberMapper
      * @param person Server person entity.
      * @return Entity identity.
      */
-    @Named("toIdentity")
+    @Named("phoneNumberToIdentity")
     default Identity toIdentity(final ServerPerson person)
     {
         return person != null ? person.getIdentity() : null;
@@ -111,9 +111,9 @@ public interface PhoneNumberMapper
      * @return Server entity.
      * @throws DocumentException Thrown in case an error occurred with a document.
      */
-    @Named("fromIdentity")
-    default ServerBaseEntity fromIdentity(final Identity identity) throws DocumentException
+    @Named("phoneNumberFromIdentity")
+    default ServerPersonEntity fromIdentity(final Identity identity) throws DocumentException
     {
-        return new ServerEntityFactory().from(identity);
+        return (ServerPersonEntity) new ServerEntityFactory().from(identity);
     }
 }

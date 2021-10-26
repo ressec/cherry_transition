@@ -14,26 +14,25 @@
  */
 package com.hemajoo.commerce.cherry.persistence.person.validation.validator;
 
-import com.hemajoo.commerce.cherry.persistence.person.repository.EmailAddressRepository;
 import com.hemajoo.commerce.cherry.persistence.person.validation.constraint.ValidEmailAddressId;
+import com.hemajoo.commerce.cherry.persistence.person.validation.engine.EmailAddressValidationEngine;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
-import java.util.UUID;
 
 /**
- * Constraint validator for the {@link ValidEmailAddressId} constraint to validate an email address identifier.
+ * Validator for the {@link ValidEmailAddressId} constraint used to validate an email address identifier exist.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
 public class EmailAddressIdValidator implements ConstraintValidator<ValidEmailAddressId, String>
 {
     /**
-     * Email address {@code JPA} repository.
+     * Email address validation engine.
      */
     @Autowired
-    private EmailAddressRepository emailAddressRepository;
+    private EmailAddressValidationEngine emailAddressRuleEngine;
 
     @Override
     public void initialize(ValidEmailAddressId constraint)
@@ -42,8 +41,21 @@ public class EmailAddressIdValidator implements ConstraintValidator<ValidEmailAd
     }
 
     @Override
+    @SuppressWarnings("squid:S1166")
     public boolean isValid(String id, ConstraintValidatorContext context)
     {
-        return emailAddressRepository.existsById(UUID.fromString(id));
+        try
+        {
+            emailAddressRuleEngine.validateEmailAddressId(id);
+
+            return true;
+        }
+        catch (Exception e)
+        {
+            context.buildConstraintViolationWithTemplate(e.getMessage()).addConstraintViolation();
+            context.disableDefaultConstraintViolation(); // Allow to disable the standard constraint message
+        }
+
+        return false;
     }
 }
