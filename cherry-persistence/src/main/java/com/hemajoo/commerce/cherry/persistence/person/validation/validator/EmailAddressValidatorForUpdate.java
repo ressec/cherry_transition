@@ -16,25 +16,25 @@ package com.hemajoo.commerce.cherry.persistence.person.validation.validator;
 
 import com.hemajoo.commerce.cherry.model.person.entity.ClientEmailAddressEntity;
 import com.hemajoo.commerce.cherry.persistence.person.validation.constraint.ValidEmailAddressForUpdate;
-import com.hemajoo.commerce.cherry.persistence.person.validation.engine.EmailAddressRuleEngine;
+import com.hemajoo.commerce.cherry.persistence.person.validation.engine.EmailAddressValidationEngine;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
 /**
- * Validator associated to the {@link ValidEmailAddressForUpdate} constraint used to validate an email
- * address is valid to be updated.
+ * Validator associated to the {@link ValidEmailAddressForUpdate} constraint used to validate a client email
+ * address entity is valid for an update.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
 public class EmailAddressValidatorForUpdate implements ConstraintValidator<ValidEmailAddressForUpdate, ClientEmailAddressEntity>
 {
     /**
-     * Email address rule engine.
+     * Email address validation engine.
      */
     @Autowired
-    private EmailAddressRuleEngine emailAddressRuleEngine;
+    private EmailAddressValidationEngine emailAddressRuleEngine;
 
     @Override
     public void initialize(ValidEmailAddressForUpdate constraint)
@@ -43,13 +43,14 @@ public class EmailAddressValidatorForUpdate implements ConstraintValidator<Valid
     }
 
     @Override
+    @SuppressWarnings("squid:S1166")
     public boolean isValid(ClientEmailAddressEntity emailAddress, ConstraintValidatorContext context)
     {
         try
         {
             emailAddressRuleEngine.validatePersonId(emailAddress);
             emailAddressRuleEngine.validateEmailAddressId(emailAddress);
-            emailAddressRuleEngine.validateEmailAddressNameUniqueness(emailAddress);
+            emailAddressRuleEngine.validateNameUniqueness(emailAddress);
             emailAddressRuleEngine.validateDefaultEmail(emailAddress);
 
             return true;

@@ -26,18 +26,24 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 
 import java.util.Objects;
+import java.util.UUID;
 
+/**
+ * Email address validation engine.
+ * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
+ * @version 1.0.0
+ */
 @Component
-public final class EmailAddressRuleEngine
+public final class EmailAddressValidationEngine
 {
     /**
-     * Service for the email addresses.
+     * Email address persistence service.
      */
     @Autowired
     private EmailAddressService emailAddressService;
 
     /**
-     * Service for the persons.
+     * Person persistence service.
      */
     @Autowired
     private PersonService personService;
@@ -51,14 +57,14 @@ public final class EmailAddressRuleEngine
      */
     public void validatePersonId(final @NonNull ClientEmailAddressEntity emailAddress) throws EmailAddressException
     {
-        if (emailAddress.getPerson() == null || emailAddress.getPerson().getId() == null)
+        if (emailAddress.getOwner() == null || emailAddress.getOwner().getId() == null)
         {
             throw new EmailAddressException("Person id cannot be null!");
         }
 
-        if (personService.findById(emailAddress.getPerson().getId()) == null)
+        if (personService.findById(emailAddress.getOwner().getId()) == null)
         {
-            throw new EmailAddressException(String.format("Person with id: %s does not exist!", emailAddress.getPerson().getId()));
+            throw new EmailAddressException(String.format("Person with id: %s does not exist!", emailAddress.getOwner().getId()));
         }
     }
 
@@ -71,14 +77,21 @@ public final class EmailAddressRuleEngine
      */
     public void validateEmailAddressId(final @NonNull ClientEmailAddressEntity emailAddress) throws EmailAddressException
     {
-        if (emailAddress.getId() == null)
-        {
-            throw new EmailAddressException("Email address id cannot be null!");
-        }
+        validateEmailAddressId(emailAddress.getId().toString());
+    }
 
-        if (emailAddressService.findById(emailAddress.getId()) == null)
+    /**
+     * Checks the email address identifier is valid.
+     * <br>
+     * The email address identifier must exist.
+     * @param id Email address identifier.
+     * @throws EmailAddressException Thrown in case the validation failed!
+     */
+    public void validateEmailAddressId(final @NonNull String id) throws EmailAddressException
+    {
+        if (emailAddressService.findById(UUID.fromString(id)) == null)
         {
-            throw new EmailAddressException(String.format("Email address with id: %s does not exist!", emailAddress.getId()));
+            throw new EmailAddressException(String.format("Email address with id: %s does not exist!", id));
         }
     }
 
@@ -93,14 +106,14 @@ public final class EmailAddressRuleEngine
     {
         if (Boolean.TRUE.equals(emailAddress.getIsDefaultEmail()) && emailAddress.isActive())
         {
-            ServerPersonEntity person = personService.findById(emailAddress.getPerson().getId());
+            ServerPersonEntity person = personService.findById(emailAddress.getOwner().getId());
             ServerEmailAddressEntity defaultEmailAddress = person.getDefaultEmailAddress();
             if (!Objects.equals(defaultEmailAddress.getIdentity(), emailAddress.getIdentity()) || emailAddress.getId() == null)
             {
                 throw new EmailAddressException(
                         String.format(
                                 "Person with id: '%s' already has an active default email address!",
-                                emailAddress.getPerson().getId()),
+                                emailAddress.getOwner().getId()),
                         HttpStatus.BAD_REQUEST);
             }
         }
@@ -111,26 +124,37 @@ public final class EmailAddressRuleEngine
      * @param emailAddress Email address persistent entity.
      * @throws EmailAddressException Thrown in case the validation failed!
      */
-    public void validateEmailAddressNameUniqueness(final @NonNull ClientEmailAddressEntity emailAddress) throws EmailAddressException
+    public void validateNameUniqueness(final @NonNull ClientEmailAddressEntity emailAddress) throws EmailAddressException
     {
-        ServerPersonEntity person = personService.findById(emailAddress.getPerson().getId());
+        ServerPersonEntity person = personService.findById(emailAddress.getOwner().getId());
+
+        if (person == null)
+        {
+            throw new EmailAddressException(
+                    String.format(
+                            "Person id: '%s' cannot be found!",
+                            emailAddress.getOwner().getId()),
+                    HttpStatus.BAD_REQUEST);
+        }
+
         if (person.existEmail(emailAddress.getEmail()))
         {
-            ServerEmailAddressEntity emailById = person.getEmailById(emailAddress.getId());
-            // TODO Services to implement
-//            EmailAddressEntity emailByName = person.getEmailByName(emailAddress.getName());
-//            List<EmailAddressEntity> emailsByType = person.getEmails(emailAddress.getAddressType());
-//            List<EmailAddressEntity> emailsByStatus = person.getEmails(emailAddress.getStatusType());
-//            List<EmailAddressEntity> emailsByName = person.getEmails(emailAddress.getName());
-
-            if (emailById != null && !emailById.getId().equals(emailAddress.getId()))
+            if (emailAddress.getId() != null) // New email address entity
             {
-                throw new EmailAddressException(
-                        String.format(
-                                "Person with id: '%s' already holds the email address: '%s'",
-                                emailAddress.getPerson().getIdentity(),
-                                emailAddress.getEmail()),
-                        HttpStatus.BAD_REQUEST);
+                ServerEmailAddressEntity email = person.getEmailById(emailAddress.getId());
+                if (email != null && !email.getId().equals(emailAddress.getId()))
+                {
+                    throw new EmailAddressException(
+                            String.format(
+                                    "Email address: '%s' already belongs to another entity: '%s'!",
+                                    emailAddress.getOwner(),
+                                    emailAddress.getEmail()),
+                            HttpStatus.BAD_REQUEST);
+                }
+            }
+            else
+            {
+                throw new EmailAddressException(String.format("Email address: '%s' already exist", emailAddress.getEmail()), HttpStatus.BAD_REQUEST);
             }
         }
     }

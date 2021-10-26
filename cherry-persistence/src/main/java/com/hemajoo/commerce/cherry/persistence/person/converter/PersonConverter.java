@@ -15,6 +15,7 @@
 package com.hemajoo.commerce.cherry.persistence.person.converter;
 
 import com.hemajoo.commerce.cherry.model.person.entity.ClientPersonEntity;
+import com.hemajoo.commerce.cherry.persistence.base.factory.ServerEntityFactory;
 import com.hemajoo.commerce.cherry.persistence.base.mapper.CycleAvoidingMappingContext;
 import com.hemajoo.commerce.cherry.persistence.person.entity.ServerPersonEntity;
 import com.hemajoo.commerce.cherry.persistence.person.mapper.PersonMapper;
@@ -35,9 +36,9 @@ public final class PersonConverter
      * @param entity Client entity to map.
      * @return Mapped persistent entity.
      */
-    public static ServerPersonEntity convertClient(ClientPersonEntity entity)
+    public static ServerPersonEntity convertClient(ClientPersonEntity entity, ServerEntityFactory factory)
     {
-        return PersonMapper.INSTANCE.mapClient(entity, new CycleAvoidingMappingContext());
+        return PersonMapper.INSTANCE.mapClient(entity, new CycleAvoidingMappingContext(), factory);
     }
 
     /**
@@ -45,9 +46,9 @@ public final class PersonConverter
      * @param list List of client entities to map.
      * @return Mapped list of persistent entities.
      */
-    public static List<ServerPersonEntity> convertClientList(List<ClientPersonEntity> list)
+    public static List<ServerPersonEntity> convertClientList(List<ClientPersonEntity> list, ServerEntityFactory factory)
     {
-        return PersonMapper.INSTANCE.mapClientList(list, new CycleAvoidingMappingContext());
+        return PersonMapper.INSTANCE.mapClientList(list, new CycleAvoidingMappingContext(), factory);
     }
 
     /**

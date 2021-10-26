@@ -78,7 +78,10 @@ public class EmailAddressServiceCore implements EmailAddressService
         emailAddressRepository.save(emailAddress);
 
         // Save the documents attached to the email address.
-        emailAddress.getDocuments().forEach(this::saveDocumentContent);
+        if (emailAddress.getDocuments() != null)
+        {
+            emailAddress.getDocuments().forEach(this::saveDocumentContent);
+        }
 
         return emailAddress;
     }

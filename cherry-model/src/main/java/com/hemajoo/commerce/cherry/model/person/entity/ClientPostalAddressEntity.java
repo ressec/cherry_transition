@@ -14,6 +14,8 @@
  */
 package com.hemajoo.commerce.cherry.model.person.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.hemajoo.commerce.cherry.commons.entity.Identity;
 import com.hemajoo.commerce.cherry.commons.type.EntityType;
 import com.hemajoo.commerce.cherry.model.base.entity.ClientBaseEntity;
 import com.hemajoo.commerce.cherry.model.person.type.AddressCategoryType;
@@ -21,6 +23,7 @@ import com.hemajoo.commerce.cherry.model.person.type.AddressType;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -94,8 +97,11 @@ public class ClientPostalAddressEntity extends ClientBaseEntity implements Clien
     /**
      * The person identifier this postal address belongs to.
      */
-    @ApiModelProperty(name = "personId", notes = "Person identifier this postal address belongs to", value = "1")
-    private ClientPersonEntity person;
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    @JsonIgnoreProperties("postalAddresses")
+    @ApiModelProperty(name = "owner", notes = "Entity identity this postal address belongs to", value = "1")
+    private Identity owner;
 
     /**
      * Creates a new postal address.

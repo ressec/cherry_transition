@@ -15,6 +15,7 @@
 package com.hemajoo.commerce.cherry.persistence.person.converter;
 
 import com.hemajoo.commerce.cherry.model.person.entity.ClientEmailAddressEntity;
+import com.hemajoo.commerce.cherry.persistence.base.factory.ServerEntityFactory;
 import com.hemajoo.commerce.cherry.persistence.base.mapper.CycleAvoidingMappingContext;
 import com.hemajoo.commerce.cherry.persistence.person.entity.ServerEmailAddressEntity;
 import com.hemajoo.commerce.cherry.persistence.person.mapper.EmailAddressMapper;
@@ -35,9 +36,9 @@ public final class EmailAddressConverter
      * @param entity Client entity to map.
      * @return Mapped persistent entity.
      */
-    public static ServerEmailAddressEntity convertClient(ClientEmailAddressEntity entity)
+    public static ServerEmailAddressEntity convertClient(ClientEmailAddressEntity entity, ServerEntityFactory factory)
     {
-        return EmailAddressMapper.INSTANCE.mapClient(entity, new CycleAvoidingMappingContext());
+        return EmailAddressMapper.INSTANCE.mapClient(entity, new CycleAvoidingMappingContext(), factory);
     }
 
     /**
@@ -45,9 +46,9 @@ public final class EmailAddressConverter
      * @param list List of client entities to map.
      * @return Converted list of persistent entities.
      */
-    public static List<ServerEmailAddressEntity> convertClientList(List<ClientEmailAddressEntity> list)
+    public static List<ServerEmailAddressEntity> convertClientList(List<ClientEmailAddressEntity> list, ServerEntityFactory factory)
     {
-        return EmailAddressMapper.INSTANCE.mapClientList(list, new CycleAvoidingMappingContext());
+        return EmailAddressMapper.INSTANCE.mapClientList(list, new CycleAvoidingMappingContext(), factory);
     }
 
     /**

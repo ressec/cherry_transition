@@ -47,73 +47,76 @@ class EmailAddressConverterUnitTest extends AbstractBaseMapperTest
     private final int LIST_COUNT = 10;
 
     @Test
-    @DisplayName("Converts a persistent email address to a client email address")
-    final void testConvertPersistentToClient()
+    @DisplayName("Converts a server email address to a client email address")
+    final void testConvertServerToClient()
     {
-        ServerEmailAddressEntity persistent = EmailAddressRandomizer.generateServer(true);
-        ClientEmailAddressEntity client = EmailAddressConverter.convertServer(persistent);
-        checkFields(persistent, client);
+        ServerEmailAddressEntity server = EmailAddressRandomizer.generateServer(true);
+        ServerPersonEntity person = PersonRandomizer.generateServer(true);
+        server.setPerson(person);
+
+        ClientEmailAddressEntity client = EmailAddressConverter.convertServer(server);
+        checkFields(server, client);
     }
 
     @Test
-    @DisplayName("Converts a persistent email address with associated documents to a client email address")
-    final void testConvertPersistentWithDocumentsToClient() throws DocumentContentException
+    @DisplayName("Converts a server email address with associated documents to a client email address")
+    final void testConvertServerWithDocumentsToClient() throws DocumentContentException
     {
         // The purpose of this test is to ensure a document owner (on client side) is mapped to an EntityIdentity (light representation of a server entity instance).
-        ServerEmailAddressEntity persistent = EmailAddressRandomizer.generateServerWithDocument(true, 5);
-        ClientEmailAddressEntity client = EmailAddressConverter.convertServer(persistent);
-        checkFields(persistent, client);
+        ServerEmailAddressEntity server = EmailAddressRandomizer.generateServerWithDocument(true, 5);
+        ClientEmailAddressEntity client = EmailAddressConverter.convertServer(server);
+        checkFields(server, client);
     }
 
     @Test
-    @DisplayName("Converts a list of persistent email addresses to a list of client email addresses")
-    final void testConvertListPersistentToListClient() throws EmailAddressException
+    @DisplayName("Converts a list of server email addresses to a list of client email addresses")
+    final void testConvertListServerToListClient() throws EmailAddressException
     {
-        List<ServerEmailAddressEntity> persistentList = new ArrayList<>();
+        List<ServerEmailAddressEntity> serverList = new ArrayList<>();
         for (int i = 0; i < LIST_COUNT; i++)
         {
-            persistentList.add(EmailAddressRandomizer.generateServer(true));
+            serverList.add(EmailAddressRandomizer.generateServer(true));
         }
 
-        List<ClientEmailAddressEntity> clientList = EmailAddressConverter.convertServerList(persistentList);
-        checkFields(persistentList, clientList);
+        List<ClientEmailAddressEntity> clientList = EmailAddressConverter.convertServerList(serverList);
+        checkFields(serverList, clientList);
     }
 
     @Test
-    @DisplayName("Converts a list of persistent email addresses with associated documents to a list of client email addresses")
-    final void testConvertListPersistentWithDocumentsToListClient() throws EmailAddressException, DocumentContentException
+    @DisplayName("Converts a list of server email addresses with associated documents to a list of client email addresses")
+    final void testConvertListServerWithDocumentsToListClient() throws EmailAddressException, DocumentContentException
     {
-        List<ServerEmailAddressEntity> persistentList = new ArrayList<>();
+        List<ServerEmailAddressEntity> serverList = new ArrayList<>();
         for (int i = 0; i < LIST_COUNT; i++)
         {
-            persistentList.add(EmailAddressRandomizer.generateServerWithDocument(true, 3));
+            serverList.add(EmailAddressRandomizer.generateServerWithDocument(true, 3));
         }
 
-        List<ClientEmailAddressEntity> clientList = EmailAddressConverter.convertServerList(persistentList);
-        checkFields(persistentList, clientList);
+        List<ClientEmailAddressEntity> clientList = EmailAddressConverter.convertServerList(serverList);
+        checkFields(serverList, clientList);
     }
 
     @Test
-    @DisplayName("Converts a client email address to a persistent email address")
-    final void testConvertClientToPersistent()
+    @DisplayName("Converts a client email address to a server email address")
+    final void testConvertClientToServer()
     {
         ClientEmailAddressEntity client = EmailAddressRandomizer.generateClient(true);
-        ServerEmailAddressEntity persistent = EmailAddressConverter.convertClient(client);
-        checkFields(persistent, client);
+        ServerEmailAddressEntity server = EmailAddressConverter.convertClient(client, null);
+        checkFields(server, client);
     }
 
     @Test
-    @DisplayName("Converts a client email address with documents to a persistent email address")
-    final void testConvertClientWithDocumentToPersistent() throws DocumentContentException
+    @DisplayName("Converts a client email address with documents to a server email address")
+    final void testConvertClientWithDocumentToServer() throws DocumentContentException
     {
         ClientEmailAddressEntity client = EmailAddressRandomizer.generateClientWithDocument(true, 3);
-        ServerEmailAddressEntity persistent = EmailAddressConverter.convertClient(client);
-        checkFields(persistent, client);
+        ServerEmailAddressEntity server = EmailAddressConverter.convertClient(client, null);
+        checkFields(server, client);
     }
 
     @Test
-    @DisplayName("Converts a list of client email addresses to a list of persistent email addresses")
-    final void testConvertListClientToListPersistent() throws EmailAddressException
+    @DisplayName("Converts a list of client email addresses to a list of server email addresses")
+    final void testConvertListClientToListServer() throws EmailAddressException
     {
         List<ClientEmailAddressEntity> clientList = new ArrayList<>();
         for (int i = 0; i < LIST_COUNT; i++)
@@ -121,13 +124,13 @@ class EmailAddressConverterUnitTest extends AbstractBaseMapperTest
             clientList.add(EmailAddressRandomizer.generateClient(true));
         }
 
-        List<ServerEmailAddressEntity> persistentList = EmailAddressConverter.convertClientList(clientList);
-        checkFields(persistentList, clientList);
+        List<ServerEmailAddressEntity> serverList = EmailAddressConverter.convertClientList(clientList, null);
+        checkFields(serverList, clientList);
     }
 
     @Test
-    @DisplayName("Converts a list of client email addresses with documents to a list of persistent email addresses")
-    final void testConvertListClientWithDocumentToListPersistent() throws EmailAddressException, DocumentContentException
+    @DisplayName("Converts a list of client email addresses with documents to a list of server email addresses")
+    final void testConvertListClientWithDocumentToListServer() throws EmailAddressException, DocumentContentException
     {
         List<ClientEmailAddressEntity> clientList = new ArrayList<>();
         for (int i = 0; i < LIST_COUNT; i++)
@@ -135,8 +138,8 @@ class EmailAddressConverterUnitTest extends AbstractBaseMapperTest
             clientList.add(EmailAddressRandomizer.generateClientWithDocument(true, 5));
         }
 
-        List<ServerEmailAddressEntity> persistentList = EmailAddressConverter.convertClientList(clientList);
-        checkFields(persistentList, clientList);
+        List<ServerEmailAddressEntity> serverList = EmailAddressConverter.convertClientList(clientList, null);
+        checkFields(serverList, clientList);
     }
 
     @Test
@@ -149,17 +152,17 @@ class EmailAddressConverterUnitTest extends AbstractBaseMapperTest
     }
 
     @Test
-    @DisplayName("Create a deep copy of a persistent email address")
+    @DisplayName("Create a deep copy of a server email address")
     final void testCopyPersistent()
     {
-        ServerEmailAddressEntity persistent = EmailAddressRandomizer.generateServer(true);
-        ServerEmailAddressEntity copy = EmailAddressConverter.copy(persistent);
-        checkFields(persistent, copy);
+        ServerEmailAddressEntity server = EmailAddressRandomizer.generateServer(true);
+        ServerEmailAddressEntity copy = EmailAddressConverter.copy(server);
+        checkFields(server, copy);
     }
 
     @Test
-    @DisplayName("Cannot associate an email address to multiple persistent persons")
-    final void testCannotSetEmailAddressToMultiplePersistentPerson() throws EmailAddressException
+    @DisplayName("Cannot associate an email address to multiple server persons")
+    final void testCannotSetEmailAddressToMultipleServerPerson() throws EmailAddressException
     {
         ServerPersonEntity person1 = PersonRandomizer.generateServer(true);
         ServerPersonEntity person2 = PersonRandomizer.generateServer(true);
@@ -174,21 +177,21 @@ class EmailAddressConverterUnitTest extends AbstractBaseMapperTest
 
     /**
      * Checks equality of fields between a persistent and a client entities.
-     * @param persistent Persistent entity.
+     * @param server Server entity.
      * @param client Client entity.
      */
-    private void checkFields(final @NonNull ServerEmailAddressEntity persistent, final @NonNull ClientEmailAddressEntity client)
+    private void checkFields(final @NonNull ServerEmailAddressEntity server, final @NonNull ClientEmailAddressEntity client)
     {
-        checkBaseFields(persistent, client);
+        checkBaseFields(server, client);
 
         // Do not test equality for transient fields and for owner!
-        assertThat(persistent.getEmail())
+        assertThat(server.getEmail())
                 .as("Emails should be equal!")
                 .isEqualTo(client.getEmail());
-        assertThat(persistent.getAddressType())
+        assertThat(server.getAddressType())
                 .as("Address types should be equal!")
                 .isEqualTo(client.getAddressType());
-        assertThat(persistent.getIsDefaultEmail())
+        assertThat(server.getIsDefaultEmail())
                 .as("Is default should be equal!")
                 .isEqualTo(client.getIsDefaultEmail());
     }
@@ -216,44 +219,44 @@ class EmailAddressConverterUnitTest extends AbstractBaseMapperTest
 
     /**
      * Checks equality of fields between two persistent person entities.
-     * @param persistent Persistent entity.
-     * @param copy Persistent entity.
+     * @param server Server entity.
+     * @param copy Copy entity.
      */
-    private void checkFields(final @NonNull ServerEmailAddressEntity persistent, final @NonNull ServerEmailAddressEntity copy)
+    private void checkFields(final @NonNull ServerEmailAddressEntity server, final @NonNull ServerEmailAddressEntity copy)
     {
-        checkBaseFields(persistent, copy);
+        checkBaseFields(server, copy);
 
         // Do not test equality for transient fields and for owner!
         assertThat(copy.getEmail())
                 .as("Emails should be equal!")
-                .isEqualTo(persistent.getEmail());
+                .isEqualTo(server.getEmail());
         assertThat(copy.getAddressType())
                 .as("Address types should be equal!")
-                .isEqualTo(persistent.getAddressType());
+                .isEqualTo(server.getAddressType());
         assertThat(copy.getIsDefaultEmail())
                 .as("Is default should be equal!")
-                .isEqualTo(persistent.getIsDefaultEmail());
+                .isEqualTo(server.getIsDefaultEmail());
     }
 
     /**
      * Checks equality of fields between email address entities.
-     * @param persistentList List of persistent email addresses.
+     * @param serverList List of persistent email addresses.
      * @param clientList List of client email addresses.
      * @throws EmailAddressException Thrown in case an error occurred finding a client email address!
      */
-    private void checkFields(final @NonNull List<ServerEmailAddressEntity> persistentList, final @NonNull List<ClientEmailAddressEntity> clientList) throws EmailAddressException
+    private void checkFields(final @NonNull List<ServerEmailAddressEntity> serverList, final @NonNull List<ClientEmailAddressEntity> clientList) throws EmailAddressException
     {
         Optional<ClientEmailAddressEntity> client;
-        for (ServerEmailAddressEntity persistent : persistentList)
+        for (ServerEmailAddressEntity server : serverList)
         {
-            client = clientList.stream().filter(element -> element.getId().equals(persistent.getId())).findFirst();
+            client = clientList.stream().filter(element -> element.getId().equals(server.getId())).findFirst();
             if (client.isPresent())
             {
-                checkBaseFields(persistent, client.get());
+                checkBaseFields(server, client.get());
             }
             else
             {
-                throw new EmailAddressException(String.format("Cannot find client email address with id: '%s'!", persistent.getId()));
+                throw new EmailAddressException(String.format("Cannot find client email address with id: '%s'!", server.getId()));
             }
         }
     }

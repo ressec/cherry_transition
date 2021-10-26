@@ -14,7 +14,7 @@
  */
 package com.hemajoo.commerce.cherry.model.person.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.hemajoo.commerce.cherry.commons.entity.EntityIdentity;
 import com.hemajoo.commerce.cherry.commons.type.EntityType;
 import com.hemajoo.commerce.cherry.model.base.entity.ClientBaseEntity;
 import com.hemajoo.commerce.cherry.model.person.type.AddressType;
@@ -64,9 +64,9 @@ public class ClientEmailAddressEntity extends ClientBaseEntity implements Client
      */
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
-    @JsonIgnoreProperties("emailAddresses")
-    @ApiModelProperty(name = "personId", notes = "Entity identifier this email address belongs to", value = "1")
-    private ClientPersonEntity person;
+    //@JsonIgnoreProperties("emailAddresses")
+    @ApiModelProperty(name = "owner", notes = "Entity identity this email address belongs to", value = "1")
+    private EntityIdentity owner; // TODO Could it be moved to base entity?
 
     /**
      * Creates a new client email address entity.

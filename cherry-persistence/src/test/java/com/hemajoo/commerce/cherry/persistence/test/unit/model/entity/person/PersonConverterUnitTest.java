@@ -71,7 +71,7 @@ class PersonConverterUnitTest extends AbstractBaseMapperTest
     final void testMapClientToPersistent() throws PersonException, EmailAddressException
     {
         ClientPersonEntity client = PersonRandomizer.generateClient(true);
-        ServerPersonEntity persistent = PersonConverter.convertClient(client);
+        ServerPersonEntity persistent = PersonConverter.convertClient(client, null);
         checkFields(persistent, client);
     }
 
@@ -85,7 +85,7 @@ class PersonConverterUnitTest extends AbstractBaseMapperTest
             clientList.add(PersonRandomizer.generateClient(true));
         }
 
-        List<ServerPersonEntity> persistentList = PersonConverter.convertClientList(clientList);
+        List<ServerPersonEntity> persistentList = PersonConverter.convertClientList(clientList, null);
         checkFields(persistentList, clientList);
     }
 

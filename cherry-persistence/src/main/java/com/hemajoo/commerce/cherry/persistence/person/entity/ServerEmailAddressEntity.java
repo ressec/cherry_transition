@@ -83,7 +83,7 @@ public class ServerEmailAddressEntity extends ServerBaseEntity implements EmailA
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     @JsonIgnoreProperties
-    @ManyToOne(targetEntity = ServerPersonEntity.class, fetch = FetchType.LAZY)
+    @ManyToOne(targetEntity = ServerPersonEntity.class, fetch = FetchType.EAGER)
     @JoinColumn(name = "PERSON_ID", nullable = false)
     private ServerPersonEntity person;
 

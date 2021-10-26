@@ -14,14 +14,14 @@
  */
 package com.hemajoo.commerce.cherry.persistence.person.mapper;
 
-import com.hemajoo.commerce.cherry.commons.entity.Identity;
+import com.hemajoo.commerce.cherry.commons.entity.EntityIdentity;
 import com.hemajoo.commerce.cherry.model.document.exception.DocumentException;
 import com.hemajoo.commerce.cherry.model.person.entity.ClientEmailAddressEntity;
 import com.hemajoo.commerce.cherry.persistence.base.factory.ServerEntityFactory;
 import com.hemajoo.commerce.cherry.persistence.base.mapper.CycleAvoidingMappingContext;
 import com.hemajoo.commerce.cherry.persistence.document.mapper.DocumentMapper;
 import com.hemajoo.commerce.cherry.persistence.person.entity.ServerEmailAddressEntity;
-import com.hemajoo.commerce.cherry.persistence.person.entity.ServerPerson;
+import com.hemajoo.commerce.cherry.persistence.person.entity.ServerPersonEntity;
 import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
 
@@ -34,6 +34,7 @@ import java.util.List;
  */
 @Mapper(
         unmappedTargetPolicy = ReportingPolicy.ERROR,
+//        componentModel = "spring",
         collectionMappingStrategy = CollectionMappingStrategy.ADDER_PREFERRED,
         uses = DocumentMapper.class)
 public interface EmailAddressMapper
@@ -46,11 +47,12 @@ public interface EmailAddressMapper
     /**
      * Maps a client entity to a persistent entity.
      * @param entity Client entity to map.
-     * @param context Context object.
+     * @param context Context object to avoid cycle mapping.
+     * @param factory Context object for the entity factory.
      * @return Mapped persistent entity.
      */
-    //@Mapping(source = "entity.person", target = "person", qualifiedByName = "fromIdentity")
-    ServerEmailAddressEntity mapClient(ClientEmailAddressEntity entity, @Context CycleAvoidingMappingContext context);
+    @Mapping(source = "owner", target = "person", qualifiedByName = "emailAddressFromIdentity")
+    ServerEmailAddressEntity mapClient(ClientEmailAddressEntity entity, @Context CycleAvoidingMappingContext context, @Context ServerEntityFactory factory);
 
     /**
      * Maps a list of client entities to a list of persistent entities.
@@ -58,7 +60,7 @@ public interface EmailAddressMapper
      * @param context Context object.
      * @return Mapped list of persistent entities.
      */
-    List<ServerEmailAddressEntity> mapClientList(List<ClientEmailAddressEntity> list, @Context CycleAvoidingMappingContext context);
+    List<ServerEmailAddressEntity> mapClientList(List<ClientEmailAddressEntity> list, @Context CycleAvoidingMappingContext context, @Context ServerEntityFactory factory);
 
     /**
      * Maps from a persistent entity to a client entity.
@@ -66,7 +68,7 @@ public interface EmailAddressMapper
      * @param context Context object.
      * @return Mapped client entity.
      */
-    //@Mapping(source = "entity.person", target = "person", qualifiedByName = "toIdentity")
+    @Mapping(source = "person", target = "owner", qualifiedByName = "emailAddressToIdentity")
     ClientEmailAddressEntity mapServer(ServerEmailAddressEntity entity, @Context CycleAvoidingMappingContext context);
 
     /**
@@ -98,8 +100,8 @@ public interface EmailAddressMapper
      * @param person Server email address entity.
      * @return Entity identity.
      */
-    @Named("toIdentity")
-    default Identity toIdentity(final ServerPerson person)
+    @Named("emailAddressToIdentity")
+    default EntityIdentity toIdentity(final ServerPersonEntity person)
     {
         return person != null ? person.getIdentity() : null;
     }
@@ -110,9 +112,9 @@ public interface EmailAddressMapper
      * @return Server entity.
      * @throws DocumentException Thrown in case an error occurred with a document.
      */
-    @Named("fromIdentity")
-    default ServerPerson fromIdentity(final Identity identity) throws DocumentException
+    @Named("emailAddressFromIdentity")
+    default ServerPersonEntity fromIdentity(final EntityIdentity identity, @Context ServerEntityFactory factory) throws DocumentException
     {
-        return (ServerPerson) new ServerEntityFactory().from(identity);
+        return factory == null ? null : (ServerPersonEntity) factory.from(identity);
     }
 }
