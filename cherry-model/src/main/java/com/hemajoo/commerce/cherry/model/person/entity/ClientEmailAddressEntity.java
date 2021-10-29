@@ -25,8 +25,6 @@ import lombok.ToString;
 
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.validation.constraints.Email;
-import javax.validation.groups.Default;
 
 /**
  * Represents a client email address entity.
@@ -43,7 +41,7 @@ public class ClientEmailAddressEntity extends ClientBaseEntity implements Client
      * Email address.
      */
     @ApiModelProperty(name = "email", notes = "Email address", value = "joe.doe@gmail.com")
-    @Email(message = "email: '${validatedValue}' is not a valid email!", groups = { Default.class })
+    //@Email(message = "email: '${validatedValue}' is not a valid email!")
     private String email;
 
     /**

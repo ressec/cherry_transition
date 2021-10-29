@@ -26,11 +26,9 @@ import com.hemajoo.commerce.cherry.persistence.person.entity.ServerPersonEntity;
 import com.hemajoo.commerce.cherry.persistence.person.randomizer.EmailAddressRandomizer;
 import com.hemajoo.commerce.cherry.persistence.person.service.EmailAddressServiceCore;
 import com.hemajoo.commerce.cherry.persistence.person.validation.constraint.ValidEmailAddressForCreation;
-import com.hemajoo.commerce.cherry.persistence.person.validation.constraint.ValidEmailAddressForUpdate;
 import com.hemajoo.commerce.cherry.persistence.person.validation.constraint.ValidEmailAddressId;
 import com.hemajoo.commerce.cherry.persistence.person.validation.constraint.ValidPersonId;
 import com.hemajoo.commerce.cherry.persistence.person.validation.validator.EmailAddressValidatorForUpdate;
-import com.hemajoo.commerce.cherry.rest.error.RestApiResponse;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -70,7 +68,7 @@ public class EmailAddressController
      * Returns the total number of email addresses.
      * @return Number of email addresses.
      */
-    @ApiOperation(value = "Count the number of email addresses.", notes = "Count the total number of email addresses.")
+    @ApiOperation(value = "Count the total number of email addresses."/*, notes = "Count the total number of email addresses."*/)
     @GetMapping("/count")
     public long count()
     {
@@ -82,7 +80,7 @@ public class EmailAddressController
      * @param id Email address identifier.
      * @return Email address matching the given identifier.
      */
-    @ApiOperation(value = "Retrieve an email address given its identifier.", notes = "Retrieve an email address given its identifier.")
+    @ApiOperation(value = "Retrieve an email address given its identifier."/*, notes = "Retrieve an email address given its identifier."*/)
     @GetMapping("/get/{id}")
     public ResponseEntity<ClientEmailAddressEntity> get(
             @ApiParam(value = "Email address identifier", required = true)
@@ -120,7 +118,7 @@ public class EmailAddressController
     @ApiOperation(value = "Create a new random email address for the given person identifier.")
     @PostMapping("/random")
     public ResponseEntity<ClientEmailAddressEntity> random(
-            @ApiParam(value = "Person identifier (UUID)", name = "personId", required = true)
+            @ApiParam(value = "Person identifier (UUID) being the owner of the email address to create.", name = "personId", required = true)
             @Valid @ValidPersonId @NotNull @RequestParam String personId)
     {
         ServerEmailAddressEntity serverEmail = EmailAddressRandomizer.generateServer(false);
@@ -137,13 +135,12 @@ public class EmailAddressController
      * @param email Email address to update.
      * @return Response.
      */
-    @ApiOperation(value = "Update an email address.", notes = "Update an email address given the new values.")
+    @ApiOperation(value = "Update the given email address."/*, notes = "Update an email address given the new values."*/)
     @PutMapping("/update")
     @Transactional
-    public ResponseEntity<RestApiResponse> update(@Valid @ValidEmailAddressForUpdate @RequestBody ClientEmailAddressEntity email)
+    public ResponseEntity<ClientEmailAddressEntity> update(
+            @NonNull /*@Valid @ValidEmailAddressForUpdate*/ @RequestBody ClientEmailAddressEntity email)
     {
-        RestApiResponse response;
-
         // TODO See JavaVers (https://www.baeldung.com/javers)
         // Should avoid having to manipulate all fields one by one!
 //        ChangeDetector detector = element.hasChanged(dbEmailAddress);
@@ -154,16 +151,14 @@ public class EmailAddressController
 
         try
         {
-            ServerEmailAddressEntity emailAddress = entityFactory.getEmailAddressService().save(EmailAddressConverter.convertClient(email, entityFactory));
-            response = RestApiResponse.ok();
-//            response = RestApiResponse.ok(String.format("Successfully updated email address with id: %s", emailAddress.getId().toString()));
+            ServerEmailAddressEntity serverEmailAddress = EmailAddressConverter.convertClient(email, entityFactory);
+            serverEmailAddress = entityFactory.getEmailAddressService().save(serverEmailAddress);
+            return ResponseEntity.ok(EmailAddressConverter.convertServer(serverEmailAddress));
         }
         catch (EmailAddressException | DocumentException e)
         {
-            response = RestApiResponse.ko(e.getStatus(), e.getMessage());
+            return new ResponseEntity(e.getMessage(), e.getStatus());
         }
-
-        return response.getEntity();
     }
 
     /**

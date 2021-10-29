@@ -34,6 +34,15 @@ import javax.validation.ConstraintViolationException;
 @RestControllerAdvice
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler
 {
+    @ExceptionHandler(Exception.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseBody
+    @NotNull
+    public static ResponseEntity<String> handleExceptions(Exception exception, WebRequest request)
+    {
+        return ResponseEntity.badRequest().body(exception.getCause().getMessage());
+    }
+
     @ExceptionHandler(IllegalArgumentException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ResponseBody

@@ -15,9 +15,12 @@
 package com.hemajoo.commerce.cherry.persistence.person.validation.validator;
 
 import com.hemajoo.commerce.cherry.model.person.entity.ClientEmailAddressEntity;
+import com.hemajoo.commerce.cherry.model.person.exception.EmailAddressException;
 import com.hemajoo.commerce.cherry.persistence.person.validation.constraint.ValidEmailAddressForUpdate;
 import com.hemajoo.commerce.cherry.persistence.person.validation.engine.EmailAddressValidationEngine;
+import org.apache.commons.validator.routines.EmailValidator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
@@ -48,6 +51,11 @@ public class EmailAddressValidatorForUpdate implements ConstraintValidator<Valid
     {
         try
         {
+            if (!EmailValidator.getInstance().isValid(emailAddress.getEmail()))
+            {
+                throw new EmailAddressException(String.format("Email address: '%s' is invalid!", emailAddress.getEmail()), HttpStatus.BAD_REQUEST);
+            }
+
             emailAddressRuleEngine.validatePersonId(emailAddress);
             emailAddressRuleEngine.validateEmailAddressId(emailAddress);
             emailAddressRuleEngine.validateNameUniqueness(emailAddress);

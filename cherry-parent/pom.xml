@@ -68,6 +68,7 @@
         <version.apache.log4j>2.13.2</version.apache.log4j>
         <version.apache.commons.lang.3>3.9</version.apache.commons.lang.3>
         <version.apache.commons.io>2.11.0</version.apache.commons.io>
+        <version.apache.commons.validator>1.7</version.apache.commons.validator>
         <version.lombok>1.18.20</version.lombok>
         <version.mapstruct>1.4.2.Final</version.mapstruct>
         <version.lombok.mapstruct>0.2.0</version.lombok.mapstruct>
@@ -214,6 +215,12 @@
                 <groupId>commons-io</groupId>
                 <artifactId>commons-io</artifactId>
                 <version>${version.apache.commons.io}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>commons-validator</groupId>
+                <artifactId>commons-validator</artifactId>
+                <version>${version.apache.commons.validator}</version>
             </dependency>
 
             <!-- JavaFaker: https://github.com/DiUS/java-faker ... Is this one necessary? -->
