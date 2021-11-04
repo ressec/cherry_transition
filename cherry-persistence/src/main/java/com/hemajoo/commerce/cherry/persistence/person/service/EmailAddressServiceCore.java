@@ -19,18 +19,25 @@ import com.hemajoo.commerce.cherry.model.base.search.criteria.SearchCriteria;
 import com.hemajoo.commerce.cherry.model.base.search.criteria.SearchOperation;
 import com.hemajoo.commerce.cherry.model.document.exception.DocumentException;
 import com.hemajoo.commerce.cherry.model.person.exception.EmailAddressException;
+import com.hemajoo.commerce.cherry.model.person.exception.EntityException;
 import com.hemajoo.commerce.cherry.model.person.search.SearchEmailAddress;
 import com.hemajoo.commerce.cherry.model.person.type.AddressType;
 import com.hemajoo.commerce.cherry.persistence.base.entity.AbstractServerAuditEntity;
 import com.hemajoo.commerce.cherry.persistence.base.entity.AbstractServerStatusEntity;
+import com.hemajoo.commerce.cherry.persistence.base.entity.EntityComparator;
 import com.hemajoo.commerce.cherry.persistence.base.entity.ServerBaseEntity;
 import com.hemajoo.commerce.cherry.persistence.base.specification.GenericSpecification;
 import com.hemajoo.commerce.cherry.persistence.document.entity.ServerDocumentEntity;
 import com.hemajoo.commerce.cherry.persistence.document.repository.DocumentService;
 import com.hemajoo.commerce.cherry.persistence.person.entity.ServerEmailAddressEntity;
 import com.hemajoo.commerce.cherry.persistence.person.repository.EmailAddressRepository;
+import com.hemajoo.commerce.cherry.persistence.person.validation.engine.EmailAddressValidationEngine;
+import lombok.Getter;
 import lombok.NonNull;
 import lombok.extern.log4j.Log4j2;
+import org.javers.core.diff.Diff;
+import org.javers.core.diff.changetype.ReferenceChange;
+import org.javers.core.diff.changetype.ValueChange;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
@@ -52,13 +59,29 @@ public class EmailAddressServiceCore implements EmailAddressService
      * Email address repository.
      */
     @Autowired
+    @Getter
     private EmailAddressRepository emailAddressRepository;
+
+    /**
+     * Person service.
+     */
+    @Autowired
+    private PersonService personService;
+
+    @Autowired
+    private EmailAddressValidationEngine validator;
 
     /**
      * Document (content store) service.
      */
     @Autowired
     private DocumentService documentService;
+
+    @Override
+    public EmailAddressRepository getRepository()
+    {
+        return emailAddressRepository;
+    }
 
     @Override
     public Long count()
@@ -72,6 +95,15 @@ public class EmailAddressServiceCore implements EmailAddressService
         return emailAddressRepository.findById(id).orElse(null);
     }
 
+    @Override
+    public ServerEmailAddressEntity update(ServerEmailAddressEntity emailAddress) throws EntityException
+    {
+        ServerEmailAddressEntity original = findById(emailAddress.getId());
+
+        return save(merge(emailAddress, original));
+    }
+
+    //@Transactional
     @Override
     public ServerEmailAddressEntity save(final @NonNull ServerEmailAddressEntity emailAddress) throws EmailAddressException, DocumentException
     {
@@ -225,5 +257,62 @@ public class EmailAddressServiceCore implements EmailAddressService
                     e.getMessage()), e);
             throw new DocumentException(e.getMessage());
         }
+    }
+
+    private ServerEmailAddressEntity merge(final ServerEmailAddressEntity source, final ServerEmailAddressEntity target) throws EntityException
+    {
+        Diff diff = EntityComparator.getJavers().compare(source, target);
+
+        // Check if some object fields have changed.
+        for (ValueChange change : diff.getChangesByType(ValueChange.class))
+        {
+            switch (change.getPropertyName())
+            {
+                case ServerEmailAddressEntity.FIELD_EMAIL:
+                    target.setEmail(source.getEmail());
+                    break;
+
+                case ServerEmailAddressEntity.FIELD_ADDRESS_TYPE:
+                    target.setAddressType(source.getAddressType());
+                    break;
+
+                case ServerEmailAddressEntity.FIELD_DESCRIPTION:
+                    target.setDescription(source.getDescription());
+                    break;
+
+                case ServerEmailAddressEntity.FIELD_STATUS_TYPE:
+                    target.setStatusType(source.getStatusType());
+                    break;
+
+                case ServerEmailAddressEntity.FIELD_REFERENCE:
+                    target.setReference(source.getReference());
+                    break;
+
+                case ServerEmailAddressEntity.FIELD_IS_DEFAULT:
+                    target.setIsDefaultEmail(source.getIsDefaultEmail());
+                    break;
+
+                default:
+                    LOGGER.warn(String.format("Property name: %s not handled!", change.getPropertyName()));
+                    break;
+            }
+        }
+
+        // Check if some object references have changed.
+        for (ReferenceChange change : diff.getChangesByType(ReferenceChange.class))
+        {
+            switch (change.getPropertyName())
+            {
+                case ServerEmailAddressEntity.FIELD_PERSON:
+                    target.setPerson(source.getPerson());
+                    break;
+
+                default:
+                    LOGGER.warn(String.format("Property name: %s not handled!", change.getPropertyName()));
+                    break;
+            }
+        }
+
+        return target;
     }
 }

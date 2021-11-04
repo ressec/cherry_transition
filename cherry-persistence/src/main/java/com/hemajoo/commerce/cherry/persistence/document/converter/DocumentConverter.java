@@ -14,79 +14,86 @@
  */
 package com.hemajoo.commerce.cherry.persistence.document.converter;
 
+import com.hemajoo.commerce.cherry.commons.entity.EntityIdentity;
 import com.hemajoo.commerce.cherry.model.document.ClientDocumentEntity;
+import com.hemajoo.commerce.cherry.model.person.exception.EntityException;
+import com.hemajoo.commerce.cherry.persistence.base.entity.AbstractBaseEntityMapper;
 import com.hemajoo.commerce.cherry.persistence.base.mapper.CycleAvoidingMappingContext;
 import com.hemajoo.commerce.cherry.persistence.document.entity.ServerDocumentEntity;
-import com.hemajoo.commerce.cherry.persistence.document.mapper.DocumentMapper;
-import lombok.experimental.UtilityClass;
+import com.hemajoo.commerce.cherry.persistence.document.mapper.AbstractDocumentMapper;
+import org.springframework.stereotype.Component;
 
-import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
 /**
- * Utility class to convert {@link ClientDocumentEntity} to {@link ServerDocumentEntity} and vice-versa.
+ * Converter to convert between instances of client and server documents.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-@UtilityClass
-public final class DocumentConverter
+@Component
+public class DocumentConverter
 {
+    @PersistenceContext
+    private EntityManager entityManager;
+
     /**
-     * Converts a persistent entity to a client entity.
-     * @param entity Client entity to map.
-     * @return Mapped persistent entity.
+     * Converts from a server document entity to an entity identity.
+     * @param document Server document entity.
+     * @return Entity identity.
      */
-    public static ServerDocumentEntity fromClient(ClientDocumentEntity entity)
+    public EntityIdentity fromServerToIdentity(ServerDocumentEntity document)
     {
-        return DocumentMapper.INSTANCE.mapClient(entity, new CycleAvoidingMappingContext());
+        return AbstractDocumentMapper.INSTANCE.fromServerToIdentity(document, new CycleAvoidingMappingContext());
     }
 
     /**
-     * Converts a list of client entities to a list of persistent entities.
-     * @param list List of client entities to map.
-     * @return Converted list of persistent entities.
+     * Converts from an entity identity to a server document entity.
+     * @param identity Entity identity.
+     * @return Server document entity.
      */
-    public static List<ServerDocumentEntity> fromClientList(List<ClientDocumentEntity> list)
+    public ServerDocumentEntity fromIdentityToServer(EntityIdentity identity) throws EntityException
     {
-        return DocumentMapper.INSTANCE.mapClientList(list, new CycleAvoidingMappingContext());
+        return AbstractBaseEntityMapper.INSTANCE.map(identity,entityManager);
     }
 
     /**
-     * Converts from a persistent entity to a client entity.
-     * @param entity Persistent entity to map.
-     * @return Mapped client entity.
+     * Converts from a client document entity to a server document entity.
+     * @param document Client document entity.
+     * @return Server document entity.
      */
-    public static ClientDocumentEntity fromServer(ServerDocumentEntity entity)
+    public ServerDocumentEntity fromClientToServer(ClientDocumentEntity document)
     {
-        return DocumentMapper.INSTANCE.mapPersistence(entity, new CycleAvoidingMappingContext());
+        return AbstractDocumentMapper.INSTANCE.fromClientToServer(document, new CycleAvoidingMappingContext(), entityManager);
     }
 
     /**
-     * Converts from a list of persistent entities to a list of client entities.
-     * @param list List of persistent entities to map.
-     * @return Mapped list of client entities.
+     * Converts from an entity identity to a document server entity.
+     * @param document Entity identity.
+     * @return Server document entity.
      */
-    public static List<ClientDocumentEntity> fromServerList(List<ServerDocumentEntity> list)
+    public ClientDocumentEntity fromServerToClient(ServerDocumentEntity document)
     {
-        return DocumentMapper.INSTANCE.mapPersistenceList(list, new CycleAvoidingMappingContext());
+        return AbstractDocumentMapper.INSTANCE.fromServerToClient(document, new CycleAvoidingMappingContext());
     }
 
     /**
-     * Copy a persistent entity.
-     * @param entity Persistent source entity to copy.
-     * @return Copied persistent entity.
+     * Copy a server document entity.
+     * @param entity Server document entity.
+     * @return Copied server document entity.
      */
     public static ServerDocumentEntity copy(ServerDocumentEntity entity)
     {
-        return DocumentMapper.INSTANCE.copy(entity, new CycleAvoidingMappingContext());
+        return AbstractDocumentMapper.INSTANCE.copy(entity, new CycleAvoidingMappingContext());
     }
 
     /**
-     * Copy a client entity.
-     * @param entity Client source entity to copy.
-     * @return Copied client entity.
+     * Copy a client document entity.
+     * @param entity Client document entity.
+     * @return Copied client document entity.
      */
     public static ClientDocumentEntity copy(ClientDocumentEntity entity)
     {
-        return DocumentMapper.INSTANCE.copy(entity, new CycleAvoidingMappingContext());
+        return AbstractDocumentMapper.INSTANCE.copy(entity, new CycleAvoidingMappingContext());
     }
 }

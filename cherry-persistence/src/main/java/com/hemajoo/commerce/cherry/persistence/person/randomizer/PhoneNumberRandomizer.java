@@ -152,7 +152,7 @@ public final class PhoneNumberRandomizer extends AbstractBaseEntityRandomizer
         for (int i = 0; i < count; i++)
         {
             document = DocumentRandomizer.generateClient(true);
-            entity.addDocument(document);
+            entity.addDocument(document.getIdentity());
         }
 
         entity.setNumber(FAKER.phoneNumber().cellPhone());

@@ -140,7 +140,7 @@ public final class EmailAddressRandomizer extends AbstractBaseEntityRandomizer
         for (int i = 0; i < count; i++)
         {
             document = DocumentRandomizer.generateClient(true);
-            entity.addDocument(document);
+            entity.addDocument(document.getIdentity());
         }
 
         entity.setEmail(FAKER.internet().emailAddress());

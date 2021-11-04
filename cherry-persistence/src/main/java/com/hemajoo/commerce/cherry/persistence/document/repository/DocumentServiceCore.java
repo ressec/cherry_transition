@@ -44,6 +44,12 @@ public class DocumentServiceCore implements DocumentService
     private DocumentStore documentStore;
 
     @Override
+    public DocumentRepository getRepository()
+    {
+        return documentRepository;
+    }
+
+    @Override
     public Long count()
     {
         return documentRepository.count();

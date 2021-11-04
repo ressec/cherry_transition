@@ -39,11 +39,20 @@ public interface PersonService
      */
     PersonRepository getRepository();
 
+    EmailAddressService getEmailAddressService();
+
     /**
      * Returns the total number of persons.
      * @return Number of persons.
      */
     Long count();
+
+    /**
+     * Returns if the given person identifier exist?
+     * @param id Person identifier.
+     * @return True if the person exist, false otherwise.
+     */
+    boolean existId(final @NonNull UUID id);
 
     /**
      * Returns the person matching the given identifier.

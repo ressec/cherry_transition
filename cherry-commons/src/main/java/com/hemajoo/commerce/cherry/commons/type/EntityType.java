@@ -22,6 +22,11 @@ package com.hemajoo.commerce.cherry.commons.type;
 public enum EntityType
 {
     /**
+     * Unknown entity type.
+     */
+    UNKNOWN,
+
+    /**
      * Media entity type.
      */
     MEDIA,

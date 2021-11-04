@@ -17,9 +17,11 @@ package com.hemajoo.commerce.cherry.persistence.person.service;
 import com.hemajoo.commerce.cherry.commons.type.StatusType;
 import com.hemajoo.commerce.cherry.model.document.exception.DocumentException;
 import com.hemajoo.commerce.cherry.model.person.exception.EmailAddressException;
+import com.hemajoo.commerce.cherry.model.person.exception.EntityException;
 import com.hemajoo.commerce.cherry.model.person.search.SearchEmailAddress;
 import com.hemajoo.commerce.cherry.model.person.type.AddressType;
 import com.hemajoo.commerce.cherry.persistence.person.entity.ServerEmailAddressEntity;
+import com.hemajoo.commerce.cherry.persistence.person.repository.EmailAddressRepository;
 import lombok.NonNull;
 
 import java.util.List;
@@ -32,6 +34,8 @@ import java.util.UUID;
  */
 public interface EmailAddressService
 {
+    EmailAddressRepository getRepository();
+
     /**
      * Returns the total number of email addresses.
      * @return Total number of email addresses.
@@ -44,6 +48,14 @@ public interface EmailAddressService
      * @return Email address.
      */
     ServerEmailAddressEntity findById(UUID id);
+
+    /**
+     * Updates the given server email address entity.
+     * @param emailAddress Server email address entity to update.
+     * @return Updated server email address entity.
+     * @throws EmailAddressException Thrown in case an error occurred while trying to update the server email address entity.
+     */
+    ServerEmailAddressEntity update(final ServerEmailAddressEntity emailAddress) throws EntityException;
 
     /**
      * Saves the given email address.

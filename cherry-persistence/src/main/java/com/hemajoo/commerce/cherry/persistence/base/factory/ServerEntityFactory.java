@@ -15,6 +15,8 @@
 package com.hemajoo.commerce.cherry.persistence.base.factory;
 
 import com.hemajoo.commerce.cherry.commons.entity.Identity;
+import com.hemajoo.commerce.cherry.commons.type.EntityType;
+import com.hemajoo.commerce.cherry.model.person.exception.EntityException;
 import com.hemajoo.commerce.cherry.persistence.base.entity.ServerBaseEntity;
 import com.hemajoo.commerce.cherry.persistence.document.repository.DocumentService;
 import com.hemajoo.commerce.cherry.persistence.person.service.EmailAddressService;
@@ -23,6 +25,7 @@ import com.hemajoo.commerce.cherry.persistence.person.service.PhoneNumberService
 import com.hemajoo.commerce.cherry.persistence.person.service.PostalAddressService;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -64,7 +67,7 @@ public class ServerEntityFactory
     private PostalAddressService postalAddressService;
 
     //    public final <T extends ServerEntity> T from(final Identity identity) // TODO Try to transform to a static method
-    public final ServerBaseEntity from(final Identity identity) // TODO Try to transform to a static method
+    public final ServerBaseEntity from(final Identity identity) throws EntityException
 //    public static ServerBaseEntity from(final Identity identity)
     {
         if (identity != null)
@@ -75,6 +78,10 @@ public class ServerEntityFactory
                     return documentService.findById(identity.getId());
 
                 case PERSON:
+                    if (!personService.existId(identity.getId()))
+                    {
+                        throw new EntityException(EntityType.PERSON, String.format("%s does not exist!", identity));
+                    }
                     return personService.findById(identity.getId());
 
                 case EMAIL_ADDRESS:
@@ -87,7 +94,7 @@ public class ServerEntityFactory
                     return postalAddressService.findById(identity.getId());
 
                 default:
-//                    throw new ServerEntityFactory("Unhandled entity type: " + identity.getEntityType());
+                    throw new EntityException(EntityType.UNKNOWN, "Unhandled entity type for: " + identity, HttpStatus.INTERNAL_SERVER_ERROR);
             }
         }
 

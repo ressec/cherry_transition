@@ -14,6 +14,8 @@
  */
 package com.hemajoo.commerce.cherry.commons.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.io.Serializable;
 
 /**
@@ -28,5 +30,6 @@ public interface IdentityAware extends Serializable
      * Returns the identity of the entity.
      * @return Entity identity.
      */
+    @JsonIgnore
     EntityIdentity getIdentity();
 }

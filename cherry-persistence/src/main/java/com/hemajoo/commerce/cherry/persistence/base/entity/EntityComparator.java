@@ -12,22 +12,20 @@
  * Resse Christophe (christophe.resse@gmail.com).
  * -----------------------------------------------------------------------------------------------
  */
-package com.hemajoo.commerce.cherry.rest.config;
 
-import org.springframework.data.domain.AuditorAware;
+package com.hemajoo.commerce.cherry.persistence.base.entity;
 
-import java.util.Optional;
+import lombok.Getter;
+import lombok.experimental.UtilityClass;
+import org.javers.core.Javers;
+import org.javers.core.JaversBuilder;
 
-/**
- * Provides a {@code JPA} auditor information for the test environment.
- * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
- * @version 1.0.0
- */
-public class JpaAuditor implements AuditorAware<String>
+@UtilityClass
+public class EntityComparator
 {
-    @Override
-    public Optional<String> getCurrentAuditor()
-    {
-        return Optional.of("ressec");
-    }
+    /**
+     * Entity version comparator.
+     */
+    @Getter
+    private static final Javers javers = JaversBuilder.javers().build();
 }

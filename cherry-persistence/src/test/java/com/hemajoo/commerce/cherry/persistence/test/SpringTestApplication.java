@@ -12,22 +12,27 @@
  * Resse Christophe (christophe.resse@gmail.com).
  * -----------------------------------------------------------------------------------------------
  */
-package com.hemajoo.commerce.cherry.rest.config;
+package com.hemajoo.commerce.cherry.persistence.test;
 
-import org.springframework.data.domain.AuditorAware;
-
-import java.util.Optional;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 /**
- * Provides a {@code JPA} auditor information for the test environment.
+ * A Spring boot test application.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-public class JpaAuditor implements AuditorAware<String>
+@ComponentScan(basePackages = "com.hemajoo.commerce.cherry.persistence")
+@EnableJpaRepositories(basePackages = "com.hemajoo.commerce.cherry.persistence")
+@EntityScan(basePackages = "com.hemajoo.commerce.cherry.persistence")
+@SpringBootApplication
+public class SpringTestApplication
 {
-    @Override
-    public Optional<String> getCurrentAuditor()
+    public static void main(String[] args)
     {
-        return Optional.of("ressec");
+        SpringApplication.run(SpringTestApplication.class, args);
     }
 }

@@ -14,6 +14,7 @@
  */
 package com.hemajoo.commerce.cherry.model.base.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.hemajoo.commerce.cherry.commons.type.StatusType;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -54,6 +55,7 @@ public abstract class AbstractClientStatusEntity extends AbstractClientAuditEnti
      * @return {@code True} if the entity is active, {@code false} otherwise.
      */
     @ApiModelProperty(hidden = true) // Status type is used instead!
+    @JsonIgnore
     public final boolean isActive()
     {
         return statusType == StatusType.ACTIVE;

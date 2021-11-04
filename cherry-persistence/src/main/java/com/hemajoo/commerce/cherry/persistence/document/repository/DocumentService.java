@@ -27,6 +27,8 @@ import java.util.UUID;
  */
 public interface DocumentService
 {
+    DocumentRepository getRepository();
+
     /**
      * Returns the number of documents.
      * @return Number of documents.

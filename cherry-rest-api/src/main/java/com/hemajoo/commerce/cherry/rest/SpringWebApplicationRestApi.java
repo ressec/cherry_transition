@@ -14,11 +14,13 @@
  */
 package com.hemajoo.commerce.cherry.rest;
 
+import com.hemajoo.commerce.cherry.rest.config.PersistenceConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.Import;
 
 import java.util.Arrays;
 import java.util.logging.Logger;
@@ -28,6 +30,7 @@ import java.util.logging.Logger;
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
+@Import(PersistenceConfiguration.class)
 @SpringBootApplication
 public class SpringWebApplicationRestApi implements CommandLineRunner
 {

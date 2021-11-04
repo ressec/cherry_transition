@@ -24,6 +24,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
@@ -36,6 +37,7 @@ import javax.validation.constraints.NotNull;
  * @version 1.0.0
  */
 //@GroupSequence( { ServerEmailAddressEntity.class, BasicValidation.class, ExtendedValidation.class } )
+@Log4j2
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
 @Table(name = "EMAIL_ADDRESS")
@@ -103,10 +105,7 @@ public class ServerEmailAddressEntity extends ServerBaseEntity implements EmailA
     {
         if (person != null)
         {
-            if (this.person == null)
-            {
-                this.person = person;
-            }
+            this.person = person;
         }
     }
 }

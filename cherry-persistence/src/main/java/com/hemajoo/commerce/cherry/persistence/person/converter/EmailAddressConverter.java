@@ -14,14 +14,7 @@
  */
 package com.hemajoo.commerce.cherry.persistence.person.converter;
 
-import com.hemajoo.commerce.cherry.model.person.entity.ClientEmailAddressEntity;
-import com.hemajoo.commerce.cherry.persistence.base.factory.ServerEntityFactory;
-import com.hemajoo.commerce.cherry.persistence.base.mapper.CycleAvoidingMappingContext;
-import com.hemajoo.commerce.cherry.persistence.person.entity.ServerEmailAddressEntity;
-import com.hemajoo.commerce.cherry.persistence.person.mapper.EmailAddressMapper;
 import lombok.experimental.UtilityClass;
-
-import java.util.List;
 
 /**
  * Utility class to convert client email address to server email address entities and vice-versa.
@@ -31,63 +24,63 @@ import java.util.List;
 @UtilityClass
 public final class EmailAddressConverter
 {
-    /**
-     * Converts a persistent entity to a client entity.
-     * @param entity Client entity to map.
-     * @return Mapped persistent entity.
-     */
-    public static ServerEmailAddressEntity convertClient(ClientEmailAddressEntity entity, ServerEntityFactory factory)
-    {
-        return EmailAddressMapper.INSTANCE.mapClient(entity, new CycleAvoidingMappingContext(), factory);
-    }
-
-    /**
-     * Converts a list of client entities to a list of persistent entities.
-     * @param list List of client entities to map.
-     * @return Converted list of persistent entities.
-     */
-    public static List<ServerEmailAddressEntity> convertClientList(List<ClientEmailAddressEntity> list, ServerEntityFactory factory)
-    {
-        return EmailAddressMapper.INSTANCE.mapClientList(list, new CycleAvoidingMappingContext(), factory);
-    }
-
-    /**
-     * Converts from a persistent entity to a client entity.
-     * @param entity Persistent entity to map.
-     * @return Mapped client entity.
-     */
-    public static ClientEmailAddressEntity convertServer(ServerEmailAddressEntity entity)
-    {
-        return EmailAddressMapper.INSTANCE.mapServer(entity, new CycleAvoidingMappingContext());
-    }
-
-    /**
-     * Converts from a list of persistent entities to a list of client entities.
-     * @param list List of persistent entities to map.
-     * @return Mapped list of client entities.
-     */
-    public static List<ClientEmailAddressEntity> convertServerList(List<ServerEmailAddressEntity> list)
-    {
-        return EmailAddressMapper.INSTANCE.mapServerList(list, new CycleAvoidingMappingContext());
-    }
-
-    /**
-     * Copy a persistent entity.
-     * @param entity Persistent source entity to copy.
-     * @return Copied persistent entity.
-     */
-    public static ServerEmailAddressEntity copy(ServerEmailAddressEntity entity)
-    {
-        return EmailAddressMapper.INSTANCE.copy(entity, new CycleAvoidingMappingContext());
-    }
-
-    /**
-     * Copy a client entity.
-     * @param entity Client source entity to copy.
-     * @return Copied client entity.
-     */
-    public static ClientEmailAddressEntity copy(ClientEmailAddressEntity entity)
-    {
-        return EmailAddressMapper.INSTANCE.copy(entity, new CycleAvoidingMappingContext());
-    }
+//    /**
+//     * Converts a persistent entity to a client entity.
+//     * @param entity Client entity to map.
+//     * @return Mapped persistent entity.
+//     */
+//    public static ServerEmailAddressEntity convertClient(ClientEmailAddressEntity entity, ServerEntityFactory factory)
+//    {
+//        return EmailAddressMapper.INSTANCE.mapClient(entity, new CycleAvoidingMappingContext(), factory);
+//    }
+//
+//    /**
+//     * Converts a list of client entities to a list of persistent entities.
+//     * @param list List of client entities to map.
+//     * @return Converted list of persistent entities.
+//     */
+//    public static List<ServerEmailAddressEntity> convertClientList(List<ClientEmailAddressEntity> list, ServerEntityFactory factory)
+//    {
+//        return EmailAddressMapper.INSTANCE.mapClientList(list, new CycleAvoidingMappingContext(), factory);
+//    }
+//
+//    /**
+//     * Converts from a persistent entity to a client entity.
+//     * @param entity Persistent entity to map.
+//     * @return Mapped client entity.
+//     */
+//    public static ClientEmailAddressEntity convertServer(ServerEmailAddressEntity entity)
+//    {
+//        return EmailAddressMapper.INSTANCE.mapServer(entity, new CycleAvoidingMappingContext());
+//    }
+//
+//    /**
+//     * Converts from a list of persistent entities to a list of client entities.
+//     * @param list List of persistent entities to map.
+//     * @return Mapped list of client entities.
+//     */
+//    public static List<ClientEmailAddressEntity> convertServerList(List<ServerEmailAddressEntity> list)
+//    {
+//        return EmailAddressMapper.INSTANCE.mapServerList(list, new CycleAvoidingMappingContext());
+//    }
+//
+//    /**
+//     * Copy a persistent entity.
+//     * @param entity Persistent source entity to copy.
+//     * @return Copied persistent entity.
+//     */
+//    public static ServerEmailAddressEntity copy(ServerEmailAddressEntity entity)
+//    {
+//        return EmailAddressMapper.INSTANCE.copy(entity, new CycleAvoidingMappingContext());
+//    }
+//
+//    /**
+//     * Copy a client entity.
+//     * @param entity Client source entity to copy.
+//     * @return Copied client entity.
+//     */
+//    public static ClientEmailAddressEntity copy(ClientEmailAddressEntity entity)
+//    {
+//        return EmailAddressMapper.INSTANCE.copy(entity, new CycleAvoidingMappingContext());
+//    }
 }

@@ -14,11 +14,12 @@
  */
 package com.hemajoo.commerce.cherry.persistence.person.validation.engine;
 
+import com.hemajoo.commerce.cherry.commons.type.EntityType;
 import com.hemajoo.commerce.cherry.model.person.entity.ClientEmailAddressEntity;
 import com.hemajoo.commerce.cherry.model.person.exception.EmailAddressException;
+import com.hemajoo.commerce.cherry.model.person.exception.EntityException;
 import com.hemajoo.commerce.cherry.persistence.person.entity.ServerEmailAddressEntity;
 import com.hemajoo.commerce.cherry.persistence.person.entity.ServerPersonEntity;
-import com.hemajoo.commerce.cherry.persistence.person.service.EmailAddressService;
 import com.hemajoo.commerce.cherry.persistence.person.service.PersonService;
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,11 +37,11 @@ import java.util.UUID;
 @Component
 public final class EmailAddressValidationEngine
 {
-    /**
-     * Email address persistence service.
-     */
-    @Autowired
-    private EmailAddressService emailAddressService;
+//    /**
+//     * Email address persistence service.
+//     */
+//    @Autowired
+//    private EmailAddressService emailAddressService;
 
     /**
      * Person persistence service.
@@ -52,19 +53,14 @@ public final class EmailAddressValidationEngine
      * Checks the person identifier is valid.
      * <br>
      * The person identifier owning the email address must exist.
-     * @param emailAddress Email address to check.
+     * @param personId Person identifier.
      * @throws EmailAddressException Thrown in case the validation failed!
      */
-    public void validatePersonId(final @NonNull ClientEmailAddressEntity emailAddress) throws EmailAddressException
+    public void validatePersonId(final @NonNull UUID personId) throws EmailAddressException
     {
-        if (emailAddress.getOwner() == null || emailAddress.getOwner().getId() == null)
+        if (personService.findById(personId) == null)
         {
-            throw new EmailAddressException("Person id cannot be null!");
-        }
-
-        if (personService.findById(emailAddress.getOwner().getId()) == null)
-        {
-            throw new EmailAddressException(String.format("Person with id: %s does not exist!", emailAddress.getOwner().getId()));
+            throw new EmailAddressException(String.format("Person with id: %s does not exist!", personId));
         }
     }
 
@@ -77,7 +73,7 @@ public final class EmailAddressValidationEngine
      */
     public void validateEmailAddressId(final @NonNull ClientEmailAddressEntity emailAddress) throws EmailAddressException
     {
-        validateEmailAddressId(emailAddress.getId().toString());
+        validateEmailAddressId(emailAddress.getId());
     }
 
     /**
@@ -87,9 +83,9 @@ public final class EmailAddressValidationEngine
      * @param id Email address identifier.
      * @throws EmailAddressException Thrown in case the validation failed!
      */
-    public void validateEmailAddressId(final @NonNull String id) throws EmailAddressException
+    public void validateEmailAddressId(final @NonNull UUID id) throws EmailAddressException
     {
-        if (emailAddressService.findById(UUID.fromString(id)) == null)
+        if (personService.getEmailAddressService().findById(id) == null)
         {
             throw new EmailAddressException(String.format("Email address with id: %s does not exist!", id));
         }
@@ -156,6 +152,23 @@ public final class EmailAddressValidationEngine
             {
                 throw new EmailAddressException(String.format("Email address: '%s' already exist", emailAddress.getEmail()), HttpStatus.BAD_REQUEST);
             }
+        }
+    }
+
+    public void validateEmailForUpdate(final @NonNull ClientEmailAddressEntity emailAddress) throws EntityException
+    {
+        validateEmailAddressId(emailAddress.getId());
+        validateEmailEntityType(emailAddress.getEntityType());
+        //validatePersonId(emailAddress.getOwner().getId());
+        validateDefaultEmail(emailAddress);
+        validateNameUniqueness(emailAddress);
+    }
+
+    private void validateEmailEntityType(final EntityType entityType) throws EntityException
+    {
+        if (entityType != EntityType.EMAIL_ADDRESS)
+        {
+            throw new EntityException(entityType, String.format("Entity type: %s expected!", EntityType.EMAIL_ADDRESS), HttpStatus.BAD_REQUEST);
         }
     }
 }

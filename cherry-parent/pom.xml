@@ -76,6 +76,7 @@
         <version.flyway>7.9.2</version.flyway>
         <version.apache.tika>1.0.18</version.apache.tika>
         <version.hibernate.validator>7.0.1.Final</version.hibernate.validator>
+        <version.javers>3.1.0</version.javers>
 
         <!-- Run properties -->
         <db.h2.test.port>9092</db.h2.test.port>
@@ -260,6 +261,12 @@
                 <groupId>com.h2database</groupId>
                 <artifactId>h2</artifactId>
                 <version>${version.h2}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.javers</groupId>
+                <artifactId>javers-core</artifactId>
+                <version>${version.javers}</version>
             </dependency>
 
             <!-- Apache Tika: https://tika.apache.org -->

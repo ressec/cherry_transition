@@ -107,6 +107,11 @@
             <scope>provided</scope>
         </dependency>
 
+        <dependency>
+            <groupId>org.javers</groupId>
+            <artifactId>javers-core</artifactId>
+        </dependency>
+
         <!-- Hemajoo Cherry - Common: https://github.com/ressec/Cherry
              Hemajoo's Commerce Cherry common entities.
           -->
@@ -176,6 +181,7 @@
     <profiles>
 
         <profile>
+            <!-- Note: This profile is used for the development of the solution -->
             <id>db-dev</id>
             <activation>
                 <activeByDefault>true</activeByDefault>
@@ -192,7 +198,7 @@
         </profile>
 
         <profile>
-            <!-- Note: It's a profile dedicated to operate only for the persistence module! -->
+            <!-- Note: This profile is used to realize the unit tests -->
             <id>db-test</id>
             <properties>
                 <db.h2.port>9092</db.h2.port>
@@ -233,7 +239,7 @@
         </profile>
 
         <profile>
-            <!-- Note: It's a profile dedicated to operate only for the persistence module! -->
+            <!-- Note: This profile is used for the user acceptance tests -->
             <id>db-uat</id>
             <properties>
                 <db.h2.port>9092</db.h2.port>
@@ -274,7 +280,7 @@
         </profile>
 
         <profile>
-            <!-- Note: It's a profile dedicated to operate only for the persistence module! -->
+            <!-- Note: This profile is used for the production -->
             <id>db-prod</id>
             <properties>
                 <db.h2.port>9092</db.h2.port>
@@ -355,7 +361,7 @@
         </profile>
 
         <profile>
-            <!-- Integration tests executed only if profile 'integration-tests' is active -->
+            <!-- Note: This profile is used for the integration tests -->
             <id>integration-tests</id>
             <properties>
                 <db.h2.name>HEMAJOO</db.h2.name>

@@ -20,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
+import java.util.UUID;
 
 /**
  * Validator for the {@link ValidEmailAddressId} constraint used to validate an email address identifier exist.
@@ -46,7 +47,7 @@ public class EmailAddressIdValidator implements ConstraintValidator<ValidEmailAd
     {
         try
         {
-            emailAddressRuleEngine.validateEmailAddressId(id);
+            emailAddressRuleEngine.validateEmailAddressId(UUID.fromString(id));
 
             return true;
         }

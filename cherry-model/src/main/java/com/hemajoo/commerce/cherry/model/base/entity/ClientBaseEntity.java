@@ -16,7 +16,6 @@ package com.hemajoo.commerce.cherry.model.base.entity;
 
 import com.hemajoo.commerce.cherry.commons.entity.EntityIdentity;
 import com.hemajoo.commerce.cherry.commons.type.EntityType;
-import com.hemajoo.commerce.cherry.model.document.ClientDocumentEntity;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
@@ -72,7 +71,8 @@ public class ClientBaseEntity extends AbstractClientStatusEntity implements Clie
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     @ApiModelProperty(hidden = true)
-    private List<ClientDocumentEntity> documents = new ArrayList<>();
+//    private List<ClientDocumentEntity> documents = new ArrayList<>();
+    private List<EntityIdentity> documents = new ArrayList<>();
 
     /**
      * Creates a new (client) base entity type
@@ -99,7 +99,7 @@ public class ClientBaseEntity extends AbstractClientStatusEntity implements Clie
      * Adds a document to this entityDocumentEntity.
      * @param document Document.
      */
-    public final void addDocument(final @NonNull ClientDocumentEntity document)
+    public final void addDocument(final @NonNull EntityIdentity document)
     {
         documents.add(document);
     }
@@ -108,7 +108,7 @@ public class ClientBaseEntity extends AbstractClientStatusEntity implements Clie
      * Returns the documents associated with this entity.
      * @return List of documents.
      */
-    public final List<ClientDocumentEntity> getDocuments()
+    public final List<EntityIdentity> getDocuments()
     {
         if (entityType == EntityType.DOCUMENT)
         {

@@ -30,6 +30,7 @@ import com.hemajoo.commerce.cherry.persistence.person.repository.EmailAddressRep
 import com.hemajoo.commerce.cherry.persistence.person.repository.PersonRepository;
 import com.hemajoo.commerce.cherry.persistence.person.repository.PhoneNumberRepository;
 import com.hemajoo.commerce.cherry.persistence.person.repository.PostalAddressRepository;
+import lombok.Getter;
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -50,36 +51,42 @@ public class PersonServiceCore implements PersonService
      * Person repository.
      */
     @Autowired
+    @Getter
     private PersonRepository personRepository;
 
     /**
      * Email address repository.
      */
     @Autowired
+    @Getter
     private EmailAddressRepository emailAddressRepository;
 
     /**
      * Postal address repository.
      */
     @Autowired
+    @Getter
     private PostalAddressRepository postalAddressRepository;
 
     /**
      * Phone number repository.
      */
     @Autowired
+    @Getter
     private PhoneNumberRepository phoneNumberRepository;
 
     /**
      * Document service.
      */
     @Autowired
+    @Getter
     private DocumentService documentService;
 
     /**
      * Email address service.
      */
     @Autowired
+    @Getter
     private EmailAddressService emailAddressService;
 
     @Override
@@ -92,6 +99,12 @@ public class PersonServiceCore implements PersonService
     public Long count()
     {
         return personRepository.count();
+    }
+
+    @Override
+    public boolean existId(final @NonNull UUID id)
+    {
+        return personRepository.existsById(id);
     }
 
     @Override
