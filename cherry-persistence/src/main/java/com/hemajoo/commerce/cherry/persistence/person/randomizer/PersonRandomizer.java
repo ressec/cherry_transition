@@ -92,7 +92,7 @@ public final class PersonRandomizer extends AbstractBaseEntityRandomizer
 
         for (int i = 0; i < count; i++)
         {
-            document = DocumentRandomizer.generatePersistent(true);
+            document = DocumentRandomizer.generateServerEntity(true);
             entity.addDocument(document);
         }
 
@@ -151,7 +151,7 @@ public final class PersonRandomizer extends AbstractBaseEntityRandomizer
 
         for (int i = 0; i < count; i++)
         {
-            document = DocumentRandomizer.generateClient(true);
+            document = DocumentRandomizer.generateClientEntity(true);
             entity.addDocument(document.getIdentity());
         }
 
@@ -179,7 +179,7 @@ public final class PersonRandomizer extends AbstractBaseEntityRandomizer
         int count = bound > 0 ? bound : AbstractBaseEntityRandomizer.DEFAULT_DEPENDENCY_BOUND;
         for (var i = 0; i < count; i++)
         {
-            person.addEmailAddress(EmailAddressRandomizer.generateServer(withRandomId));
+            person.addEmailAddress(EmailAddressRandomizer.generateServerEntity(withRandomId));
             person.addPhoneNumber(PhoneNumberRandomizer.generateServer(withRandomId));
             person.addPostalAddress(PostalAddressRandomizer.generatePersistent(withRandomId));
         }

@@ -39,12 +39,12 @@ public class DocumentConverter
 
     /**
      * Converts from a server document entity to an entity identity.
-     * @param document Server document entity.
+     * @param server Server document entity.
      * @return Entity identity.
      */
-    public EntityIdentity fromServerToIdentity(ServerDocumentEntity document)
+    public EntityIdentity fromServerToIdentity(ServerDocumentEntity server)
     {
-        return AbstractDocumentMapper.INSTANCE.fromServerToIdentity(document, new CycleAvoidingMappingContext());
+        return AbstractDocumentMapper.INSTANCE.fromServerToIdentity(server, new CycleAvoidingMappingContext());
     }
 
     /**
@@ -59,41 +59,41 @@ public class DocumentConverter
 
     /**
      * Converts from a client document entity to a server document entity.
-     * @param document Client document entity.
+     * @param client Client document entity.
      * @return Server document entity.
      */
-    public ServerDocumentEntity fromClientToServer(ClientDocumentEntity document)
+    public ServerDocumentEntity fromClientToServer(ClientDocumentEntity client)
     {
-        return AbstractDocumentMapper.INSTANCE.fromClientToServer(document, new CycleAvoidingMappingContext(), entityManager);
+        return AbstractDocumentMapper.INSTANCE.fromClientToServer(client, new CycleAvoidingMappingContext(), entityManager);
     }
 
     /**
-     * Converts from an entity identity to a document server entity.
-     * @param document Entity identity.
-     * @return Server document entity.
+     * Converts from a server document entity to a client document entity.
+     * @param server Server document entity.
+     * @return Client document entity.
      */
-    public ClientDocumentEntity fromServerToClient(ServerDocumentEntity document)
+    public ClientDocumentEntity fromServerToClient(ServerDocumentEntity server)
     {
-        return AbstractDocumentMapper.INSTANCE.fromServerToClient(document, new CycleAvoidingMappingContext());
+        return AbstractDocumentMapper.INSTANCE.fromServerToClient(server, new CycleAvoidingMappingContext());
     }
 
     /**
      * Copy a server document entity.
-     * @param entity Server document entity.
+     * @param server Server document entity.
      * @return Copied server document entity.
      */
-    public static ServerDocumentEntity copy(ServerDocumentEntity entity)
+    public static ServerDocumentEntity copy(ServerDocumentEntity server)
     {
-        return AbstractDocumentMapper.INSTANCE.copy(entity, new CycleAvoidingMappingContext());
+        return AbstractDocumentMapper.INSTANCE.copy(server, new CycleAvoidingMappingContext());
     }
 
     /**
      * Copy a client document entity.
-     * @param entity Client document entity.
+     * @param client Client document entity.
      * @return Copied client document entity.
      */
-    public static ClientDocumentEntity copy(ClientDocumentEntity entity)
+    public static ClientDocumentEntity copy(ClientDocumentEntity client)
     {
-        return AbstractDocumentMapper.INSTANCE.copy(entity, new CycleAvoidingMappingContext());
+        return AbstractDocumentMapper.INSTANCE.copy(client, new CycleAvoidingMappingContext());
     }
 }

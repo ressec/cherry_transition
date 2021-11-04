@@ -60,7 +60,7 @@ class EmailAddressIntegrationTest extends AbstractBaseDatabaseUnitTest
     {
         // Generate random person & email address.
         ServerPersonEntity person = PersonRandomizer.generateServer(false);
-        ServerEmailAddressEntity email = EmailAddressRandomizer.generateServer(false);
+        ServerEmailAddressEntity email = EmailAddressRandomizer.generateServerEntity(false);
         person.addEmailAddress(email);
         personService.save(person); // TODO Need to save the documents content in the content store!
 
@@ -82,8 +82,8 @@ class EmailAddressIntegrationTest extends AbstractBaseDatabaseUnitTest
     final void testCreateEmailAddressWithDocument() throws DocumentException, DocumentContentException, EmailAddressException
     {
         // Generate random entities.
-        ServerEmailAddressEntity email = EmailAddressRandomizer.generateServer(false);
-        ServerDocumentEntity document = DocumentRandomizer.generatePersistent(false);
+        ServerEmailAddressEntity email = EmailAddressRandomizer.generateServerEntity(false);
+        ServerDocumentEntity document = DocumentRandomizer.generateServerEntity(false);
         ServerPersonEntity person = PersonRandomizer.generateServer(false);
         email.addDocument(document);
         person.addEmailAddress(email);
@@ -114,8 +114,8 @@ class EmailAddressIntegrationTest extends AbstractBaseDatabaseUnitTest
     @DisplayName("Email address with a document should be deleted when email address is deleted")
     final void testValidateEmailAddressDocumentOrphanRemove() throws DocumentException, DocumentContentException, EmailAddressException
     {
-        ServerEmailAddressEntity email = EmailAddressRandomizer.generateServer(false);
-        ServerDocumentEntity document = DocumentRandomizer.generatePersistent(false);
+        ServerEmailAddressEntity email = EmailAddressRandomizer.generateServerEntity(false);
+        ServerDocumentEntity document = DocumentRandomizer.generateServerEntity(false);
         ServerPersonEntity person = PersonRandomizer.generateServer(false);
         email.addDocument(document);
         person.addEmailAddress(email);
@@ -140,7 +140,7 @@ class EmailAddressIntegrationTest extends AbstractBaseDatabaseUnitTest
         String referenceEmailAddress = "victor.hugo@gmail.com";
 
         // Generate random entities and save them in database.
-        ServerEmailAddressEntity email = EmailAddressRandomizer.generateServer(false);
+        ServerEmailAddressEntity email = EmailAddressRandomizer.generateServerEntity(false);
         ServerPersonEntity person = PersonRandomizer.generateServer(false);
         person.addEmailAddress(email);
         personService.save(person);
@@ -175,7 +175,7 @@ class EmailAddressIntegrationTest extends AbstractBaseDatabaseUnitTest
     {
         // Generate a person and an email address.
         ServerPersonEntity person = PersonRandomizer.generateServer(false);
-        ServerEmailAddressEntity email = EmailAddressRandomizer.generateServer(false);
+        ServerEmailAddressEntity email = EmailAddressRandomizer.generateServerEntity(false);
         person.addEmailAddress(email);
         personService.save(person);
 
@@ -202,7 +202,7 @@ class EmailAddressIntegrationTest extends AbstractBaseDatabaseUnitTest
     {
         // Generate a person and an email address.
         ServerPersonEntity person = PersonRandomizer.generateServer(false);
-        ServerEmailAddressEntity email = EmailAddressRandomizer.generateServer(false);
+        ServerEmailAddressEntity email = EmailAddressRandomizer.generateServerEntity(false);
         person.addEmailAddress(email);
         personService.save(person);
 

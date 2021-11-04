@@ -98,8 +98,8 @@ public class ServerEmailAddressEntity extends ServerBaseEntity implements EmailA
     }
 
     /**
-     * Sets the person.
-     * @param person Person owning this email address.
+     * Sets the owner person.
+     * @param person Person being the owner of the email address.
      */
     public void setPerson(final ServerPersonEntity person)
     {

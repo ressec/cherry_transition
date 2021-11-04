@@ -63,8 +63,8 @@ public class ClientEmailAddressEntity extends ClientBaseEntity implements Client
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     //@JsonIgnoreProperties("emailAddresses")
-    @ApiModelProperty(name = "owner", notes = "Entity identity this email address belongs to", value = "1")
-    private EntityIdentity owner; // TODO Could it be moved to base entity?
+    @ApiModelProperty(name = "person", notes = "Person this email address belongs to", value = "1")
+    private EntityIdentity person; // TODO Could it be moved to base entity?
 
     /**
      * Creates a new client email address entity.

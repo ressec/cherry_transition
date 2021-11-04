@@ -43,7 +43,7 @@ public final class DocumentRandomizer extends AbstractBaseEntityRandomizer
      * @return Random document.
      * @throws DocumentContentException Raised in case an error occurred while trying to set the document content (media file)!
      */
-    public static ServerDocumentEntity generatePersistent(final boolean withRandomId) throws DocumentContentException
+    public static ServerDocumentEntity generateServerEntity(final boolean withRandomId) throws DocumentContentException
     {
         var entity = new ServerDocumentEntity();
         AbstractBaseEntityRandomizer.populateBaseFields(entity);
@@ -67,7 +67,7 @@ public final class DocumentRandomizer extends AbstractBaseEntityRandomizer
      * @return Random document.
      * @throws DocumentContentException Raised in case an error occurred while trying to set the document content (media file)!
      */
-    public static ClientDocumentEntity generateClient(final boolean withRandomId) throws DocumentContentException
+    public static ClientDocumentEntity generateClientEntity(final boolean withRandomId) throws DocumentContentException
     {
         var entity = new ClientDocumentEntity();
         AbstractBaseEntityRandomizer.populateBaseFields(entity);

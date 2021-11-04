@@ -54,7 +54,7 @@ class DocumentIntegrationTest extends AbstractBaseDatabaseUnitTest
     @DisplayName("Create a document") final void testCreateDocument() throws DocumentContentException, DocumentException
     {
         // Generate a random document.
-        ServerDocumentEntity document = DocumentRandomizer.generatePersistent(false); // No id set!
+        ServerDocumentEntity document = DocumentRandomizer.generateServerEntity(false); // No id set!
         documentService.save(document);
 
         assertThat(document)
@@ -73,7 +73,7 @@ class DocumentIntegrationTest extends AbstractBaseDatabaseUnitTest
         String contentFileName = "java-8-streams-cheat-sheet.pdf";
 
         // Generate a random document.
-        ServerDocumentEntity document = DocumentRandomizer.generatePersistent(false);
+        ServerDocumentEntity document = DocumentRandomizer.generateServerEntity(false);
         document.setContent(contentName);
 
         // Save it and store the associated media file.
@@ -95,7 +95,7 @@ class DocumentIntegrationTest extends AbstractBaseDatabaseUnitTest
     @DisplayName("Update a document") final void testUpdateDocument() throws DocumentContentException, DocumentException
     {
         // Generate a random document.
-        ServerDocumentEntity document = DocumentRandomizer.generatePersistent(false);
+        ServerDocumentEntity document = DocumentRandomizer.generateServerEntity(false);
         documentService.save(document);
 
         // Update the document 'tags'.
@@ -121,7 +121,7 @@ class DocumentIntegrationTest extends AbstractBaseDatabaseUnitTest
     @DisplayName("Update a document content") final void testUpdateDocumentContent() throws DocumentContentException, DocumentException
     {
         // Generate a random document.
-        ServerDocumentEntity document = DocumentRandomizer.generatePersistent(false);
+        ServerDocumentEntity document = DocumentRandomizer.generateServerEntity(false);
         document.setContent("./media/java-8-streams-cheat-sheet.pdf");
         long length = document.getContentLength();
         documentService.save(document);
@@ -144,7 +144,7 @@ class DocumentIntegrationTest extends AbstractBaseDatabaseUnitTest
     @DisplayName("Delete a document") final void testDeleteDocumentInDatabase() throws DocumentContentException, DocumentException
     {
         // Generate a random document.
-        ServerDocumentEntity document = DocumentRandomizer.generatePersistent(false);
+        ServerDocumentEntity document = DocumentRandomizer.generateServerEntity(false);
         document.setContent("./media/java-8-streams-cheat-sheet.pdf");
         documentService.save(document);
 
@@ -177,7 +177,7 @@ class DocumentIntegrationTest extends AbstractBaseDatabaseUnitTest
 
         for (int i = 0; i < 100; i++)
         {
-            document = DocumentRandomizer.generatePersistent(false);
+            document = DocumentRandomizer.generateServerEntity(false);
             document.setContent("./media/java-8-streams-cheat-sheet.pdf");
             documentService.save(document);
             documents.add(document);

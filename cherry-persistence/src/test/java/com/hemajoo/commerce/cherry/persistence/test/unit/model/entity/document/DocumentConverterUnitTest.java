@@ -47,6 +47,8 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  * Unit tests for the document converter class.
+ * <hr>
+ * Unit tests are supposed to be executed with the Maven 'db-test' profile activated.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
@@ -81,78 +83,102 @@ class DocumentConverterUnitTest extends AbstractBaseMapperTest
     }
 
     @Test
-    @DisplayName("Test to convert a server document to a document identity")
-    final void testConvertServerDocumentToIdentity() throws DocumentContentException
+    @DisplayName("Convert a server document to an identity")
+    final void testConvertServerToIdentityDocument() throws DocumentContentException
     {
-        ServerDocumentEntity document = DocumentRandomizer.generatePersistent(true);
+        ServerDocumentEntity document = DocumentRandomizer.generateServerEntity(true);
         EntityIdentity identity = converter.fromServerToIdentity(document);
 
         assertThat(identity)
                 .as("Entity identity should not be null!")
                 .isNotNull();
+
+        assertThat(identity.getId())
+                .as("Identifiers are expected to be the same!")
+                .isEqualTo(document.getId());
+
+        assertThat(identity.getEntityType())
+                .as("Identity is supposed to be of type: DOCUMENT")
+                .isEqualTo(EntityType.DOCUMENT);
     }
 
     @Test
-    @DisplayName("Test to convert a document identity to a server document")
+    @DisplayName("Convert an identity to a server document")
     final void testConvertIdentityToServerDocument() throws DocumentContentException, EntityException
     {
-        ServerDocumentEntity reference = documentService.save(DocumentRandomizer.generatePersistent(true));
+        // For an entity identity to be mapped to a server entity, the server entity must exist in the underlying database!
+        ServerDocumentEntity reference = documentService.save(DocumentRandomizer.generateServerEntity(true));
 
         EntityIdentity identity = new EntityIdentity(reference.getIdentity());
         ServerDocumentEntity server = converter.fromIdentityToServer(identity);
 
         assertThat(server)
-                .as("Server document should not be null!")
+                .as("Server entity should not be null!")
                 .isNotNull();
+
+        assertThat(server.getId())
+                .as("Identifiers are expected to be the same!")
+                .isEqualTo(identity.getId());
+
+        assertThat(server.getEntityType())
+                .as("Identity is supposed to be of type: DOCUMENT")
+                .isEqualTo(EntityType.DOCUMENT);
     }
 
     @Test
-    @DisplayName("Test to convert a document identity to a server document that does not exist")
+    @DisplayName("Convert an identity to a server document (that does not exist)")
+    @SuppressWarnings("java:S5977")
     final void testConvertIdentityToServerDocumentNotExisting()
     {
-        EntityIdentity identity = new EntityIdentity(UUID.fromString("a787b9b9-9098-4903-8d60-14d19a0b0aa4"), EntityType.DOCUMENT);
+        EntityIdentity identity = new EntityIdentity(UUID.randomUUID(), EntityType.DOCUMENT);
 
         assertThatThrownBy(() -> converter.fromIdentityToServer(identity))
                 .isInstanceOf(EntityException.class);
     }
 
     @Test
-    @DisplayName("Test to convert a client document with a owner to a server document")
+    @DisplayName("Convert a client document with a owner to a server document")
     final void testConvertClientToServerDocumentWithOwner() throws DocumentContentException
     {
-        ServerDocumentEntity owner = documentService.save(DocumentRandomizer.generatePersistent(false));
+        // For an entity identity to be mapped to a server entity, the server entity must exist in the underlying database!
+        ServerDocumentEntity owner = documentService.save(DocumentRandomizer.generateServerEntity(false));
 
-        ClientDocumentEntity client = DocumentRandomizer.generateClient(true);
-        client.setOwner(new EntityIdentity(EntityType.PERSON, owner.getId()));
-        converter.fromClientToServer(client);
+        ClientDocumentEntity client = DocumentRandomizer.generateClientEntity(true);
+        client.setOwner(owner.getIdentity());
 
-        assertThat(client)
+        ServerDocumentEntity server = converter.fromClientToServer(client);
+
+        assertThat(server)
                 .as("Server document should not be null!")
+                .isNotNull();
+
+        assertThat(server.getOwner())
+                .as("Server document owner should not be null!")
                 .isNotNull();
     }
 
-    @SuppressWarnings("java:S5977")
     @Test
-    @DisplayName("Test to convert a client document with a non existing owner to a server document")
-    final void testConvertClientToServerDocumentWithNonExistentOwner() throws DocumentContentException
+    @DisplayName("Convert a client document with a non existing owner to a server document. Should raise an exception!")
+    @SuppressWarnings("java:S5977")
+    final void testConvertClientToServerDocumentWithNonExistingOwner() throws DocumentContentException
     {
-        ClientDocumentEntity client = DocumentRandomizer.generateClient(true);
+        ClientDocumentEntity client = DocumentRandomizer.generateClientEntity(true);
         client.setOwner(new EntityIdentity(EntityType.PERSON,UUID.randomUUID()));
 
-        // If the owner of the client document to convert does not exist, ensure an exception is thrown!
+        // If the owner of the client document to convert does not exist, ensure an exception is raised!
         assertThatThrownBy(() -> converter.fromClientToServer(client))
                 .isInstanceOf(RuntimeException.class)
                 .hasCauseExactlyInstanceOf(EntityException.class);
     }
 
     @Test
-    @DisplayName("Test to convert a list of server documents to a list of client documents")
-    final void testConvertListServerToClientDocument() throws DocumentContentException
+    @DisplayName("Convert a list of server documents to a list of client documents")
+    final void testConvertServerToClientDocumentList() throws DocumentContentException
     {
         List<ServerDocumentEntity> documents = new ArrayList<>();
         for (int i = 0; i < LIST_COUNT; i++)
         {
-            documents.add(DocumentRandomizer.generatePersistent(true));
+            documents.add(DocumentRandomizer.generateServerEntity(true));
         }
 
         List<ClientDocumentEntity> clients = documents.stream()
@@ -169,92 +195,58 @@ class DocumentConverterUnitTest extends AbstractBaseMapperTest
     }
 
     @Test
-    @DisplayName("Test to convert a list of client documents to a list of server documents")
-    final void testConvertListClientToServerDocument() throws DocumentContentException
+    @DisplayName("Convert a list of client documents to a list of server documents")
+    final void testConvertClientToServerDocumentList() throws DocumentContentException
     {
-        List<ServerDocumentEntity> documents = new ArrayList<>();
-
-        // Create some random server documents.
+        List<ClientDocumentEntity> clients = new ArrayList<>();
         for (int i = 0; i < LIST_COUNT; i++)
         {
-            documents.add(documentService.save(DocumentRandomizer.generatePersistent(false)));
+            clients.add(DocumentRandomizer.generateClientEntity(true));
         }
 
-        // Convert from server to client document list.
-        List<ClientDocumentEntity> clients = documents.stream()
-                .map(document -> converter.fromServerToClient(document))
-                .collect(Collectors.toList());
-
-        assertThat(clients.size())
-                .as("Document server and client list should have the same size!")
-                .isEqualTo(documents.size());
-
-        clients.forEach(clientDocument -> assertThat(clientDocument)
-                .as("Client document should not be null!")
-                .isNotNull());
-
-        // Convert back from client to server document list.
         List<ServerDocumentEntity> servers = clients.stream()
                 .map(document -> converter.fromClientToServer(document))
                 .collect(Collectors.toList());
 
-        assertThat(clients.size())
-                .as("Document server and client list should have the same size!")
-                .isEqualTo(servers.size());
+        assertThat(servers.size())
+                .as("Both lists should have the same size!")
+                .isEqualTo(clients.size());
 
-        servers.forEach(serverDocument -> assertThat(serverDocument)
+        servers.forEach(document -> assertThat(document)
                 .as("Server document should not be null!")
                 .isNotNull());
     }
 
     @Test
-    @DisplayName("Test to convert a list of server document to a list of entity identities")
-    final void testConvertListServerDocumentToIdentity() throws DocumentContentException, EntityException
+    @DisplayName("Convert a list of server documents to a list of entity identities")
+    final void testConvertServerDocumentToIdentityList() throws DocumentContentException
     {
         List<ServerDocumentEntity> documents = new ArrayList<>();
-
-        // Create some random server documents.
         for (int i = 0; i < LIST_COUNT; i++)
         {
-            documents.add(documentService.save(DocumentRandomizer.generatePersistent(false)));
+            documents.add(DocumentRandomizer.generateServerEntity(true));
         }
 
-        // Convert from server to identity list.
         List<EntityIdentity> identities = documents.stream()
                 .map(document -> converter.fromServerToIdentity(document))
                 .collect(Collectors.toList());
 
         assertThat(identities.size())
-                .as("Document server and identity list should have the same size!")
+                .as("Both lists should have the same size!")
                 .isEqualTo(documents.size());
 
         identities.forEach(identity -> assertThat(identity)
                 .as("Identity should not be null!")
                 .isNotNull());
-
-        // Convert back from identity to server document list.
-        List<ServerDocumentEntity> servers = new ArrayList<>();
-        for (EntityIdentity document : identities)
-        {
-            ServerDocumentEntity serverDocumentEntity = converter.fromIdentityToServer(document);
-            servers.add(serverDocumentEntity);
-        }
-
-        assertThat(servers.size())
-                .as("Document server and identity list should have the same size!")
-                .isEqualTo(identities.size());
-
-        servers.forEach(serverDocument -> assertThat(serverDocument)
-                .as("Server document should not be null!")
-                .isNotNull());
     }
 
     @Test
-    @DisplayName("Test a copy and the original server documents are equal")
-    final void testCopyServerDocumentEquality() throws DocumentContentException
+    @DisplayName("Copy a server document")
+    final void testCopyServerDocument() throws DocumentContentException
     {
-        ServerDocumentEntity document = DocumentRandomizer.generatePersistent(true);
+        ServerDocumentEntity document = DocumentRandomizer.generateServerEntity(true);
         ServerDocumentEntity copy = DocumentConverter.copy(document);
+
         assertThat(document)
                 .as("Both server documents should be equal!")
                 .isEqualTo(copy);
@@ -266,11 +258,12 @@ class DocumentConverterUnitTest extends AbstractBaseMapperTest
     }
 
     @Test
-    @DisplayName("Test a copy and the original client documents are equal")
-    final void testCopyClientDocumentEquality() throws DocumentContentException
+    @DisplayName("Copy a server document")
+    final void testCopyClientDocument() throws DocumentContentException
     {
-        ClientDocumentEntity document = DocumentRandomizer.generateClient(true);
+        ClientDocumentEntity document = DocumentRandomizer.generateClientEntity(true);
         ClientDocumentEntity copy = DocumentConverter.copy(document);
+
         assertThat(document)
                 .as("Both client documents should be equal!")
                 .isEqualTo(copy);

@@ -97,7 +97,7 @@ public final class PostalAddressRandomizer extends AbstractBaseEntityRandomizer
 
         for (int i = 0; i < count; i++)
         {
-            document = DocumentRandomizer.generatePersistent(true);
+            document = DocumentRandomizer.generateServerEntity(true);
             entity.addDocument(document);
         }
 
@@ -165,7 +165,7 @@ public final class PostalAddressRandomizer extends AbstractBaseEntityRandomizer
 
         for (int i = 0; i < count; i++)
         {
-            document = DocumentRandomizer.generateClient(true);
+            document = DocumentRandomizer.generateClientEntity(true);
             entity.addDocument(document.getIdentity());
         }
 

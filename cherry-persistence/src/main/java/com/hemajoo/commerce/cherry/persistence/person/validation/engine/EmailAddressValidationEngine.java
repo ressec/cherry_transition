@@ -102,14 +102,14 @@ public final class EmailAddressValidationEngine
     {
         if (Boolean.TRUE.equals(emailAddress.getIsDefaultEmail()) && emailAddress.isActive())
         {
-            ServerPersonEntity person = personService.findById(emailAddress.getOwner().getId());
+            ServerPersonEntity person = personService.findById(emailAddress.getPerson().getId());
             ServerEmailAddressEntity defaultEmailAddress = person.getDefaultEmailAddress();
             if (!Objects.equals(defaultEmailAddress.getIdentity(), emailAddress.getIdentity()) || emailAddress.getId() == null)
             {
                 throw new EmailAddressException(
                         String.format(
                                 "Person with id: '%s' already has an active default email address!",
-                                emailAddress.getOwner().getId()),
+                                emailAddress.getPerson().getId()),
                         HttpStatus.BAD_REQUEST);
             }
         }
@@ -122,14 +122,14 @@ public final class EmailAddressValidationEngine
      */
     public void validateNameUniqueness(final @NonNull ClientEmailAddressEntity emailAddress) throws EmailAddressException
     {
-        ServerPersonEntity person = personService.findById(emailAddress.getOwner().getId());
+        ServerPersonEntity person = personService.findById(emailAddress.getPerson().getId());
 
         if (person == null)
         {
             throw new EmailAddressException(
                     String.format(
                             "Person id: '%s' cannot be found!",
-                            emailAddress.getOwner().getId()),
+                            emailAddress.getPerson().getId()),
                     HttpStatus.BAD_REQUEST);
         }
 
@@ -143,7 +143,7 @@ public final class EmailAddressValidationEngine
                     throw new EmailAddressException(
                             String.format(
                                     "Email address: '%s' already belongs to another entity: '%s'!",
-                                    emailAddress.getOwner(),
+                                    emailAddress.getPerson(),
                                     emailAddress.getEmail()),
                             HttpStatus.BAD_REQUEST);
                 }

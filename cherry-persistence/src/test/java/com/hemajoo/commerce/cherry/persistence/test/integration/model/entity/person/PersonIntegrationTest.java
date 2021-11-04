@@ -70,7 +70,7 @@ class PersonIntegrationTest extends AbstractBaseDatabaseUnitTest
     {
         // Generate random person and document.
         ServerPersonEntity person = PersonRandomizer.generateServer(false);
-        ServerDocumentEntity document = DocumentRandomizer.generatePersistent(false);
+        ServerDocumentEntity document = DocumentRandomizer.generateServerEntity(false);
         person.addDocument(document);
 
         // Save the entities on database.
@@ -147,7 +147,7 @@ class PersonIntegrationTest extends AbstractBaseDatabaseUnitTest
     final void testChildDocumentRemoval() throws DocumentException, DocumentContentException
     {
         ServerPersonEntity person = PersonRandomizer.generateServer(false);
-        ServerDocumentEntity document = DocumentRandomizer.generatePersistent(false);
+        ServerDocumentEntity document = DocumentRandomizer.generateServerEntity(false);
         person.addDocument(document);
         personService.save(person);
 

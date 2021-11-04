@@ -29,11 +29,11 @@ public interface ClientEmailAddress extends EmailAddress, ClientEntity
      * Returns the entity identity owning this email address.
      * @return Entity identity.
      */
-    EntityIdentity getOwner();
+    EntityIdentity getPerson();
 
     /**
      * Sets the entity identity owning this email address.
      * @param owner Entity identity.
      */
-    void setOwner(final EntityIdentity owner);
+    void setPerson(final EntityIdentity owner);
 }
