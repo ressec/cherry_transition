@@ -51,6 +51,7 @@ public class DocumentConverter
      * Converts from an entity identity to a server document entity.
      * @param identity Entity identity.
      * @return Server document entity.
+     * @throws EntityException Thrown to indicate an error occurred while retrieving the server entity from the underlying database.
      */
     public ServerDocumentEntity fromIdentityToServer(EntityIdentity identity) throws EntityException
     {

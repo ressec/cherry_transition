@@ -51,6 +51,7 @@ public abstract class AbstractDocumentMapper
      * Maps from a server document entity to a client document entity.
      * @param document Server document entity.
      * @param context Context object.
+     * @param entityManager Entity manager.
      * @return Client document entity.
      */
     public abstract ServerDocumentEntity fromClientToServer(ClientDocumentEntity document, @Context CycleAvoidingMappingContext context, @Context EntityManager entityManager);

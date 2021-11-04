@@ -107,7 +107,10 @@ class EmailAddressConverterUnitTest extends AbstractBaseMapperTest
     final void testConvertIdentityToServerEmailAddress() throws EntityException
     {
         // For an entity identity to be mapped to a server entity, the server entity must exist in the underlying database!
-        ServerEmailAddressEntity reference = emailAddressService.save(EmailAddressRandomizer.generateServerEntity(true));
+        ServerPersonEntity owner = personService.save(PersonRandomizer.generateServer(false));
+        ServerEmailAddressEntity reference = EmailAddressRandomizer.generateServerEntity(false);
+        reference.setPerson(owner);
+        reference = emailAddressService.save(reference);
 
         EntityIdentity identity = new EntityIdentity(reference.getIdentity());
         ServerEmailAddressEntity server = converter.fromIdentityToServer(identity);

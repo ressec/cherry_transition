@@ -15,13 +15,20 @@
 package com.hemajoo.commerce.cherry.persistence.test.unit.model.entity.person;
 
 import com.hemajoo.commerce.cherry.persistence.person.entity.ServerEmailAddressEntity;
+import com.hemajoo.commerce.cherry.persistence.person.randomizer.EmailAddressRandomizer;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 
+import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
+import java.util.Set;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
- * Test the validation rules for a {@link ServerEmailAddressEntity} entity.
+ * Test the validation rules for the server email address entity.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
@@ -30,31 +37,31 @@ class EmailAddressValidationUnitTest
     private final ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
     private final Validator validator = factory.getValidator();
 
-//    @Test
-//    @DisplayName("Email address should not be null")
-//    final void testNullEmailAddress() throws EmailAddressException
-//    {
-//        ServerEmailAddressEntity email = EmailAddressRandomizer.generateServer(true);
-//        email.setEmail(null);
-//
-//        Set<ConstraintViolation<ServerEmailAddressEntity>> violations = validator.validate(email);
-//
-//        assertThat(violations)
-//                .as(String.format("Should have raised a violation rule because email address: '%s' is null or empty!", email.getEmail()))
-//                .isNotEmpty();
-//    }
-//
-//    @Test
-//    @DisplayName("Email address should be valid")
-//    final void testValidEmailAddress() throws EmailAddressException
-//    {
-//        ServerEmailAddressEntity email = EmailAddressRandomizer.generateServer(true);
-//        email.setEmail("john.doe#gmail.com");
-//
-//        Set<ConstraintViolation<ServerEmailAddressEntity>> violations = validator.validate(email);
-//
-//        assertThat(violations)
-//                .as(String.format("Should have raised a violation rule because email address: %s is supposed to be invalid!", email.getEmail()))
-//                .isNotEmpty();
-//    }
+    @Test
+    @DisplayName("Email address must not be null")
+    final void testNullEmailAddress()
+    {
+        ServerEmailAddressEntity email = EmailAddressRandomizer.generateServerEntity(true);
+        email.setEmail(null);
+
+        Set<ConstraintViolation<ServerEmailAddressEntity>> violations = validator.validate(email);
+
+        assertThat(violations)
+                .as(String.format("Should have raised a violation rule because email address: '%s' is null or empty!", email.getEmail()))
+                .isNotEmpty();
+    }
+
+    @Test
+    @DisplayName("Email address must be valid")
+    final void testValidEmailAddress()
+    {
+        ServerEmailAddressEntity email = EmailAddressRandomizer.generateServerEntity(true);
+        email.setEmail("john.doe#gmail.com");
+
+        Set<ConstraintViolation<ServerEmailAddressEntity>> violations = validator.validate(email);
+
+        assertThat(violations)
+                .as(String.format("Email address: %s is supposed to be invalid!", email.getEmail()))
+                .isNotEmpty();
+    }
 }

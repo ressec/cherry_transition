@@ -51,6 +51,7 @@ public final class EmailAddressConverter
      * Converts from an entity identity to a server email address entity.
      * @param identity Entity identity.
      * @return Server email address entity.
+     * @throws EntityException Thrown to indicate an error occurred while retrieving the server entity from the underlying database.
      */
     public ServerEmailAddressEntity fromIdentityToServer(EntityIdentity identity) throws EntityException
     {

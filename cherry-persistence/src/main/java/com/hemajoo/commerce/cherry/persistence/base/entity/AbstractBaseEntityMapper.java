@@ -40,6 +40,7 @@ public abstract class AbstractBaseEntityMapper
      * Maps an entity identity to a server base entity.
      * <hr>
      * If the base entity exist in the underlying database, it will be loaded and returned, otherwise an exception is raised.
+     * @param <T> Type of server entity.
      * @param identity Entity identity.
      * @param entityManager Entity manager.
      * @return Server base entity.

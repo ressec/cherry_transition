@@ -51,6 +51,7 @@ public abstract class AbstractEmailAddressMapper
      * Maps from a server email address entity to a client email address entity.
      * @param document Server email address entity.
      * @param context Context object.
+     * @param entityManager Entity manager.
      * @return Client document entity.
      */
     public abstract ServerEmailAddressEntity fromClientToServer(ClientEmailAddressEntity document, @Context CycleAvoidingMappingContext context, @Context EntityManager entityManager);
@@ -68,7 +69,7 @@ public abstract class AbstractEmailAddressMapper
      * @param entity Server email address entity.
      * @param context Context object.
      * @return Copy of the server email address entity.
-     * @throws DocumentException Thrown if an error occurred while trying to copy the server document entity!
+     * @throws DocumentException Thrown to indicate an error occurred while trying to copy the server document entity!
      */
     public abstract ServerEmailAddressEntity copy(ServerEmailAddressEntity entity, @Context CycleAvoidingMappingContext context) throws DocumentException;
 
