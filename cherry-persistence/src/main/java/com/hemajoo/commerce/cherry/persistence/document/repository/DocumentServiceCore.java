@@ -17,6 +17,7 @@ package com.hemajoo.commerce.cherry.persistence.document.repository;
 import com.hemajoo.commerce.cherry.model.document.exception.DocumentException;
 import com.hemajoo.commerce.cherry.persistence.content.DocumentStore;
 import com.hemajoo.commerce.cherry.persistence.document.entity.ServerDocumentEntity;
+import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -34,6 +35,7 @@ public class DocumentServiceCore implements DocumentService
     /**
      * Document repository.
      */
+    @Getter
     @Autowired
     private DocumentRepository documentRepository;
 
@@ -73,6 +75,12 @@ public class DocumentServiceCore implements DocumentService
         }
 
         return document;
+    }
+
+    @Override
+    public ServerDocumentEntity saveAndFlush(ServerDocumentEntity document)
+    {
+        return documentRepository.saveAndFlush(document);
     }
 
     @Override

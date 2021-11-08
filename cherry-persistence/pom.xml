@@ -75,17 +75,42 @@
             <scope>test</scope>
         </dependency>
 
-        <!-- Database H2 dependencies -->
         <dependency>
-            <groupId>com.h2database</groupId>
-            <artifactId>h2</artifactId>
+            <groupId>org.testcontainers</groupId>
+            <artifactId>testcontainers</artifactId>
+            <scope>test</scope>
         </dependency>
+
+        <dependency>
+            <groupId>org.testcontainers</groupId>
+            <artifactId>junit-jupiter</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.testcontainers</groupId>
+            <artifactId>postgresql</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+        </dependency>
+
+        <!-- Database H2 dependencies -->
+<!--        <dependency>-->
+<!--            <groupId>com.h2database</groupId>-->
+<!--            <artifactId>h2</artifactId>-->
+<!--        </dependency>-->
 
         <!-- Flyway dependencies -->
         <dependency>
             <groupId>org.flywaydb</groupId>
             <artifactId>flyway-core</artifactId>
-            <version>${version.flyway}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-boot-starter</artifactId>
         </dependency>
 
         <!-- Bean mapper: MapStruct -->
@@ -172,9 +197,31 @@
             </resource>
         </resources>
 
-        <plugins>
-
-        </plugins>
+<!--        <plugins>-->
+<!--            <plugin>-->
+<!--                <groupId>org.flywaydb</groupId>-->
+<!--                <artifactId>flyway-maven-plugin</artifactId>-->
+<!--                <version>${version.maven.plugin.flyway}</version>-->
+<!--                <configuration>-->
+<!--                    <url>jdbc:h2:tcp://localhost:${db.h2.port}/${db.h2.name};DB_CLOSE_ON_EXIT=TRUE</url>-->
+<!--                    <user>${db.h2.user}</user>-->
+<!--                    <password>${db.h2.password}</password>-->
+<!--                    <schemas>-->
+<!--                        <schema>${db.h2.schemas}</schema>-->
+<!--                    </schemas>-->
+<!--                    <locations>${flyway.locations}</locations>-->
+<!--                </configuration>-->
+<!--                <executions>-->
+<!--                    <execution>-->
+<!--                        <id>flyway-check-db</id>-->
+<!--                        <phase>compile</phase>-->
+<!--                        <goals>-->
+<!--                            <goal>info</goal>-->
+<!--                        </goals>-->
+<!--                    </execution>-->
+<!--                </executions>-->
+<!--            </plugin>-->
+<!--        </plugins>-->
 
     </build>
 

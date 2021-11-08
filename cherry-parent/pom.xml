@@ -51,7 +51,7 @@
         <version.maven.plugin.sonar>3.6.0.1398</version.maven.plugin.sonar>
         <version.maven.plugin.project.info.reports>3.0.0</version.maven.plugin.project.info.reports>
         <version.maven.plugin.surefire>3.0.0-M5</version.maven.plugin.surefire>
-        <version.maven.plugin.flyway>7.9.1</version.maven.plugin.flyway>
+        <version.maven.plugin.flyway>8.0.3</version.maven.plugin.flyway>
         <version.plugin.maven.docker>0.37.0</version.plugin.maven.docker>
         <version.plugin.maven.sonarscource.scanner>3.9.0.2155</version.plugin.maven.sonarscource.scanner>
         <version.plugin.maven.jacoco>0.8.7</version.plugin.maven.jacoco>
@@ -73,10 +73,12 @@
         <version.mapstruct>1.4.2.Final</version.mapstruct>
         <version.lombok.mapstruct>0.2.0</version.lombok.mapstruct>
         <version.h2>1.4.200</version.h2>
-        <version.flyway>7.9.2</version.flyway>
+        <version.flyway>8.0.3</version.flyway>
         <version.apache.tika>1.0.18</version.apache.tika>
         <version.hibernate.validator>7.0.1.Final</version.hibernate.validator>
         <version.javers>3.1.0</version.javers>
+        <version.testcontainers>1.16.2</version.testcontainers>
+        <version.db.postgresql>42.3.1</version.db.postgresql>
 
         <!-- Run properties -->
         <db.h2.test.port>9092</db.h2.test.port>
@@ -132,7 +134,7 @@
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <version>${version.spring.boot}</version>
+<!--                <version>${version.spring.boot}</version>-->
                 <type>maven-plugin</type>
             </dependency>
 
@@ -200,6 +202,27 @@
             </dependency>
 
             <dependency>
+                <groupId>org.testcontainers</groupId>
+                <artifactId>testcontainers</artifactId>
+                <version>${version.testcontainers}</version>
+                <scope>test</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.testcontainers</groupId>
+                <artifactId>junit-jupiter</artifactId>
+                <version>${version.testcontainers}</version>
+                <scope>test</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.testcontainers</groupId>
+                <artifactId>postgresql</artifactId>
+                <version>${version.testcontainers}</version>
+                <scope>test</scope>
+            </dependency>
+
+            <dependency>
                 <groupId>org.mapstruct</groupId>
                 <artifactId>mapstruct-processor</artifactId>
                 <version>${version.mapstruct}</version>
@@ -257,11 +280,18 @@
                 <version>${version.flyway}</version>
             </dependency>
 
+            <!-- https://mvnrepository.com/artifact/org.postgresql/postgresql -->
             <dependency>
-                <groupId>com.h2database</groupId>
-                <artifactId>h2</artifactId>
-                <version>${version.h2}</version>
+                <groupId>org.postgresql</groupId>
+                <artifactId>postgresql</artifactId>
+                <version>${version.db.postgresql}</version>
             </dependency>
+
+<!--            <dependency>-->
+<!--                <groupId>com.h2database</groupId>-->
+<!--                <artifactId>h2</artifactId>-->
+<!--                <version>${version.h2}</version>-->
+<!--            </dependency>-->
 
             <dependency>
                 <groupId>org.javers</groupId>
@@ -287,15 +317,15 @@
 
     </dependencyManagement>
 
-    <dependencies>
+<!--    <dependencies>-->
 
-        <dependency>
-            <groupId>com.h2database</groupId>
-            <artifactId>h2</artifactId>
-            <version>${version.h2}</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>com.h2database</groupId>-->
+<!--            <artifactId>h2</artifactId>-->
+<!--            <version>${version.h2}</version>-->
+<!--        </dependency>-->
 
-    </dependencies>
+<!--    </dependencies>-->
 
     <build>
 

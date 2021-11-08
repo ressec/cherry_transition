@@ -12,26 +12,22 @@
  * Resse Christophe (christophe.resse@gmail.com).
  * -----------------------------------------------------------------------------------------------
  */
-package com.hemajoo.commerce.cherry.persistence.test.integration;
+package com.hemajoo.commerce.cherry.persistence.test.config;
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.data.domain.AuditorAware;
+
+import java.util.Optional;
 
 /**
- * {@code Spring} test {@code Cherry} application.
+ * Provides a {@code JPA} auditor information for the test environment.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-@SpringBootApplication
-public class SpringCherryForIntegrationTest
+public class JpaAuditor implements AuditorAware<String>
 {
-    // This class is not intended to be started directly!
-    // It is used by the test classes to get a Spring environment.
-
-    public static void main(String[] args)
+    @Override
+    public Optional<String> getCurrentAuditor()
     {
-        SpringApplication.run(SpringCherryForIntegrationTest.class, args);
-        SpringApplication application = new SpringApplication(SpringCherryForIntegrationTest.class);
-        application.run(args);
+        return Optional.of("unit-test-user");
     }
 }

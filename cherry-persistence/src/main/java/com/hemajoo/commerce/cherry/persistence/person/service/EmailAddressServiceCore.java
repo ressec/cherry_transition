@@ -119,6 +119,16 @@ public class EmailAddressServiceCore implements EmailAddressService
     }
 
     @Override
+    public ServerEmailAddressEntity saveAndFlush(ServerEmailAddressEntity emailAddress) throws EmailAddressException
+    {
+        emailAddress = save(emailAddress);
+
+        emailAddressRepository.flush();
+
+        return emailAddress;
+    }
+
+    @Override
     public void deleteById(UUID id)
     {
         emailAddressRepository.deleteById(id);

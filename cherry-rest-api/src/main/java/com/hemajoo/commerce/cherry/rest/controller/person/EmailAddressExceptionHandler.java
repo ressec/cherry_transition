@@ -37,8 +37,8 @@ public class EmailAddressExceptionHandler extends ResponseEntityExceptionHandler
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ResponseBody
     @NotNull
-    public static ResponseEntity<String> handleEmailAddressExceptions(Exception exception, WebRequest request)
+    public static ResponseEntity<String> handleEmailAddressExceptions(EmailAddressException exception, WebRequest request)
     {
-        return new ResponseEntity<>(exception.getMessage(), HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(exception.getMessage(), exception.getStatus());
     }
 }

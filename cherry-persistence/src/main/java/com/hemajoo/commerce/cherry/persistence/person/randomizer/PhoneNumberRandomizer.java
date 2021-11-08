@@ -47,12 +47,12 @@ public final class PhoneNumberRandomizer extends AbstractBaseEntityRandomizer
     private static final EnumRandomGenerator PHONE_NUMBER_CATEGORY_TYPE_GENERATOR = new EnumRandomGenerator(PhoneNumberCategoryType.class);
 
     /**
-     * Generates a new random persistent phone number.
+     * Generates a new random server phone number.
      * @param withRandomId Do we need to generate a random identifier? False by default.
      * <br>Generally set to {@code true} only for unit tests.
      * @return Phone number.
      */
-    public static ServerPhoneNumberEntity generateServer(final boolean withRandomId)
+    public static ServerPhoneNumberEntity generateServerEntity(final boolean withRandomId)
     {
         var entity = new ServerPhoneNumberEntity();
         AbstractBaseEntityRandomizer.populateBaseFields(entity);
@@ -79,7 +79,7 @@ public final class PhoneNumberRandomizer extends AbstractBaseEntityRandomizer
      * @return Phone number.
      * @throws DocumentContentException Thrown in case an error occurred while trying to generate a document.
      */
-    public static ServerPhoneNumberEntity generateServerWithDocument(final boolean withRandomId, final int count) throws DocumentContentException
+    public static ServerPhoneNumberEntity generateServerEntityWithDocument(final boolean withRandomId, final int count) throws DocumentContentException
     {
         var entity = new ServerPhoneNumberEntity();
         ServerDocumentEntity document;
@@ -111,7 +111,7 @@ public final class PhoneNumberRandomizer extends AbstractBaseEntityRandomizer
      * <br>Generally set to {@code true} only for unit tests.
      * @return Phone number.
      */
-    public static ClientPhoneNumberEntity generateClient(final boolean withRandomId)
+    public static ClientPhoneNumberEntity generateClientEntity(final boolean withRandomId)
     {
         var entity = new ClientPhoneNumberEntity();
         AbstractBaseEntityRandomizer.populateBaseFields(entity);
@@ -138,7 +138,7 @@ public final class PhoneNumberRandomizer extends AbstractBaseEntityRandomizer
      * @return Phone number.
      * @throws DocumentContentException Thrown in case an error occurred while trying to generate a document.
      */
-    public static ClientPhoneNumberEntity generateClientWithDocument(final boolean withRandomId, final int count) throws DocumentContentException
+    public static ClientPhoneNumberEntity generateClientEntityWithDocument(final boolean withRandomId, final int count) throws DocumentContentException
     {
         ClientDocumentEntity document;
         ClientPhoneNumberEntity entity = new ClientPhoneNumberEntity();

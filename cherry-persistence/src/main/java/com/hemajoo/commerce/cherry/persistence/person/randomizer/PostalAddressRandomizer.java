@@ -47,12 +47,12 @@ public final class PostalAddressRandomizer extends AbstractBaseEntityRandomizer
     private static final EnumRandomGenerator ADDRESS_CATEGORY_TYPE_GENERATOR = new EnumRandomGenerator(AddressCategoryType.class);
 
     /**
-     * Create a random persistent postal address.
+     * Create a random server postal address.
      * @param withRandomId Do we need to generate a random identifier? False by default.
      * <br>Generally set to {@code true} only for unit tests.
      * @return Postal address.
      */
-    public static ServerPostalAddressEntity generatePersistent(final boolean withRandomId)
+    public static ServerPostalAddressEntity generateServerEntity(final boolean withRandomId)
     {
         var entity = new ServerPostalAddressEntity();
         AbstractBaseEntityRandomizer.populateBaseFields(entity);
@@ -84,7 +84,7 @@ public final class PostalAddressRandomizer extends AbstractBaseEntityRandomizer
      * @return Postal address.
      * @throws DocumentContentException Thrown in case an error occurred while trying to generate a document.
      */
-    public static ServerPostalAddressEntity generateServerWithDocument(final boolean withRandomId, final int count) throws DocumentContentException
+    public static ServerPostalAddressEntity generateServerEntityWithDocument(final boolean withRandomId, final int count) throws DocumentContentException
     {
         var entity = new ServerPostalAddressEntity();
         ServerDocumentEntity document;

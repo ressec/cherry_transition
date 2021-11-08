@@ -14,6 +14,7 @@
  */
 package com.hemajoo.commerce.cherry.commons.entity;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.hemajoo.commerce.cherry.commons.type.EntityType;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
@@ -33,6 +34,7 @@ public class EntityIdentity implements Identity
     /**
      * Entity type.
      */
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     @ApiModelProperty(hidden = true)
     @Getter
     @Setter
@@ -41,6 +43,7 @@ public class EntityIdentity implements Identity
     /**
      * Entity unique identifier.
      */
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     @ApiModelProperty(hidden = true)
     @Getter
     @Setter

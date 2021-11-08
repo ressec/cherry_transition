@@ -27,6 +27,10 @@ import java.util.UUID;
  */
 public interface DocumentService
 {
+    /**
+     * Returns the underlying repository.
+     * @return Document repository.
+     */
     DocumentRepository getRepository();
 
     /**
@@ -50,6 +54,12 @@ public interface DocumentService
      * @throws DocumentException Raised if an error occurred while trying to save the document.
      */
     ServerDocumentEntity save(ServerDocumentEntity document) throws DocumentException;
+
+    /**
+     * Saves and flush the document.
+     * @param document Document.
+     */
+    ServerDocumentEntity saveAndFlush(ServerDocumentEntity document);
 
     /**
      * Deletes a document given its identifier.

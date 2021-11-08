@@ -12,7 +12,7 @@
  * Resse Christophe (christophe.resse@gmail.com).
  * -----------------------------------------------------------------------------------------------
  */
-package com.hemajoo.commerce.cherry.persistence.test.unit.model.entity.document;
+package com.hemajoo.commerce.cherry.persistence.test.unit.model.entity.document.converter;
 
 import com.hemajoo.commerce.cherry.commons.entity.EntityIdentity;
 import com.hemajoo.commerce.cherry.commons.type.EntityType;
@@ -25,7 +25,6 @@ import com.hemajoo.commerce.cherry.persistence.document.entity.ServerDocumentEnt
 import com.hemajoo.commerce.cherry.persistence.document.randomizer.DocumentRandomizer;
 import com.hemajoo.commerce.cherry.persistence.document.repository.DocumentService;
 import com.hemajoo.commerce.cherry.persistence.test.SpringTestApplication;
-import com.hemajoo.commerce.cherry.persistence.test.unit.base.AbstractBaseMapperTest;
 import org.javers.core.diff.Diff;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
@@ -55,7 +54,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 @TestInstance(TestInstance.Lifecycle.PER_CLASS) // Allow to define BeforeAll as non-static.
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = SpringTestApplication.class)
-class DocumentConverterUnitTest extends AbstractBaseMapperTest
+class DocumentConverterUnitTest
 {
     /**
      * Document converter facility service.

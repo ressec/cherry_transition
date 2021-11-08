@@ -25,7 +25,7 @@ import java.util.List;
 import java.util.UUID;
 
 /**
- * Phone number persistence service.
+ * Phone number persistence service behavior.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
@@ -50,6 +50,13 @@ public interface PhoneNumberService
      * @return Saved phone number.
      */
     ServerPhoneNumberEntity save(ServerPhoneNumberEntity phoneNumber);
+
+    /**
+     * Saves and flush a phone number.
+     * @param phoneNumber Phone number.
+     * @return Saved phone number.
+     */
+    ServerPhoneNumberEntity saveAndFlush(ServerPhoneNumberEntity phoneNumber);
 
     /**
      * Deletes a phone number given its identifier.

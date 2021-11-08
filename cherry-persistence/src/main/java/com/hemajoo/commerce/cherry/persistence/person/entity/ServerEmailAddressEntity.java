@@ -99,13 +99,12 @@ public class ServerEmailAddressEntity extends ServerBaseEntity implements EmailA
 
     /**
      * Sets the owner person.
+     * <hr>
+     * <b>NOTE:</b> Never invoke directly this service to add an email address to a person. For that, you need to call {@link ServerPersonEntity#addEmailAddress(ServerEmailAddressEntity)}!.
      * @param person Person being the owner of the email address.
      */
     public void setPerson(final ServerPersonEntity person)
     {
-        if (person != null)
-        {
-            this.person = person;
-        }
+        this.person = person;
     }
 }

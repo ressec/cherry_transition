@@ -28,7 +28,7 @@ import java.util.List;
 import java.util.UUID;
 
 /**
- * Provides the behavior of the email address persistence service.
+ * Email address persistence service behavior.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
@@ -64,6 +64,13 @@ public interface EmailAddressService
      * @throws EmailAddressException Thrown in case an error occurred while trying to save the email address.
      */
     ServerEmailAddressEntity save(ServerEmailAddressEntity emailAddress) throws EmailAddressException, DocumentException;
+
+    /**
+     * Saves and flush a email address.
+     * @param emailAddress Email address.
+     * @return Email address.
+     */
+    ServerEmailAddressEntity saveAndFlush(ServerEmailAddressEntity emailAddress) throws EmailAddressException;
 
     /**
      * Deletes the email address matching the given identifier.

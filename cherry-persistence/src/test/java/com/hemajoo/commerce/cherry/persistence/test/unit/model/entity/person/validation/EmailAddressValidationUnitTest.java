@@ -12,7 +12,7 @@
  * Resse Christophe (christophe.resse@gmail.com).
  * -----------------------------------------------------------------------------------------------
  */
-package com.hemajoo.commerce.cherry.persistence.test.unit.model.entity.person;
+package com.hemajoo.commerce.cherry.persistence.test.unit.model.entity.person.validation;
 
 import com.hemajoo.commerce.cherry.persistence.person.entity.ServerEmailAddressEntity;
 import com.hemajoo.commerce.cherry.persistence.person.randomizer.EmailAddressRandomizer;

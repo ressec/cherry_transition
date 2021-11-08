@@ -28,6 +28,6 @@ public class JpaAuditor implements AuditorAware<String>
     @Override
     public Optional<String> getCurrentAuditor()
     {
-        return Optional.of("ressec");
+        return Optional.of("rest-api-user");
     }
 }

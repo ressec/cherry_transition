@@ -12,17 +12,16 @@
  * Resse Christophe (christophe.resse@gmail.com).
  * -----------------------------------------------------------------------------------------------
  */
-package com.hemajoo.commerce.cherry.persistence.test.unit.model.entity.person;
+package com.hemajoo.commerce.cherry.persistence.test.unit.model.entity.person.converter;
 
 import com.hemajoo.commerce.cherry.persistence.person.converter.PersonConverter;
-import com.hemajoo.commerce.cherry.persistence.test.unit.base.AbstractBaseMapperTest;
 
 /**
  * Test the {@link PersonConverter} class.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-class PersonConverterUnitTest extends AbstractBaseMapperTest
+class PersonConverterUnitTest
 {
     /**
      * List element count.

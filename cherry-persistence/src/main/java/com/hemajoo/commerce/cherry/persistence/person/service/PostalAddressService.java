@@ -24,7 +24,7 @@ import java.util.List;
 import java.util.UUID;
 
 /**
- * Postal address persistence service.
+ * Postal address persistence service behavior.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */

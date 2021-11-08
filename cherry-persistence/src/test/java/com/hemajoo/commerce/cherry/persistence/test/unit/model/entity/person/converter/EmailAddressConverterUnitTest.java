@@ -12,13 +12,17 @@
  * Resse Christophe (christophe.resse@gmail.com).
  * -----------------------------------------------------------------------------------------------
  */
-package com.hemajoo.commerce.cherry.persistence.test.unit.model.entity.person;
+package com.hemajoo.commerce.cherry.persistence.test.unit.model.entity.person.converter;
 
 import com.hemajoo.commerce.cherry.commons.entity.EntityIdentity;
 import com.hemajoo.commerce.cherry.commons.type.EntityType;
+import com.hemajoo.commerce.cherry.model.document.exception.DocumentContentException;
 import com.hemajoo.commerce.cherry.model.person.entity.ClientEmailAddressEntity;
 import com.hemajoo.commerce.cherry.model.person.exception.EntityException;
 import com.hemajoo.commerce.cherry.persistence.base.entity.EntityComparator;
+import com.hemajoo.commerce.cherry.persistence.document.entity.ServerDocumentEntity;
+import com.hemajoo.commerce.cherry.persistence.document.randomizer.DocumentRandomizer;
+import com.hemajoo.commerce.cherry.persistence.document.repository.DocumentService;
 import com.hemajoo.commerce.cherry.persistence.person.converter.EmailAddressConverter;
 import com.hemajoo.commerce.cherry.persistence.person.entity.ServerEmailAddressEntity;
 import com.hemajoo.commerce.cherry.persistence.person.entity.ServerPersonEntity;
@@ -27,7 +31,6 @@ import com.hemajoo.commerce.cherry.persistence.person.randomizer.PersonRandomize
 import com.hemajoo.commerce.cherry.persistence.person.service.EmailAddressService;
 import com.hemajoo.commerce.cherry.persistence.person.service.PersonService;
 import com.hemajoo.commerce.cherry.persistence.test.SpringTestApplication;
-import com.hemajoo.commerce.cherry.persistence.test.unit.base.AbstractBaseMapperTest;
 import org.javers.core.diff.Diff;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
@@ -57,7 +60,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 @TestInstance(TestInstance.Lifecycle.PER_CLASS) // Allow to define BeforeAll as non-static.
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = SpringTestApplication.class)
-class EmailAddressConverterUnitTest extends AbstractBaseMapperTest
+class EmailAddressConverterUnitTest
 {
     /**
      * Email address converter facility service.
@@ -78,16 +81,32 @@ class EmailAddressConverterUnitTest extends AbstractBaseMapperTest
     private PersonService personService;
 
     /**
+     * Document persistence service.
+     */
+    @Autowired
+    private DocumentService documentService;
+
+    private ServerPersonEntity testPerson;
+
+    private ServerDocumentEntity testDocument;
+
+    /**
      * List element count.
      */
     private final int LIST_COUNT = 10;
 
     @Transactional
     @BeforeAll
-    public void clearAllDocuments()
+    public void clearAllDocuments() throws DocumentContentException
     {
         // Clean all email addresses that would exist in the underlying database.
         emailAddressService.getRepository().deleteAll();
+
+        // Create a test person.
+        testPerson = personService.save(PersonRandomizer.generateServerEntity(false));
+
+        // Create a test document.
+        testDocument = documentService.save(DocumentRandomizer.generateServerEntity(false));
     }
 
     @Test
@@ -107,7 +126,7 @@ class EmailAddressConverterUnitTest extends AbstractBaseMapperTest
     final void testConvertIdentityToServerEmailAddress() throws EntityException
     {
         // For an entity identity to be mapped to a server entity, the server entity must exist in the underlying database!
-        ServerPersonEntity owner = personService.save(PersonRandomizer.generateServer(false));
+        ServerPersonEntity owner = personService.save(PersonRandomizer.generateServerEntity(false));
         ServerEmailAddressEntity reference = EmailAddressRandomizer.generateServerEntity(false);
         reference.setPerson(owner);
         reference = emailAddressService.save(reference);
@@ -244,7 +263,7 @@ class EmailAddressConverterUnitTest extends AbstractBaseMapperTest
     final void testConvertIdentityToServerEmailAddressList() throws EntityException
     {
         ServerEmailAddressEntity email;
-        ServerPersonEntity owner = personService.save(PersonRandomizer.generateServer(false));
+        ServerPersonEntity owner = personService.save(PersonRandomizer.generateServerEntity(false));
 
         // When testing identities, we must ensure the objects exist in the underlying database.
         List<ServerEmailAddressEntity> emails = new ArrayList<>();
