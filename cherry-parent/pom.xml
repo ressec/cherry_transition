@@ -524,14 +524,14 @@
                         <groupId>org.sonarsource.scanner.maven</groupId>
                         <artifactId>sonar-maven-plugin</artifactId>
                         <version>${version.plugin.maven.sonarscource.scanner}</version>
-                        <executions>
-                            <execution>
-                                <phase>verify</phase>
-                                <goals>
-                                    <goal>sonar</goal>
-                                </goals>
-                            </execution>
-                        </executions>
+<!--                        <executions>-->
+<!--                            <execution>-->
+<!--                                <phase>verify</phase>-->
+<!--                                <goals>-->
+<!--                                    <goal>sonar</goal>-->
+<!--                                </goals>-->
+<!--                            </execution>-->
+<!--                        </executions>-->
                     </plugin>
                 </plugins>
             </build>
@@ -579,15 +579,15 @@
                             </schemas>
                             <locations>${flyway.locations}</locations>
                         </configuration>
-                        <executions>
-                            <execution>
-                                <id>flyway-check-db</id>
-                                <phase>compile</phase>
-                                <goals>
-                                    <goal>info</goal>
-                                </goals>
-                            </execution>
-                        </executions>
+<!--                        <executions>-->
+<!--                            <execution>-->
+<!--                                <id>flyway-check-db</id>-->
+<!--                                <phase>compile</phase>-->
+<!--                                <goals>-->
+<!--                                    <goal>info</goal>-->
+<!--                                </goals>-->
+<!--                            </execution>-->
+<!--                        </executions>-->
                     </plugin>
                 </plugins>
             </build>
@@ -637,15 +637,15 @@
                             </schemas>
                             <locations>${flyway.locations}</locations>
                         </configuration>
-                        <executions>
-                            <execution>
-                                <id>flyway-check-db</id>
-                                <phase>compile</phase>
-                                <goals>
-                                    <goal>info</goal>
-                                </goals>
-                            </execution>
-                        </executions>
+<!--                        <executions>-->
+<!--                            <execution>-->
+<!--                                <id>flyway-check-db</id>-->
+<!--                                <phase>compile</phase>-->
+<!--                                <goals>-->
+<!--                                    <goal>info</goal>-->
+<!--                                </goals>-->
+<!--                            </execution>-->
+<!--                        </executions>-->
                     </plugin>
                 </plugins>
             </build>
@@ -692,15 +692,15 @@
                             </schemas>
                             <locations>${flyway.locations}</locations>
                         </configuration>
-                        <executions>
-                            <execution>
-                                <id>flyway-check-db</id>
-                                <phase>compile</phase>
-                                <goals>
-                                    <goal>info</goal>
-                                </goals>
-                            </execution>
-                        </executions>
+<!--                        <executions>-->
+<!--                            <execution>-->
+<!--                                <id>flyway-check-db</id>-->
+<!--                                <phase>compile</phase>-->
+<!--                                <goals>-->
+<!--                                    <goal>info</goal>-->
+<!--                                </goals>-->
+<!--                            </execution>-->
+<!--                        </executions>-->
                     </plugin>
                 </plugins>
             </build>
@@ -747,15 +747,15 @@
                             </schemas>
                             <locations>${flyway.locations}</locations>
                         </configuration>
-                        <executions>
-                            <execution>
-                                <id>flyway-check-db</id>
-                                <phase>compile</phase>
-                                <goals>
-                                    <goal>info</goal>
-                                </goals>
-                            </execution>
-                        </executions>
+<!--                        <executions>-->
+<!--                            <execution>-->
+<!--                                <id>flyway-check-db</id>-->
+<!--                                <phase>compile</phase>-->
+<!--                                <goals>-->
+<!--                                    <goal>info</goal>-->
+<!--                                </goals>-->
+<!--                            </execution>-->
+<!--                        </executions>-->
                     </plugin>
                 </plugins>
             </build>
