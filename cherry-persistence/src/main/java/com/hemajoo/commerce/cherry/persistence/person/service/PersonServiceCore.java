@@ -28,8 +28,7 @@ import com.hemajoo.commerce.cherry.persistence.person.entity.ServerEmailAddressE
 import com.hemajoo.commerce.cherry.persistence.person.entity.ServerPersonEntity;
 import com.hemajoo.commerce.cherry.persistence.person.repository.EmailAddressRepository;
 import com.hemajoo.commerce.cherry.persistence.person.repository.PersonRepository;
-import com.hemajoo.commerce.cherry.persistence.person.repository.PhoneNumberRepository;
-import com.hemajoo.commerce.cherry.persistence.person.repository.PostalAddressRepository;
+import lombok.Getter;
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -39,7 +38,7 @@ import java.util.List;
 import java.util.UUID;
 
 /**
- * Implementation of the person persistence service.
+ * Person persistence service.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
@@ -47,51 +46,50 @@ import java.util.UUID;
 public class PersonServiceCore implements PersonService
 {
     /**
-     * Repository for the persons.
+     * Person repository.
      */
     @Autowired
+    @Getter
     private PersonRepository personRepository;
 
     /**
-     * Repository for the email addresses.
+     * Email address repository.
      */
     @Autowired
+    @Getter
     private EmailAddressRepository emailAddressRepository;
-
-    /**
-     * Repository for the postal addresses.
-     */
-    @Autowired
-    private PostalAddressRepository postalAddressRepository;
-
-    /**
-     * Repository for the phone numbers.
-     */
-    @Autowired
-    private PhoneNumberRepository phoneNumberRepository;
 
     /**
      * Document service.
      */
     @Autowired
+    @Getter
     private DocumentService documentService;
 
-    /**
-     * Email address service.
-     */
-    @Autowired
-    private EmailAddressService emailAddressService;
-
-    @Override
-    public PersonRepository getRepository()
-    {
-        return personRepository;
-    }
+//    /**
+//     * Postal address service.
+//     */
+//    @Autowired
+//    @Getter
+//    private PostalAddressService postalAddressService;
+//
+//    /**
+//     * Phone number service.
+//     */
+//    @Autowired
+//    @Getter
+//    private PhoneNumberService phoneNumberService;
 
     @Override
     public Long count()
     {
         return personRepository.count();
+    }
+
+    @Override
+    public boolean existId(final @NonNull UUID id)
+    {
+        return personRepository.existsById(id);
     }
 
     @Override
@@ -149,9 +147,9 @@ public class PersonServiceCore implements PersonService
     }
 
     @Override
-    public void saveAndFlush(@NonNull ServerPersonEntity person)
+    public ServerPersonEntity saveAndFlush(@NonNull ServerPersonEntity person)
     {
-        personRepository.saveAndFlush(person);
+        return personRepository.saveAndFlush(person);
     }
 
     @Override
@@ -253,13 +251,13 @@ public class PersonServiceCore implements PersonService
         return emailAddressRepository.findByPersonId(person.getId());
     }
 
-    @Override
-    public ServerPersonEntity loadEmailAddresses(final @NonNull ServerPersonEntity person)
-    {
-        person.setEmailAddresses(getEmailAddresses(person));
-
-        return person;
-    }
+//    @Override
+//    public ServerPersonEntity loadEmailAddresses(final @NonNull ServerPersonEntity person)
+//    {
+//        person.setEmailAddresses(getEmailAddresses(person));
+//
+//        return person;
+//    }
 
 //    private void saveDocument(final @NonNull DocumentServerEntity document) throws DocumentException
 //    {

@@ -33,7 +33,7 @@ import java.util.List;
 import java.util.UUID;
 
 /**
- * Implementation of the phone number persistence service.
+ * Phone number persistence service.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
@@ -63,6 +63,12 @@ public class PhoneNumberServiceCore implements PhoneNumberService
     public ServerPhoneNumberEntity save(ServerPhoneNumberEntity phoneNumber)
     {
         return phoneNumberRepository.save(phoneNumber);
+    }
+
+    @Override
+    public ServerPhoneNumberEntity saveAndFlush(ServerPhoneNumberEntity phoneNumber)
+    {
+        return phoneNumberRepository.saveAndFlush(phoneNumber);
     }
 
     @Override

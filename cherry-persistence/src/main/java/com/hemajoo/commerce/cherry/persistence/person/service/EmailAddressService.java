@@ -17,36 +17,48 @@ package com.hemajoo.commerce.cherry.persistence.person.service;
 import com.hemajoo.commerce.cherry.commons.type.StatusType;
 import com.hemajoo.commerce.cherry.model.document.exception.DocumentException;
 import com.hemajoo.commerce.cherry.model.person.exception.EmailAddressException;
+import com.hemajoo.commerce.cherry.model.person.exception.EntityException;
 import com.hemajoo.commerce.cherry.model.person.search.SearchEmailAddress;
 import com.hemajoo.commerce.cherry.model.person.type.AddressType;
 import com.hemajoo.commerce.cherry.persistence.person.entity.ServerEmailAddressEntity;
+import com.hemajoo.commerce.cherry.persistence.person.repository.EmailAddressRepository;
 import lombok.NonNull;
 
 import java.util.List;
 import java.util.UUID;
 
 /**
- * Provides the behavior of the email address persistence service.
+ * Email address persistence service behavior.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
 public interface EmailAddressService
 {
+    EmailAddressRepository getRepository();
+
     /**
-     * Returns the number of email addresses.
-     * @return Number of email addresses.
+     * Returns the total number of email addresses.
+     * @return Total number of email addresses.
      */
     Long count();
 
     /**
-     * Finds an email address given its identifier.
+     * Returns the email address matching the given identifier.
      * @param id Email address identifier.
-     * @return Email address if found, null otherwise.
+     * @return Email address.
      */
     ServerEmailAddressEntity findById(UUID id);
 
     /**
-     * Saves an email address.
+     * Updates the given server email address entity.
+     * @param emailAddress Server email address entity to update.
+     * @return Updated server email address entity.
+     * @throws EmailAddressException Thrown in case an error occurred while trying to update the server email address entity.
+     */
+    ServerEmailAddressEntity update(final ServerEmailAddressEntity emailAddress) throws EntityException;
+
+    /**
+     * Saves the given email address.
      * @param emailAddress Email address.
      * @return Saved email address.
      * @throws EmailAddressException Thrown in case an error occurred while trying to save the email address.
@@ -54,40 +66,47 @@ public interface EmailAddressService
     ServerEmailAddressEntity save(ServerEmailAddressEntity emailAddress) throws EmailAddressException, DocumentException;
 
     /**
-     * Deletes an email address given its identifier.
-     * @param id Email address identfier.
+     * Saves and flush a email address.
+     * @param emailAddress Email address.
+     * @return Email address.
+     */
+    ServerEmailAddressEntity saveAndFlush(ServerEmailAddressEntity emailAddress) throws EmailAddressException;
+
+    /**
+     * Deletes the email address matching the given identifier.
+     * @param id Email address identifier.
      */
     void deleteById(UUID id);
 
     /**
-     * Returns the email addresses.
+     * Returns all email addresses.
      * @return List of email addresses.
      */
     List<ServerEmailAddressEntity> findAll();
 
     /**
-     * Returns a list of email addresses given an address type.
+     * Returns the list of email addresses matching the given address type.
      * @param type Address type.
-     * @return List of matching email addresses.
+     * @return List of email addresses.
      */
     List<ServerEmailAddressEntity> findByAddressType(AddressType type);
 
     /**
-     * Returns a list of email addresses given a status type.
+     * Returns the list of email addresses matching the given status type.
      * @param status Status type.
-     * @return List of matching email addresses.
+     * @return List of email addresses.
      */
     List<ServerEmailAddressEntity> findByStatus(StatusType status);
 
     /**
-     * Returns a list of default or not default email addresses.
+     * Returns the list of default or not default email addresses.
      * @param isDefaultEmail Is it the default email address?
      * @return List of matching email addresses.
      */
     List<ServerEmailAddressEntity> findByIsDefaultEmail(Boolean isDefaultEmail);
 
     /**
-     * Returns a list of email addresses belonging to a person.
+     * Returns the list of email addresses belonging to a person.
      * @param personId Person identifier.
      * @return List of matching email addresses.
      */

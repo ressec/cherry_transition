@@ -131,7 +131,7 @@ public class ServerPersonEntity extends ServerBaseEntity implements ServerPerson
     @Setter
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
-    @JsonIgnoreProperties("person")
+    @JsonIgnoreProperties("owner")
     @OneToMany(targetEntity = ServerEmailAddressEntity.class, mappedBy = "person", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ServerEmailAddressEntity> emailAddresses = new ArrayList<>();
 

@@ -14,6 +14,7 @@
  */
 package com.hemajoo.commerce.cherry.model.person.entity;
 
+import com.hemajoo.commerce.cherry.commons.entity.EntityIdentity;
 import com.hemajoo.commerce.cherry.model.base.entity.ClientEntity;
 import com.hemajoo.commerce.cherry.model.person.entity.base.EmailAddress;
 
@@ -25,14 +26,14 @@ import com.hemajoo.commerce.cherry.model.person.entity.base.EmailAddress;
 public interface ClientEmailAddress extends EmailAddress, ClientEntity
 {
     /**
-     * Returns the person owning this email address.
-     * @return Person.
+     * Returns the entity identity owning this email address.
+     * @return Entity identity.
      */
-    ClientPersonEntity getPerson();
+    EntityIdentity getPerson();
 
     /**
-     * Sets the person owning this email address.
-     * @param owner Person.
+     * Sets the entity identity owning this email address.
+     * @param owner Entity identity.
      */
-    void setPerson(final ClientPersonEntity owner);
+    void setPerson(final EntityIdentity owner);
 }

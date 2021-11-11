@@ -1,0 +1,146 @@
+#
+# (C) Copyright Resse Christophe 2021 - All Rights Reserved
+# -----------------------------------------------------------------------------------------------
+# All information contained herein is, and remains the property of
+# Resse Christophe. and its suppliers, if any. The intellectual and technical
+# concepts contained herein are proprietary to Resse C. and its
+# suppliers and may be covered by U.S. and Foreign Patents, patents
+# in process, and are protected by trade secret or copyright law.
+#
+# Dissemination of this information or reproduction of this material
+# is strictly forbidden unless prior written permission is obtained from
+# Resse Christophe (christophe.resse@gmail.com).
+# -----------------------------------------------------------------------------------------------
+# Notes:
+#  This CI workflow action is used to build the project, run integration-tests and make a sonar
+#  analysis when some code is pushed through a pull request into the 'dev' branch.
+# -----------------------------------------------------------------------------------------------
+name: "Dev"
+
+on:
+  pull_request:
+    branches: [ dev ]
+
+jobs:
+
+  # ----------------------------------------
+  # Build project using Maven
+  # ----------------------------------------
+  build:
+    name: Build with Maven
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0 # Shallow clones should be disabled for a better relevancy of analysis
+
+      # Step: Setup adopt JDK 11
+      - name: Set up JDK 11
+        uses: actions/setup-java@v2
+        with:
+          java-version: '11'
+          distribution: 'adopt'
+
+      # Step - Cache sonar packages
+      - name: Cache SonarCloud packages
+        uses: actions/cache@v1
+        with:
+          path: ~/.sonar/cache
+          key: ${{ runner.os }}-sonar
+          restore-keys: ${{ runner.os }}-sonar
+
+      # Step: Cache maven packages
+      - name: Cache Maven packages
+        uses: actions/cache@v1
+        with:
+          path: ~/.m2
+          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+          restore-keys: ${{ runner.os }}-m2
+
+      # Step: Maven clean & package goals
+      - name: Package with Maven
+        run: mvn -B clean package -f cherry-parent/pom.xml
+
+  # ----------------------------------------
+  # Execute integration tests
+  # ----------------------------------------
+#  integration:
+#    name: Maven - Execute integration tests
+#    runs-on: ubuntu-latest
+#    needs: build
+#    steps:
+#      - uses: actions/checkout@v2
+#        with:
+#          fetch-depth: 0 # Shallow clones should be disabled for a better relevancy of analysis
+#
+#      # Step: Setup adopt JDK 11
+#      - name: Set up JDK 11
+#        uses: actions/setup-java@v2
+#        with:
+#          java-version: '11'
+#          distribution: 'adopt'
+#
+#      # Step: Cache maven packages
+#      - name: Cache Maven packages
+#        uses: actions/cache@v1
+#        with:
+#          path: ~/.m2
+#          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+#          restore-keys: ${{ runner.os }}-m2
+#
+#      # Step - Cache sonar packages
+#      - name: Cache SonarCloud packages
+#        uses: actions/cache@v1
+#        with:
+#          path: ~/.sonar/cache
+#          key: ${{ runner.os }}-sonar
+#          restore-keys: ${{ runner.os }}-sonar
+#
+#      # Step - Maven verify for integration tests
+#      - name: Execute integration tests
+#        env:
+#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Needed to get PR information, if any.
+#          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+#        run: mvn -B verify -P integration-tests -f cherry-parent/pom.xml
+
+  # ----------------------------------------
+  # Analyse code with Sonar
+  # ----------------------------------------
+  sonar:
+    name: Sonar Analysis (Static Code Analysis)
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0 # Shallow clones should be disabled for a better relevancy of analysis
+
+      # Step: Setup adopt JDK 11
+      - name: Set up JDK 11
+        uses: actions/setup-java@v2
+        with:
+          java-version: '11'
+          distribution: 'adopt'
+
+      # Step: Cache maven packages
+      - name: Cache Maven packages
+        uses: actions/cache@v1
+        with:
+          path: ~/.m2
+          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+          restore-keys: ${{ runner.os }}-m2
+
+      # Step - Cache sonar packages
+      - name: Cache SonarCloud packages
+        uses: actions/cache@v1
+        with:
+          path: ~/.sonar/cache
+          key: ${{ runner.os }}-sonar
+          restore-keys: ${{ runner.os }}-sonar
+
+      # Step - Maven verify for sonar analysis
+      - name: Analyze with SonarCloud
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Needed to get PR information, if any.
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: mvn -B verify -P sonar -f cherry-parent/pom.xml

@@ -51,7 +51,7 @@
         <version.maven.plugin.sonar>3.6.0.1398</version.maven.plugin.sonar>
         <version.maven.plugin.project.info.reports>3.0.0</version.maven.plugin.project.info.reports>
         <version.maven.plugin.surefire>3.0.0-M5</version.maven.plugin.surefire>
-        <version.maven.plugin.flyway>7.9.1</version.maven.plugin.flyway>
+        <version.maven.plugin.flyway>8.0.3</version.maven.plugin.flyway>
         <version.plugin.maven.docker>0.37.0</version.plugin.maven.docker>
         <version.plugin.maven.sonarscource.scanner>3.9.0.2155</version.plugin.maven.sonarscource.scanner>
         <version.plugin.maven.jacoco>0.8.7</version.plugin.maven.jacoco>
@@ -68,16 +68,19 @@
         <version.apache.log4j>2.13.2</version.apache.log4j>
         <version.apache.commons.lang.3>3.9</version.apache.commons.lang.3>
         <version.apache.commons.io>2.11.0</version.apache.commons.io>
+        <version.apache.commons.validator>1.7</version.apache.commons.validator>
         <version.lombok>1.18.20</version.lombok>
         <version.mapstruct>1.4.2.Final</version.mapstruct>
         <version.lombok.mapstruct>0.2.0</version.lombok.mapstruct>
-        <version.h2>1.4.200</version.h2>
-        <version.flyway>7.9.2</version.flyway>
+        <version.flyway>8.0.3</version.flyway>
         <version.apache.tika>1.0.18</version.apache.tika>
         <version.hibernate.validator>7.0.1.Final</version.hibernate.validator>
+        <version.javers>3.1.0</version.javers>
+        <version.testcontainers>1.16.2</version.testcontainers>
+        <version.db.h2>1.4.200</version.db.h2>
+        <version.db.postgresql>42.3.1</version.db.postgresql>
+        <version.spring.content.rest>1.2.6</version.spring.content.rest>
 
-        <!-- Run properties -->
-        <db.h2.test.port>9092</db.h2.test.port>
         <flyway.locations>classpath:/db/migration/h2</flyway.locations>
 
     </properties>
@@ -130,7 +133,6 @@
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <version>${version.spring.boot}</version>
                 <type>maven-plugin</type>
             </dependency>
 
@@ -139,6 +141,18 @@
                 <groupId>org.projectlombok</groupId>
                 <artifactId>lombok</artifactId>
                 <version>${version.lombok}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.github.paulcwarren</groupId>
+                <artifactId>spring-content-rest-boot-starter</artifactId>
+                <version>${version.spring.content.rest}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.github.paulcwarren</groupId>
+                <artifactId>spring-content-fs-boot-starter</artifactId>
+                <version>${version.spring.content.rest}</version>
             </dependency>
 
             <!-- Google Gson: https://github.com/google/gson -->
@@ -198,6 +212,27 @@
             </dependency>
 
             <dependency>
+                <groupId>org.testcontainers</groupId>
+                <artifactId>testcontainers</artifactId>
+                <version>${version.testcontainers}</version>
+                <scope>test</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.testcontainers</groupId>
+                <artifactId>junit-jupiter</artifactId>
+                <version>${version.testcontainers}</version>
+                <scope>test</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.testcontainers</groupId>
+                <artifactId>postgresql</artifactId>
+                <version>${version.testcontainers}</version>
+                <scope>test</scope>
+            </dependency>
+
+            <dependency>
                 <groupId>org.mapstruct</groupId>
                 <artifactId>mapstruct-processor</artifactId>
                 <version>${version.mapstruct}</version>
@@ -214,6 +249,12 @@
                 <groupId>commons-io</groupId>
                 <artifactId>commons-io</artifactId>
                 <version>${version.apache.commons.io}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>commons-validator</groupId>
+                <artifactId>commons-validator</artifactId>
+                <version>${version.apache.commons.validator}</version>
             </dependency>
 
             <!-- JavaFaker: https://github.com/DiUS/java-faker ... Is this one necessary? -->
@@ -249,10 +290,24 @@
                 <version>${version.flyway}</version>
             </dependency>
 
+            <!-- https://mvnrepository.com/artifact/org.postgresql/postgresql -->
+            <dependency>
+                <groupId>org.postgresql</groupId>
+                <artifactId>postgresql</artifactId>
+                <version>${version.db.postgresql}</version>
+                <scope>test</scope>
+            </dependency>
+
             <dependency>
                 <groupId>com.h2database</groupId>
                 <artifactId>h2</artifactId>
-                <version>${version.h2}</version>
+                <version>${version.db.h2}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.javers</groupId>
+                <artifactId>javers-core</artifactId>
+                <version>${version.javers}</version>
             </dependency>
 
             <!-- Apache Tika: https://tika.apache.org -->
@@ -272,16 +327,6 @@
         </dependencies>
 
     </dependencyManagement>
-
-    <dependencies>
-
-        <dependency>
-            <groupId>com.h2database</groupId>
-            <artifactId>h2</artifactId>
-            <version>${version.h2}</version>
-        </dependency>
-
-    </dependencies>
 
     <build>
 
@@ -479,14 +524,213 @@
                         <groupId>org.sonarsource.scanner.maven</groupId>
                         <artifactId>sonar-maven-plugin</artifactId>
                         <version>${version.plugin.maven.sonarscource.scanner}</version>
-                        <executions>
-                            <execution>
-                                <phase>verify</phase>
-                                <goals>
-                                    <goal>sonar</goal>
-                                </goals>
-                            </execution>
-                        </executions>
+<!--                        <executions>-->
+<!--                            <execution>-->
+<!--                                <phase>verify</phase>-->
+<!--                                <goals>-->
+<!--                                    <goal>sonar</goal>-->
+<!--                                </goals>-->
+<!--                            </execution>-->
+<!--                        </executions>-->
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+        <profile>
+            <!-- Note: This profile is used for the development of the solution using a H2 database -->
+            <id>cherry-h2-dev</id>
+            <properties>
+                <server.port>8084</server.port>
+                <database.port>9092</database.port>
+                <database.name>HEMAJOO</database.name>
+                <database.schema>DEV</database.schema>
+                <spring.datasource.url>jdbc:h2:tcp://localhost:${database.port}/${database.name};DB_CLOSE_ON_EXIT=TRUE</spring.datasource.url>
+                <spring.datasource.username>sa</spring.datasource.username>
+                <spring.datasource.password>password</spring.datasource.password>
+                <spring.jpa.hibernate.database-platform>org.hibernate.dialect.PostgresPlusDialect</spring.jpa.hibernate.database-platform>
+                <spring.jpa.hibernate.ddl-auto>update</spring.jpa.hibernate.ddl-auto>
+                <spring.jpa.hibernate.show-sql>false</spring.jpa.hibernate.show-sql>
+                <spring.jpa.hibernate.properties.javax.persistence.validation.mode>none</spring.jpa.hibernate.properties.javax.persistence.validation.mode>
+                <spring.jpa.generate-ddl>true</spring.jpa.generate-ddl>
+                <spring.jpa.hibernate.ddl-auto>update</spring.jpa.hibernate.ddl-auto>
+                <spring.batch.initialize-schema>always</spring.batch.initialize-schema>
+                <hemajoo.commerce.cherry.store.location>./target/content-store</hemajoo.commerce.cherry.store.location>
+            </properties>
+            <dependencies>
+                <dependency>
+                    <groupId>com.h2database</groupId>
+                    <artifactId>h2</artifactId>
+                    <version>${version.db.h2}</version>
+                    <scope>runtime</scope>
+                </dependency>
+            </dependencies>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.flywaydb</groupId>
+                        <artifactId>flyway-maven-plugin</artifactId>
+                        <version>${version.maven.plugin.flyway}</version>
+                        <configuration>
+                            <url>${spring.datasource.url}</url>
+                            <user>${spring.datasource.username}</user>
+                            <password>${spring.datasource.password}</password>
+                            <schemas>
+                                <schema>${database.schema}</schema>
+                            </schemas>
+                            <locations>${flyway.locations}</locations>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+        <profile>
+            <!-- Note: This profile is used for the development of the solution using a PostgreSQL database -->
+            <id>cherry-postgres-dev</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <server.port>8094</server.port>
+                <database.port>5432</database.port>
+                <database.name>cherry</database.name>
+                <database.schema>dev</database.schema>
+                <spring.datasource.url>jdbc:postgresql://localhost:${database.port}/${database.name}</spring.datasource.url>
+                <spring.datasource.username>postgres</spring.datasource.username>
+                <spring.datasource.password>postgres</spring.datasource.password>
+                <spring.jpa.hibernate.ddl-auto>update</spring.jpa.hibernate.ddl-auto>
+                <spring.jpa.hibernate.show-sql>false</spring.jpa.hibernate.show-sql>
+                <spring.jpa.hibernate.properties.javax.persistence.validation.mode>none</spring.jpa.hibernate.properties.javax.persistence.validation.mode>
+                <spring.jpa.generate-ddl>true</spring.jpa.generate-ddl>
+                <spring.jpa.hibernate.ddl-auto>update</spring.jpa.hibernate.ddl-auto>
+                <spring.batch.initialize-schema>always</spring.batch.initialize-schema>
+                <hemajoo.commerce.cherry.store.location>./target/content-store</hemajoo.commerce.cherry.store.location>
+            </properties>
+            <dependencies>
+                <dependency>
+                    <groupId>org.postgresql</groupId>
+                    <artifactId>postgresql</artifactId>
+                    <version>${version.db.postgresql}</version>
+                    <scope>runtime</scope>
+                </dependency>
+            </dependencies>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.flywaydb</groupId>
+                        <artifactId>flyway-maven-plugin</artifactId>
+                        <version>${version.maven.plugin.flyway}</version>
+                        <configuration>
+                            <url>${spring.datasource.url}</url>
+                            <user>${spring.datasource.username}</user>
+                            <password>${spring.datasource.password}</password>
+                            <schemas>
+                                <schema>${database.schema}</schema>
+                            </schemas>
+                            <locations>${flyway.locations}</locations>
+                        </configuration>
+<!--                        <executions>-->
+<!--                            <execution>-->
+<!--                                <id>flyway-check-db</id>-->
+<!--                                <phase>compile</phase>-->
+<!--                                <goals>-->
+<!--                                    <goal>info</goal>-->
+<!--                                </goals>-->
+<!--                            </execution>-->
+<!--                        </executions>-->
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+        <profile>
+            <!-- Note: This profile is used for the user acceptance tests of the cherry solution using a PostgreSQL database -->
+            <id>cherry-postgres-uat</id>
+            <properties>
+                <database.port>5432</database.port>
+                <database.name>cherry</database.name>
+                <database.schema>uat</database.schema>
+                <spring.datasource.url>jdbc:postgresql://localhost:${database.port}/${database.name}</spring.datasource.url>
+                <spring.datasource.username>postgres</spring.datasource.username>
+                <spring.datasource.password>postgres</spring.datasource.password>
+                <spring.jpa.hibernate.ddl-auto>update</spring.jpa.hibernate.ddl-auto>
+                <spring.jpa.hibernate.show-sql>false</spring.jpa.hibernate.show-sql>
+                <spring.jpa.hibernate.properties.javax.persistence.validation.mode>none</spring.jpa.hibernate.properties.javax.persistence.validation.mode>
+                <spring.jpa.generate-ddl>true</spring.jpa.generate-ddl>
+                <spring.jpa.hibernate.ddl-auto>update</spring.jpa.hibernate.ddl-auto>
+                <spring.batch.initialize-schema>always</spring.batch.initialize-schema>
+                <hemajoo.commerce.cherry.store.location>./target/content-store</hemajoo.commerce.cherry.store.location>
+            </properties>
+            <dependencies>
+                <dependency>
+                    <groupId>org.postgresql</groupId>
+                    <artifactId>postgresql</artifactId>
+                    <version>${version.db.postgresql}</version>
+                    <scope>runtime</scope>
+                </dependency>
+            </dependencies>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.flywaydb</groupId>
+                        <artifactId>flyway-maven-plugin</artifactId>
+                        <version>${version.maven.plugin.flyway}</version>
+                        <configuration>
+                            <url>${spring.datasource.url}</url>
+                            <user>${spring.datasource.username}</user>
+                            <password>${spring.datasource.password}</password>
+                            <schemas>
+                                <schema>${database.schema}</schema>
+                            </schemas>
+                            <locations>${flyway.locations}</locations>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+        <profile>
+            <!-- Note: This profile is used for the production of the cherry solution using a PostgreSQL database -->
+            <id>cherry-postgres-prod</id>
+            <properties>
+                <spring.datasource.url>jdbc:postgresql://localhost:${database.port}/${database.name}</spring.datasource.url>
+                <database.port>5432</database.port>
+                <spring.datasource.username>postgres</spring.datasource.username>
+                <spring.datasource.password>postgres</spring.datasource.password>
+                <database.name>cherry</database.name>
+                <database.schema>prod</database.schema>
+                <spring.jpa.hibernate.ddl-auto>update</spring.jpa.hibernate.ddl-auto>
+                <spring.jpa.hibernate.show-sql>false</spring.jpa.hibernate.show-sql>
+                <spring.jpa.hibernate.properties.javax.persistence.validation.mode>none</spring.jpa.hibernate.properties.javax.persistence.validation.mode>
+                <spring.jpa.generate-ddl>true</spring.jpa.generate-ddl>
+                <spring.jpa.hibernate.ddl-auto>update</spring.jpa.hibernate.ddl-auto>
+                <spring.batch.initialize-schema>always</spring.batch.initialize-schema>
+                <hemajoo.commerce.cherry.store.location>./target/content-store</hemajoo.commerce.cherry.store.location>
+            </properties>
+            <dependencies>
+                <dependency>
+                    <groupId>org.postgresql</groupId>
+                    <artifactId>postgresql</artifactId>
+                    <version>${version.db.postgresql}</version>
+                    <scope>runtime</scope>
+                </dependency>
+            </dependencies>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.flywaydb</groupId>
+                        <artifactId>flyway-maven-plugin</artifactId>
+                        <version>${version.maven.plugin.flyway}</version>
+                        <configuration>
+                            <url>${spring.datasource.url}</url>
+                            <user>${spring.datasource.username}</user>
+                            <password>${spring.datasource.password}</password>
+                            <schemas>
+                                <schema>${database.schema}</schema>
+                            </schemas>
+                            <locations>${flyway.locations}</locations>
+                        </configuration>
                     </plugin>
                 </plugins>
             </build>

@@ -23,14 +23,14 @@ import javax.validation.ConstraintValidatorContext;
 import java.util.UUID;
 
 /**
- * Constraint validator of the {@link ValidPersonId} constraint for a person identifier.
+ * Validator for the {@link ValidPersonId} constraint used to validate a person identifier exist.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
 public class PersonIdValidator implements ConstraintValidator<ValidPersonId, String>
 {
     /**
-     * {@code JPA} repository.
+     * Person repository.
      */
     @Autowired
     private PersonRepository personRepository;

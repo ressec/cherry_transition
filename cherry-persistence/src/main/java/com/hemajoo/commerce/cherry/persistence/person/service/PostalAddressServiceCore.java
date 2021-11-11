@@ -95,7 +95,7 @@ public class PostalAddressServiceCore implements PostalAddressService
     }
 
     @Override
-    public List<ServerPostalAddressEntity> findByPersonId(long personId)
+    public List<ServerPostalAddressEntity> findByPersonId(UUID personId)
     {
         return postalAddressRepository.findByPersonId(personId);
     }

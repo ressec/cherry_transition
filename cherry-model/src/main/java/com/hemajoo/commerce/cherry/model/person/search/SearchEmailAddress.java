@@ -21,6 +21,7 @@ import com.hemajoo.commerce.cherry.model.person.type.AddressType;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -30,7 +31,9 @@ import javax.persistence.Enumerated;
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
+//@ApiModel(value = "EmailAddressSearch", description = "Specification object used to search for email addresses.")
 @Data
+@ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
 public final class SearchEmailAddress extends BaseSearch
 {
@@ -44,8 +47,8 @@ public final class SearchEmailAddress extends BaseSearch
     /**
      * Is it the default email address?
      */
-    @JsonProperty("isDefaultEmail")
-    @ApiModelProperty(value = "Is default email address?")
+    @JsonProperty("isDefault")
+    //@ApiModelProperty(name = "isDefault", value = "Is default email address?")
     private Boolean isDefaultEmail;
 
     /**
