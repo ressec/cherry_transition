@@ -15,7 +15,6 @@
 package com.hemajoo.commerce.cherry.persistence.document.entity;
 
 import com.hemajoo.commerce.cherry.commons.type.EntityType;
-import com.hemajoo.commerce.cherry.model.base.entity.BaseEntity;
 import com.hemajoo.commerce.cherry.model.document.exception.DocumentContentException;
 import com.hemajoo.commerce.cherry.model.document.type.DocumentType;
 import com.hemajoo.commerce.cherry.persistence.base.entity.ServerBaseEntity;
@@ -130,13 +129,14 @@ public class ServerDocumentEntity extends ServerBaseEntity implements ServerDocu
     private String contentPath; //TODO Not yet filled!
 
     /**
-     * Document owner.
+     * Document owners.
      */
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     @Getter
-    @ManyToOne(targetEntity = ServerBaseEntity.class, fetch = FetchType.EAGER)
+    @OneToOne(targetEntity = ServerBaseEntity.class, fetch = FetchType.EAGER)
     private ServerBaseEntity owner;
+//    private List<ServerBaseEntity> owners = new ArrayList<>();
 
     /**
      * Document content.
@@ -358,8 +358,8 @@ public class ServerDocumentEntity extends ServerBaseEntity implements ServerDocu
     }
 
     @Override
-    public void setOwner(BaseEntity owner)
+    public void setOwner(ServerBaseEntity owner)
     {
-        this.owner = (ServerBaseEntity) owner;
+        this.owner = owner;
     }
 }

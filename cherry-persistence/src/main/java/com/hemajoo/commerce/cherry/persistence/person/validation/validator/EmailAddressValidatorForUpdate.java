@@ -56,7 +56,7 @@ public class EmailAddressValidatorForUpdate implements ConstraintValidator<Valid
                 throw new EmailAddressException(String.format("Email address: '%s' is invalid!", emailAddress.getEmail()), HttpStatus.BAD_REQUEST);
             }
 
-            emailAddressRuleEngine.validatePersonId(emailAddress);
+            emailAddressRuleEngine.validatePersonId(emailAddress.getPerson().getId());
             emailAddressRuleEngine.validateEmailAddressId(emailAddress);
             emailAddressRuleEngine.validateNameUniqueness(emailAddress);
             emailAddressRuleEngine.validateDefaultEmail(emailAddress);

@@ -27,7 +27,7 @@ import java.util.List;
 import java.util.UUID;
 
 /**
- * Provides the behavior of the person persistence service.
+ * Person persistence service behavior.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
@@ -37,13 +37,20 @@ public interface PersonService
      * Returns the person repository.
      * @return Person repository.
      */
-    PersonRepository getRepository();
+    PersonRepository getPersonRepository();
 
     /**
      * Returns the total number of persons.
      * @return Number of persons.
      */
     Long count();
+
+    /**
+     * Returns if the given person identifier exist?
+     * @param id Person identifier.
+     * @return True if the person exist, false otherwise.
+     */
+    boolean existId(final @NonNull UUID id);
 
     /**
      * Returns the person matching the given identifier.
@@ -59,6 +66,13 @@ public interface PersonService
      * @throws DocumentException Thrown in case an error occurred with one of the document when trying to save the person!
      */
     ServerPersonEntity save(ServerPersonEntity person) throws DocumentException;
+
+    /**
+     * Saves the person and flush.
+     * @param person Person to save.
+     * @return Updated person.
+     */
+    ServerPersonEntity saveAndFlush(final @NonNull ServerPersonEntity person);
 
     /**
      * Deletes the person matching the given identifier.
@@ -94,10 +108,4 @@ public interface PersonService
      * @return List of documents.
      */
     List<ServerDocumentEntity> getDocuments(final @NonNull ServerBaseEntity entity);
-
-    /**
-     * Saves the person and flush.
-     * @param person Person to save.
-     */
-    void saveAndFlush(final @NonNull ServerPersonEntity person);
 }

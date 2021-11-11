@@ -48,11 +48,11 @@ public final class PersonRandomizer extends AbstractBaseEntityRandomizer
     private static final EnumRandomGenerator GENDER_TYPE_GENERATOR = new EnumRandomGenerator(GenderType.class);
 
     /**
-     * Generates a new random persistent person.
+     * Generates a new random server person.
      * @param withRandomId Do we need to generate a random identifier? False by default.
      * @return Random person.
      */
-    public static ServerPersonEntity generateServer(final boolean withRandomId)
+    public static ServerPersonEntity generateServerEntity(final boolean withRandomId)
     {
         var entity = new ServerPersonEntity();
         AbstractBaseEntityRandomizer.populateBaseFields(entity);
@@ -79,7 +79,7 @@ public final class PersonRandomizer extends AbstractBaseEntityRandomizer
      * @return Person.
      * @throws DocumentContentException Thrown in case an error occurred while trying to generate a document.
      */
-    public static ServerPersonEntity generateServerWithDocument(final boolean withRandomId, final int count) throws DocumentContentException
+    public static ServerPersonEntity generateServerEntityWithDocument(final boolean withRandomId, final int count) throws DocumentContentException
     {
         var entity = new ServerPersonEntity();
         ServerDocumentEntity document;
@@ -92,7 +92,7 @@ public final class PersonRandomizer extends AbstractBaseEntityRandomizer
 
         for (int i = 0; i < count; i++)
         {
-            document = DocumentRandomizer.generatePersistent(true);
+            document = DocumentRandomizer.generateServerEntity(true);
             entity.addDocument(document);
         }
 
@@ -111,7 +111,7 @@ public final class PersonRandomizer extends AbstractBaseEntityRandomizer
      * <br>Generally set to {@code true} only for unit tests.
      * @return Random person.
      */
-    public static ClientPersonEntity generateClient(final boolean withRandomId)
+    public static ClientPersonEntity generateClientEntity(final boolean withRandomId)
     {
         var entity = new ClientPersonEntity();
         AbstractBaseEntityRandomizer.populateBaseFields(entity);
@@ -138,7 +138,7 @@ public final class PersonRandomizer extends AbstractBaseEntityRandomizer
      * @return Person.
      * @throws DocumentContentException Thrown in case an error occurred while trying to generate a document.
      */
-    public static ClientPersonEntity generateClientWithDocument(final boolean withRandomId, final int count) throws DocumentContentException
+    public static ClientPersonEntity generateClientEntityWithDocument(final boolean withRandomId, final int count) throws DocumentContentException
     {
         ClientDocumentEntity document;
         ClientPersonEntity entity = new ClientPersonEntity();
@@ -151,8 +151,8 @@ public final class PersonRandomizer extends AbstractBaseEntityRandomizer
 
         for (int i = 0; i < count; i++)
         {
-            document = DocumentRandomizer.generateClient(true);
-            entity.addDocument(document);
+            document = DocumentRandomizer.generateClientEntity(true);
+            entity.addDocument(document.getIdentity());
         }
 
         entity.setFirstName(FAKER.name().firstName());
@@ -172,16 +172,16 @@ public final class PersonRandomizer extends AbstractBaseEntityRandomizer
      * @return Person.
      * @throws EmailAddressException Raised in case an error occurred when trying to create an email address!
      */
-    public static ServerPersonEntity generateWithDependencies(final boolean withRandomId, final int bound) throws EmailAddressException
+    public static ServerPersonEntity generateServerEntityWithDependencies(final boolean withRandomId, final int bound) throws EmailAddressException
     {
-        var person = generateServer(withRandomId);
+        var person = generateServerEntity(withRandomId);
 
         int count = bound > 0 ? bound : AbstractBaseEntityRandomizer.DEFAULT_DEPENDENCY_BOUND;
         for (var i = 0; i < count; i++)
         {
-            person.addEmailAddress(EmailAddressRandomizer.generateServer(withRandomId));
-            person.addPhoneNumber(PhoneNumberRandomizer.generateServer(withRandomId));
-            person.addPostalAddress(PostalAddressRandomizer.generatePersistent(withRandomId));
+            person.addEmailAddress(EmailAddressRandomizer.generateServerEntity(withRandomId));
+            person.addPhoneNumber(PhoneNumberRandomizer.generateServerEntity(withRandomId));
+            person.addPostalAddress(PostalAddressRandomizer.generateServerEntity(withRandomId));
         }
 
         return person;

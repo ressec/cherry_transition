@@ -17,21 +17,25 @@ package com.hemajoo.commerce.cherry.persistence.person.service;
 import com.hemajoo.commerce.cherry.commons.type.StatusType;
 import com.hemajoo.commerce.cherry.model.document.exception.DocumentException;
 import com.hemajoo.commerce.cherry.model.person.exception.EmailAddressException;
+import com.hemajoo.commerce.cherry.model.person.exception.EntityException;
 import com.hemajoo.commerce.cherry.model.person.search.SearchEmailAddress;
 import com.hemajoo.commerce.cherry.model.person.type.AddressType;
 import com.hemajoo.commerce.cherry.persistence.person.entity.ServerEmailAddressEntity;
+import com.hemajoo.commerce.cherry.persistence.person.repository.EmailAddressRepository;
 import lombok.NonNull;
 
 import java.util.List;
 import java.util.UUID;
 
 /**
- * Provides the behavior of the email address persistence service.
+ * Email address persistence service behavior.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
 public interface EmailAddressService
 {
+    EmailAddressRepository getRepository();
+
     /**
      * Returns the total number of email addresses.
      * @return Total number of email addresses.
@@ -46,12 +50,27 @@ public interface EmailAddressService
     ServerEmailAddressEntity findById(UUID id);
 
     /**
+     * Updates the given server email address entity.
+     * @param emailAddress Server email address entity to update.
+     * @return Updated server email address entity.
+     * @throws EmailAddressException Thrown in case an error occurred while trying to update the server email address entity.
+     */
+    ServerEmailAddressEntity update(final ServerEmailAddressEntity emailAddress) throws EntityException;
+
+    /**
      * Saves the given email address.
      * @param emailAddress Email address.
      * @return Saved email address.
      * @throws EmailAddressException Thrown in case an error occurred while trying to save the email address.
      */
     ServerEmailAddressEntity save(ServerEmailAddressEntity emailAddress) throws EmailAddressException, DocumentException;
+
+    /**
+     * Saves and flush a email address.
+     * @param emailAddress Email address.
+     * @return Email address.
+     */
+    ServerEmailAddressEntity saveAndFlush(ServerEmailAddressEntity emailAddress) throws EmailAddressException;
 
     /**
      * Deletes the email address matching the given identifier.

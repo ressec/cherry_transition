@@ -14,6 +14,8 @@
  */
 package com.hemajoo.commerce.cherry.model.base.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.hemajoo.commerce.cherry.commons.type.StatusType;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -39,6 +41,7 @@ public abstract class AbstractClientStatusEntity extends AbstractClientAuditEnti
     /**
      * Email address status.
      */
+    @JsonProperty("status")
     @ApiModelProperty(name = "statusType", notes = "Email address status type", value = "ACTIVE")
     @Enumerated(EnumType.STRING)
     private StatusType statusType;
@@ -46,6 +49,7 @@ public abstract class AbstractClientStatusEntity extends AbstractClientAuditEnti
     /**
      * Inactivity time stamp information (server time) that must be filled when the email address becomes inactive.
      */
+    @JsonProperty("inactiveSince")
     @ApiModelProperty(hidden = true) // As it is set automatically when status changes.
     private Date since;
 
@@ -54,6 +58,7 @@ public abstract class AbstractClientStatusEntity extends AbstractClientAuditEnti
      * @return {@code True} if the entity is active, {@code false} otherwise.
      */
     @ApiModelProperty(hidden = true) // Status type is used instead!
+    @JsonIgnore
     public final boolean isActive()
     {
         return statusType == StatusType.ACTIVE;

@@ -55,6 +55,8 @@ public abstract class AbstractStatusSearch extends AbstractAuditSearch
      * Returns if the entity is active?
      * @return {@code True} if the entity is active, {@code false} otherwise.
      */
+    @JsonIgnore
+    @ApiModelProperty(hidden = true)
     public final boolean isActive()
     {
         return statusType == StatusType.ACTIVE;

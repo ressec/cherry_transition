@@ -24,6 +24,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
@@ -36,6 +37,7 @@ import javax.validation.constraints.NotNull;
  * @version 1.0.0
  */
 //@GroupSequence( { ServerEmailAddressEntity.class, BasicValidation.class, ExtendedValidation.class } )
+@Log4j2
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
 @Table(name = "EMAIL_ADDRESS")
@@ -96,17 +98,13 @@ public class ServerEmailAddressEntity extends ServerBaseEntity implements EmailA
     }
 
     /**
-     * Sets the person.
-     * @param person Person owning this email address.
+     * Sets the owner person.
+     * <hr>
+     * <b>NOTE:</b> Never invoke directly this service to add an email address to a person. For that, you need to call {@link ServerPersonEntity#addEmailAddress(ServerEmailAddressEntity)}!.
+     * @param person Person being the owner of the email address.
      */
     public void setPerson(final ServerPersonEntity person)
     {
-        if (person != null)
-        {
-            if (this.person == null)
-            {
-                this.person = person;
-            }
-        }
+        this.person = person;
     }
 }

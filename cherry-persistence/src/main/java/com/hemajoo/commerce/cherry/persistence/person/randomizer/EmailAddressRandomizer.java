@@ -46,7 +46,7 @@ public final class EmailAddressRandomizer extends AbstractBaseEntityRandomizer
      * <br>Generally set to {@code true} in unit tests.
      * @return Email address.
      */
-    public static ServerEmailAddressEntity generateServer(final boolean withRandomId)
+    public static ServerEmailAddressEntity generateServerEntity(final boolean withRandomId)
     {
         var entity = new ServerEmailAddressEntity();
         AbstractBaseEntityRandomizer.populateBaseFields(entity);
@@ -71,7 +71,7 @@ public final class EmailAddressRandomizer extends AbstractBaseEntityRandomizer
      * @return Email address.
      * @throws DocumentContentException Thrown in case an error occurred while trying to generate a document.
      */
-    public static ServerEmailAddressEntity generateServerWithDocument(final boolean withRandomId, final int count) throws DocumentContentException
+    public static ServerEmailAddressEntity generateServerEntityWithDocument(final boolean withRandomId, final int count) throws DocumentContentException
     {
         var entity = new ServerEmailAddressEntity();
         ServerDocumentEntity document;
@@ -84,7 +84,7 @@ public final class EmailAddressRandomizer extends AbstractBaseEntityRandomizer
 
         for (int i = 0; i < count; i++)
         {
-            document = DocumentRandomizer.generatePersistent(true);
+            document = DocumentRandomizer.generateServerEntity(true);
             entity.addDocument(document);
         }
 
@@ -101,7 +101,7 @@ public final class EmailAddressRandomizer extends AbstractBaseEntityRandomizer
      * <br>Generally set to {@code true} only for unit tests.
      * @return Email address.
      */
-    public static ClientEmailAddressEntity generateClient(final boolean withRandomId)
+    public static ClientEmailAddressEntity generateClientEntity(final boolean withRandomId)
     {
         var entity = new ClientEmailAddressEntity();
         AbstractBaseEntityRandomizer.populateBaseFields(entity);
@@ -126,7 +126,7 @@ public final class EmailAddressRandomizer extends AbstractBaseEntityRandomizer
      * @return Email address.
      * @throws DocumentContentException Thrown in case an error occurred while trying to generate a document.
      */
-    public static ClientEmailAddressEntity generateClientWithDocument(final boolean withRandomId, final int count) throws DocumentContentException
+    public static ClientEmailAddressEntity generateClientEntityWithDocument(final boolean withRandomId, final int count) throws DocumentContentException
     {
         ClientDocumentEntity document;
         ClientEmailAddressEntity entity = new ClientEmailAddressEntity();
@@ -139,8 +139,8 @@ public final class EmailAddressRandomizer extends AbstractBaseEntityRandomizer
 
         for (int i = 0; i < count; i++)
         {
-            document = DocumentRandomizer.generateClient(true);
-            entity.addDocument(document);
+            document = DocumentRandomizer.generateClientEntity(true);
+            entity.addDocument(document.getIdentity());
         }
 
         entity.setEmail(FAKER.internet().emailAddress());

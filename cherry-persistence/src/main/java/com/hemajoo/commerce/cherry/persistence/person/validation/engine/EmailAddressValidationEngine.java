@@ -14,13 +14,17 @@
  */
 package com.hemajoo.commerce.cherry.persistence.person.validation.engine;
 
+import com.hemajoo.commerce.cherry.commons.type.EntityType;
 import com.hemajoo.commerce.cherry.model.person.entity.ClientEmailAddressEntity;
 import com.hemajoo.commerce.cherry.model.person.exception.EmailAddressException;
+import com.hemajoo.commerce.cherry.model.person.exception.EntityException;
+import com.hemajoo.commerce.cherry.model.person.search.SearchEmailAddress;
+import com.hemajoo.commerce.cherry.persistence.base.entity.EntityComparator;
+import com.hemajoo.commerce.cherry.persistence.base.factory.ServerEntityFactory;
 import com.hemajoo.commerce.cherry.persistence.person.entity.ServerEmailAddressEntity;
 import com.hemajoo.commerce.cherry.persistence.person.entity.ServerPersonEntity;
-import com.hemajoo.commerce.cherry.persistence.person.service.EmailAddressService;
-import com.hemajoo.commerce.cherry.persistence.person.service.PersonService;
 import lombok.NonNull;
+import org.javers.core.diff.changetype.ValueChange;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
@@ -37,34 +41,38 @@ import java.util.UUID;
 public final class EmailAddressValidationEngine
 {
     /**
-     * Email address persistence service.
+     * Entity factory.
      */
     @Autowired
-    private EmailAddressService emailAddressService;
+    private ServerEntityFactory entityFactory;
 
     /**
-     * Person persistence service.
+     * Checks if the given search object is valid or not?
+     * @param search Search email address object.
+     * @throws EmailAddressException Thrown to indicate an error occurred while submitting a search email address object.
      */
-    @Autowired
-    private PersonService personService;
+    public static void isSearchValid(final @NonNull SearchEmailAddress search) throws EmailAddressException
+    {
+        SearchEmailAddress reference = new SearchEmailAddress();
+
+        if (EntityComparator.getJavers().compare(reference, search).getChangesByType(ValueChange.class).isEmpty())
+        {
+            throw new EmailAddressException("Search object must contain at least one search value!", HttpStatus.BAD_REQUEST);
+        }
+    }
 
     /**
      * Checks the person identifier is valid.
      * <br>
      * The person identifier owning the email address must exist.
-     * @param emailAddress Email address to check.
+     * @param personId Person identifier.
      * @throws EmailAddressException Thrown in case the validation failed!
      */
-    public void validatePersonId(final @NonNull ClientEmailAddressEntity emailAddress) throws EmailAddressException
+    public void validatePersonId(final @NonNull UUID personId) throws EmailAddressException
     {
-        if (emailAddress.getOwner() == null || emailAddress.getOwner().getId() == null)
+        if (entityFactory.getServices().getPersonService().findById(personId) == null)
         {
-            throw new EmailAddressException("Person id cannot be null!");
-        }
-
-        if (personService.findById(emailAddress.getOwner().getId()) == null)
-        {
-            throw new EmailAddressException(String.format("Person with id: %s does not exist!", emailAddress.getOwner().getId()));
+            throw new EmailAddressException(String.format("Person with id: %s does not exist!", personId));
         }
     }
 
@@ -77,7 +85,7 @@ public final class EmailAddressValidationEngine
      */
     public void validateEmailAddressId(final @NonNull ClientEmailAddressEntity emailAddress) throws EmailAddressException
     {
-        validateEmailAddressId(emailAddress.getId().toString());
+        validateEmailAddressId(emailAddress.getId());
     }
 
     /**
@@ -87,11 +95,11 @@ public final class EmailAddressValidationEngine
      * @param id Email address identifier.
      * @throws EmailAddressException Thrown in case the validation failed!
      */
-    public void validateEmailAddressId(final @NonNull String id) throws EmailAddressException
+    public void validateEmailAddressId(final @NonNull UUID id) throws EmailAddressException
     {
-        if (emailAddressService.findById(UUID.fromString(id)) == null)
+        if (entityFactory.getServices().getEmailAddressService().findById(id) == null)
         {
-            throw new EmailAddressException(String.format("Email address with id: %s does not exist!", id));
+            throw new EmailAddressException(String.format("Email address with id: %s does not exist!", id), HttpStatus.NOT_FOUND);
         }
     }
 
@@ -106,14 +114,14 @@ public final class EmailAddressValidationEngine
     {
         if (Boolean.TRUE.equals(emailAddress.getIsDefaultEmail()) && emailAddress.isActive())
         {
-            ServerPersonEntity person = personService.findById(emailAddress.getOwner().getId());
+            ServerPersonEntity person = entityFactory.getServices().getPersonService().findById(emailAddress.getPerson().getId());
             ServerEmailAddressEntity defaultEmailAddress = person.getDefaultEmailAddress();
             if (!Objects.equals(defaultEmailAddress.getIdentity(), emailAddress.getIdentity()) || emailAddress.getId() == null)
             {
                 throw new EmailAddressException(
                         String.format(
                                 "Person with id: '%s' already has an active default email address!",
-                                emailAddress.getOwner().getId()),
+                                emailAddress.getPerson().getId()),
                         HttpStatus.BAD_REQUEST);
             }
         }
@@ -126,14 +134,14 @@ public final class EmailAddressValidationEngine
      */
     public void validateNameUniqueness(final @NonNull ClientEmailAddressEntity emailAddress) throws EmailAddressException
     {
-        ServerPersonEntity person = personService.findById(emailAddress.getOwner().getId());
+        ServerPersonEntity person = entityFactory.getServices().getPersonService().findById(emailAddress.getPerson().getId());
 
         if (person == null)
         {
             throw new EmailAddressException(
                     String.format(
                             "Person id: '%s' cannot be found!",
-                            emailAddress.getOwner().getId()),
+                            emailAddress.getPerson().getId()),
                     HttpStatus.BAD_REQUEST);
         }
 
@@ -147,15 +155,32 @@ public final class EmailAddressValidationEngine
                     throw new EmailAddressException(
                             String.format(
                                     "Email address: '%s' already belongs to another entity: '%s'!",
-                                    emailAddress.getOwner(),
+                                    emailAddress.getPerson(),
                                     emailAddress.getEmail()),
                             HttpStatus.BAD_REQUEST);
                 }
             }
             else
             {
-                throw new EmailAddressException(String.format("Email address: '%s' already exist", emailAddress.getEmail()), HttpStatus.BAD_REQUEST);
+                throw new EmailAddressException(String.format("Email address: '%s' already exist!", emailAddress.getEmail()), HttpStatus.BAD_REQUEST);
             }
+        }
+    }
+
+    public void validateEmailForUpdate(final @NonNull ClientEmailAddressEntity emailAddress) throws EntityException
+    {
+        validateEmailAddressId(emailAddress.getId());
+        validateEmailEntityType(emailAddress.getEntityType());
+        //validatePersonId(emailAddress.getOwner().getId());
+        validateDefaultEmail(emailAddress);
+        validateNameUniqueness(emailAddress);
+    }
+
+    private void validateEmailEntityType(final EntityType entityType) throws EntityException
+    {
+        if (entityType != EntityType.EMAIL_ADDRESS)
+        {
+            throw new EntityException(entityType, String.format("Entity type: %s expected!", EntityType.EMAIL_ADDRESS), HttpStatus.BAD_REQUEST);
         }
     }
 }
