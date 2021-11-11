@@ -192,7 +192,7 @@ public class EmailAddressController
             @ApiResponse(code = 404, message = "No email address found matching the given criteria"),
             @ApiResponse(code = 400, message = "Missing or invalid request"),
             @ApiResponse(code = 500, message = "Internal server error")})
-    @PatchMapping(value = "/search", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PatchMapping(value = "/search", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE) // PATCH method Because a GET method cannot have a request body!
     public ResponseEntity<List<ClientEmailAddressEntity>> search(final @RequestBody @NotNull SearchEmailAddress search) throws EmailAddressException
     {
         EmailAddressValidationEngine.isSearchValid(search);

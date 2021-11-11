@@ -541,6 +541,7 @@
             <!-- Note: This profile is used for the development of the solution using a H2 database -->
             <id>cherry-h2-dev</id>
             <properties>
+                <server.port>8084</server.port>
                 <database.port>9092</database.port>
                 <database.name>HEMAJOO</database.name>
                 <database.schema>DEV</database.schema>
@@ -579,15 +580,6 @@
                             </schemas>
                             <locations>${flyway.locations}</locations>
                         </configuration>
-<!--                        <executions>-->
-<!--                            <execution>-->
-<!--                                <id>flyway-check-db</id>-->
-<!--                                <phase>compile</phase>-->
-<!--                                <goals>-->
-<!--                                    <goal>info</goal>-->
-<!--                                </goals>-->
-<!--                            </execution>-->
-<!--                        </executions>-->
                     </plugin>
                 </plugins>
             </build>
@@ -600,6 +592,7 @@
                 <activeByDefault>true</activeByDefault>
             </activation>
             <properties>
+                <server.port>8094</server.port>
                 <database.port>5432</database.port>
                 <database.name>cherry</database.name>
                 <database.schema>dev</database.schema>
@@ -692,15 +685,6 @@
                             </schemas>
                             <locations>${flyway.locations}</locations>
                         </configuration>
-<!--                        <executions>-->
-<!--                            <execution>-->
-<!--                                <id>flyway-check-db</id>-->
-<!--                                <phase>compile</phase>-->
-<!--                                <goals>-->
-<!--                                    <goal>info</goal>-->
-<!--                                </goals>-->
-<!--                            </execution>-->
-<!--                        </executions>-->
                     </plugin>
                 </plugins>
             </build>
@@ -747,15 +731,6 @@
                             </schemas>
                             <locations>${flyway.locations}</locations>
                         </configuration>
-<!--                        <executions>-->
-<!--                            <execution>-->
-<!--                                <id>flyway-check-db</id>-->
-<!--                                <phase>compile</phase>-->
-<!--                                <goals>-->
-<!--                                    <goal>info</goal>-->
-<!--                                </goals>-->
-<!--                            </execution>-->
-<!--                        </executions>-->
                     </plugin>
                 </plugins>
             </build>
