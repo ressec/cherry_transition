@@ -62,8 +62,9 @@ public class DocumentConverter
      * Converts from a client document entity to a server document entity.
      * @param client Client document entity.
      * @return Server document entity.
+     * @throws EntityException Thrown to indicate an error occurred while retrieving the server entity from the underlying database.
      */
-    public ServerDocumentEntity fromClientToServer(ClientDocumentEntity client)
+    public ServerDocumentEntity fromClientToServer(ClientDocumentEntity client) throws EntityException
     {
         return AbstractDocumentMapper.INSTANCE.fromClientToServer(client, new CycleAvoidingMappingContext(), entityManager);
     }

@@ -16,11 +16,11 @@ package com.hemajoo.commerce.cherry.persistence.person.mapper;
 
 import com.hemajoo.commerce.cherry.commons.entity.EntityIdentity;
 import com.hemajoo.commerce.cherry.model.document.exception.DocumentException;
-import com.hemajoo.commerce.cherry.model.person.entity.ClientEmailAddressEntity;
+import com.hemajoo.commerce.cherry.model.person.entity.ClientPostalAddressEntity;
 import com.hemajoo.commerce.cherry.model.person.exception.EntityException;
 import com.hemajoo.commerce.cherry.persistence.base.entity.AbstractBaseEntityMapper;
 import com.hemajoo.commerce.cherry.persistence.base.mapper.CycleAvoidingMappingContext;
-import com.hemajoo.commerce.cherry.persistence.person.entity.ServerEmailAddressEntity;
+import com.hemajoo.commerce.cherry.persistence.person.entity.ServerPostalAddressEntity;
 import org.mapstruct.Context;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
@@ -28,58 +28,59 @@ import org.mapstruct.factory.Mappers;
 import javax.persistence.EntityManager;
 
 /**
- * Mapper interface to convert between instances of client and server email addresses.
+ * Mapper interface to convert between instances of client and server postal addresses.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
 @Mapper(uses = { AbstractBaseEntityMapper.class })
-public abstract class AbstractEmailAddressMapper
+public abstract class AbstractPostalAddressMapper
 {
     /**
      * Instance to this bean mapper.
      */
-    public static final AbstractEmailAddressMapper INSTANCE = Mappers.getMapper(AbstractEmailAddressMapper.class);
+    public static final AbstractPostalAddressMapper INSTANCE = Mappers.getMapper(AbstractPostalAddressMapper.class);
 
     /**
-     * Maps from a server email address entity to an entity identity.
-     * @param entity Server email address entity.
+     * Maps from a server postal address entity to an entity identity.
+     * @param entity Server postal address entity.
      * @param context Context object.
      * @return Entity identity.
-     */
-    public abstract EntityIdentity fromServerToIdentity(ServerEmailAddressEntity entity, @Context CycleAvoidingMappingContext context);
-
-    /**
-     * Maps from a server email address entity to a client email address entity.
-     * @param entity Server email address entity.
-     * @param context Context object.
-     * @param entityManager Entity manager.
-     * @return Client email address entity.
      * @throws EntityException Thrown to indicate an error occurred while retrieving the server entity from the underlying database.
      */
-    public abstract ServerEmailAddressEntity fromClientToServer(ClientEmailAddressEntity entity, @Context CycleAvoidingMappingContext context, @Context EntityManager entityManager) throws EntityException;
+    public abstract EntityIdentity fromServerToIdentity(ServerPostalAddressEntity entity, @Context CycleAvoidingMappingContext context) throws EntityException;
 
     /**
-     * Maps from a server email address entity to a client email address entity.
-     * @param entity Server email address entity.
+     * Maps from a server postal address entity to a client postal address entity.
+     * @param entity Server postal address entity.
      * @param context Context object.
-     * @return Client email address entity.
+     * @param entityManager Entity manager.
+     * @return Client postal address entity.
+     * @throws EntityException Thrown to indicate an error occurred while retrieving the server entity from the underlying database.
      */
-    public abstract ClientEmailAddressEntity fromServerToClient(ServerEmailAddressEntity entity, @Context CycleAvoidingMappingContext context);
+    public abstract ServerPostalAddressEntity fromClientToServer(ClientPostalAddressEntity entity, @Context CycleAvoidingMappingContext context, @Context EntityManager entityManager) throws EntityException;
 
     /**
-     * Copy a server email address entity.
-     * @param entity Server email address entity.
+     * Maps from a server postal address entity to a client postal address entity.
+     * @param entity Server postal address entity.
      * @param context Context object.
-     * @return Copy of the server email address entity.
+     * @return Client postal address entity.
+     */
+    public abstract ClientPostalAddressEntity fromServerToClient(ServerPostalAddressEntity entity, @Context CycleAvoidingMappingContext context);
+
+    /**
+     * Copy a server postal address entity.
+     * @param entity Server postal address entity.
+     * @param context Context object.
+     * @return Copy of the server postal address entity.
      * @throws DocumentException Thrown to indicate an error occurred while trying to copy the server document entity!
      */
-    public abstract ServerEmailAddressEntity copy(ServerEmailAddressEntity entity, @Context CycleAvoidingMappingContext context) throws DocumentException;
+    public abstract ServerPostalAddressEntity copy(ServerPostalAddressEntity entity, @Context CycleAvoidingMappingContext context) throws DocumentException;
 
     /**
-     * Copy a client email address entity.
-     * @param entity Client email address entity.
+     * Copy a client postal address entity.
+     * @param entity Client postal address entity.
      * @param context Context object.
-     * @return Copy of the client email address entity.
+     * @return Copy of the client postal address entity.
      */
-    public abstract ClientEmailAddressEntity copy(ClientEmailAddressEntity entity, @Context CycleAvoidingMappingContext context);
+    public abstract ClientPostalAddressEntity copy(ClientPostalAddressEntity entity, @Context CycleAvoidingMappingContext context);
 }

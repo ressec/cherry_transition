@@ -15,13 +15,14 @@
 package com.hemajoo.commerce.cherry.persistence.test.unit.model.entity.person.converter;
 
 import com.hemajoo.commerce.cherry.persistence.person.converter.PersonConverter;
+import com.hemajoo.commerce.cherry.persistence.test.unit.base.AbstractPostgresUnitTest;
 
 /**
  * Test the {@link PersonConverter} class.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-class PersonConverterUnitTest
+class PersonConverterUnitTest extends AbstractPostgresUnitTest
 {
     /**
      * List element count.

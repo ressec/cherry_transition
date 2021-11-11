@@ -28,6 +28,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.DirtiesContext;
+import org.testcontainers.junit.jupiter.Testcontainers;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,7 +42,8 @@ import static org.assertj.core.api.Assertions.assertThat;
  * @version 1.0.0
  */
 @Log4j2
-//@Testcontainers // Not to be used to keep container alive after the tests!
+@DirtiesContext
+@Testcontainers // Not to be used to keep container alive after the tests!
 @SpringBootTest
 class PhoneNumberUnitTest extends AbstractPostgresUnitTest
 {

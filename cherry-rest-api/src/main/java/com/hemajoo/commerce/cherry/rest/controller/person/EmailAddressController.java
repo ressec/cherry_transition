@@ -84,7 +84,7 @@ public class EmailAddressController
     @GetMapping("/count")
     public long count()
     {
-        return entityFactory.getEmailAddressService().count();
+        return entityFactory.getServices().getEmailAddressService().count();
     }
 
     /**
@@ -100,7 +100,7 @@ public class EmailAddressController
             @NotNull
             @PathVariable String id)
     {
-        ServerEmailAddressEntity serverEmailAddress = entityFactory.getEmailAddressService().findById(UUID.fromString(id));
+        ServerEmailAddressEntity serverEmailAddress = entityFactory.getServices().getEmailAddressService().findById(UUID.fromString(id));
         return ResponseEntity.ok(converter.fromServerToClient(serverEmailAddress));
     }
 
@@ -117,7 +117,7 @@ public class EmailAddressController
             @Valid @ValidEmailAddressForCreation @RequestBody ClientEmailAddressEntity emailAddress) throws EntityException
     {
         ServerEmailAddressEntity serverEmailAddress = converter.fromClientToServer(emailAddress);
-        serverEmailAddress = entityFactory.getEmailAddressService().save(serverEmailAddress);
+        serverEmailAddress = entityFactory.getServices().getEmailAddressService().save(serverEmailAddress);
 
         return ResponseEntity.ok(converter.fromServerToClient(serverEmailAddress));
     }
@@ -136,9 +136,9 @@ public class EmailAddressController
     {
         ServerEmailAddressEntity serverEmail = EmailAddressRandomizer.generateServerEntity(false);
 
-        ServerPersonEntity person = entityFactory.getPersonService().findById(UUID.fromString(personId));
+        ServerPersonEntity person = entityFactory.getServices().getPersonService().findById(UUID.fromString(personId));
         serverEmail.setPerson(person);
-        serverEmail = entityFactory.getEmailAddressService().save(serverEmail);
+        serverEmail = entityFactory.getServices().getEmailAddressService().save(serverEmail);
 
         return ResponseEntity.ok(converter.fromServerToClient(serverEmail));
     }
@@ -158,7 +158,7 @@ public class EmailAddressController
         emailAddressRuleEngine.validateEmailForUpdate(email);
 
         ServerEmailAddressEntity source = converter.fromClientToServer(email);
-        ServerEmailAddressEntity updated = entityFactory.getEmailAddressService().update(source);
+        ServerEmailAddressEntity updated = entityFactory.getServices().getEmailAddressService().update(source);
         ClientEmailAddressEntity client = converter.fromServerToClient(updated);
 
         return ResponseEntity.ok(client);
@@ -175,7 +175,7 @@ public class EmailAddressController
             @ApiParam(value = "Email address identifier (UUID)", required = true)
             @NotNull @Valid @ValidEmailAddressId @PathVariable String id)
     {
-        entityFactory.getEmailAddressService().deleteById(UUID.fromString(id));
+        entityFactory.getServices().getEmailAddressService().deleteById(UUID.fromString(id));
 
         return ResponseEntity.ok(String.format("Email address id: '%s' has been deleted successfully!", id));
     }
@@ -197,7 +197,7 @@ public class EmailAddressController
     {
         EmailAddressValidationEngine.isSearchValid(search);
 
-        List<ClientEmailAddressEntity> clients = entityFactory.getEmailAddressService().search(search)
+        List<ClientEmailAddressEntity> clients = entityFactory.getServices().getEmailAddressService().search(search)
                 .stream()
                 .map(element -> converter.fromServerToClient(element))
                 .collect(Collectors.toList());
@@ -222,7 +222,7 @@ public class EmailAddressController
     {
         EmailAddressValidationEngine.isSearchValid(search);
 
-        List<ClientEmailAddressEntity> clients = entityFactory.getEmailAddressService().search(search)
+        List<ClientEmailAddressEntity> clients = entityFactory.getServices().getEmailAddressService().search(search)
                 .stream()
                 .map(element -> converter.fromServerToClient(element))
                 .collect(Collectors.toList());

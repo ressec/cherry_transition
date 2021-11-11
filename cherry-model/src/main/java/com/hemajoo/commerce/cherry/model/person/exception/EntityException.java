@@ -14,7 +14,7 @@
  */
 package com.hemajoo.commerce.cherry.model.person.exception;
 
-import com.hemajoo.commerce.cherry.commons.exception.AbstractEntityCheckedException;
+import com.hemajoo.commerce.cherry.commons.exception.AbstractEntityUncheckedException;
 import com.hemajoo.commerce.cherry.commons.type.EntityType;
 import org.springframework.http.HttpStatus;
 
@@ -23,7 +23,7 @@ import org.springframework.http.HttpStatus;
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-public class EntityException extends AbstractEntityCheckedException
+public class EntityException extends AbstractEntityUncheckedException
 {
     /**
      * Default serialization identifier.

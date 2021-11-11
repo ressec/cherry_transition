@@ -56,8 +56,9 @@ public interface DocumentService
     ServerDocumentEntity save(ServerDocumentEntity document) throws DocumentException;
 
     /**
-     * Saves and flush the document.
+     * Saves and flush a document.
      * @param document Document.
+     * @return Saved document.
      */
     ServerDocumentEntity saveAndFlush(ServerDocumentEntity document);
 

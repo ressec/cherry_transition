@@ -20,21 +20,18 @@ import com.hemajoo.commerce.cherry.model.document.ClientDocumentEntity;
 import com.hemajoo.commerce.cherry.model.document.exception.DocumentContentException;
 import com.hemajoo.commerce.cherry.model.person.exception.EntityException;
 import com.hemajoo.commerce.cherry.persistence.base.entity.EntityComparator;
+import com.hemajoo.commerce.cherry.persistence.base.factory.ServerEntityFactory;
 import com.hemajoo.commerce.cherry.persistence.document.converter.DocumentConverter;
 import com.hemajoo.commerce.cherry.persistence.document.entity.ServerDocumentEntity;
 import com.hemajoo.commerce.cherry.persistence.document.randomizer.DocumentRandomizer;
-import com.hemajoo.commerce.cherry.persistence.document.repository.DocumentService;
-import com.hemajoo.commerce.cherry.persistence.test.SpringTestApplication;
+import com.hemajoo.commerce.cherry.persistence.test.unit.base.AbstractPostgresUnitTest;
 import org.javers.core.diff.Diff;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.test.annotation.DirtiesContext;
+import org.testcontainers.junit.jupiter.Testcontainers;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,10 +48,10 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-@TestInstance(TestInstance.Lifecycle.PER_CLASS) // Allow to define BeforeAll as non-static.
-@ExtendWith(SpringExtension.class)
-@SpringBootTest(classes = SpringTestApplication.class)
-class DocumentConverterUnitTest
+@Testcontainers // Not to be used to keep container alive after the tests!
+@DirtiesContext
+@SpringBootTest
+class DocumentConverterUnitTest extends AbstractPostgresUnitTest
 {
     /**
      * Document converter facility service.
@@ -63,23 +60,15 @@ class DocumentConverterUnitTest
     private DocumentConverter converter;
 
     /**
-     * Document persistence service.
+     * Entity factory.
      */
     @Autowired
-    private DocumentService documentService;
+    private ServerEntityFactory entityFactory;
 
     /**
      * List element count.
      */
     private final int LIST_COUNT = 10;
-
-    @Transactional
-    @BeforeAll
-    public void clearAllDocuments()
-    {
-        // Clean all documents that would exist in the underlying database.
-        documentService.getRepository().deleteAll();
-    }
 
     @Test
     @DisplayName("Convert a server document to an identity")
@@ -106,7 +95,7 @@ class DocumentConverterUnitTest
     final void testConvertIdentityToServerDocument() throws DocumentContentException, EntityException
     {
         // For an entity identity to be mapped to a server entity, the server entity must exist in the underlying database!
-        ServerDocumentEntity reference = documentService.save(DocumentRandomizer.generateServerEntity(true));
+        ServerDocumentEntity reference = entityFactory.getServices().getDocumentService().save(DocumentRandomizer.generateServerEntity(true));
 
         EntityIdentity identity = new EntityIdentity(reference.getIdentity());
         ServerDocumentEntity server = converter.fromIdentityToServer(identity);
@@ -140,7 +129,7 @@ class DocumentConverterUnitTest
     final void testConvertClientToServerDocumentWithOwner() throws DocumentContentException
     {
         // For an entity identity to be mapped to a server entity, the server entity must exist in the underlying database!
-        ServerDocumentEntity owner = documentService.save(DocumentRandomizer.generateServerEntity(false));
+        ServerDocumentEntity owner = entityFactory.getServices().getDocumentService().save(DocumentRandomizer.generateServerEntity(false));
 
         ClientDocumentEntity client = DocumentRandomizer.generateClientEntity(true);
         client.setOwner(owner.getIdentity());
@@ -166,8 +155,7 @@ class DocumentConverterUnitTest
 
         // If the owner of the client document to convert does not exist, ensure an exception is raised!
         assertThatThrownBy(() -> converter.fromClientToServer(client))
-                .isInstanceOf(RuntimeException.class)
-                .hasCauseExactlyInstanceOf(EntityException.class);
+                .isInstanceOf(EntityException.class);
     }
 
     @Test

@@ -17,6 +17,7 @@ package com.hemajoo.commerce.cherry.persistence.document.mapper;
 import com.hemajoo.commerce.cherry.commons.entity.EntityIdentity;
 import com.hemajoo.commerce.cherry.model.document.ClientDocumentEntity;
 import com.hemajoo.commerce.cherry.model.document.exception.DocumentException;
+import com.hemajoo.commerce.cherry.model.person.exception.EntityException;
 import com.hemajoo.commerce.cherry.persistence.base.entity.AbstractBaseEntityMapper;
 import com.hemajoo.commerce.cherry.persistence.base.mapper.CycleAvoidingMappingContext;
 import com.hemajoo.commerce.cherry.persistence.document.entity.ServerDocumentEntity;
@@ -53,8 +54,9 @@ public abstract class AbstractDocumentMapper
      * @param context Context object.
      * @param entityManager Entity manager.
      * @return Client document entity.
+     * @throws EntityException Thrown to indicate an error occurred while retrieving the server entity from the underlying database.
      */
-    public abstract ServerDocumentEntity fromClientToServer(ClientDocumentEntity document, @Context CycleAvoidingMappingContext context, @Context EntityManager entityManager);
+    public abstract ServerDocumentEntity fromClientToServer(ClientDocumentEntity document, @Context CycleAvoidingMappingContext context, @Context EntityManager entityManager) throws EntityException;
 
     /**
      * Maps from a server document entity to a client document entity.
