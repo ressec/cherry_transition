@@ -11,10 +11,6 @@
 # is strictly forbidden unless prior written permission is obtained from
 # Resse Christophe (christophe.resse@gmail.com).
 # -----------------------------------------------------------------------------------------------
-# Notes:
-#  This CI workflow action is used to build the project, run integration-tests and make a sonar
-#  analysis when some code is pushed through a pull request into the 'dev' branch.
-# -----------------------------------------------------------------------------------------------
 name: "Dev"
 
 on:
@@ -143,4 +139,5 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Needed to get PR information, if any.
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: mvn -B verify -P sonar -f cherry-parent/pom.xml
+        run: mvn -B verify sonar:sonar -f cherry-parent/pom.xml
+

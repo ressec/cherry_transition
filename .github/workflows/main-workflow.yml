@@ -11,11 +11,6 @@
 # is strictly forbidden unless prior written permission is obtained from
 # Resse Christophe (christophe.resse@gmail.com).
 # -----------------------------------------------------------------------------------------------
-# Notes:
-#  This CI workflow action is used to build the project, run integration-tests, make a sonar
-#  analysis and deploy artifacts to GitHub packages when some code is pushed through a pull
-#  request into the 'main' branch.
-# -----------------------------------------------------------------------------------------------
 name: "Maven Deploy"
 
 on:
