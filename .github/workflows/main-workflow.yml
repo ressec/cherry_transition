@@ -15,8 +15,7 @@ name: "Maven Deploy"
 
 on:
   pull_request:
-    branches:
-      - main
+    branches: [ main ]
 
 jobs:
 

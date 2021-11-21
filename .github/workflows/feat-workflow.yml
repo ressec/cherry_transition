@@ -14,8 +14,6 @@
 name: "Feat"
 
 on:
-  push:
-    branches: [ feat ]
   pull_request:
     branches: [ feat ]
 
