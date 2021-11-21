@@ -15,6 +15,10 @@
     <name>Cherry - Model</name>
     <description>Module providing the shared Cherry data model.</description>
 
+    <properties>
+        <sonar.coverage.jacoco.xmlReportPaths>${project.basedir}/../cherry-coverage/target/site/jacoco-aggregate/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
+    </properties>
+
     <dependencies>
 
         <!-- Hemajoo Cherry dependencies -->
