@@ -16,7 +16,11 @@
     <name>Cherry - REST APIs</name>
     <description>Module providing REST API controllers and endpoints to communicate with the backend.</description>
 
-<!--    <properties>-->
+    <properties>
+        <sonar.coverage.jacoco.xmlReportPaths>${project.basedir}/../cherry-coverage/target/site/jacoco-aggregate/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
+    </properties>
+
+    <!--    <properties>-->
 
 <!--        &lt;!&ndash; FlyWay properties &ndash;&gt;-->
 <!--        <flyway.user></flyway.user>-->

@@ -16,6 +16,10 @@
     <name>Cherry - Persistence</name>
     <description>Module providing the persistence layer of the Cherry solution.</description>
 
+    <properties>
+        <sonar.coverage.jacoco.xmlReportPaths>${project.basedir}/../cherry-coverage/target/site/jacoco-aggregate/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
+    </properties>
+
     <dependencies>
 
         <!-- Spring dependencies -->
@@ -198,135 +202,5 @@
         </resources>
 
     </build>
-
-<!--    <profiles>-->
-
-<!--        <profile>-->
-<!--            &lt;!&ndash; Note: This profile is used for the integration tests &ndash;&gt;-->
-<!--            <id>integration-tests</id>-->
-<!--            <properties>-->
-<!--                <db.h2.name>HEMAJOO</db.h2.name>-->
-<!--                <db.h2.schemas>TEST</db.h2.schemas>-->
-<!--                <db.h2.port>9093</db.h2.port>-->
-<!--                <db.h2.user>sa</db.h2.user>-->
-<!--                <db.h2.password></db.h2.password>-->
-<!--                <spring.jpa.hibernate.ddl-auto>create</spring.jpa.hibernate.ddl-auto>-->
-<!--                <spring.profiles.active>integration</spring.profiles.active>-->
-<!--                <spring.batch.initialize-schema>auto</spring.batch.initialize-schema>-->
-<!--            </properties>-->
-<!--            <build>-->
-<!--                <plugins>-->
-
-<!--                    <plugin>-->
-<!--                        <groupId>org.flywaydb</groupId>-->
-<!--                        <artifactId>flyway-maven-plugin</artifactId>-->
-<!--                        <version>${version.maven.plugin.flyway}</version>-->
-<!--                        <executions>-->
-<!--                            &lt;!&ndash; Do not issue a flyway:info when integration-tests profile is active &ndash;&gt;-->
-<!--                            <execution>-->
-<!--                                <id>flyway-check-db</id>-->
-<!--                                <phase>none</phase>-->
-<!--                                <goals>-->
-<!--                                    <goal>info</goal>-->
-<!--                                </goals>-->
-<!--                            </execution>-->
-<!--                            <execution>-->
-<!--                                <id>test-flyway-prepare-db</id>-->
-<!--                                <phase>integration-test</phase>-->
-<!--                                <goals>-->
-<!--                                    <goal>migrate</goal>-->
-<!--                                </goals>-->
-<!--                                <configuration>-->
-<!--                                    <user>${db.h2.user}</user>-->
-<!--                                    <password>${db.h2.password}</password>-->
-<!--                                    <schemas>-->
-<!--                                        <schema>${db.h2.schemas}</schema>-->
-<!--                                    </schemas>-->
-<!--                                    <url>jdbc:h2:tcp://localhost:${db.h2.port}/${db.h2.name};DB_CLOSE_ON_EXIT=TRUE</url>-->
-<!--                                    <locations>${flyway.locations}</locations>-->
-<!--                                </configuration>-->
-<!--                            </execution>-->
-<!--                        </executions>-->
-<!--                    </plugin>-->
-
-<!--                    &lt;!&ndash; SUREFIRE: The Surefire Plugin is used during the test phase of the build lifecycle to execute the unit tests of an application. &ndash;&gt;-->
-<!--                    <plugin>-->
-<!--                        <groupId>org.apache.maven.plugins</groupId>-->
-<!--                        <artifactId>maven-surefire-plugin</artifactId>-->
-<!--                        <version>${version.maven.plugin.surefire}</version>-->
-<!--                        <configuration>-->
-<!--                            <skipTests>false</skipTests>-->
-<!--                        </configuration>-->
-<!--                        <executions>-->
-<!--                            <execution>-->
-<!--                                <id>integration-test-h2</id> &lt;!&ndash; Integration tests for H2  &ndash;&gt;-->
-<!--                                <phase>integration-test</phase>-->
-<!--                                <goals>-->
-<!--                                    <goal>test</goal>-->
-<!--                                </goals>-->
-<!--                                <configuration>-->
-<!--                                    <skipTests>false</skipTests>-->
-<!--                                    &lt;!&ndash; Include all integration test classes, the ones ending with: IntegrationTest &ndash;&gt;-->
-<!--                                    <includes>-->
-<!--                                        <include>${test.pattern.integration}</include>-->
-<!--                                    </includes>-->
-<!--                                    &lt;!&ndash; Exclude all unit test classes, the ones ending with: UnitTest &ndash;&gt;-->
-<!--                                    <excludes>-->
-<!--                                        <exclude>${test.pattern.unit}</exclude>-->
-<!--                                    </excludes>-->
-<!--                                </configuration>-->
-<!--                            </execution>-->
-<!--                        </executions>-->
-<!--                    </plugin>-->
-
-<!--                    <plugin>-->
-<!--                        <groupId>io.fabric8</groupId>-->
-<!--                        <artifactId>docker-maven-plugin</artifactId>-->
-<!--                        <version>${version.plugin.maven.docker}</version>-->
-<!--                        &lt;!&ndash; Build an h2 Docker image for the integration tests. &ndash;&gt;-->
-<!--                        <configuration>-->
-<!--                            <images>-->
-<!--                                <image>-->
-<!--                                    <name>nemerosa/h2:latest</name>-->
-<!--                                    <alias>h2-integration</alias>-->
-<!--                                    <run>-->
-<!--                                        <env>-->
-<!--                                            <name>nemerosa-test-h2</name>-->
-<!--                                        </env>-->
-<!--                                        <ports>-->
-<!--                                            &lt;!&ndash; Must not conflict with other h2 instance deployed! &ndash;&gt;-->
-<!--                                            <port>${db.h2.port}:9082</port>-->
-<!--                                        </ports>-->
-<!--                                        <wait>-->
-<!--                                            <time>1000</time>-->
-<!--                                        </wait>-->
-<!--                                    </run>-->
-<!--                                </image>-->
-<!--                            </images>-->
-<!--                        </configuration>-->
-<!--                        <executions>-->
-<!--                            <execution>-->
-<!--                                <id>docker-h2-start-container</id>-->
-<!--                                <phase>pre-integration-test</phase>-->
-<!--                                <goals>-->
-<!--                                    <goal>build</goal>-->
-<!--                                    <goal>start</goal>-->
-<!--                                </goals>-->
-<!--                            </execution>-->
-<!--                            <execution>-->
-<!--                                <id>docker-h2-stop-container</id>-->
-<!--                                <phase>post-integration-test</phase>-->
-<!--                                <goals>-->
-<!--                                    <goal>stop</goal>-->
-<!--                                </goals>-->
-<!--                            </execution>-->
-<!--                        </executions>-->
-<!--                    </plugin>-->
-
-<!--                </plugins>-->
-<!--            </build>-->
-<!--        </profile>-->
-
-<!--    </profiles>-->
 
 </project>
