@@ -15,6 +15,10 @@
     <name>Cherry - Commons</name>
     <description>Module providing common code.</description>
 
+    <properties>
+        <sonar.coverage.jacoco.xmlReportPaths>${project.basedir}/../cherry-coverage/target/site/jacoco-aggregate/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
+    </properties>
+
     <dependencies>
 
         <!-- Spring Boot dependencies -->
