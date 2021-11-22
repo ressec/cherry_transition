@@ -18,9 +18,11 @@ import com.hemajoo.commerce.cherry.commons.type.EntityType;
 import com.hemajoo.commerce.cherry.model.base.search.BaseSearch;
 import com.hemajoo.commerce.cherry.model.person.type.PhoneNumberCategoryType;
 import com.hemajoo.commerce.cherry.model.person.type.PhoneNumberType;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -30,7 +32,9 @@ import javax.persistence.Enumerated;
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
+@ApiModel(value = "PhoneNumberSearch", description = "Specification object used to search for phone numbers.")
 @Data
+@ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
 public class SearchPhoneNumber extends BaseSearch
 {
@@ -73,7 +77,7 @@ public class SearchPhoneNumber extends BaseSearch
     private Long personId;
 
     /**
-     * Creates a new phone number.
+     * Creates a new phone number search instance.
      */
     public SearchPhoneNumber()
     {

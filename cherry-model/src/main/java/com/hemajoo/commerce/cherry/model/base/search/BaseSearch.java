@@ -25,6 +25,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.util.UUID;
 
@@ -35,6 +36,7 @@ import java.util.UUID;
  */
 @Data
 @NoArgsConstructor
+@ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
 public class BaseSearch extends AbstractStatusSearch implements Identity, IdentityAware
 {

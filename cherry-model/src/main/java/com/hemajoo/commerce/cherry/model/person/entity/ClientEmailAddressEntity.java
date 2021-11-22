@@ -14,7 +14,8 @@
  */
 package com.hemajoo.commerce.cherry.model.person.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.hemajoo.commerce.cherry.commons.entity.EntityIdentity;
 import com.hemajoo.commerce.cherry.commons.type.EntityType;
 import com.hemajoo.commerce.cherry.model.base.entity.ClientBaseEntity;
 import com.hemajoo.commerce.cherry.model.person.type.AddressType;
@@ -25,14 +26,13 @@ import lombok.ToString;
 
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.validation.constraints.Email;
-import javax.validation.groups.Default;
 
 /**
- * Represents an email address client entity.
+ * Represents a client email address entity.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
+//@JsonInclude(JsonInclude.Include.NON_NULL)
 @Data
 @ToString(callSuper = true)
 //@Builder(setterPrefix = "with") // Does not work well with MapStruct!
@@ -42,19 +42,22 @@ public class ClientEmailAddressEntity extends ClientBaseEntity implements Client
     /**
      * Email address.
      */
+    @JsonProperty("email")
     @ApiModelProperty(name = "email", notes = "Email address", value = "joe.doe@gmail.com")
-    @Email(message = "email: '${validatedValue}' is not a valid email!", groups = { Default.class })
+    //@Email(message = "email: '${validatedValue}' is not a valid email!")
     private String email;
 
     /**
      * Is it the default email address?
      */
+    @JsonProperty("isDefault")
     @ApiModelProperty(name = "defaultEmail", notes = "Is it the default email address", value = "true")
     private Boolean isDefaultEmail;
 
     /**
      * Email address type.
      */
+    @JsonProperty("addressType")
     @ApiModelProperty(name = "addressType", notes = "Address type", value = "PRIVATE")
     @Enumerated(EnumType.STRING)
     private AddressType addressType;
@@ -62,12 +65,16 @@ public class ClientEmailAddressEntity extends ClientBaseEntity implements Client
     /**
      * The person identifier this email address belongs to.
      */
+    @JsonProperty("person")
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
-    @JsonIgnoreProperties("emailAddresses")
-    @ApiModelProperty(name = "ownerId", notes = "Entity identifier this email address belongs to", value = "1")
-    private ClientPersonEntity person;
+    //@JsonIgnoreProperties("emailAddresses")
+    @ApiModelProperty(name = "person", notes = "Person this email address belongs to", value = "1")
+    private EntityIdentity person; // TODO Could it be moved to base entity?
 
+    /**
+     * Creates a new client email address entity.
+     */
     public ClientEmailAddressEntity()
     {
         super(EntityType.EMAIL_ADDRESS);

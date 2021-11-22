@@ -18,7 +18,7 @@ import com.hemajoo.commerce.cherry.model.document.ClientDocumentEntity;
 import com.hemajoo.commerce.cherry.model.document.exception.DocumentContentException;
 import com.hemajoo.commerce.cherry.model.person.entity.ClientEmailAddressEntity;
 import com.hemajoo.commerce.cherry.model.person.type.AddressType;
-import com.hemajoo.commerce.cherry.persistence.base.randomizer.AbstractBaseServerEntityRandomizer;
+import com.hemajoo.commerce.cherry.persistence.base.randomizer.AbstractBaseEntityRandomizer;
 import com.hemajoo.commerce.cherry.persistence.document.entity.ServerDocumentEntity;
 import com.hemajoo.commerce.cherry.persistence.document.randomizer.DocumentRandomizer;
 import com.hemajoo.commerce.cherry.persistence.person.entity.ServerEmailAddressEntity;
@@ -28,12 +28,12 @@ import org.ressec.avocado.core.random.EnumRandomGenerator;
 import java.util.UUID;
 
 /**
- * Email address random generator.
+ * Random email address generator.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
 @UtilityClass
-public final class EmailAddressRandomizer extends AbstractBaseServerEntityRandomizer
+public final class EmailAddressRandomizer extends AbstractBaseEntityRandomizer
 {
     /**
      * Address type enumeration generator.
@@ -41,15 +41,15 @@ public final class EmailAddressRandomizer extends AbstractBaseServerEntityRandom
     private static final EnumRandomGenerator ADDRESS_TYPE_GENERATOR = new EnumRandomGenerator(AddressType.class);
 
     /**
-     * Create a random persistent email address.
+     * Generates a new random server email address.
      * @param withRandomId Do we need to generate a random identifier? False by default.
-     * <br>Generally set to {@code true} only for unit tests.
+     * <br>Generally set to {@code true} in unit tests.
      * @return Email address.
      */
-    public static ServerEmailAddressEntity generatePersistent(final boolean withRandomId)
+    public static ServerEmailAddressEntity generateServerEntity(final boolean withRandomId)
     {
         var entity = new ServerEmailAddressEntity();
-        AbstractBaseServerEntityRandomizer.populateBaseFields(entity);
+        AbstractBaseEntityRandomizer.populateBaseFields(entity);
 
         if (withRandomId)
         {
@@ -64,18 +64,18 @@ public final class EmailAddressRandomizer extends AbstractBaseServerEntityRandom
     }
 
     /**
-     * Create a random persistent email address with an associated document.
+     * Generates a new random server email address with associated documents.
      * @param withRandomId Do we need to generate a random identifier? False by default.
      * <br>Generally set to {@code true} only for unit tests.
-     * @param count Number of documents to generate.
+     * @param count Number of random documents to generate.
      * @return Email address.
      * @throws DocumentContentException Thrown in case an error occurred while trying to generate a document.
      */
-    public static ServerEmailAddressEntity generatePersistentWithDocument(final boolean withRandomId, final int count) throws DocumentContentException
+    public static ServerEmailAddressEntity generateServerEntityWithDocument(final boolean withRandomId, final int count) throws DocumentContentException
     {
         var entity = new ServerEmailAddressEntity();
         ServerDocumentEntity document;
-        AbstractBaseServerEntityRandomizer.populateBaseFields(entity);
+        AbstractBaseEntityRandomizer.populateBaseFields(entity);
 
         if (withRandomId)
         {
@@ -84,7 +84,7 @@ public final class EmailAddressRandomizer extends AbstractBaseServerEntityRandom
 
         for (int i = 0; i < count; i++)
         {
-            document = DocumentRandomizer.generatePersistent(true);
+            document = DocumentRandomizer.generateServerEntity(true);
             entity.addDocument(document);
         }
 
@@ -96,15 +96,15 @@ public final class EmailAddressRandomizer extends AbstractBaseServerEntityRandom
     }
 
     /**
-     * Create a random client email address.
+     * Generates a new random client email address.
      * @param withRandomId Do we need to generate a random identifier? False by default.
      * <br>Generally set to {@code true} only for unit tests.
      * @return Email address.
      */
-    public static ClientEmailAddressEntity generateClient(final boolean withRandomId)
+    public static ClientEmailAddressEntity generateClientEntity(final boolean withRandomId)
     {
         var entity = new ClientEmailAddressEntity();
-        AbstractBaseServerEntityRandomizer.populateBaseFields(entity);
+        AbstractBaseEntityRandomizer.populateBaseFields(entity);
 
         if (withRandomId)
         {
@@ -119,18 +119,18 @@ public final class EmailAddressRandomizer extends AbstractBaseServerEntityRandom
     }
 
     /**
-     * Create a random client email address with associated documents.
+     * Generates a new random client email address with associated documents.
      * @param withRandomId Do we need to generate a random identifier? False by default.
      * <br>Generally set to {@code true} only for unit tests.
      * @param count Number of documents to generate.
      * @return Email address.
      * @throws DocumentContentException Thrown in case an error occurred while trying to generate a document.
      */
-    public static ClientEmailAddressEntity generateClientWithDocument(final boolean withRandomId, final int count) throws DocumentContentException
+    public static ClientEmailAddressEntity generateClientEntityWithDocument(final boolean withRandomId, final int count) throws DocumentContentException
     {
         ClientDocumentEntity document;
         ClientEmailAddressEntity entity = new ClientEmailAddressEntity();
-        AbstractBaseServerEntityRandomizer.populateBaseFields(entity);
+        AbstractBaseEntityRandomizer.populateBaseFields(entity);
 
         if (withRandomId)
         {
@@ -139,8 +139,8 @@ public final class EmailAddressRandomizer extends AbstractBaseServerEntityRandom
 
         for (int i = 0; i < count; i++)
         {
-            document = DocumentRandomizer.generateClient(true);
-            entity.addDocument(document);
+            document = DocumentRandomizer.generateClientEntity(true);
+            entity.addDocument(document.getIdentity());
         }
 
         entity.setEmail(FAKER.internet().emailAddress());

@@ -32,7 +32,7 @@ import java.time.LocalDate;
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-@ApiModel(value = "PersonSearch", description = "Predicate object used to search for persons.")
+@ApiModel(value = "PersonSearch", description = "Specification object used to search for persons.")
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class SearchPerson extends BaseSearch
@@ -70,7 +70,7 @@ public class SearchPerson extends BaseSearch
     private PersonType personType;
 
     /**
-     * Creates a new search person.
+     * Creates a new person search instance.
      */
     public SearchPerson()
     {

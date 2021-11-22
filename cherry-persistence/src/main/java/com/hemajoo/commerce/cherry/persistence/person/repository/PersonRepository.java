@@ -30,12 +30,17 @@ import java.util.Optional;
 import java.util.UUID;
 
 /**
- * Person repository.
+ * JPA repository for the person entity.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
 public interface PersonRepository extends JpaRepository<ServerPersonEntity, UUID>, JpaSpecificationExecutor<ServerPersonEntity>
 {
+    /**
+     * Returns a person matching the given identifier.
+     * @param id Person identifier.
+     * @return Person.
+     */
     @NotNull
     @EntityGraph(attributePaths = "documents")
     Optional<ServerPersonEntity> findById(final @NonNull UUID id);
@@ -49,7 +54,7 @@ public interface PersonRepository extends JpaRepository<ServerPersonEntity, UUID
     List<ServerPersonEntity> findByStatusType(StatusType statusType);
 
     /**
-     * Returns a list of persons matching the given person type.
+     * Returns the list of persons matching the given person type.
      * @param personType Person type.
      * @return List of persons.
      * @see PersonType
@@ -57,7 +62,7 @@ public interface PersonRepository extends JpaRepository<ServerPersonEntity, UUID
     List<ServerPersonEntity> findByPersonType(PersonType personType);
 
     /**
-     * Returns a list of persons matching the given gender type.
+     * Returns the list of persons matching the given gender type.
      * @param gender Gender type.
      * @return List of persons.
      * @see GenderType
@@ -65,52 +70,24 @@ public interface PersonRepository extends JpaRepository<ServerPersonEntity, UUID
     List<ServerPersonEntity> findByGenderType(GenderType gender);
 
     /**
-     * Returns a list of persons matching the given last name.
+     * Returns the list of persons matching the given last name.
      * @param lastName Last name (strict).
      * @return List of persons.
      */
     List<ServerPersonEntity> findByLastName(String lastName);
 
     /**
-     * Returns a list of persons matching the given first name.
+     * Returns the list of persons matching the given first name.
      * @param firstName First name (strict).
      * @return List of persons.
      */
     List<ServerPersonEntity> findByFirstName(String firstName);
 
     /**
-     * Find persons given predicates.
-     * @param specification Specification of the predicates.
-     * @return List of matching persons.
+     * Returns the list of persons matching the given specification.
+     * @param specification Person specification.
+     * @return List of persons.
      */
+    @NotNull
     List<ServerPersonEntity> findAll(final Specification<ServerPersonEntity> specification);
-
-//    /**
-//     * Returns a list of persons matching the given set of criteria.
-//     * @param lastName Last name (is optional can be partial and make use of {@code SQL} wildcard characters).
-//     * @param firstName First name (is optional can be partial and make use of {@code SQL} wildcard characters).
-//     * @param birthDate Person birthdate (optional).
-//     * @param type Person type (optional).
-//     * @param status Person status type (optional).
-//     * @param gender Person gender type (optional).
-//     * @return List of persons.
-//     * @see PersonType
-//     * @see GenderType
-//     * @see StatusType
-//     */
-//    @Query(value = "SELECT * FROM PERSON p " +
-//            "WHERE p.LASTNAME LIKE COALESCE(NULLIF(:lastName, ''), p.LASTNAME) " +
-//            "AND p.FIRSTNAME LIKE COALESCE(NULLIF(:firstName, ''), p.FIRSTNAME) " +
-//            "AND p.BIRTHDATE = COALESCE(NULLIF(:birthDate, ''), p.BIRTHDATE) " +
-//            "AND p.TYPE LIKE COALESCE(NULLIF(:type, ''), p.TYPE) " +
-//            "AND p.GENDER LIKE COALESCE(NULLIF(:gender, ''), p.GENDER) " +
-//            "AND p.STATUS LIKE COALESCE(NULLIF(:status, ''), p.STATUS)",
-//            nativeQuery = true)
-//    List<PersonEntity> findByCriteria(
-//            @Param(value = "lastName") String lastName,
-//            @Param(value = "firstName") String firstName,
-//            @Param(value = "birthDate") String birthDate,
-//            @Param(value = "type") String type,
-//            @Param(value = "gender") String gender,
-//            @Param(value = "status") String status);
 }

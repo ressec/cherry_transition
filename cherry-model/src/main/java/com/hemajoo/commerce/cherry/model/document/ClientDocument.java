@@ -14,7 +14,7 @@
  */
 package com.hemajoo.commerce.cherry.model.document;
 
-import com.hemajoo.commerce.cherry.commons.entity.Identity;
+import com.hemajoo.commerce.cherry.commons.entity.EntityIdentity;
 import com.hemajoo.commerce.cherry.model.base.entity.ClientEntity;
 import com.hemajoo.commerce.cherry.model.document.base.Document;
 
@@ -29,11 +29,11 @@ public interface ClientDocument extends Document, ClientEntity
      * Returns the document owner.
      * @return Document owner.
      */
-    Identity getOwner();
+    EntityIdentity getOwner();
 
     /**
      * Sets the document owner.
      * @param owner Document owner.
      */
-    void setOwner(final Identity owner);
+    void setOwner(final EntityIdentity owner);
 }

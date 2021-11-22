@@ -24,7 +24,9 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
+import java.util.Optional;
 
 /**
  * A global exception handler.
@@ -34,6 +36,15 @@ import javax.validation.ConstraintViolationException;
 @RestControllerAdvice
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler
 {
+    @ExceptionHandler(Exception.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseBody
+    @NotNull
+    public static ResponseEntity<String> handleExceptions(Exception exception, WebRequest request)
+    {
+        return ResponseEntity.badRequest().body(exception.getCause().getMessage());
+    }
+
     @ExceptionHandler(IllegalArgumentException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ResponseBody
@@ -49,17 +60,30 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler
      * @param request Web request.
      * @return Response entity containing the errors.
      */
-    @ExceptionHandler(ConstraintViolationException.class)
-    @ResponseStatus(HttpStatus.NOT_FOUND)
     @ResponseBody
     @NotNull
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(ConstraintViolationException.class)
+    @SuppressWarnings("java:S3655")
     public static ResponseEntity<String> handleConstraintViolationException(ConstraintViolationException exception, WebRequest request)
     {
-//        for (ConstraintViolation<?> violation : exception.getConstraintViolations())
-//        {
-//            response.addError(violation.getMessage());
-//        }
-//
-        return new ResponseEntity<>(exception.getMessage(), HttpStatus.NOT_FOUND);
+        String message = exception.getMessage();
+        String status;
+        HttpStatus httpStatus = HttpStatus.BAD_REQUEST;
+        Optional<ConstraintViolation<?>> first = exception.getConstraintViolations().stream().findFirst();
+
+        // Extract the HttpsStatus code
+        if (first.isPresent())
+        {
+            message = first.get().getMessage();
+            if (message != null && message.contains("@@"))
+            {
+                status = message.substring(0, message.indexOf("@@"));
+                httpStatus = HttpStatus.valueOf(Integer.parseInt(status.substring(0, 3)));
+                message = message.substring(message.indexOf("@@") + 2);
+            }
+        }
+
+        return new ResponseEntity<>(message, httpStatus);
     }
 }

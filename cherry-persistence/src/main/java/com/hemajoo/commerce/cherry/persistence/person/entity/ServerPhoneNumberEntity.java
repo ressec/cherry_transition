@@ -20,8 +20,6 @@ import com.hemajoo.commerce.cherry.model.person.type.PhoneNumberCategoryType;
 import com.hemajoo.commerce.cherry.model.person.type.PhoneNumberType;
 import com.hemajoo.commerce.cherry.persistence.base.entity.ServerBaseEntity;
 import com.hemajoo.commerce.cherry.persistence.base.entity.ServerEntity;
-import com.hemajoo.commerce.cherry.persistence.base.validation.BasicValidation;
-import com.hemajoo.commerce.cherry.persistence.base.validation.ExtendedValidation;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -29,7 +27,6 @@ import lombok.ToString;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
-import javax.validation.GroupSequence;
 import javax.validation.constraints.NotNull;
 
 /**
@@ -37,7 +34,6 @@ import javax.validation.constraints.NotNull;
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-@GroupSequence( { ServerPhoneNumberEntity.class, BasicValidation.class, ExtendedValidation.class } )
 @ToString(callSuper = false)
 @EqualsAndHashCode(callSuper = false)
 @Table(name = "PHONE_NUMBER")

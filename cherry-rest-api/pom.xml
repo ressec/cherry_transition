@@ -17,15 +17,19 @@
     <description>Module providing REST API controllers and endpoints to communicate with the backend.</description>
 
     <properties>
-
-        <!-- FlyWay properties -->
-        <flyway.user></flyway.user>
-        <flyway.password></flyway.password>
-        <flyway.schemas>DEV</flyway.schemas>
-        <flyway.url>jdbc:h2:tcp://localhost:9092/cherry;DB_CLOSE_ON_EXIT=FALSE</flyway.url>
-        <flyway.locations>filesystem:../cherry-persistence/src/main/resources/db/migration/h2</flyway.locations>
-
+        <sonar.coverage.jacoco.xmlReportPaths>${project.basedir}/../cherry-coverage/target/site/jacoco-aggregate/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
     </properties>
+
+    <!--    <properties>-->
+
+<!--        &lt;!&ndash; FlyWay properties &ndash;&gt;-->
+<!--        <flyway.user></flyway.user>-->
+<!--        <flyway.password></flyway.password>-->
+<!--        <flyway.schemas>DEV</flyway.schemas>-->
+<!--        <flyway.url>jdbc:h2:tcp://localhost:9092/cherry;DB_CLOSE_ON_EXIT=FALSE</flyway.url>-->
+<!--        <flyway.locations>filesystem:../cherry-persistence/src/main/resources/db/migration/h2</flyway.locations>-->
+
+<!--    </properties>-->
 
     <dependencies>
 
@@ -33,12 +37,6 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-        </dependency>
-
-        <!-- Spring Boot dependencies -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-autoconfigure</artifactId>
         </dependency>
 
         <dependency>
@@ -56,22 +54,28 @@
             <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
 
-        <!-- Allow to expose JPA repositories as REST controllers -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-rest</artifactId>
-        </dependency>
+<!--        &lt;!&ndash; Allow to expose JPA repositories as REST controllers &ndash;&gt;-->
+<!--        <dependency>-->
+<!--            <groupId>org.springframework.boot</groupId>-->
+<!--            <artifactId>spring-boot-starter-data-rest</artifactId>-->
+<!--        </dependency>-->
 
         <dependency>
             <groupId>com.github.paulcwarren</groupId>
             <artifactId>spring-content-rest-boot-starter</artifactId>
-            <version>1.2.4</version>
         </dependency>
 
-        <!-- Database: H2 -->
+        <!-- H2 database driver -->
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+
+        <!-- PostgreSQL database driver -->
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
             <scope>runtime</scope>
         </dependency>
 
@@ -114,6 +118,12 @@
         <dependency>
             <groupId>org.mapstruct</groupId>
             <artifactId>mapstruct-processor</artifactId>
+        </dependency>
+
+        <!-- Bean validation -->
+        <dependency>
+            <groupId>commons-validator</groupId>
+            <artifactId>commons-validator</artifactId>
         </dependency>
 
     </dependencies>

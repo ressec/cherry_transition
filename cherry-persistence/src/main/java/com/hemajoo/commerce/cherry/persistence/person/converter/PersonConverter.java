@@ -14,79 +14,88 @@
  */
 package com.hemajoo.commerce.cherry.persistence.person.converter;
 
+import com.hemajoo.commerce.cherry.commons.entity.EntityIdentity;
 import com.hemajoo.commerce.cherry.model.person.entity.ClientPersonEntity;
+import com.hemajoo.commerce.cherry.model.person.exception.EntityException;
+import com.hemajoo.commerce.cherry.persistence.base.entity.AbstractBaseEntityMapper;
 import com.hemajoo.commerce.cherry.persistence.base.mapper.CycleAvoidingMappingContext;
 import com.hemajoo.commerce.cherry.persistence.person.entity.ServerPersonEntity;
-import com.hemajoo.commerce.cherry.persistence.person.mapper.PersonMapper;
-import lombok.experimental.UtilityClass;
+import com.hemajoo.commerce.cherry.persistence.person.mapper.AbstractPersonMapper;
+import org.springframework.stereotype.Component;
 
-import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
 /**
- * Utility class to convert between {@link ClientPersonEntity} and {@link ServerPersonEntity} and vice-versa.
+ * Component to convert between instances of client and server persons.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-@UtilityClass
+@Component
 public final class PersonConverter
 {
+    @PersistenceContext
+    private EntityManager entityManager;
+
     /**
-     * Converts a client entity to a persistent entity.
-     * @param entity Client entity to map.
-     * @return Mapped persistent entity.
+     * Converts from a server person entity to an entity identity.
+     * @param server Server person entity.
+     * @return Entity identity.
      */
-    public static ServerPersonEntity convertClient(ClientPersonEntity entity)
+    public EntityIdentity fromServerToIdentity(ServerPersonEntity server)
     {
-        return PersonMapper.INSTANCE.mapClient(entity, new CycleAvoidingMappingContext());
+        return AbstractPersonMapper.INSTANCE.fromServerToIdentity(server, new CycleAvoidingMappingContext());
     }
 
     /**
-     * Converts a list of client entities to a list of persistent entities.
-     * @param list List of client entities to map.
-     * @return Mapped list of persistent entities.
+     * Converts from an entity identity to a server person entity.
+     * @param identity Entity identity.
+     * @return Server person entity.
+     * @throws EntityException Thrown to indicate an error occurred while retrieving the server entity from the underlying database.
      */
-    public static List<ServerPersonEntity> convertClientList(List<ClientPersonEntity> list)
+    public ServerPersonEntity fromIdentityToServer(EntityIdentity identity) throws EntityException
     {
-        return PersonMapper.INSTANCE.mapClientList(list, new CycleAvoidingMappingContext());
+        return AbstractBaseEntityMapper.INSTANCE.map(identity,entityManager);
     }
 
     /**
-     * Converts from a (persistent) email address to a (client) email address.
-     * @param entity Persistent entity to map.
-     * @return Mapped client entity.
+     * Converts from a client person entity to a server person entity.
+     * @param client Client person entity.
+     * @return Server person entity.
+     * @throws EntityException Thrown to indicate an error occurred while retrieving the server entity from the underlying database.
      */
-    public static ClientPersonEntity convertPersistence(ServerPersonEntity entity)
+    public ServerPersonEntity fromClientToServer(ClientPersonEntity client) throws EntityException
     {
-        return PersonMapper.INSTANCE.mapPersistence(entity, new CycleAvoidingMappingContext());
+        return AbstractPersonMapper.INSTANCE.fromClientToServer(client, new CycleAvoidingMappingContext(), entityManager);
     }
 
     /**
-     * Converts from a list of persistent entities to a list of client entities.
-     * @param list List of persistent entities to map.
-     * @return Mapped list of client entities.
+     * Converts from a server person entity to a client person entity.
+     * @param server Server person entity.
+     * @return Client person entity.
      */
-    public static List<ClientPersonEntity> convertPersistenceList(List<ServerPersonEntity> list)
+    public ClientPersonEntity fromServerToClient(ServerPersonEntity server)
     {
-        return PersonMapper.INSTANCE.mapPersistenceList(list, new CycleAvoidingMappingContext());
+        return AbstractPersonMapper.INSTANCE.fromServerToClient(server, new CycleAvoidingMappingContext());
     }
 
     /**
-     * Copy a persistent entity.
-     * @param entity Persistent source entity to copy.
-     * @return Copied persistent entity.
+     * Copy a server person entity.
+     * @param server Server person entity.
+     * @return Copied server person entity.
      */
-    public static ServerPersonEntity copy(ServerPersonEntity entity)
+    public static ServerPersonEntity copy(ServerPersonEntity server)
     {
-        return PersonMapper.INSTANCE.copy(entity, new CycleAvoidingMappingContext());
+        return AbstractPersonMapper.INSTANCE.copy(server, new CycleAvoidingMappingContext());
     }
 
     /**
-     * Copy a client entity.
-     * @param entity Client source entity to copy.
-     * @return Copied client entity.
+     * Copy a client person entity.
+     * @param client Client person entity.
+     * @return Copied client person entity.
      */
-    public static ClientPersonEntity copy(ClientPersonEntity entity)
+    public static ClientPersonEntity copy(ClientPersonEntity client)
     {
-        return PersonMapper.INSTANCE.copy(entity, new CycleAvoidingMappingContext());
+        return AbstractPersonMapper.INSTANCE.copy(client, new CycleAvoidingMappingContext());
     }
 }

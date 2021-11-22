@@ -18,6 +18,7 @@ import com.hemajoo.commerce.cherry.commons.type.EntityType;
 import com.hemajoo.commerce.cherry.model.base.search.BaseSearch;
 import com.hemajoo.commerce.cherry.model.person.type.AddressCategoryType;
 import com.hemajoo.commerce.cherry.model.person.type.AddressType;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -30,6 +31,7 @@ import javax.persistence.Enumerated;
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
+@ApiModel(value = "PostalAddressSearch", description = "Specification object used to search for postal addresses.")
 @Data
 @EqualsAndHashCode(callSuper = false)
 public class SearchPostalAddress extends BaseSearch
@@ -97,7 +99,7 @@ public class SearchPostalAddress extends BaseSearch
     private Long personId;
 
     /**
-     * Creates a new postal address.
+     * Creates a new postal address search instance.
      */
     public SearchPostalAddress()
     {

@@ -16,7 +16,6 @@ package com.hemajoo.commerce.cherry.model.document;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.hemajoo.commerce.cherry.commons.entity.EntityIdentity;
-import com.hemajoo.commerce.cherry.commons.entity.Identity;
 import com.hemajoo.commerce.cherry.commons.type.EntityType;
 import com.hemajoo.commerce.cherry.model.base.entity.ClientBaseEntity;
 import com.hemajoo.commerce.cherry.model.base.entity.ClientEntity;
@@ -105,8 +104,7 @@ public class ClientDocumentEntity extends ClientBaseEntity implements Document, 
      * Document owner identity.
      */
     @Getter
-    //@Setter
-    private /*EntityIdentity*/ Identity owner;
+    private EntityIdentity owner;
 
     @ToString.Exclude
     @Getter
@@ -144,7 +142,7 @@ public class ClientDocumentEntity extends ClientBaseEntity implements Document, 
      * @param owner Document owner identity.
      * @param documentType Document type.
      */
-    public ClientDocumentEntity(final @NonNull /*EntityIdentity*/ Identity owner, final @NonNull DocumentType documentType)
+    public ClientDocumentEntity(final @NonNull EntityIdentity owner, final @NonNull DocumentType documentType)
     {
         super(EntityType.DOCUMENT);
 
@@ -161,7 +159,7 @@ public class ClientDocumentEntity extends ClientBaseEntity implements Document, 
      * @param filename File name.
      * @throws DocumentContentException Thrown in case an error occurred while processing the document content.
      */
-    public ClientDocumentEntity(final @NonNull /*EntityIdentity*/ Identity owner, final @NonNull DocumentType documentType, final @NonNull String filename) throws DocumentContentException
+    public ClientDocumentEntity(final @NonNull EntityIdentity owner, final @NonNull DocumentType documentType, final @NonNull String filename) throws DocumentContentException
     {
         this(owner, documentType);
 
@@ -179,7 +177,7 @@ public class ClientDocumentEntity extends ClientBaseEntity implements Document, 
      * @param file File.
      * @throws DocumentContentException Thrown in case an error occurred while processing the document content.
      */
-    public ClientDocumentEntity(final @NonNull /*EntityIdentity*/ Identity owner, final @NonNull DocumentType documentType, final @NonNull File file) throws DocumentContentException
+    public ClientDocumentEntity(final @NonNull EntityIdentity owner, final @NonNull DocumentType documentType, final @NonNull File file) throws DocumentContentException
     {
         this(owner, documentType);
 
@@ -197,7 +195,7 @@ public class ClientDocumentEntity extends ClientBaseEntity implements Document, 
      * @param multiPartFile Multipart file.
      * @throws DocumentContentException Thrown in case an error occurred while processing the document content.
      */
-    public ClientDocumentEntity(final @NonNull /*EntityIdentity*/ Identity owner, final @NonNull DocumentType documentType, final @NonNull MultipartFile multiPartFile) throws DocumentContentException
+    public ClientDocumentEntity(final @NonNull EntityIdentity owner, final @NonNull DocumentType documentType, final @NonNull MultipartFile multiPartFile) throws DocumentContentException
     {
         this(owner, documentType);
 
@@ -326,8 +324,8 @@ public class ClientDocumentEntity extends ClientBaseEntity implements Document, 
     }
 
     @Override
-    public void setOwner(Identity owner)
+    public void setOwner(EntityIdentity owner)
     {
-        this.owner = (EntityIdentity) owner;
+        this.owner = owner;
     }
 }

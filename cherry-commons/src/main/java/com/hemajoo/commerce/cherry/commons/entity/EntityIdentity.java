@@ -14,10 +14,10 @@
  */
 package com.hemajoo.commerce.cherry.commons.entity;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.hemajoo.commerce.cherry.commons.type.EntityType;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Getter;
-import lombok.ToString;
+import lombok.*;
 
 import java.util.UUID;
 
@@ -27,21 +27,40 @@ import java.util.UUID;
  * @version 1.0.0
  */
 @ToString
+@NoArgsConstructor
+@AllArgsConstructor
 public class EntityIdentity implements Identity
 {
     /**
      * Entity type.
      */
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     @ApiModelProperty(hidden = true)
     @Getter
-    private final EntityType entityType;
+    @Setter
+    private EntityType entityType;
 
     /**
      * Entity unique identifier.
      */
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     @ApiModelProperty(hidden = true)
     @Getter
-    private final UUID id;
+    @Setter
+    private UUID id;
+
+    /**
+     * Creates a new entity identity based on a given identity.
+     * @param identity Identity.
+     */
+    public EntityIdentity(final Identity identity)
+    {
+        if (identity != null)
+        {
+            this.id = identity.getId();
+            this.entityType = identity.getEntityType();
+        }
+    }
 
     /**
      * Creates a new entity identity.

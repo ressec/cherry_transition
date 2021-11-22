@@ -14,9 +14,10 @@
  */
 package com.hemajoo.commerce.cherry.model.base.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.hemajoo.commerce.cherry.commons.entity.EntityIdentity;
 import com.hemajoo.commerce.cherry.commons.type.EntityType;
-import com.hemajoo.commerce.cherry.model.document.ClientDocumentEntity;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
@@ -30,48 +31,64 @@ import java.util.UUID;
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-@Data
 @NoArgsConstructor
+@ToString
 @EqualsAndHashCode(callSuper = true)
-public class ClientBaseEntity extends AbstractStatusClientEntity implements ClientEntity, BaseEntity
+public class ClientBaseEntity extends AbstractClientStatusEntity implements ClientEntity
 {
     /**
      * Entity identifier.
      */
+    @Getter
+    @Setter
+    @JsonProperty("uuid")
     @ApiModelProperty(name = "id", notes = "Identifier")
     private UUID id;
 
     /**
      * Entity type.
      */
+    @Setter
+    @JsonProperty("type")
     @ApiModelProperty(name = "entityType", notes = "Entity type", value = "PERSON")
     private EntityType entityType;
 
     /**
      * Entity name.
      */
+    @Getter
+    @Setter
+    @JsonProperty("name")
     @ApiModelProperty(name = "name", notes = "Name")
     private String name;
 
     /**
      * Entity description.
      */
+    @Getter
+    @Setter
+    @JsonProperty("description")
     @ApiModelProperty(name = "description", notes = "Description")
     private String description;
 
     /**
      * Entity reference.
      */
+    @Getter
+    @Setter
+    @JsonProperty("reference")
     @ApiModelProperty(name = "reference", notes = "Reference")
     private String reference;
 
     /**
      * Entity documents.
      */
+    @Setter
+    @JsonProperty("documents")
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     @ApiModelProperty(hidden = true)
-    private List<ClientDocumentEntity> documents = new ArrayList<>();
+    private List<EntityIdentity> documents = new ArrayList<>();
 
     /**
      * Creates a new (client) base entity type
@@ -98,7 +115,7 @@ public class ClientBaseEntity extends AbstractStatusClientEntity implements Clie
      * Adds a document to this entityDocumentEntity.
      * @param document Document.
      */
-    public final void addDocument(final @NonNull ClientDocumentEntity document)
+    public final void addDocument(final @NonNull EntityIdentity document)
     {
         documents.add(document);
     }
@@ -107,7 +124,8 @@ public class ClientBaseEntity extends AbstractStatusClientEntity implements Clie
      * Returns the documents associated with this entity.
      * @return List of documents.
      */
-    public final List<ClientDocumentEntity> getDocuments()
+    @JsonIgnore
+    public List<EntityIdentity> getDocuments()
     {
         if (entityType == EntityType.DOCUMENT)
         {

@@ -14,6 +14,8 @@
  */
 package com.hemajoo.commerce.cherry.model.person.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.hemajoo.commerce.cherry.commons.entity.Identity;
 import com.hemajoo.commerce.cherry.commons.type.EntityType;
 import com.hemajoo.commerce.cherry.model.base.entity.ClientBaseEntity;
 import com.hemajoo.commerce.cherry.model.person.type.PhoneNumberCategoryType;
@@ -21,6 +23,7 @@ import com.hemajoo.commerce.cherry.model.person.type.PhoneNumberType;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -67,10 +70,13 @@ public class ClientPhoneNumberEntity extends ClientBaseEntity implements ClientP
     private Boolean isDefault;
 
     /**
-     * The person identifier this phone number belongs to.
+     * The entity identity this phone number belongs to.
      */
-    @ApiModelProperty(name = "personId", notes = "Person identifier this phone number belongs to", value = "1")
-    private ClientPersonEntity person;
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    @JsonIgnoreProperties("phoneNumbers")
+    @ApiModelProperty(name = "owner", notes = "Entity identity this phone number belongs to", value = "1")
+    private Identity owner;
 
     /**
      * Creates a new phone number.

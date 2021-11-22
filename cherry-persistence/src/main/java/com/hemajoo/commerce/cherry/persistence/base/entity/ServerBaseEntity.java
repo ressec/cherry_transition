@@ -94,7 +94,7 @@ public class ServerBaseEntity extends AbstractServerStatusEntity implements Base
      */
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL/*, orphanRemoval = true*/)
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL/*, orphanRemoval = true*/)
     private List<ServerDocumentEntity> documents = null;
 
     /**
