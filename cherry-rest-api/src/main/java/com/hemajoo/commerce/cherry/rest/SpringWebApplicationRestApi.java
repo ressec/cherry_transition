@@ -15,6 +15,7 @@
 package com.hemajoo.commerce.cherry.rest;
 
 import com.hemajoo.commerce.cherry.rest.config.PersistenceConfiguration;
+import internal.org.springframework.content.s3.boot.autoconfigure.S3ContentAutoConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -30,8 +31,8 @@ import java.util.logging.Logger;
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-@Import(PersistenceConfiguration.class)
-@SpringBootApplication
+@Import({ PersistenceConfiguration.class })
+@SpringBootApplication(exclude = { S3ContentAutoConfiguration.class })
 public class SpringWebApplicationRestApi implements CommandLineRunner
 {
     /**

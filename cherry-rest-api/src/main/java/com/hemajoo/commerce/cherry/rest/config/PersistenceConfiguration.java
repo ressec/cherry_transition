@@ -40,8 +40,8 @@ import java.util.Optional;
  * @version 1.0.0
  */
 @Configuration
-@ComponentScan(basePackages = "com.hemajoo.commerce.cherry.persistence")
-@EnableJpaRepositories(basePackages = "com.hemajoo.commerce.cherry.persistence")
+@ComponentScan(basePackages = { "com.hemajoo.commerce.cherry.persistence.*" } )
+@EnableJpaRepositories(basePackages = { "com.hemajoo.commerce.cherry.persistence.*" })
 @EntityScan(basePackages = "com.hemajoo.commerce.cherry.persistence")
 @EnableFilesystemStores(basePackages = "com.hemajoo.commerce.cherry.persistence")
 @EnableJpaAuditing(auditorAwareRef = "auditorProvider", dateTimeProviderRef = "auditingDateTimeProvider")

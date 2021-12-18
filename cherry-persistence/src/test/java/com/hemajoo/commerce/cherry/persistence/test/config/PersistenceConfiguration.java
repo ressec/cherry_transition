@@ -99,6 +99,7 @@ public class PersistenceConfiguration
     @Bean
     FileSystemResourceLoader fileSystemResourceLoader() throws ContentStoreException
     {
+        // For file system storage.
         return new FileSystemResourceLoader(fileSystemRoot().getAbsolutePath());
     }
 }
