@@ -18,8 +18,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.hemajoo.commerce.cherry.commons.entity.EntityIdentity;
 import com.hemajoo.commerce.cherry.commons.type.EntityType;
 import com.hemajoo.commerce.cherry.model.base.entity.ClientBaseEntity;
-import com.hemajoo.commerce.cherry.model.base.entity.ClientEntity;
-import com.hemajoo.commerce.cherry.model.document.base.Document;
 import com.hemajoo.commerce.cherry.model.document.exception.DocumentContentException;
 import com.hemajoo.commerce.cherry.model.document.type.DocumentType;
 import lombok.*;
@@ -40,7 +38,7 @@ import java.io.InputStream;
  */
 @EqualsAndHashCode(callSuper = true)
 @ToString
-public class ClientDocumentEntity extends ClientBaseEntity implements Document, ClientDocument, ClientEntity
+public class ClientDocumentEntity extends ClientBaseEntity implements ClientDocument
 {
     /**
      * Document type.
@@ -149,7 +147,6 @@ public class ClientDocumentEntity extends ClientBaseEntity implements Document, 
         setActive();
         this.documentType = documentType;
         this.owner = owner;
-        //owner.addDocument(this);
     }
 
     /**
@@ -206,6 +203,11 @@ public class ClientDocumentEntity extends ClientBaseEntity implements Document, 
         detectMimeType(multiPartFile);
     }
 
+    /**
+     * Sets the content of a document.
+     * @param filename Filename of the content.
+     * @throws DocumentContentException Thrown to indicate an error occurred when trying to set the content of the document.
+     */
     public final void setContent(final @NonNull String filename) throws DocumentContentException
     {
         try
@@ -218,9 +220,14 @@ public class ClientDocumentEntity extends ClientBaseEntity implements Document, 
         catch (Exception e)
         {
             throw new DocumentContentException(e);
-        };
+        }
     }
 
+    /**
+     * Sets the content of a document.
+     * @param file File being the content of the document.
+     * @throws DocumentContentException Thrown to indicate an error occurred when trying to set the content of the document.
+     */
     public final void setContent(final @NonNull File file) throws DocumentContentException
     {
         try
@@ -233,9 +240,13 @@ public class ClientDocumentEntity extends ClientBaseEntity implements Document, 
         catch (Exception e)
         {
             throw new DocumentContentException(e);
-        };
+        }
     }
 
+    /**
+     * Sets the content of a document.
+     * @param inputStream Input stream representing the content.
+     */
     public final void setContent(final InputStream inputStream)
     {
         this.content = inputStream;
@@ -294,7 +305,7 @@ public class ClientDocumentEntity extends ClientBaseEntity implements Document, 
 
     /**
      * Detects the media file {@code Mime} type.
-     * @param multiPartFile Multi part file.
+     * @param multiPartFile Multipart file.
      * @throws DocumentContentException Thrown in case an error occurred while processing the media file.
      */
     private void detectMimeType(final @NonNull MultipartFile multiPartFile) throws DocumentContentException
@@ -324,7 +335,7 @@ public class ClientDocumentEntity extends ClientBaseEntity implements Document, 
     }
 
     @Override
-    public void setOwner(EntityIdentity owner)
+    public final void setOwner(EntityIdentity owner)
     {
         this.owner = owner;
     }
