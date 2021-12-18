@@ -16,7 +16,7 @@ package com.hemajoo.commerce.cherry.rest.controller.person;
 
 import com.hemajoo.commerce.cherry.model.person.entity.ClientPersonEntity;
 import com.hemajoo.commerce.cherry.model.person.exception.EmailAddressException;
-import com.hemajoo.commerce.cherry.persistence.base.factory.ServerEntityFactory;
+import com.hemajoo.commerce.cherry.persistence.base.entity.ServiceFactoryPerson;
 import com.hemajoo.commerce.cherry.persistence.person.converter.PersonConverter;
 import com.hemajoo.commerce.cherry.persistence.person.entity.ServerPersonEntity;
 import com.hemajoo.commerce.cherry.persistence.person.randomizer.PersonRandomizer;
@@ -50,19 +50,19 @@ public class PersonController
      * Server entity factory.
      */
     @Autowired
-    private ServerEntityFactory entityFactory;
+    private ServiceFactoryPerson servicePerson;
 
     /**
      * Person converter.
      */
     @Autowired
-    private PersonConverter personConverter;
+    private PersonConverter converterPerson;
 
     /**
      * Email address validation engine.
      */
     @Autowired
-    private EmailAddressValidationEngine emailAddressRuleEngine;
+    private EmailAddressValidationEngine validationEmailAddress;
 
     /**
      * Service to count the number of persons.
@@ -72,7 +72,7 @@ public class PersonController
     @GetMapping("/count")
     public long count()
     {
-        return entityFactory.getServices().getPersonService().count();
+        return servicePerson.getPersonService().count();
     }
 
     /**
@@ -88,8 +88,8 @@ public class PersonController
             @NotNull
             @PathVariable String id)
     {
-        ServerPersonEntity person = entityFactory.getServices().getPersonService().findById(UUID.fromString(id));
-        return ResponseEntity.ok(personConverter.fromServerToClient(person));
+        ServerPersonEntity person = servicePerson.getPersonService().findById(UUID.fromString(id));
+        return ResponseEntity.ok(converterPerson.fromServerToClient(person));
     }
 
 //    /**
@@ -120,9 +120,9 @@ public class PersonController
     public ResponseEntity<ClientPersonEntity> random() throws EmailAddressException
     {
         ServerPersonEntity person = PersonRandomizer.generateServerEntity(false);
-        person = entityFactory.getServices().getPersonService().save(person);
+        person = servicePerson.getPersonService().save(person);
 
-        return ResponseEntity.ok(personConverter.fromServerToClient(person));
+        return ResponseEntity.ok(converterPerson.fromServerToClient(person));
     }
 
 //    /**
@@ -154,7 +154,7 @@ public class PersonController
             @ApiParam(value = "Person identifier (UUID)", required = true)
             @NotNull @Valid @ValidPersonId @PathVariable String id)
     {
-        entityFactory.getServices().getPersonService().deleteById(UUID.fromString(id));
+        servicePerson.getPersonService().deleteById(UUID.fromString(id));
 
         return ResponseEntity.ok(String.format("Person id: '%s' has been deleted successfully!", id));
     }

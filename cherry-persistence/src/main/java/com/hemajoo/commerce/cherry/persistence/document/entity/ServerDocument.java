@@ -25,24 +25,12 @@ import com.hemajoo.commerce.cherry.persistence.base.entity.ServerEntity;
  */
 public interface ServerDocument extends Document, ServerEntity
 {
-//    /**
-//     * Returns the owner entity of this document.
-//     * @return Owner entity.
-//     */
-//    BaseEntity getOwner();
-
     /**
      * Returns the owner entity of this document.
      * @param <T> Type of the owner.
      * @return Owner entity.
      */
     <T extends ServerBaseEntity> T getOwner();
-
-//    /**
-//     * Sets the owner entity of this document.
-//     * @param owner Owner entity.
-//     */
-//    void setOwner(final BaseEntity owner);
 
     /**
      * Sets the owner entity of this document.

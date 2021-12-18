@@ -129,14 +129,13 @@ public class ServerDocumentEntity extends ServerBaseEntity implements ServerDocu
     private String contentPath; //TODO Not yet filled!
 
     /**
-     * Document owners.
+     * Document owner.
      */
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     @Getter
     @OneToOne(targetEntity = ServerBaseEntity.class, fetch = FetchType.EAGER)
     private ServerBaseEntity owner;
-//    private List<ServerBaseEntity> owners = new ArrayList<>();
 
     /**
      * Document content.

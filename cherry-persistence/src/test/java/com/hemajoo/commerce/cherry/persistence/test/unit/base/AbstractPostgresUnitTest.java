@@ -22,7 +22,7 @@ import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 
 /**
- * Abstract class providing PostgreSQL support for unit tests through docker container.
+ * Abstract class providing PostgresSQL support for unit tests through docker container.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
@@ -30,11 +30,11 @@ import org.testcontainers.junit.jupiter.Container;
 public abstract class AbstractPostgresUnitTest
 {
     /**
-     * PostgreSQL docker container.
+     * PostgresSQL docker container.
      */
     @Container
     @Getter
-    protected static final PostgreSQLContainer<?> POSTGRE_SQL_CONTAINER = new PostgreSQLContainer<>("postgres:latest")
+    protected static final PostgreSQLContainer<?> POSTGRES_SQL_CONTAINER = new PostgreSQLContainer<>("postgres:latest")
             .withUsername("postgres")
             .withPassword("postgres")
             .withDatabaseName("test")
@@ -47,19 +47,19 @@ public abstract class AbstractPostgresUnitTest
     @DynamicPropertySource
     private static void properties(DynamicPropertyRegistry registry)
     {
-        registry.add("spring.datasource.url", POSTGRE_SQL_CONTAINER::getJdbcUrl);
-        registry.add("spring.datasource.username", POSTGRE_SQL_CONTAINER::getUsername);
-        registry.add("spring.datasource.password", POSTGRE_SQL_CONTAINER::getPassword);
+        registry.add("spring.datasource.url", POSTGRES_SQL_CONTAINER::getJdbcUrl);
+        registry.add("spring.datasource.username", POSTGRES_SQL_CONTAINER::getUsername);
+        registry.add("spring.datasource.password", POSTGRES_SQL_CONTAINER::getPassword);
         registry.add("spring.jpa.generate-ddl", () -> "true");
         registry.add("spring.jpa.hibernate.ddl-auto", () -> "update");
         registry.add("spring.batch.initialize-schema", () -> "always");
 
-        LOGGER.info(String.format("Container host address: %s", POSTGRE_SQL_CONTAINER.getHost()));
-        LOGGER.info(String.format("Container port number: %s", POSTGRE_SQL_CONTAINER.getFirstMappedPort()));
+        LOGGER.info(String.format("Container host address: %s", POSTGRES_SQL_CONTAINER.getHost()));
+        LOGGER.info(String.format("Container port number: %s", POSTGRES_SQL_CONTAINER.getFirstMappedPort()));
     }
 
     static
     {
-        POSTGRE_SQL_CONTAINER.start();
+        POSTGRES_SQL_CONTAINER.start();
     }
 }
