@@ -58,14 +58,14 @@
 
         <!-- Dependencies version properties -->
         <version.ressec.avocado>0.1.0</version.ressec.avocado>
-        <version.spring.boot>2.5.5</version.spring.boot>
+        <version.spring.boot>2.6.1</version.spring.boot>
         <version.swagger>3.0.0</version.swagger>
         <version.google.gson>2.8.6</version.google.gson>
         <version.gson-fire>1.8.4</version.gson-fire>
         <version.google.guava>30.0-jre</version.google.guava>
         <version.junit.jupiter>5.8.1</version.junit.jupiter>
         <version.javafaker>1.0.1</version.javafaker>
-        <version.apache.log4j>2.13.2</version.apache.log4j>
+        <version.apache.log4j>2.16.0</version.apache.log4j>
         <version.apache.commons.lang.3>3.9</version.apache.commons.lang.3>
         <version.apache.commons.io>2.11.0</version.apache.commons.io>
         <version.apache.commons.validator>1.7</version.apache.commons.validator>
@@ -79,7 +79,8 @@
         <version.testcontainers>1.16.2</version.testcontainers>
         <version.db.h2>1.4.200</version.db.h2>
         <version.db.postgresql>42.3.1</version.db.postgresql>
-        <version.spring.content.rest>1.2.6</version.spring.content.rest>
+        <version.spring.content>1.2.7</version.spring.content>
+        <version.amazon.awssdk>2.17.100</version.amazon.awssdk>
 
         <!-- Flyway properties -->
         <flyway.locations>classpath:/db/migration/h2</flyway.locations>
@@ -154,17 +155,37 @@
                 <version>${version.lombok}</version>
             </dependency>
 
+            <!-- Amazon AWS SDK -->
+            <dependency>
+                <groupId>software.amazon.awssdk</groupId>
+                <artifactId>s3</artifactId>
+                <version>${version.amazon.awssdk}</version>
+            </dependency>
+
+            <!-- Content Storage -->
             <dependency>
                 <groupId>com.github.paulcwarren</groupId>
                 <artifactId>spring-content-rest-boot-starter</artifactId>
-                <version>${version.spring.content.rest}</version>
+                <version>${version.spring.content}</version>
             </dependency>
 
             <dependency>
                 <groupId>com.github.paulcwarren</groupId>
                 <artifactId>spring-content-fs-boot-starter</artifactId>
-                <version>${version.spring.content.rest}</version>
+                <version>${version.spring.content}</version>
             </dependency>
+
+            <dependency>
+                <groupId>com.github.paulcwarren</groupId>
+                <artifactId>content-s3-spring-boot-starter</artifactId>
+                <version>${version.spring.content}</version>
+            </dependency>
+
+<!--            <dependency>-->
+<!--                <groupId>com.github.paulcwarren</groupId>-->
+<!--                <artifactId>spring-content-s3</artifactId>-->
+<!--                <version>${version.spring.content}</version>-->
+<!--            </dependency>-->
 
             <!-- Google Gson: https://github.com/google/gson -->
             <dependency>
