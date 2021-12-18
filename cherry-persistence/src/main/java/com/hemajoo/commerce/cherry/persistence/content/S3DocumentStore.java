@@ -15,16 +15,16 @@
 package com.hemajoo.commerce.cherry.persistence.content;
 
 import com.hemajoo.commerce.cherry.persistence.document.entity.ServerDocumentEntity;
-import org.springframework.content.commons.repository.ContentStore;
 import org.springframework.content.rest.StoreRestResource;
+import org.springframework.content.s3.store.S3ContentStore;
 
 /**
- * Content store repository.
+ * Content store repository with for {@code Amazon S3}.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
 @StoreRestResource
-public interface DocumentStore extends ContentStore<ServerDocumentEntity, String>
+public interface S3DocumentStore extends S3ContentStore<ServerDocumentEntity, String>
 {
     // Empty.
 }

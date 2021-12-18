@@ -63,7 +63,7 @@
         <version.google.gson>2.8.6</version.google.gson>
         <version.gson-fire>1.8.4</version.gson-fire>
         <version.google.guava>30.0-jre</version.google.guava>
-        <version.junit.jupiter>5.8.1</version.junit.jupiter>
+        <version.junit.jupiter>5.8.2</version.junit.jupiter>
         <version.javafaker>1.0.1</version.javafaker>
         <version.apache.log4j>2.16.0</version.apache.log4j>
         <version.apache.commons.lang.3>3.9</version.apache.commons.lang.3>
@@ -72,7 +72,7 @@
         <version.lombok>1.18.20</version.lombok>
         <version.mapstruct>1.4.2.Final</version.mapstruct>
         <version.lombok.mapstruct>0.2.0</version.lombok.mapstruct>
-        <version.flyway>8.0.3</version.flyway>
+        <version.flyway>8.1.0</version.flyway>
         <version.apache.tika>1.0.18</version.apache.tika>
         <version.hibernate.validator>7.0.1.Final</version.hibernate.validator>
         <version.javers>3.1.0</version.javers>
@@ -145,6 +145,7 @@
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>${version.spring.boot}</version>
                 <type>maven-plugin</type>
             </dependency>
 
@@ -162,30 +163,32 @@
                 <version>${version.amazon.awssdk}</version>
             </dependency>
 
-            <!-- Content Storage -->
+            <!-- Spring Content Store: REST -->
             <dependency>
                 <groupId>com.github.paulcwarren</groupId>
                 <artifactId>spring-content-rest-boot-starter</artifactId>
                 <version>${version.spring.content}</version>
             </dependency>
 
+            <!-- Spring Content Store: File System -->
             <dependency>
                 <groupId>com.github.paulcwarren</groupId>
                 <artifactId>spring-content-fs-boot-starter</artifactId>
                 <version>${version.spring.content}</version>
             </dependency>
 
+            <!-- Spring Content Store: Amazon S3 -->
             <dependency>
                 <groupId>com.github.paulcwarren</groupId>
                 <artifactId>content-s3-spring-boot-starter</artifactId>
                 <version>${version.spring.content}</version>
             </dependency>
 
-<!--            <dependency>-->
-<!--                <groupId>com.github.paulcwarren</groupId>-->
-<!--                <artifactId>spring-content-s3</artifactId>-->
-<!--                <version>${version.spring.content}</version>-->
-<!--            </dependency>-->
+            <dependency>
+                <groupId>com.github.paulcwarren</groupId>
+                <artifactId>spring-content-s3</artifactId>
+                <version>${version.spring.content}</version>
+            </dependency>
 
             <!-- Google Gson: https://github.com/google/gson -->
             <dependency>

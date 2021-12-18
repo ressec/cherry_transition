@@ -14,7 +14,7 @@
  */
 package com.hemajoo.commerce.cherry.persistence.base.test;
 
-import com.hemajoo.commerce.cherry.persistence.content.DocumentStore;
+import com.hemajoo.commerce.cherry.persistence.content.FileSystemContentStore;
 import com.hemajoo.commerce.cherry.persistence.document.repository.DocumentRepository;
 import com.hemajoo.commerce.cherry.persistence.document.repository.DocumentService;
 import com.hemajoo.commerce.cherry.persistence.person.entity.ServerEmailAddressEntity;
@@ -69,7 +69,7 @@ public abstract class AbstractBaseDatabaseUnitTest extends AbstractBaseUnitTest
      * Document content store.
      */
     @Autowired
-    protected DocumentStore documentStore;
+    protected FileSystemContentStore documentStore;
 
     /**
      * Document repository.

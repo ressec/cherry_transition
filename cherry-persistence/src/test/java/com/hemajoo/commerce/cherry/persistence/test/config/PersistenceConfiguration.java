@@ -51,12 +51,20 @@ public class PersistenceConfiguration
     @Value("${hemajoo.commerce.cherry.store.location}")
     private String baseContentStoreLocation;
 
+    /**
+     * Provides the auditor implementation when saving an entity in the backend.
+     * @return {@link AuditorAware}.
+     */
     @Bean(name = "auditorProvider")
     public AuditorAware<String> auditorProvider()
     {
         return new JpaAuditor();
     }
 
+    /**
+     * Provides the date time implementation when saving an entity in the backend (for creation and modification properties).
+     * @return {@link DateTimeProvider}.
+     */
     @Bean(name = "auditingDateTimeProvider")
     public DateTimeProvider dateTimeProvider()
     {
@@ -64,9 +72,9 @@ public class PersistenceConfiguration
     }
 
     /**
-     * Base file base path for the content store.
-     * @return File base path.
-     * @throws ContentStoreException Raised if required content store properties are not defined!
+     * File system root path to use for storing documents.
+     * @return File system root path.
+     * @throws ContentStoreException Thrown to indicate an error occurred when trying to retrieve the filesystem root path.
      */
     @Bean
     public File fileSystemRoot() throws ContentStoreException
@@ -94,7 +102,7 @@ public class PersistenceConfiguration
     /**
      * Returns the content store file system resource loader.
      * @return File system resource loader.
-     * @throws ContentStoreException Raised if required content store properties are not defined!
+     * @throws ContentStoreException Thrown to indicate an error occurred when trying to access file system resource loader.
      */
     @Bean
     FileSystemResourceLoader fileSystemResourceLoader() throws ContentStoreException
