@@ -15,7 +15,7 @@
 package com.hemajoo.commerce.cherry.persistence.test.unit.model.entity.person.persistence;
 
 import com.hemajoo.commerce.cherry.model.document.exception.DocumentContentException;
-import com.hemajoo.commerce.cherry.persistence.base.factory.ServerEntityFactory;
+import com.hemajoo.commerce.cherry.persistence.base.entity.ServiceFactoryPerson;
 import com.hemajoo.commerce.cherry.persistence.document.entity.ServerDocumentEntity;
 import com.hemajoo.commerce.cherry.persistence.document.randomizer.DocumentRandomizer;
 import com.hemajoo.commerce.cherry.persistence.person.entity.ServerPersonEntity;
@@ -48,22 +48,22 @@ import static org.assertj.core.api.Assertions.assertThat;
 class PhoneNumberUnitTest extends AbstractPostgresUnitTest
 {
     /**
-     * Entity factory.
+     * Person services.
      */
     @Autowired
-    private ServerEntityFactory entityFactory;
+    private ServiceFactoryPerson servicePerson;
 
     @Test
     @DisplayName("Create a phone number")
     void testCreatePhoneNumber()
     {
-        ServerPersonEntity person = entityFactory.getServices().getPersonService().save(PersonRandomizer.generateServerEntity(false));
+        ServerPersonEntity person = servicePerson.getPersonService().save(PersonRandomizer.generateServerEntity(false));
 
         ServerPhoneNumberEntity phoneNumber = PhoneNumberRandomizer.generateServerEntity(false);
         phoneNumber.setPerson(person);
 
         LOGGER.info(String.format("Saving phone number: %s", phoneNumber.getIdentity()));
-        phoneNumber = entityFactory.getServices().getPhoneNumberService().save(phoneNumber);
+        phoneNumber = servicePerson.getPhoneNumberService().save(phoneNumber);
 
         assertThat(phoneNumber)
                 .as("Phone number should not be null!")
@@ -79,14 +79,14 @@ class PhoneNumberUnitTest extends AbstractPostgresUnitTest
     void testCreatePhoneNumberWithOneDocument() throws DocumentContentException
     {
         ServerDocumentEntity document = DocumentRandomizer.generateServerEntity(false);
-        ServerPersonEntity person = entityFactory.getServices().getPersonService().save(PersonRandomizer.generateServerEntity(false));
+        ServerPersonEntity person = servicePerson.getPersonService().save(PersonRandomizer.generateServerEntity(false));
 
         ServerPhoneNumberEntity phoneNumber = PhoneNumberRandomizer.generateServerEntity(false);
         phoneNumber.addDocument(document);
         person.addPhoneNumber(phoneNumber);
 
         LOGGER.info(String.format("Saving phone number: %s", phoneNumber.getIdentity()));
-        phoneNumber = entityFactory.getServices().getPhoneNumberService().save(phoneNumber);
+        phoneNumber = servicePerson.getPhoneNumberService().save(phoneNumber);
 
         assertThat(phoneNumber)
                 .as("Phone number should not be null!")
@@ -111,14 +111,14 @@ class PhoneNumberUnitTest extends AbstractPostgresUnitTest
             documents.add(DocumentRandomizer.generateServerEntity(false));
         }
 
-        ServerPersonEntity person = entityFactory.getServices().getPersonService().save(PersonRandomizer.generateServerEntity(false));
+        ServerPersonEntity person = servicePerson.getPersonService().save(PersonRandomizer.generateServerEntity(false));
 
         ServerPhoneNumberEntity phoneNumber = PhoneNumberRandomizer.generateServerEntity(false);
         documents.forEach(phoneNumber::addDocument);
         person.addPhoneNumber(phoneNumber);
 
         LOGGER.info(String.format("Saving phone number: %s", phoneNumber.getIdentity()));
-        phoneNumber = entityFactory.getServices().getPhoneNumberService().save(phoneNumber);
+        phoneNumber = servicePerson.getPhoneNumberService().save(phoneNumber);
 
         assertThat(phoneNumber)
                 .as("Phone number should not be null!")
@@ -137,11 +137,11 @@ class PhoneNumberUnitTest extends AbstractPostgresUnitTest
     @DisplayName("Update a phone number")
     void testUpdatePhoneNumber()
     {
-        ServerPersonEntity person = entityFactory.getServices().getPersonService().save(PersonRandomizer.generateServerEntity(false));
+        ServerPersonEntity person = servicePerson.getPersonService().save(PersonRandomizer.generateServerEntity(false));
 
         ServerPhoneNumberEntity phoneNumber = PhoneNumberRandomizer.generateServerEntity(false);
         phoneNumber.setPerson(person);
-        phoneNumber = entityFactory.getServices().getPhoneNumberService().save(phoneNumber);
+        phoneNumber = servicePerson.getPhoneNumberService().save(phoneNumber);
 
         assertThat(phoneNumber)
                 .as("Phone number should not be null!")
@@ -153,10 +153,10 @@ class PhoneNumberUnitTest extends AbstractPostgresUnitTest
 
         String description = phoneNumber.getDescription();
         phoneNumber.setDescription("Test description for phone number: " + phoneNumber.getId());
-        phoneNumber = entityFactory.getServices().getPhoneNumberService().saveAndFlush(phoneNumber);
+        phoneNumber = servicePerson.getPhoneNumberService().saveAndFlush(phoneNumber);
 
         LOGGER.info(String.format("Updating phone number: %s", phoneNumber.getIdentity()));
-        ServerPhoneNumberEntity updated = entityFactory.getServices().getPhoneNumberService().findById(phoneNumber.getId());
+        ServerPhoneNumberEntity updated = servicePerson.getPhoneNumberService().findById(phoneNumber.getId());
 
         assertThat(updated)
                 .as("Phone number should not be null!")
@@ -171,11 +171,11 @@ class PhoneNumberUnitTest extends AbstractPostgresUnitTest
     @DisplayName("Delete a phone number")
     void testDeletePhoneNumber()
     {
-        ServerPersonEntity person = entityFactory.getServices().getPersonService().save(PersonRandomizer.generateServerEntity(false));
+        ServerPersonEntity person = servicePerson.getPersonService().save(PersonRandomizer.generateServerEntity(false));
 
         ServerPhoneNumberEntity phoneNumber = PhoneNumberRandomizer.generateServerEntity(false);
         person.addPhoneNumber(phoneNumber);
-        phoneNumber = entityFactory.getServices().getPhoneNumberService().save(phoneNumber);
+        phoneNumber = servicePerson.getPhoneNumberService().save(phoneNumber);
 //        person = entityFactory.getPersonService().save(person);
 
         assertThat(phoneNumber)
@@ -187,9 +187,9 @@ class PhoneNumberUnitTest extends AbstractPostgresUnitTest
                 .isNotNull();
 
         LOGGER.info(String.format("Deleting phone number: %s", phoneNumber.getIdentity()));
-        entityFactory.getServices().getPhoneNumberService().deleteById(phoneNumber.getId());
+        servicePerson.getPhoneNumberService().deleteById(phoneNumber.getId());
 
-        assertThat(entityFactory.getServices().getPhoneNumberService().findById(phoneNumber.getId()))
+        assertThat(servicePerson.getPhoneNumberService().findById(phoneNumber.getId()))
                 .as("Phone number should be null!")
                 .isNull();
     }

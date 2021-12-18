@@ -31,7 +31,6 @@ import com.hemajoo.commerce.cherry.persistence.document.entity.ServerDocumentEnt
 import com.hemajoo.commerce.cherry.persistence.document.repository.DocumentService;
 import com.hemajoo.commerce.cherry.persistence.person.entity.ServerEmailAddressEntity;
 import com.hemajoo.commerce.cherry.persistence.person.repository.EmailAddressRepository;
-import com.hemajoo.commerce.cherry.persistence.person.validation.engine.EmailAddressValidationEngine;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.extern.log4j.Log4j2;
@@ -67,9 +66,6 @@ public class EmailAddressServiceCore implements EmailAddressService
      */
     @Autowired
     private PersonService personService;
-
-    @Autowired
-    private EmailAddressValidationEngine validator;
 
     /**
      * Document (content store) service.
