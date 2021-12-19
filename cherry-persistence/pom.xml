@@ -40,33 +40,34 @@
             <artifactId>spring-boot-starter-data-rest</artifactId>
         </dependency>
 
-        <!-- Amazon AWS SDK -->
-<!--        <dependency>-->
-<!--            <groupId>software.amazon.awssdk</groupId>-->
-<!--            <artifactId>s3</artifactId>-->
-<!--        </dependency>-->
+        <!-- Amazon AWS S3 SDK -->
+        <dependency>
+            <groupId>software.amazon.awssdk</groupId>
+            <artifactId>s3</artifactId>
+        </dependency>
 
+        <!-- Spring Content Store: REST -->
         <dependency>
             <groupId>com.github.paulcwarren</groupId>
             <artifactId>spring-content-rest-boot-starter</artifactId>
         </dependency>
 
-        <!-- Spring Store Content: File System support -->
+        <!-- Spring Content Store: FileSystem -->
         <dependency>
             <groupId>com.github.paulcwarren</groupId>
             <artifactId>spring-content-fs-boot-starter</artifactId>
         </dependency>
 
-        <!-- Spring Store Content: S3 support -->
-<!--        <dependency>-->
-<!--            <groupId>com.github.paulcwarren</groupId>-->
-<!--            <artifactId>content-s3-spring-boot-starter</artifactId>-->
-<!--        </dependency>-->
+        <!-- Spring Content Store: Amazon S3 -->
+        <dependency>
+            <groupId>com.github.paulcwarren</groupId>
+            <artifactId>content-s3-spring-boot-starter</artifactId>
+        </dependency>
 
-<!--        <dependency>-->
-<!--            <groupId>com.github.paulcwarren</groupId>-->
-<!--            <artifactId>spring-content-s3</artifactId>-->
-<!--        </dependency>-->
+        <dependency>
+            <groupId>com.github.paulcwarren</groupId>
+            <artifactId>spring-content-s3</artifactId>
+        </dependency>
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -90,7 +91,6 @@
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter</artifactId>
             <version>${version.junit.jupiter}</version>
-            <scope>test</scope>
         </dependency>
 
         <dependency>
@@ -140,7 +140,7 @@
             <artifactId>mapstruct</artifactId>
         </dependency>
 
-        <!-- Lombok annotation processing for MapStruct -->
+        <!-- Lombok's annotation processing for MapStruct -->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok-mapstruct-binding</artifactId>
@@ -154,6 +154,7 @@
             <scope>provided</scope>
         </dependency>
 
+        <!-- JaVers: Compare Java objects -->
         <dependency>
             <groupId>org.javers</groupId>
             <artifactId>javers-core</artifactId>
@@ -177,7 +178,6 @@
             <groupId>com.hemajoo.commerce.cherry</groupId>
             <artifactId>cherry-model</artifactId>
             <version>${project.version}</version>
-<!--            <scope>compile</scope>-->
         </dependency>
 
         <!-- Avocado: https://github.com/ressec/Avocado
