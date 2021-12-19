@@ -18,7 +18,6 @@ import com.hemajoo.commerce.cherry.commons.exception.ContentStoreException;
 import com.hemajoo.commerce.cherry.persistence.document.entity.ServerDocumentEntity;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.content.fs.config.EnableFilesystemStores;
 import org.springframework.content.fs.io.FileSystemResourceLoader;
@@ -65,7 +64,7 @@ public class PersistenceConfiguration
      * @return {@link S3Client}.
      */
     @Bean
-    @ConditionalOnProperty(prefix = "spring.content.storage", name = "type", havingValue = "s3")
+    //@ConditionalOnProperty(prefix = "spring.content.storage", name = "type", havingValue = "s3")
     public S3Client client()
     {
         Region region = Region.EU_WEST_3;
