@@ -20,7 +20,7 @@ import com.hemajoo.commerce.cherry.model.document.ClientDocumentEntity;
 import com.hemajoo.commerce.cherry.model.document.exception.DocumentContentException;
 import com.hemajoo.commerce.cherry.model.person.exception.EntityException;
 import com.hemajoo.commerce.cherry.persistence.base.entity.EntityComparator;
-import com.hemajoo.commerce.cherry.persistence.base.factory.ServerEntityFactory;
+import com.hemajoo.commerce.cherry.persistence.base.entity.ServiceFactoryPerson;
 import com.hemajoo.commerce.cherry.persistence.document.converter.DocumentConverter;
 import com.hemajoo.commerce.cherry.persistence.document.entity.ServerDocumentEntity;
 import com.hemajoo.commerce.cherry.persistence.document.randomizer.DocumentRandomizer;
@@ -57,13 +57,14 @@ class DocumentConverterUnitTest extends AbstractPostgresUnitTest
      * Document converter facility service.
      */
     @Autowired
-    private DocumentConverter converter;
+    private DocumentConverter converterDocument;
 
     /**
-     * Entity factory.
+     * Person services.
      */
     @Autowired
-    private ServerEntityFactory entityFactory;
+    private ServiceFactoryPerson servicePerson;
+
 
     /**
      * List element count.
@@ -75,7 +76,7 @@ class DocumentConverterUnitTest extends AbstractPostgresUnitTest
     final void testConvertServerToIdentityDocument() throws DocumentContentException
     {
         ServerDocumentEntity document = DocumentRandomizer.generateServerEntity(true);
-        EntityIdentity identity = converter.fromServerToIdentity(document);
+        EntityIdentity identity = converterDocument.fromServerToIdentity(document);
 
         assertThat(identity)
                 .as("Entity identity should not be null!")
@@ -95,10 +96,10 @@ class DocumentConverterUnitTest extends AbstractPostgresUnitTest
     final void testConvertIdentityToServerDocument() throws DocumentContentException, EntityException
     {
         // For an entity identity to be mapped to a server entity, the server entity must exist in the underlying database!
-        ServerDocumentEntity reference = entityFactory.getServices().getDocumentService().save(DocumentRandomizer.generateServerEntity(true));
+        ServerDocumentEntity reference = servicePerson.getDocumentService().save(DocumentRandomizer.generateServerEntity(true));
 
         EntityIdentity identity = new EntityIdentity(reference.getIdentity());
-        ServerDocumentEntity server = converter.fromIdentityToServer(identity);
+        ServerDocumentEntity server = converterDocument.fromIdentityToServer(identity);
 
         assertThat(server)
                 .as("Server entity should not be null!")
@@ -120,7 +121,7 @@ class DocumentConverterUnitTest extends AbstractPostgresUnitTest
     {
         EntityIdentity identity = new EntityIdentity(UUID.randomUUID(), EntityType.DOCUMENT);
 
-        assertThatThrownBy(() -> converter.fromIdentityToServer(identity))
+        assertThatThrownBy(() -> converterDocument.fromIdentityToServer(identity))
                 .isInstanceOf(EntityException.class);
     }
 
@@ -129,12 +130,12 @@ class DocumentConverterUnitTest extends AbstractPostgresUnitTest
     final void testConvertClientToServerDocumentWithOwner() throws DocumentContentException
     {
         // For an entity identity to be mapped to a server entity, the server entity must exist in the underlying database!
-        ServerDocumentEntity owner = entityFactory.getServices().getDocumentService().save(DocumentRandomizer.generateServerEntity(false));
+        ServerDocumentEntity owner = servicePerson.getDocumentService().save(DocumentRandomizer.generateServerEntity(false));
 
         ClientDocumentEntity client = DocumentRandomizer.generateClientEntity(true);
         client.setOwner(owner.getIdentity());
 
-        ServerDocumentEntity server = converter.fromClientToServer(client);
+        ServerDocumentEntity server = converterDocument.fromClientToServer(client);
 
         assertThat(server)
                 .as("Server document should not be null!")
@@ -154,7 +155,7 @@ class DocumentConverterUnitTest extends AbstractPostgresUnitTest
         client.setOwner(new EntityIdentity(EntityType.PERSON,UUID.randomUUID()));
 
         // If the owner of the client document to convert does not exist, ensure an exception is raised!
-        assertThatThrownBy(() -> converter.fromClientToServer(client))
+        assertThatThrownBy(() -> converterDocument.fromClientToServer(client))
                 .isInstanceOf(EntityException.class);
     }
 
@@ -169,7 +170,7 @@ class DocumentConverterUnitTest extends AbstractPostgresUnitTest
         }
 
         List<ClientDocumentEntity> clients = documents.stream()
-                .map(document -> converter.fromServerToClient(document))
+                .map(document -> converterDocument.fromServerToClient(document))
                 .collect(Collectors.toList());
 
         assertThat(clients.size())
@@ -192,7 +193,7 @@ class DocumentConverterUnitTest extends AbstractPostgresUnitTest
         }
 
         List<ServerDocumentEntity> servers = clients.stream()
-                .map(document -> converter.fromClientToServer(document))
+                .map(document -> converterDocument.fromClientToServer(document))
                 .collect(Collectors.toList());
 
         assertThat(servers.size())
@@ -215,7 +216,7 @@ class DocumentConverterUnitTest extends AbstractPostgresUnitTest
         }
 
         List<EntityIdentity> identities = documents.stream()
-                .map(document -> converter.fromServerToIdentity(document))
+                .map(document -> converterDocument.fromServerToIdentity(document))
                 .collect(Collectors.toList());
 
         assertThat(identities.size())

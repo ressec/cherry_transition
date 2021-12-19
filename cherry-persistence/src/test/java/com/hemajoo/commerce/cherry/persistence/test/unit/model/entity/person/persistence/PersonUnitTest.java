@@ -14,7 +14,7 @@
  */
 package com.hemajoo.commerce.cherry.persistence.test.unit.model.entity.person.persistence;
 
-import com.hemajoo.commerce.cherry.persistence.base.factory.ServerEntityFactory;
+import com.hemajoo.commerce.cherry.persistence.base.entity.ServiceFactoryPerson;
 import com.hemajoo.commerce.cherry.persistence.person.entity.ServerPersonEntity;
 import com.hemajoo.commerce.cherry.persistence.person.randomizer.PersonRandomizer;
 import com.hemajoo.commerce.cherry.persistence.test.unit.base.AbstractPostgresUnitTest;
@@ -40,16 +40,16 @@ import static org.assertj.core.api.Assertions.assertThat;
 class PersonUnitTest extends AbstractPostgresUnitTest
 {
     /**
-     * Entity factory.
+     * Person services.
      */
     @Autowired
-    private ServerEntityFactory entityFactory;
+    private ServiceFactoryPerson servicePerson;
 
     @Test
     @DisplayName("Create a person")
     void testCreatePerson()
     {
-        ServerPersonEntity person = entityFactory.getServices().getPersonService().save(PersonRandomizer.generateServerEntity(false));
+        ServerPersonEntity person = servicePerson.getPersonService().save(PersonRandomizer.generateServerEntity(false));
 
         assertThat(person)
                 .as("Person should not be null!")
@@ -64,7 +64,7 @@ class PersonUnitTest extends AbstractPostgresUnitTest
     @DisplayName("Update a person")
     void testUpdatePerson()
     {
-        ServerPersonEntity person = entityFactory.getServices().getPersonService().save(PersonRandomizer.generateServerEntity(false));
+        ServerPersonEntity person = servicePerson.getPersonService().save(PersonRandomizer.generateServerEntity(false));
 
         assertThat(person)
                 .as("Person should not be null!")
@@ -76,9 +76,9 @@ class PersonUnitTest extends AbstractPostgresUnitTest
 
         String description = person.getDescription();
         person.setDescription("Test description for person: " + person.getId());
-        person = entityFactory.getServices().getPersonService().saveAndFlush(person);
+        person = servicePerson.getPersonService().saveAndFlush(person);
 
-        ServerPersonEntity updated = entityFactory.getServices().getPersonService().findById(person.getId());
+        ServerPersonEntity updated = servicePerson.getPersonService().findById(person.getId());
 
         assertThat(updated)
                 .as("Person should not be null!")
@@ -93,7 +93,7 @@ class PersonUnitTest extends AbstractPostgresUnitTest
     @DisplayName("Delete a person")
     void testDeletePerson()
     {
-        ServerPersonEntity person = entityFactory.getServices().getPersonService().save(PersonRandomizer.generateServerEntity(false));
+        ServerPersonEntity person = servicePerson.getPersonService().save(PersonRandomizer.generateServerEntity(false));
 
         assertThat(person)
                 .as("Person should not be null!")
@@ -103,9 +103,9 @@ class PersonUnitTest extends AbstractPostgresUnitTest
                 .as("Person identifier should not be null!")
                 .isNotNull();
 
-        entityFactory.getServices().getPersonService().deleteById(person.getId());
+        servicePerson.getPersonService().deleteById(person.getId());
 
-        assertThat(entityFactory.getServices().getPersonService().findById(person.getId()))
+        assertThat(servicePerson.getPersonService().findById(person.getId()))
                 .as("Person should be null!")
                 .isNull();
     }

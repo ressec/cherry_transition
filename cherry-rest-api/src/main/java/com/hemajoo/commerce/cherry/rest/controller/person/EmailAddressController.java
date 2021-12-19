@@ -19,7 +19,7 @@ import com.hemajoo.commerce.cherry.model.person.entity.ClientEmailAddressEntity;
 import com.hemajoo.commerce.cherry.model.person.exception.EmailAddressException;
 import com.hemajoo.commerce.cherry.model.person.exception.EntityException;
 import com.hemajoo.commerce.cherry.model.person.search.SearchEmailAddress;
-import com.hemajoo.commerce.cherry.persistence.base.factory.ServerEntityFactory;
+import com.hemajoo.commerce.cherry.persistence.base.entity.ServiceFactoryPerson;
 import com.hemajoo.commerce.cherry.persistence.person.converter.EmailAddressConverter;
 import com.hemajoo.commerce.cherry.persistence.person.entity.ServerEmailAddressEntity;
 import com.hemajoo.commerce.cherry.persistence.person.entity.ServerPersonEntity;
@@ -62,19 +62,19 @@ public class EmailAddressController
      * Server entity factory.
      */
     @Autowired
-    private ServerEntityFactory entityFactory;
+    private ServiceFactoryPerson servicePerson;
 
     /**
      * Email address converter.
      */
     @Autowired
-    private EmailAddressConverter converter;
+    private EmailAddressConverter converterEmailAddress;
 
     /**
      * Email address validation engine.
      */
     @Autowired
-    private EmailAddressValidationEngine emailAddressRuleEngine;
+    private EmailAddressValidationEngine validationEmailAddress;
 
     /**
      * Service to count the number of email addresses.
@@ -84,7 +84,7 @@ public class EmailAddressController
     @GetMapping("/count")
     public long count()
     {
-        return entityFactory.getServices().getEmailAddressService().count();
+        return servicePerson.getEmailAddressService().count();
     }
 
     /**
@@ -100,8 +100,8 @@ public class EmailAddressController
             @NotNull
             @PathVariable String id)
     {
-        ServerEmailAddressEntity serverEmailAddress = entityFactory.getServices().getEmailAddressService().findById(UUID.fromString(id));
-        return ResponseEntity.ok(converter.fromServerToClient(serverEmailAddress));
+        ServerEmailAddressEntity serverEmailAddress = servicePerson.getEmailAddressService().findById(UUID.fromString(id));
+        return ResponseEntity.ok(converterEmailAddress.fromServerToClient(serverEmailAddress));
     }
 
     /**
@@ -116,10 +116,10 @@ public class EmailAddressController
             @ApiParam(value = "Email address", required = true)
             @Valid @ValidEmailAddressForCreation @RequestBody ClientEmailAddressEntity emailAddress) throws EntityException
     {
-        ServerEmailAddressEntity serverEmailAddress = converter.fromClientToServer(emailAddress);
-        serverEmailAddress = entityFactory.getServices().getEmailAddressService().save(serverEmailAddress);
+        ServerEmailAddressEntity serverEmailAddress = converterEmailAddress.fromClientToServer(emailAddress);
+        serverEmailAddress = servicePerson.getEmailAddressService().save(serverEmailAddress);
 
-        return ResponseEntity.ok(converter.fromServerToClient(serverEmailAddress));
+        return ResponseEntity.ok(converterEmailAddress.fromServerToClient(serverEmailAddress));
     }
 
     /**
@@ -136,11 +136,11 @@ public class EmailAddressController
     {
         ServerEmailAddressEntity serverEmail = EmailAddressRandomizer.generateServerEntity(false);
 
-        ServerPersonEntity person = entityFactory.getServices().getPersonService().findById(UUID.fromString(personId));
+        ServerPersonEntity person = servicePerson.getPersonService().findById(UUID.fromString(personId));
         serverEmail.setPerson(person);
-        serverEmail = entityFactory.getServices().getEmailAddressService().save(serverEmail);
+        serverEmail = servicePerson.getEmailAddressService().save(serverEmail);
 
-        return ResponseEntity.ok(converter.fromServerToClient(serverEmail));
+        return ResponseEntity.ok(converterEmailAddress.fromServerToClient(serverEmail));
     }
 
     /**
@@ -155,11 +155,11 @@ public class EmailAddressController
             @NotNull @Valid @ValidEmailAddressForUpdate @RequestBody ClientEmailAddressEntity email) throws EntityException
     {
         //emailAddressRuleEngine.validateEmailAddressId(email);
-        emailAddressRuleEngine.validateEmailForUpdate(email);
+        validationEmailAddress.validateEmailForUpdate(email);
 
-        ServerEmailAddressEntity source = converter.fromClientToServer(email);
-        ServerEmailAddressEntity updated = entityFactory.getServices().getEmailAddressService().update(source);
-        ClientEmailAddressEntity client = converter.fromServerToClient(updated);
+        ServerEmailAddressEntity source = converterEmailAddress.fromClientToServer(email);
+        ServerEmailAddressEntity updated = servicePerson.getEmailAddressService().update(source);
+        ClientEmailAddressEntity client = converterEmailAddress.fromServerToClient(updated);
 
         return ResponseEntity.ok(client);
     }
@@ -175,7 +175,7 @@ public class EmailAddressController
             @ApiParam(value = "Email address identifier (UUID)", required = true)
             @NotNull @Valid @ValidEmailAddressId @PathVariable String id)
     {
-        entityFactory.getServices().getEmailAddressService().deleteById(UUID.fromString(id));
+        servicePerson.getEmailAddressService().deleteById(UUID.fromString(id));
 
         return ResponseEntity.ok(String.format("Email address id: '%s' has been deleted successfully!", id));
     }
@@ -197,9 +197,9 @@ public class EmailAddressController
     {
         EmailAddressValidationEngine.isSearchValid(search);
 
-        List<ClientEmailAddressEntity> clients = entityFactory.getServices().getEmailAddressService().search(search)
+        List<ClientEmailAddressEntity> clients = servicePerson.getEmailAddressService().search(search)
                 .stream()
-                .map(element -> converter.fromServerToClient(element))
+                .map(element -> converterEmailAddress.fromServerToClient(element))
                 .collect(Collectors.toList());
 
         return ResponseEntity.ok(clients);
@@ -222,9 +222,9 @@ public class EmailAddressController
     {
         EmailAddressValidationEngine.isSearchValid(search);
 
-        List<ClientEmailAddressEntity> clients = entityFactory.getServices().getEmailAddressService().search(search)
+        List<ClientEmailAddressEntity> clients = servicePerson.getEmailAddressService().search(search)
                 .stream()
-                .map(element -> converter.fromServerToClient(element))
+                .map(element -> converterEmailAddress.fromServerToClient(element))
                 .collect(Collectors.toList());
 
         return ResponseEntity.ok(GenericEntityConverter.toIdList(clients));

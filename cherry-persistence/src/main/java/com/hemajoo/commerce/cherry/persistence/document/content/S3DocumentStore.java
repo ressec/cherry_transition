@@ -12,22 +12,19 @@
  * Resse Christophe (christophe.resse@gmail.com).
  * -----------------------------------------------------------------------------------------------
  */
-package com.hemajoo.commerce.cherry.rest.config;
+package com.hemajoo.commerce.cherry.persistence.document.content;
 
-import org.springframework.data.domain.AuditorAware;
-
-import java.util.Optional;
+import com.hemajoo.commerce.cherry.persistence.document.entity.ServerDocumentEntity;
+import org.springframework.content.rest.StoreRestResource;
+import org.springframework.content.s3.store.S3ContentStore;
 
 /**
- * Provides a {@code JPA} auditor information for the test environment.
+ * Content store repository with {@code Amazon S3} support.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-public class JpaAuditor implements AuditorAware<String>
+@StoreRestResource
+public interface S3DocumentStore extends S3ContentStore<ServerDocumentEntity, String>
 {
-    @Override
-    public Optional<String> getCurrentAuditor()
-    {
-        return Optional.of("api");
-    }
+    // Empty.
 }

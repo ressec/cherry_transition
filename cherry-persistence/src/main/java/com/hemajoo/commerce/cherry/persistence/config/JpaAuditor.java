@@ -12,30 +12,29 @@
  * Resse Christophe (christophe.resse@gmail.com).
  * -----------------------------------------------------------------------------------------------
  */
-package com.hemajoo.commerce.cherry.persistence.document.entity;
+package com.hemajoo.commerce.cherry.persistence.config;
 
-import com.hemajoo.commerce.cherry.model.document.base.Document;
-import com.hemajoo.commerce.cherry.persistence.base.entity.ServerBaseEntity;
-import com.hemajoo.commerce.cherry.persistence.base.entity.ServerEntity;
+import lombok.Getter;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.AuditorAware;
+
+import java.util.Optional;
 
 /**
- * Behavior of a server document entity.
+ * Provides a {@code JPA} auditor information.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-public interface ServerDocument extends Document, ServerEntity
+public class JpaAuditor implements AuditorAware<String>
 {
-    /**
-     * Returns the owner entity of this document.
-     * @param <T> Type of the owner.
-     * @return Owner entity.
-     */
-    <T extends ServerBaseEntity> T getOwner();
+    @Getter
+    @Value("${hemajoo.commerce.cherry.auditor.name}")
+    private String auditorName = "default";
 
-    /**
-     * Sets the owner entity of this document.
-     * @param <T> Type of the owner.
-     * @param owner Owner entity.
-     */
-    <T extends ServerBaseEntity> void setOwner(final T owner);
+
+    @Override
+    public Optional<String> getCurrentAuditor()
+    {
+        return Optional.of(auditorName);
+    }
 }
