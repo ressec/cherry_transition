@@ -19,10 +19,11 @@ import com.hemajoo.commerce.cherry.commons.type.EntityType;
 import org.springframework.http.HttpStatus;
 
 /**
- * Checked exception thrown to indicate an error occurred with a document.
+ * Unchecked exception thrown to indicate an error occurred with a document.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
+@SuppressWarnings("java:S110")
 public class DocumentException extends AbstractEntityUncheckedException
 {
     /**

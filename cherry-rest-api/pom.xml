@@ -37,6 +37,7 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
+            <version>1.18.22</version>
         </dependency>
 
         <dependency>
@@ -65,10 +66,17 @@
             <artifactId>spring-content-rest-boot-starter</artifactId>
         </dependency>
 
+        <!-- Amazon AWS SDK -->
+        <dependency>
+            <groupId>software.amazon.awssdk</groupId>
+            <artifactId>s3</artifactId>
+        </dependency>
+
         <!-- H2 database driver -->
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
+            <version>2.0.202</version>
             <scope>runtime</scope>
         </dependency>
 
