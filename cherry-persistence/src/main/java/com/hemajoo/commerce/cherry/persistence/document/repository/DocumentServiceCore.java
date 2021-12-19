@@ -15,7 +15,7 @@
 package com.hemajoo.commerce.cherry.persistence.document.repository;
 
 import com.hemajoo.commerce.cherry.model.document.exception.DocumentException;
-import com.hemajoo.commerce.cherry.persistence.content.ProxyContentStore;
+import com.hemajoo.commerce.cherry.persistence.document.content.ProxyContentStore;
 import com.hemajoo.commerce.cherry.persistence.document.entity.ServerDocumentEntity;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -68,7 +68,6 @@ public class DocumentServiceCore implements DocumentService
         // and save the associated content file, if one!
         if (document.getContent() != null)
         {
-//            documentStore.setContent(document, document.getContent());
             proxyStore.getStore().setContent(document, document.getContent());
         }
 
@@ -89,7 +88,6 @@ public class DocumentServiceCore implements DocumentService
         // If a content file is associated, then delete it!
         if (document != null && document.getContentId() != null)
         {
-            //documentStore.unsetContent(document);
             proxyStore.getStore().unsetContent(document);
         }
 
@@ -106,7 +104,6 @@ public class DocumentServiceCore implements DocumentService
     @Override
     public void loadContent(ServerDocumentEntity document)
     {
-//        document.setContent(documentStore.getContent(document));
         document.setContent(proxyStore.getStore().getContent(document));
     }
 

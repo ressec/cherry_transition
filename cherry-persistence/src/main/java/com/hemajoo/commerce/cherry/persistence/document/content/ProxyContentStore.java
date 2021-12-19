@@ -12,7 +12,7 @@
  * Resse Christophe (christophe.resse@gmail.com).
  * -----------------------------------------------------------------------------------------------
  */
-package com.hemajoo.commerce.cherry.persistence.content;
+package com.hemajoo.commerce.cherry.persistence.document.content;
 
 import lombok.Getter;
 import lombok.extern.log4j.Log4j2;
@@ -26,16 +26,19 @@ import org.springframework.stereotype.Component;
 public class ProxyContentStore
 {
     @Getter
-    @Value("${hemajoo.commerce.cherry.store.type}")
-    private String storeTypeName;
+    @Value("${spring.content.storage.type}")
+    private String springContentStoreType;
+
+    /**
+     * Content store type to use.
+     */
+    private ContentStoreType storeType = ContentStoreType.UNKNOWN;
 
     /**
      * Content store repository.
      */
     @Autowired
-    private FileSystemContentStore storeFileSystem;
-
-    private String storeName;
+    private FileSystemDocumentStore storeFileSystem;
 
     /**
      * Content store repository.
@@ -46,35 +49,36 @@ public class ProxyContentStore
     @SuppressWarnings("java:S3740")
     public final ContentStore getStore()
     {
-        if (storeName == null || storeName.isEmpty())
+        if (storeType == ContentStoreType.UNKNOWN)
         {
             computeDocumentStoreSelection();
         }
 
-        return storeName.equals("FS") ? storeFileSystem : storeS3;
+        return storeType == ContentStoreType.FILESYSTEM ? storeFileSystem : storeS3;
     }
 
     /**
-     * Computes the document store selection.
+     * Computes the document store type to use according to the configuration.
      */
     private void computeDocumentStoreSelection()
     {
-        if (storeS3 == null)
+        // If not set in configuration, then defaulting to FileSystem.
+        if (springContentStoreType == null)
         {
-            LOGGER.info("Using a document store of type: FileSystem");
-            storeName = "FS";
+            LOGGER.info("Defaulting to a content store type: FileSystem");
+            storeType = ContentStoreType.FILESYSTEM;
         }
         else
         {
-            if (storeTypeName.equals("S3"))
+            if (springContentStoreType.equals("s3"))
             {
-                LOGGER.info("Using a document store of type: S3");
-                storeName = "S3";
+                LOGGER.info("Using a content store of type: S3");
+                storeType = ContentStoreType.S3;
             }
-            else if (storeTypeName.equals("FS"))
+            else if (springContentStoreType.equals("filesystem"))
             {
-                LOGGER.info("Using a document store of type: FileSystem");
-                storeName = "FS";
+                LOGGER.info("Using a content store of type: FileSystem");
+                storeType = ContentStoreType.FILESYSTEM;
             }
         }
     }

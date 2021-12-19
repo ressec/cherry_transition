@@ -15,7 +15,7 @@
 package com.hemajoo.commerce.cherry.rest.config;
 
 import com.hemajoo.commerce.cherry.model.document.exception.DocumentException;
-import com.hemajoo.commerce.cherry.persistence.content.S3DocumentStore;
+import com.hemajoo.commerce.cherry.persistence.document.content.ProxyContentStore;
 import com.hemajoo.commerce.cherry.persistence.document.entity.ServerDocumentEntity;
 import lombok.NonNull;
 import org.apache.commons.io.FileUtils;
@@ -31,11 +31,8 @@ import java.io.InputStream;
 @Component
 public class DocumentHelper
 {
-//    @Autowired
-//    private FileSystemContentStore store;
-
     @Autowired
-    private S3DocumentStore store;
+    private ProxyContentStore proxyStore;
 
     public void saveAs(final @NonNull ServerDocumentEntity document, final @NonNull String outputPath) throws DocumentException
     {
@@ -49,7 +46,7 @@ public class DocumentHelper
 //            }
 //            else
 //            {
-                generateApplicationFile(store.getContent(document), outputPathname);
+                generateApplicationFile(proxyStore.getStore().getContent(document), outputPathname);
 //            }
         }
         catch (IOException e)

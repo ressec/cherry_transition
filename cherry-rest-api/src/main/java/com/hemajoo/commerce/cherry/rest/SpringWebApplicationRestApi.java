@@ -14,7 +14,7 @@
  */
 package com.hemajoo.commerce.cherry.rest;
 
-import com.hemajoo.commerce.cherry.rest.config.PersistenceConfiguration;
+import com.hemajoo.commerce.cherry.persistence.config.PersistenceConfiguration;
 import internal.org.springframework.content.s3.boot.autoconfigure.S3ContentAutoConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
