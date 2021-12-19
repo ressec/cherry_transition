@@ -16,9 +16,11 @@ package com.hemajoo.commerce.cherry.persistence.content;
 
 import com.hemajoo.commerce.cherry.persistence.document.entity.ServerDocumentEntity;
 import lombok.NonNull;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.content.fs.config.FilesystemStoreConfigurer;
 import org.springframework.content.s3.config.S3StoreConfigurer;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.core.convert.converter.ConverterRegistry;
 
@@ -29,10 +31,11 @@ import java.io.File;
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-//@Configuration
+@Configuration
 public class S3DocumentStoreConfigurator
 {
     @Bean
+    @ConditionalOnProperty(prefix = "spring.content.storage", name = "type", havingValue = "filesystem")
     public FilesystemStoreConfigurer configureFileSystem()
     {
         return new FilesystemStoreConfigurer()
@@ -54,6 +57,7 @@ public class S3DocumentStoreConfigurator
     }
 
     @Bean
+    @ConditionalOnProperty(prefix = "spring.content.storage", name = "type", havingValue = "s3")
     public S3StoreConfigurer configureS3()
     {
         return new S3StoreConfigurer()
