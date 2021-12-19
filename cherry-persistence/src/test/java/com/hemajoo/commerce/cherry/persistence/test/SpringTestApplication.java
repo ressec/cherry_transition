@@ -14,10 +14,12 @@
  */
 package com.hemajoo.commerce.cherry.persistence.test;
 
+import com.hemajoo.commerce.cherry.persistence.config.PersistenceConfiguration;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Import;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 /**
@@ -25,6 +27,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
+@Import({ PersistenceConfiguration.class })
 @ComponentScan(basePackages = "com.hemajoo.commerce.cherry.persistence")
 @EnableJpaRepositories(basePackages = "com.hemajoo.commerce.cherry.persistence")
 @EntityScan(basePackages = "com.hemajoo.commerce.cherry.persistence")

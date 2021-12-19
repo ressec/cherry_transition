@@ -12,19 +12,29 @@
  * Resse Christophe (christophe.resse@gmail.com).
  * -----------------------------------------------------------------------------------------------
  */
-package com.hemajoo.commerce.cherry.persistence.content;
+package com.hemajoo.commerce.cherry.persistence.config;
 
-import com.hemajoo.commerce.cherry.persistence.document.entity.ServerDocumentEntity;
-import org.springframework.content.fs.store.FilesystemContentStore;
-import org.springframework.content.rest.StoreRestResource;
+import lombok.Getter;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.AuditorAware;
+
+import java.util.Optional;
 
 /**
- * Content store repository for {@code FileSystem}.
+ * Provides a {@code JPA} auditor information.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-@StoreRestResource
-public interface FileSystemContentStore extends FilesystemContentStore<ServerDocumentEntity, String>
+public class JpaAuditor implements AuditorAware<String>
 {
-    // Empty.
+    @Getter
+    @Value("${hemajoo.commerce.cherry.auditor.name}")
+    private String auditorName = "default";
+
+
+    @Override
+    public Optional<String> getCurrentAuditor()
+    {
+        return Optional.of(auditorName);
+    }
 }

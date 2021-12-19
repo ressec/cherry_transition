@@ -12,14 +12,17 @@
  * Resse Christophe (christophe.resse@gmail.com).
  * -----------------------------------------------------------------------------------------------
  */
-package com.hemajoo.commerce.cherry.rest.config;
+package com.hemajoo.commerce.cherry.persistence.config;
 
 import com.hemajoo.commerce.cherry.commons.exception.ContentStoreException;
 import com.hemajoo.commerce.cherry.persistence.document.entity.ServerDocumentEntity;
 import lombok.Getter;
+import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.content.fs.config.EnableFilesystemStores;
+import org.springframework.content.fs.config.FilesystemStoreConfigurer;
 import org.springframework.content.fs.io.FileSystemResourceLoader;
 import org.springframework.content.s3.S3ObjectId;
 import org.springframework.content.s3.config.EnableS3Stores;
@@ -42,13 +45,13 @@ import java.util.Objects;
 import java.util.Optional;
 
 /**
- * Configuration containing definitions for the persistence layer.
+ * A {@code Spring} configuration containing definitions for the persistence layer for the {@code test} environment.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
 @Configuration
-@ComponentScan(basePackages = { "com.hemajoo.commerce.cherry.persistence" } )
-@EnableJpaRepositories(basePackages = { "com.hemajoo.commerce.cherry.persistence" })
+@ComponentScan(basePackages = "com.hemajoo.commerce.cherry.persistence")
+@EnableJpaRepositories(basePackages = "com.hemajoo.commerce.cherry.persistence")
 @EntityScan(basePackages = "com.hemajoo.commerce.cherry.persistence")
 @EnableFilesystemStores(basePackages = "com.hemajoo.commerce.cherry.persistence")
 @EnableS3Stores(basePackages = "com.hemajoo.commerce.cherry.persistence")
@@ -64,7 +67,6 @@ public class PersistenceConfiguration
      * @return {@link S3Client}.
      */
     @Bean
-    //@ConditionalOnProperty(prefix = "spring.content.storage", name = "type", havingValue = "s3")
     public S3Client client()
     {
         Region region = Region.EU_WEST_3;
@@ -75,18 +77,37 @@ public class PersistenceConfiguration
     }
 
     /**
-     * Amazon S3 client when using a S3 document store.
+     * File system content store configurator.
+     * @return {@link FilesystemStoreConfigurer}.
+     */
+    @Bean
+    @ConditionalOnProperty(prefix = "spring.content.storage", name = "type", havingValue = "filesystem")
+    public FilesystemStoreConfigurer configureFileSystemContent()
+    {
+        return registry -> registry.addConverter(new Converter<ServerDocumentEntity, String>()
+        {
+            @Override
+            public String convert(final @NonNull ServerDocumentEntity document)
+            {
+                return File.separator + document.getContentId();
+            }
+        });
+    }
+
+    /**
+     * Amazon S3 content store configurator.
      * @return {@link S3Client}.
      */
     @Bean
-    public S3StoreConfigurer configure()
+    @ConditionalOnProperty(prefix = "spring.content.storage", name = "type", havingValue = "s3")
+    public S3StoreConfigurer configureS3Content()
     {
         return registry -> registry.addConverter(new Converter<ServerDocumentEntity, S3ObjectId>()
         {
             @Override
             public S3ObjectId convert(ServerDocumentEntity source)
             {
-                return new S3ObjectId("ressec-private", source.getId().toString());
+                return new S3ObjectId("hemajoo.commerce.cherry", "dev/internal/" + source.getId().toString());
                 //                        return new S3ObjectId(entity.getCustomBucketField(), entity.getCustomContentIdField());
             }
         });
@@ -125,9 +146,9 @@ public class PersistenceConfiguration
             throw new ContentStoreException("Property: 'hemajoo.commerce.cherry.store.location' cannot be null or empty!");
         }
 
+        // Clear the content store for a test environment
         try
         {
-            // Clear the content store for a test environment
             Arrays.stream(
                     Objects.requireNonNull(
                             new File(baseContentStoreLocation).listFiles())).forEach(File::delete);
@@ -148,6 +169,7 @@ public class PersistenceConfiguration
     @Bean
     FileSystemResourceLoader fileSystemResourceLoader() throws ContentStoreException
     {
+        // For file system storage.
         return new FileSystemResourceLoader(fileSystemRoot().getAbsolutePath());
     }
 }

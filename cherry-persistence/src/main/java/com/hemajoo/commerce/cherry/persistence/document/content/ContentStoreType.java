@@ -12,22 +12,11 @@
  * Resse Christophe (christophe.resse@gmail.com).
  * -----------------------------------------------------------------------------------------------
  */
-package com.hemajoo.commerce.cherry.persistence.test.config;
+package com.hemajoo.commerce.cherry.persistence.document.content;
 
-import org.springframework.data.domain.AuditorAware;
-
-import java.util.Optional;
-
-/**
- * Provides a {@code JPA} auditor information for the test environment.
- * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
- * @version 1.0.0
- */
-public class JpaAuditor implements AuditorAware<String>
+public enum ContentStoreType
 {
-    @Override
-    public Optional<String> getCurrentAuditor()
-    {
-        return Optional.of("unit-test-user");
-    }
+    FILESYSTEM,
+    S3,
+    UNKNOWN,
 }

@@ -12,19 +12,19 @@
  * Resse Christophe (christophe.resse@gmail.com).
  * -----------------------------------------------------------------------------------------------
  */
-package com.hemajoo.commerce.cherry.persistence.content;
+package com.hemajoo.commerce.cherry.persistence.document.content;
 
 import com.hemajoo.commerce.cherry.persistence.document.entity.ServerDocumentEntity;
+import org.springframework.content.fs.store.FilesystemContentStore;
 import org.springframework.content.rest.StoreRestResource;
-import org.springframework.content.s3.store.S3ContentStore;
 
 /**
- * Content store repository with for {@code Amazon S3}.
+ * Content store repository with {@code FileSystem} support.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
 @StoreRestResource
-public interface S3DocumentStore extends S3ContentStore<ServerDocumentEntity, String>
+public interface FileSystemDocumentStore extends FilesystemContentStore<ServerDocumentEntity, String>
 {
     // Empty.
 }
