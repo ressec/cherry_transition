@@ -38,7 +38,7 @@ public abstract class AbstractPostgresUnitTest
             .withUsername("postgres")
             .withPassword("postgres")
             .withDatabaseName("test")
-            .withEnv("AWS_REGION", System.getenv("AWS_REGION"))
+            .withEnv("AWS_REGION", "eu-west-3")
             .withReuse(true);
 
     /**
