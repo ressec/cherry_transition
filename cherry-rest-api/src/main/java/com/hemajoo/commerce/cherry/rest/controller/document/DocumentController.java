@@ -76,7 +76,7 @@ public class DocumentController
     /**
      * Service to create a random document.
      * @param personId Person identifier being the parent of the document to create.
-     * @return Document.
+     * @return Message.
      * @throws DocumentException Thrown to indicate an error occurred while trying to create a random document.
      */
     @ApiOperation(value = "Create a new random document")

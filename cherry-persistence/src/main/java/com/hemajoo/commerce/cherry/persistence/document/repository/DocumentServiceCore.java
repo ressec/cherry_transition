@@ -65,8 +65,8 @@ public class DocumentServiceCore implements DocumentService
     @Override
     public ServerDocumentEntity save(ServerDocumentEntity document)
     {
-        // and save the associated content file, if one!
-        if (document.getContent() != null)
+        // Save the content file, if one exist and not already saved!
+        if (document.getContent() != null && document.getContentId() == null)
         {
             document = (ServerDocumentEntity) proxyStore.getStore().setContent(document, document.getContent());
         }
