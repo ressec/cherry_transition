@@ -16,7 +16,7 @@ name: "CodeQL"
 on:
   pull_request:
     # The branches below must be a subset of the branches above
-    branches: [ feat, dev ]
+    branches: [ feat, dev, main ]
   schedule:
     - cron: '15 2 * * 2'
 
@@ -32,7 +32,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        language: [ 'java' ]
+        language: [ java ]
         # CodeQL supports [ 'cpp', 'csharp', 'go', 'java', 'javascript', 'python' ]
         # Learn more:
         # https://docs.github.com/en/free-pro-team@latest/github/finding-security-vulnerabilities-and-errors-in-your-code/configuring-code-scanning#changing-the-languages-that-are-analyzed
@@ -65,5 +65,5 @@ jobs:
       #   make bootstrap
       #   make release
 
-      - name: Perform CodeQL analysis
+      - name: Perform CodeQL analysis for language ${{ matrix.language }}
         uses: github/codeql-action/analyze@v1
