@@ -20,6 +20,7 @@ import com.hemajoo.commerce.cherry.persistence.document.entity.ServerDocumentEnt
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.UUID;
@@ -60,16 +61,17 @@ public class DocumentServiceCore implements DocumentService
         return documentRepository.findById(id).orElse(null);
     }
 
+    @Transactional
     @Override
     public ServerDocumentEntity save(ServerDocumentEntity document)
     {
-        document = documentRepository.save(document);
-
         // and save the associated content file, if one!
         if (document.getContent() != null)
         {
-            proxyStore.getStore().setContent(document, document.getContent());
+            document = (ServerDocumentEntity) proxyStore.getStore().setContent(document, document.getContent());
         }
+
+        document = documentRepository.save(document);
 
         return document;
     }

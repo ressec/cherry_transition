@@ -37,7 +37,7 @@ import java.util.Optional;
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler
 {
     @ExceptionHandler(Exception.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    //@ResponseStatus(HttpStatus.BAD_REQUEST)
     @ResponseBody
     @NotNull
     public static ResponseEntity<String> handleExceptions(Exception exception, WebRequest request)
