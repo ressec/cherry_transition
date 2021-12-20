@@ -15,7 +15,7 @@ name: "Dev"
 
 on:
   pull_request:
-    branches: [ feat ]
+    branches: [ dev ]
 
 jobs:
 
@@ -27,7 +27,7 @@ jobs:
 
     strategy:
       matrix:
-        java: [ 15, 17 ]
+        java: [ 16, 17 ]
 
     name: Build with Java ${{ matrix.Java }}
 
