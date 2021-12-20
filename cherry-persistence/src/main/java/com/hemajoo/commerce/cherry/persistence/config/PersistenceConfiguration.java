@@ -107,7 +107,7 @@ public class PersistenceConfiguration
             @Override
             public S3ObjectId convert(ServerDocumentEntity source)
             {
-                return new S3ObjectId("hemajoo.commerce.cherry", "dev/internal/" + source.getId().toString());
+                return new S3ObjectId("hemajoo.commerce.cherry", "dev/internal/" + source.getContentId());
                 //                        return new S3ObjectId(entity.getCustomBucketField(), entity.getCustomContentIdField());
             }
         });

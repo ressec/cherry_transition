@@ -134,6 +134,12 @@
             <artifactId>commons-validator</artifactId>
         </dependency>
 
+        <!-- Apache Tika: https://tika.apache.org -->
+        <dependency>
+            <groupId>com.github.lafa.tikaNoExternal</groupId>
+            <artifactId>tika-core</artifactId>
+        </dependency>
+
     </dependencies>
 
     <build>
