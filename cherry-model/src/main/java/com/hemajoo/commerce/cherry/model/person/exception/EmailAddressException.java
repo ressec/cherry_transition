@@ -17,16 +17,20 @@ package com.hemajoo.commerce.cherry.model.person.exception;
 import com.hemajoo.commerce.cherry.commons.type.EntityType;
 import org.springframework.http.HttpStatus;
 
+import java.io.Serial;
+
 /**
  * Unchecked exception thrown to indicate an error occurred with an email address.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
+@SuppressWarnings("java:S110")
 public class EmailAddressException extends EntityException
 {
     /**
      * Default serialization identifier.
      */
+    @Serial
     private static final long serialVersionUID = 1L;
 
     /**

@@ -19,12 +19,12 @@ import org.springframework.http.HttpStatus;
 import java.io.Serial;
 
 /**
- * Checked exception thrown to indicate an email address identifier cannot be found.
+ * Checked exception thrown to indicate a phone number identifier cannot be found.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
 @SuppressWarnings("java:S110")
-public class EmailAddressNotFoundException extends EmailAddressException
+public class PhoneNumberNotFoundException extends EmailAddressException
 {
     /**
      * Default serialization identifier.
@@ -33,11 +33,11 @@ public class EmailAddressNotFoundException extends EmailAddressException
     private static final long serialVersionUID = 1L;
 
     /**
-     * Thrown to indicate an email address cannot be found.
-     * @param id Email address identifier.
+     * Thrown to indicate a phone number cannot be found.
+     * @param id Phone number identifier.
      */
-    public EmailAddressNotFoundException(final Long id)
+    public PhoneNumberNotFoundException(final Long id)
     {
-        super(String.format("Email address id: '%s' cannot be found!", id), HttpStatus.NOT_FOUND);
+        super(String.format("Phone number id: '%s' cannot be found!", id), HttpStatus.NOT_FOUND);
     }
 }
