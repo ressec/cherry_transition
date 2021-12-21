@@ -34,8 +34,8 @@ import javax.validation.constraints.NotNull;
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-@ToString(callSuper = false)
-@EqualsAndHashCode(callSuper = false)
+@ToString(callSuper = true)
+@EqualsAndHashCode(callSuper = true)
 @Table(name = "PHONE_NUMBER")
 @Entity
 @EntityListeners(AuditingEntityListener.class)
@@ -99,7 +99,6 @@ public class ServerPhoneNumberEntity extends ServerBaseEntity implements PhoneNu
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     @Getter
-    @Setter
     @ManyToOne(targetEntity = ServerPersonEntity.class, fetch = FetchType.LAZY)
     @JoinColumn(name = "PERSON_ID", nullable = false)
     private ServerPersonEntity person;
@@ -110,5 +109,16 @@ public class ServerPhoneNumberEntity extends ServerBaseEntity implements PhoneNu
     public ServerPhoneNumberEntity()
     {
         super(EntityType.PHONE_NUMBER);
+    }
+
+    /**
+     * Sets the owner person.
+     * <hr>
+     * <b>NOTE:</b> Never invoke directly this service to add a phone number to a person. For that, you need to call {@link ServerPersonEntity#addPhoneNumber(ServerPhoneNumberEntity)}.
+     * @param person Person being the owner of the phone number.
+     */
+    public void setPerson(final ServerPersonEntity person)
+    {
+        this.person = person;
     }
 }
