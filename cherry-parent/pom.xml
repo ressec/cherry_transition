@@ -29,8 +29,9 @@
     <properties>
 
         <!-- Project properties -->
-        <maven.compiler.source>11</maven.compiler.source>
-        <maven.compiler.target>11</maven.compiler.target>
+        <maven.compiler.source>16</maven.compiler.source>
+        <maven.compiler.target>16</maven.compiler.target>
+        <maven.compiler.release>16</maven.compiler.release>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.directory.benchmark>file://${basedir}/benchmark}</project.directory.benchmark>
         <project.directory.run>${basedir}/run</project.directory.run>
@@ -43,7 +44,7 @@
         <!-- Plugin version properties -->
         <version.maven.plugin.compiler>3.8.1</version.maven.plugin.compiler>
         <version.maven.plugin.jar>3.1.2</version.maven.plugin.jar>
-        <version.maven.plugin.javadoc>3.1.1</version.maven.plugin.javadoc>
+        <version.maven.plugin.javadoc>3.3.1</version.maven.plugin.javadoc>
         <version.maven.plugin.source>3.1.0</version.maven.plugin.source>
         <version.maven.plugin.scm>1.11.2</version.maven.plugin.scm>
         <version.maven.plugin.release>2.5.3</version.maven.plugin.release>
@@ -77,7 +78,7 @@
         <version.hibernate.validator>7.0.1.Final</version.hibernate.validator>
         <version.javers>3.1.0</version.javers>
         <version.testcontainers>1.16.2</version.testcontainers>
-        <version.db.h2>1.4.200</version.db.h2>
+        <version.db.h2>2.0.202</version.db.h2>
         <version.db.postgresql>42.3.1</version.db.postgresql>
         <version.spring.content>1.2.7</version.spring.content>
         <version.amazon.awssdk>2.17.100</version.amazon.awssdk>
@@ -454,7 +455,7 @@
             </plugin>
 
             <!-- SCM: Used to perform Source Control Management actions with Maven. -->
-            <plugin>
+            <plugin>  
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-scm-plugin</artifactId>
                 <version>${version.maven.plugin.scm}</version>

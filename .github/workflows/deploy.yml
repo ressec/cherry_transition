@@ -11,7 +11,7 @@
 # is strictly forbidden unless prior written permission is obtained from
 # Resse Christophe (christophe.resse@gmail.com).
 # -----------------------------------------------------------------------------------------------
-name: "Maven Deploy"
+name: "Deploy"
 
 on:
   pull_request:
@@ -19,60 +19,27 @@ on:
 
 jobs:
 
-  # ----------------------------------------
-  # Build project using Maven
-  # ----------------------------------------
-  build:
-    name: Build
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-        with:
-          fetch-depth: 0 # Shallow clones should be disabled for a better relevancy of analysis
-
-      # Step: Setup adopt JDK 11
-      - name: Set up JDK 11
-        uses: actions/setup-java@v2
-        with:
-          java-version: '11'
-          distribution: 'adopt'
-
-      # Step: Cache maven packages
-      - name: Cache Maven packages
-        uses: actions/cache@v1
-        with:
-          path: ~/.m2
-          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
-          restore-keys: ${{ runner.os }}-m2
-
-      # Step: Maven clean & package goals
-      - name: Package with Maven
-        run: mvn -B clean package -f cherry-parent/pom.xml
-
-  # ----------------------------------------
-  # Deploy artifacts to GitHub Packages
-  # ----------------------------------------
   deploy:
-    name: Deploy
+
+    name: Deploy Artifacts
     runs-on: ubuntu-latest
     permissions:
       contents: read
       packages: write
-    needs: [build]
+    needs: [ build ]
+
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout Code
+        uses: actions/checkout@v2
         with:
           fetch-depth: 0 # Shallow clones should be disabled for a better relevancy of analysis
 
-      # Step: Setup adopt JDK 11
-      - name: Set up JDK 11
+      - name: Set up JDK 17
         uses: actions/setup-java@v2
         with:
-          java-version: '11'
-          distribution: 'adopt'
-        if: contains(github.base_ref, 'main')
+          java-version: 17
+          distribution: adopt
 
-      # Step: Cache maven packages
       - name: Cache Maven packages
         uses: actions/cache@v1
         with:
@@ -80,7 +47,6 @@ jobs:
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-m2
 
-      # Step - Cache sonar packages
       - name: Cache SonarCloud packages
         uses: actions/cache@v1
         with:
@@ -88,9 +54,9 @@ jobs:
           key: ${{ runner.os }}-sonar
           restore-keys: ${{ runner.os }}-sonar
 
-      # Step: Maven deploy goal
-      - name: Deploy to Github Packages with Maven
+      - name: Deploy Artifacts to Github Packages
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: mvn --batch-mode deploy -f cherry-parent/pom.xml # Only for a PR on main branch
         if: contains(github.base_ref, 'main')
+

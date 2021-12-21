@@ -1,7 +1,7 @@
 ---
 name: Randomizer entity
 about: Design and implement a new entity randomizer.
-title: Design and implement the <entity> randomizer entity
+title: Design and implement the [ENTITY] randomizer entity
 labels: ''
 assignees: ressec
 
@@ -9,11 +9,11 @@ assignees: ressec
 
 ## Purpose
 
-This task aims to cover the design and implementation of the <entity> randomizer.
+This task aims to cover the design and implementation of the `[ENTITY]` randomizer.
 
 ## Description
 
-_A randomizer is a utility class that provides services to randomly create client and/or server email address instances._
+_A randomizer is a utility class that provides services to randomly create client and/or server entities._
 
 ## Services
 

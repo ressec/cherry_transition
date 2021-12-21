@@ -1,7 +1,7 @@
 ---
 name: Integration tests
 about: Design and implement integration tests.
-title: Design and implement integration tests for <entity> entity.
+title: Design and implement integration tests for [ENTITY] entity.
 labels: ''
 assignees: ressec
 
@@ -9,7 +9,7 @@ assignees: ressec
 
 ## Purpose
 
-This task aims to design and implement integration tests for the `<entity>` entity.
+This task aims to design and implement integration tests for the `[ENTITY]` entity.
 
 ## Integration Tests 
 
