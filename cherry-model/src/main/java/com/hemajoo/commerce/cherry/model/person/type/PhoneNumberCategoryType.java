@@ -34,5 +34,10 @@ public enum PhoneNumberCategoryType
     /**
      * Fax phone number category.
      */
-    FAX
+    FAX,
+
+    /**
+     * Other phone number category.
+     */
+    OTHER
 }
