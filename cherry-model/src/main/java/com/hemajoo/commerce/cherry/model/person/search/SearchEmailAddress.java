@@ -48,7 +48,6 @@ public final class SearchEmailAddress extends BaseSearch
      * Is it the default email address?
      */
     @JsonProperty("isDefault")
-    //@ApiModelProperty(name = "isDefault", value = "Is default email address?")
     private Boolean isDefaultEmail;
 
     /**
