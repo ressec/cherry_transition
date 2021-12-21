@@ -13,14 +13,14 @@ This task aims to cover the design and implementation of the `[ENTITY]` randomiz
 
 ## Description
 
-_A randomizer is a utility class that provides services to randomly create client and/or server entities._
+_A randomizer is a utility class that provides services to randomly create client and/or server instances of a specific entity._
 
 ## Services
 
-- [ ] Implement service `generatePersistent(boolean)` 
-- [ ] Implement service `generatePersistentWithDocument(boolean, int)` 
-- [ ] Implement service `generateClient(boolean)` 
-- [ ] Implement service `generateClientWithDocument(boolean, int)` 
+- [ ] Implement service `generateServerEntity(boolean)`
+- [ ] Implement service `generateServerEntityWithDocument(boolean, int)`
+- [ ] Implement service `generateClientEntity(boolean)`
+- [ ] Implement service `generateClientEntityWithDocument(boolean, int)`
 
 ## Reference(s)
 
