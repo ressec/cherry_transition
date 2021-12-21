@@ -45,9 +45,8 @@ public abstract class AbstractPostalAddressMapper
      * @param entity Server postal address entity.
      * @param context Context object.
      * @return Entity identity.
-     * @throws EntityException Thrown to indicate an error occurred while retrieving the server entity from the underlying database.
      */
-    public abstract EntityIdentity fromServerToIdentity(ServerPostalAddressEntity entity, @Context CycleAvoidingMappingContext context) throws EntityException;
+    public abstract EntityIdentity fromServerToIdentity(ServerPostalAddressEntity entity, @Context CycleAvoidingMappingContext context);
 
     /**
      * Maps from a server postal address entity to a client postal address entity.
