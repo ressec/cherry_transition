@@ -14,6 +14,8 @@
 name: "Cherry"
 
 on:
+  push:
+    branches: [ feat, de, main ]
   pull_request:
     branches: [ feat, dev, main ]
 
