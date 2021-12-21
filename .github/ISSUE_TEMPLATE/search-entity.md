@@ -1,7 +1,7 @@
 ---
 name: Search entity
 about: Design and implement a new search entity.
-title: Design and implement the <entity> search entity
+title: Design and implement the [ENTITY] search entity
 labels: ''
 assignees: ressec
 
@@ -9,7 +9,7 @@ assignees: ressec
 
 ## Purpose
 
-This task aims to design and implement the `<entity>` search entity.
+This task aims to design and implement the `[ENTITY]` search entity.
 
 ## Description
 

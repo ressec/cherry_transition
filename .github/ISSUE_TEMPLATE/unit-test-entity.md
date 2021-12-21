@@ -1,7 +1,7 @@
 ---
 name: Unit test entity
 about: Design and implement new unit tests.
-title: Design and implement unit tests for <entity>
+title: Design and implement unit tests for [ENTITY]
 labels: ''
 assignees: ressec
 
@@ -9,7 +9,7 @@ assignees: ressec
 
 ## Purpose
 
-This task aims to design and implement unit tests for the `<entity>` entity.
+This task aims to design and implement unit tests for the `[ENTITY]` entity.
 
 ## Tests
 
