@@ -130,7 +130,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: mvn --batch-mode deploy -f cherry-parent/pom.xml # Only for a PR on main branch
-        if: contains(github.base_ref, 'main')
+        if: contains(github.ref, 'main')
 
   # CODEQL
   analyze:
