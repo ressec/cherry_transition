@@ -99,6 +99,7 @@ jobs:
       contents: read
       packages: write
     needs: [ build, sonar, analyze ]
+    if: ${{ github.ref == 'refs/heads/main' }} # Conditional step only for the 'main' branch
 
     steps:
       - name: Checkout Code
@@ -130,7 +131,6 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: mvn --batch-mode deploy -f cherry-parent/pom.xml # Only for a PR on main branch
-        if: contains(github.ref, 'main')
 
   # CODEQL
   analyze:
