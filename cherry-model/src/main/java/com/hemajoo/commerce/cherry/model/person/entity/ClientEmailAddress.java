@@ -19,7 +19,7 @@ import com.hemajoo.commerce.cherry.model.base.entity.ClientEntity;
 import com.hemajoo.commerce.cherry.model.person.entity.base.EmailAddress;
 
 /**
- * Interface providing the behavior of a client email address entity.
+ * Interface providing the minimal behavior of a client email address entity.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */

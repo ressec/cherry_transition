@@ -32,10 +32,8 @@ import javax.persistence.Enumerated;
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-//@JsonInclude(JsonInclude.Include.NON_NULL)
 @Data
 @ToString(callSuper = true)
-//@Builder(setterPrefix = "with") // Does not work well with MapStruct!
 @EqualsAndHashCode(callSuper = true)
 public class ClientEmailAddressEntity extends ClientBaseEntity implements ClientEmailAddress
 {
@@ -63,12 +61,11 @@ public class ClientEmailAddressEntity extends ClientBaseEntity implements Client
     private AddressType addressType;
 
     /**
-     * The person identifier this email address belongs to.
+     * The person this email address belongs to.
      */
     @JsonProperty("person")
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
-    //@JsonIgnoreProperties("emailAddresses")
     @ApiModelProperty(name = "person", notes = "Person this email address belongs to", value = "1")
     private EntityIdentity person; // TODO Could it be moved to base entity?
 

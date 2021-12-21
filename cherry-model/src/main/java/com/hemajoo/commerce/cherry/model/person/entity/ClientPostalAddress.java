@@ -14,12 +14,12 @@
  */
 package com.hemajoo.commerce.cherry.model.person.entity;
 
-import com.hemajoo.commerce.cherry.commons.entity.Identity;
+import com.hemajoo.commerce.cherry.commons.entity.EntityIdentity;
 import com.hemajoo.commerce.cherry.model.base.entity.ClientEntity;
 import com.hemajoo.commerce.cherry.model.person.entity.base.PostalAddress;
 
 /**
- * Behavior of a client postal address entity.
+ * Interface providing the minimal behavior of a client postal address entity.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
@@ -29,11 +29,11 @@ public interface ClientPostalAddress extends PostalAddress, ClientEntity
      * Returns the entity identity owning this postal address.
      * @return Entity identity.
      */
-    Identity getOwner();
+    EntityIdentity getPerson();
 
     /**
      * Sets the entity identity owning this postal address.
      * @param owner Entity identity.
      */
-    void setOwner(final Identity owner);
+    void setPerson(final EntityIdentity owner);
 }
