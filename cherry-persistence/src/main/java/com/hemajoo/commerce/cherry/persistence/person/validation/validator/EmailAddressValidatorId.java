@@ -24,9 +24,10 @@ import javax.validation.ConstraintValidatorContext;
 import java.util.UUID;
 
 /**
- * Validator for the {@link EmailAddressCheckId} constraint used to validate an email address identifier exist.
+ * Validator used to validate an <b>Email Address</b> identifier is valid.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
+ * @see EmailAddressCheckId
  */
 public class EmailAddressValidatorId implements ConstraintValidator<EmailAddressCheckId, String>
 {
@@ -34,13 +35,10 @@ public class EmailAddressValidatorId implements ConstraintValidator<EmailAddress
      * Email address validation engine.
      */
     @Autowired
-    private EmailAddressValidationEngine validation;
+    private EmailAddressValidationEngine engine;
 
     @Override
-    public void initialize(EmailAddressCheckId constraint)
-    {
-        // Empty.
-    }
+    public void initialize(EmailAddressCheckId constraint) { /* Empty */ }
 
     @Override
     @SuppressWarnings("squid:S1166")
@@ -48,7 +46,7 @@ public class EmailAddressValidatorId implements ConstraintValidator<EmailAddress
     {
         try
         {
-            validation.isIdValid(UUID.fromString(id));
+            engine.isIdValid(UUID.fromString(id));
 
             return true;
         }

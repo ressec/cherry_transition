@@ -22,10 +22,10 @@ import javax.validation.Payload;
 import java.lang.annotation.*;
 
 /**
- * Validation constraint to be used on field, parameter or local variables representing a person identifier
- * and providing validation rules used to ensure the person identifier exist.
+ * Validation constraint used to validate a <b>Person</b> identifier.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
+ * @see PersonValidatorId
  */
 @Documented
 @Constraint(validatedBy = PersonValidatorId.class)

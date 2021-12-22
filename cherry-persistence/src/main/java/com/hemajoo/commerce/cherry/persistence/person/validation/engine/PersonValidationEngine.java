@@ -38,18 +38,15 @@ public final class PersonValidationEngine extends AbstractEntityValidationEngine
     @Autowired
     private PersonService servicePerson;
 
+    /**
+     * Creates a new person validation engine.
+     */
     public PersonValidationEngine()
     {
         super(EntityType.PERSON);
     }
 
-    /**
-     * Checks if a person identifier is valid.
-     * <br>
-     * For an entity identifier to be valid, it must exist in the underlying persistence system.
-     * @param personId Person identifier.
-     * @throws EntityValidationException Thrown to indicate an error occurred when trying to validate the person identifier.
-     */
+    @Override
     public void isIdValid(final @NonNull UUID personId) throws EntityValidationException
     {
         if (!servicePerson.existId(personId))

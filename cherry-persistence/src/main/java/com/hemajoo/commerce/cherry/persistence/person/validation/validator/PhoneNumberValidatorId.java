@@ -24,9 +24,10 @@ import javax.validation.ConstraintValidatorContext;
 import java.util.UUID;
 
 /**
- * Phone number validator for the {@link PhoneNumberCheckId} constraint used to validate a phone number identifier is valid (exist).
+ * Validator used to validate a <b>Phone Number</b> identifier is valid.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
+ * @see PhoneNumberCheckId
  */
 public class PhoneNumberValidatorId implements ConstraintValidator<PhoneNumberCheckId, String>
 {

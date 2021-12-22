@@ -24,9 +24,10 @@ import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
 /**
- * Phone number validator associated to the {@link PhoneNumberCheckUpdate} constraint used to validate the entity is valid tobe updated.
+ * Validator used to validate a <b>Phone Number</b> is valid to be updated.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
+ * @see PhoneNumberCheckUpdate
  */
 public class PhoneNumberValidatorUpdate implements ConstraintValidator<PhoneNumberCheckUpdate, ClientPhoneNumberEntity>
 {

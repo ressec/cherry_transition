@@ -24,9 +24,10 @@ import javax.validation.ConstraintValidatorContext;
 import java.util.UUID;
 
 /**
- * Validator for the {@link PersonCheckId} constraint used to validate that a person identifier exist in the underlying persistence system.
+ * Validator used to validate an <b>Email Address</b> is valid to be created.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
+ * @see PersonCheckId
  */
 public class PersonValidatorId implements ConstraintValidator<PersonCheckId, String>
 {
@@ -37,10 +38,7 @@ public class PersonValidatorId implements ConstraintValidator<PersonCheckId, Str
     private PersonValidationEngine engine;
 
     @Override
-    public void initialize(PersonCheckId constraint)
-    {
-        // Empty.
-    }
+    public void initialize(PersonCheckId constraint) { /* Empty */ }
 
     @Override
     public boolean isValid(String id, ConstraintValidatorContext context)

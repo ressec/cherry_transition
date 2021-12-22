@@ -174,7 +174,7 @@ public class EmailAddressController
     {
         servicePerson.getEmailAddressService().deleteById(UUID.fromString(id));
 
-        return ResponseEntity.ok(String.format("Email address id: '%s' has been deleted successfully!", id));
+        return ResponseEntity.ok(String.format("Successfully deleted email address with id: '%s'", id));
     }
 
     /**

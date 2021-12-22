@@ -22,7 +22,7 @@ import javax.validation.Payload;
 import java.lang.annotation.*;
 
 /**
- * Validation constraint used to validate a phone number identifier is valid.
+ * Validation constraint used to validate a <b>Phone Number</b> identifier.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  * @see PhoneNumberValidatorId

@@ -14,20 +14,20 @@
  */
 package com.hemajoo.commerce.cherry.persistence.person.validation.constraint;
 
-import com.hemajoo.commerce.cherry.persistence.person.validation.validator.EmailAddressValidatorCreate;
+import com.hemajoo.commerce.cherry.persistence.person.validation.validator.EmailAddressValidatorUpdate;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;
 import java.lang.annotation.*;
 
 /**
- * Validation constraint to be used on field, parameter or local variables used to check
- * if an email address client entity is valid for a creation.
+ * Validation constraint used to validate an <b>Email Address</b> to be updated.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
+ * @see EmailAddressValidatorUpdate
  */
 @Documented
-@Constraint(validatedBy = EmailAddressValidatorCreate.class)
+@Constraint(validatedBy = EmailAddressValidatorUpdate.class)
 @Target( { ElementType.FIELD, ElementType.PARAMETER, ElementType.LOCAL_VARIABLE })
 @Retention(RetentionPolicy.RUNTIME)
 public @interface EmailAddressCheckUpdate

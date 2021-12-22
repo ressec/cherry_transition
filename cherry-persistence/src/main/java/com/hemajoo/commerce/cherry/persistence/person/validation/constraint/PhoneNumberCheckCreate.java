@@ -21,10 +21,10 @@ import javax.validation.Payload;
 import java.lang.annotation.*;
 
 /**
- * Validation constraint to be used on field, parameter or local variables used to check
- * if a phone number client entity is valid for a creation.
+ * Validation constraint used to validate a <b>Phone Number</b> is valid to be created.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
+ * @see PhoneNumberValidatorCreate
  */
 @Documented
 @Constraint(validatedBy = PhoneNumberValidatorCreate.class)

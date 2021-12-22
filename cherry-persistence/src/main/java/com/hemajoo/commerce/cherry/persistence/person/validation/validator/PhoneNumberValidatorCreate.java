@@ -24,9 +24,10 @@ import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
 /**
- * Validator associated to the {@link PhoneNumberCheckCreate} constraint used to validate a phone number is valid to be created.
+ * Validator used to validate an <b>Phone Number</b> is valid to be created.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
+ * @see PhoneNumberCheckCreate
  */
 public class PhoneNumberValidatorCreate implements ConstraintValidator<PhoneNumberCheckCreate, ClientPhoneNumberEntity>
 {
@@ -37,10 +38,7 @@ public class PhoneNumberValidatorCreate implements ConstraintValidator<PhoneNumb
     private PhoneNumberValidationEngine engine;
 
     @Override
-    public void initialize(PhoneNumberCheckCreate constraint)
-    {
-        // Empty.
-    }
+    public void initialize(PhoneNumberCheckCreate constraint) { /* Empty */ }
 
     @Override
     @SuppressWarnings("squid:S1166")

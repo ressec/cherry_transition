@@ -22,9 +22,10 @@ import javax.validation.Payload;
 import java.lang.annotation.*;
 
 /**
- * Validation constraint used to validate an email address identifier.
+ * Validation constraint used to validate an <b>Email Address</b> identifier.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
+ * @see EmailAddressValidatorId
  */
 @Documented
 @Constraint(validatedBy = EmailAddressValidatorId.class)

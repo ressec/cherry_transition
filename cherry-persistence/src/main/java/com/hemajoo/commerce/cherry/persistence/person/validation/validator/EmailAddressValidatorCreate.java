@@ -16,7 +16,7 @@ package com.hemajoo.commerce.cherry.persistence.person.validation.validator;
 
 import com.hemajoo.commerce.cherry.model.person.entity.ClientEmailAddressEntity;
 import com.hemajoo.commerce.cherry.model.person.exception.EmailAddressException;
-import com.hemajoo.commerce.cherry.persistence.person.validation.constraint.EmailAddressCheckUpdate;
+import com.hemajoo.commerce.cherry.persistence.person.validation.constraint.EmailAddressCheckCreate;
 import com.hemajoo.commerce.cherry.persistence.person.validation.engine.EmailAddressValidationEngine;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -24,11 +24,12 @@ import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
 /**
- * Email address validator associated to the {@link EmailAddressCheckUpdate} constraint used to validate the entity is valid to be created.
+ * Validator used to validate an <b>Email Address</b> is valid to be created.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
+ * @see EmailAddressCheckCreate
  */
-public class EmailAddressValidatorCreate implements ConstraintValidator<EmailAddressCheckUpdate, ClientEmailAddressEntity>
+public class EmailAddressValidatorCreate implements ConstraintValidator<EmailAddressCheckCreate, ClientEmailAddressEntity>
 {
     /**
      * Email address validation engine.
@@ -37,7 +38,7 @@ public class EmailAddressValidatorCreate implements ConstraintValidator<EmailAdd
     private EmailAddressValidationEngine engine;
 
     @Override
-    public void initialize(EmailAddressCheckUpdate constraint) { /* Empty*/ }
+    public void initialize(EmailAddressCheckCreate constraint) { /* Empty*/ }
 
     @Override
     @SuppressWarnings("squid:S1166")

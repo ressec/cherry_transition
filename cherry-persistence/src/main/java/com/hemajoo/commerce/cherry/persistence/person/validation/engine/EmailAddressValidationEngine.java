@@ -35,7 +35,7 @@ import java.util.Objects;
 import java.util.UUID;
 
 /**
- * Email address validation object.
+ * Email address validation engine.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
@@ -48,6 +48,9 @@ public final class EmailAddressValidationEngine extends AbstractEntityValidation
     @Autowired
     private EmailAddressService serviceEmailAddress;
 
+    /**
+     * Creates a new email address validation engine.
+     */
     public EmailAddressValidationEngine()
     {
         super(EntityType.EMAIL_ADDRESS);

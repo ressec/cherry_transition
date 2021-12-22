@@ -21,9 +21,10 @@ import javax.validation.Payload;
 import java.lang.annotation.*;
 
 /**
- * Validation constraint used to check if a phone number entity is valid to be updated.
+ * Validation constraint used to validate a <b>Phone Number</b> is valid to be updated.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
+ * @see PhoneNumberValidatorUpdate
  */
 @Documented
 @Constraint(validatedBy = PhoneNumberValidatorUpdate.class)
