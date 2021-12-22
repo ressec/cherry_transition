@@ -14,6 +14,7 @@
  */
 package com.hemajoo.commerce.cherry.persistence.person.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.hemajoo.commerce.cherry.commons.type.EntityType;
 import com.hemajoo.commerce.cherry.model.person.entity.base.PhoneNumber;
 import com.hemajoo.commerce.cherry.model.person.type.PhoneNumberCategoryType;
@@ -99,7 +100,8 @@ public class ServerPhoneNumberEntity extends ServerBaseEntity implements PhoneNu
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     @Getter
-    @ManyToOne(targetEntity = ServerPersonEntity.class, fetch = FetchType.LAZY)
+    @JsonIgnoreProperties
+    @ManyToOne(targetEntity = ServerPersonEntity.class, fetch = FetchType.EAGER)
     @JoinColumn(name = "PERSON_ID", nullable = false)
     private ServerPersonEntity person;
 

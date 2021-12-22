@@ -35,10 +35,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.time.Month;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * Represents a person.
@@ -277,6 +274,19 @@ public class ServerPersonEntity extends ServerBaseEntity implements ServerPerson
         emailAddresses.remove(email);
     }
 
+    /**
+     * Removes all email addresses.
+     */
+    public final void removeAllEmailAddress()
+    {
+        Iterator<ServerEmailAddressEntity> iterator = emailAddresses.iterator();
+        while (iterator.hasNext())
+        {
+            iterator.next().setPerson(null);
+            iterator.remove();
+        }
+    }
+
     // PHONE NUMBER SERVICES
 
     /**
@@ -372,8 +382,8 @@ public class ServerPersonEntity extends ServerBaseEntity implements ServerPerson
                     this.getName()), HttpStatus.BAD_REQUEST);
         }
 
-        phoneNumber.setPerson(this);
         phoneNumbers.add(phoneNumber);
+        phoneNumber.setPerson(this);
     }
 
     /**
@@ -382,8 +392,21 @@ public class ServerPersonEntity extends ServerBaseEntity implements ServerPerson
      */
     public final void removePhoneNumber(final @NonNull ServerPhoneNumberEntity phoneNumber)
     {
-        phoneNumber.setPerson(null);
         phoneNumbers.remove(phoneNumber);
+        phoneNumber.setPerson(null);
+    }
+
+    /**
+     * Removes all phone numbers.
+     */
+    public final void removeAllPhoneNumber()
+    {
+        Iterator<ServerPhoneNumberEntity> iterator = phoneNumbers.iterator();
+        while (iterator.hasNext())
+        {
+            iterator.next().setPerson(null);
+            iterator.remove();
+        }
     }
 
     // POSTAL ADDRESS SERVICES
@@ -482,5 +505,18 @@ public class ServerPersonEntity extends ServerBaseEntity implements ServerPerson
     {
         postalAddress.setPerson(null);
         postalAddresses.remove(postalAddress);
+    }
+
+    /**
+     * Removes all postal addresses.
+     */
+    public final void removeAllPostalAddress()
+    {
+        Iterator<ServerPostalAddressEntity> iterator = postalAddresses.iterator();
+        while (iterator.hasNext())
+        {
+            iterator.next().setPerson(null);
+            iterator.remove();
+        }
     }
 }

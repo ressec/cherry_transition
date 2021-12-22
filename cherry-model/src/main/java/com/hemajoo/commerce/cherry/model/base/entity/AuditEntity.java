@@ -15,7 +15,7 @@
 package com.hemajoo.commerce.cherry.model.base.entity;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 /**
  * Interface providing the behavior of an audit entity.
@@ -29,25 +29,25 @@ public interface AuditEntity extends Serializable
      * Returns the creation date.
      * @return Date.
      */
-    Date getCreatedDate();
+    LocalDateTime getCreatedDate();
 
     /**
      * Sets the creation date.
      * @param date Creation date.
      */
-    void setCreatedDate(final Date date);
+    void setCreatedDate(final LocalDateTime date);
 
     /**
      * Returns the last modification date.
      * @return Date.
      */
-    Date getModifiedDate();
+    LocalDateTime getModifiedDate();
 
     /**
      * Sets the last modification date.
      * @param date Modification date.
      */
-    void setModifiedDate(final Date date);
+    void setModifiedDate(final LocalDateTime date);
 
     /**
      * Returns the creation author.

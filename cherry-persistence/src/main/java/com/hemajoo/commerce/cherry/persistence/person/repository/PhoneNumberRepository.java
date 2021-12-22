@@ -73,7 +73,7 @@ public interface PhoneNumberRepository extends JpaRepository<ServerPhoneNumberEn
      * @param personId Person identifier.
      * @return List of phone numbers.
      */
-    List<ServerPhoneNumberEntity> findByPersonId(long personId);
+    List<ServerPhoneNumberEntity> findByPersonId(UUID personId);
 
     /**
      * Returns the list of phone numbers matching the given specification.

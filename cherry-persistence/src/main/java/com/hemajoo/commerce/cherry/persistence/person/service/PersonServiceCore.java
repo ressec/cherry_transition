@@ -26,8 +26,10 @@ import com.hemajoo.commerce.cherry.persistence.document.entity.ServerDocumentEnt
 import com.hemajoo.commerce.cherry.persistence.document.repository.DocumentService;
 import com.hemajoo.commerce.cherry.persistence.person.entity.ServerEmailAddressEntity;
 import com.hemajoo.commerce.cherry.persistence.person.entity.ServerPersonEntity;
+import com.hemajoo.commerce.cherry.persistence.person.entity.ServerPhoneNumberEntity;
 import com.hemajoo.commerce.cherry.persistence.person.repository.EmailAddressRepository;
 import com.hemajoo.commerce.cherry.persistence.person.repository.PersonRepository;
+import com.hemajoo.commerce.cherry.persistence.person.repository.PhoneNumberRepository;
 import lombok.Getter;
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,6 +60,13 @@ public class PersonServiceCore implements PersonService
     @Autowired
     @Getter
     private EmailAddressRepository emailAddressRepository;
+
+    /**
+     * Phone number repository.
+     */
+    @Autowired
+    @Getter
+    private PhoneNumberRepository phoneNumberRepository;
 
     /**
      * Document service.
@@ -249,6 +258,12 @@ public class PersonServiceCore implements PersonService
     public List<ServerEmailAddressEntity> getEmailAddresses(final @NonNull ServerPersonEntity person)
     {
         return emailAddressRepository.findByPersonId(person.getId());
+    }
+
+    @Override
+    public List<ServerPhoneNumberEntity> getPhoneNumbers(@NonNull ServerPersonEntity person)
+    {
+        return phoneNumberRepository.findByPersonId(person.getId());
     }
 
 //    @Override

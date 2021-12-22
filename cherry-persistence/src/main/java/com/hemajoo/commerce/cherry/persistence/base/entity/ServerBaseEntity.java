@@ -19,7 +19,6 @@ import com.hemajoo.commerce.cherry.commons.type.EntityType;
 import com.hemajoo.commerce.cherry.model.base.entity.BaseEntity;
 import com.hemajoo.commerce.cherry.persistence.document.entity.ServerDocumentEntity;
 import lombok.*;
-import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -52,7 +51,7 @@ public class ServerBaseEntity extends AbstractServerStatusEntity implements Base
     @Getter
     @Setter
     @Id
-    @Type(type = "uuid-char") // Allow displaying in the DB the UUID as a string instead of a binary field!
+    //@Type(type = "uuid-char") // Allow displaying in the DB the UUID as a string instead of a binary field!
     @GeneratedValue
     private UUID id;
 

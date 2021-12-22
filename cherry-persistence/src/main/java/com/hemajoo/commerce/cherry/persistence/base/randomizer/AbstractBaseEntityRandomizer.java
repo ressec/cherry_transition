@@ -22,6 +22,7 @@ import lombok.NonNull;
 import org.ressec.avocado.core.random.EnumRandomGenerator;
 
 import java.security.SecureRandom;
+import java.time.ZoneId;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -75,9 +76,13 @@ public abstract class AbstractBaseEntityRandomizer
         parent.setReference(FAKER.ancient().hero());
         parent.setStatusType((StatusType) STATUS_TYPE_GENERATOR.gen());
         parent.setCreatedBy(FAKER.internet().emailAddress());
-        parent.setCreatedDate(FAKER.date().past(100, TimeUnit.DAYS)); // Created in the previous 100 days
+        parent.setCreatedDate(FAKER.date().past(100, TimeUnit.DAYS).toInstant()
+                .atZone(ZoneId.systemDefault())
+                .toLocalDateTime()); // Created in the previous 100 days
         parent.setModifiedBy(FAKER.internet().emailAddress());
-        parent.setCreatedDate(FAKER.date().past(1, TimeUnit.HOURS)); // Modified in the last hour
+        parent.setCreatedDate(FAKER.date().past(1, TimeUnit.HOURS).toInstant()
+                .atZone(ZoneId.systemDefault())
+                .toLocalDateTime()); // Modified in the last hour
     }
 
     /**
@@ -95,9 +100,13 @@ public abstract class AbstractBaseEntityRandomizer
         parent.setReference(FAKER.ancient().hero());
         parent.setStatusType((StatusType) STATUS_TYPE_GENERATOR.gen());
         parent.setCreatedBy(FAKER.internet().emailAddress());
-        parent.setCreatedDate(FAKER.date().past(100, TimeUnit.DAYS)); // Created in the previous 100 days
+        parent.setCreatedDate(FAKER.date().past(100, TimeUnit.DAYS).toInstant()
+                .atZone(ZoneId.systemDefault())
+                .toLocalDateTime()); // Created in the previous 100 days
         parent.setModifiedBy(FAKER.internet().emailAddress());
-        parent.setCreatedDate(FAKER.date().past(1, TimeUnit.HOURS)); // Modified in the last hour
+        parent.setCreatedDate(FAKER.date().past(1, TimeUnit.HOURS).toInstant()
+                .atZone(ZoneId.systemDefault())
+                .toLocalDateTime()); // Modified in the last hour
     }
 
     /**
