@@ -18,6 +18,7 @@ import com.hemajoo.commerce.cherry.model.base.converter.GenericEntityConverter;
 import com.hemajoo.commerce.cherry.model.person.entity.ClientEmailAddressEntity;
 import com.hemajoo.commerce.cherry.model.person.exception.EmailAddressException;
 import com.hemajoo.commerce.cherry.model.person.exception.EntityException;
+import com.hemajoo.commerce.cherry.model.person.exception.EntityValidationException;
 import com.hemajoo.commerce.cherry.model.person.search.SearchEmailAddress;
 import com.hemajoo.commerce.cherry.persistence.base.entity.ServiceFactoryPerson;
 import com.hemajoo.commerce.cherry.persistence.person.converter.EmailAddressConverter;
@@ -25,16 +26,15 @@ import com.hemajoo.commerce.cherry.persistence.person.entity.ServerEmailAddressE
 import com.hemajoo.commerce.cherry.persistence.person.entity.ServerPersonEntity;
 import com.hemajoo.commerce.cherry.persistence.person.randomizer.EmailAddressRandomizer;
 import com.hemajoo.commerce.cherry.persistence.person.service.EmailAddressServiceCore;
-import com.hemajoo.commerce.cherry.persistence.person.validation.constraint.ValidEmailAddressForCreation;
-import com.hemajoo.commerce.cherry.persistence.person.validation.constraint.ValidEmailAddressForUpdate;
-import com.hemajoo.commerce.cherry.persistence.person.validation.constraint.ValidEmailAddressId;
-import com.hemajoo.commerce.cherry.persistence.person.validation.constraint.ValidPersonId;
+import com.hemajoo.commerce.cherry.persistence.person.validation.constraint.EmailAddressCheckCreate;
+import com.hemajoo.commerce.cherry.persistence.person.validation.constraint.EmailAddressCheckId;
+import com.hemajoo.commerce.cherry.persistence.person.validation.constraint.EmailAddressCheckUpdate;
+import com.hemajoo.commerce.cherry.persistence.person.validation.constraint.PersonCheckId;
 import com.hemajoo.commerce.cherry.persistence.person.validation.engine.EmailAddressValidationEngine;
-import com.hemajoo.commerce.cherry.persistence.person.validation.validator.EmailAddressValidatorForUpdate;
+import com.hemajoo.commerce.cherry.persistence.person.validation.validator.EmailAddressValidatorUpdate;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -43,7 +43,6 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 /**
  * REST controller providing service endpoints to manage the email addresses.
@@ -51,8 +50,7 @@ import java.util.stream.Collectors;
  * @version 1.0.0
  */
 @Api(tags = "Email Addresses")
-@ComponentScan(basePackageClasses = { EmailAddressValidatorForUpdate.class, EmailAddressServiceCore.class })
-//@GroupSequence( { EmailAddressController.class, BasicValidation.class, ExtendedValidation.class } )
+@ComponentScan(basePackageClasses = { EmailAddressValidatorUpdate.class, EmailAddressServiceCore.class })
 @Validated
 @RestController
 @RequestMapping("/api/v1/person/email")
@@ -96,7 +94,7 @@ public class EmailAddressController
     @GetMapping("/get/{id}")
     public ResponseEntity<ClientEmailAddressEntity> get(
             @ApiParam(value = "Email address identifier", required = true)
-            @Valid @ValidEmailAddressId // Handles email id validation automatically, need both annotations!
+            @Valid @EmailAddressCheckId // Handles email id validation automatically, need both annotations!
             @NotNull
             @PathVariable String id)
     {
@@ -114,7 +112,7 @@ public class EmailAddressController
     @PostMapping("/create")
     public ResponseEntity<ClientEmailAddressEntity> create(
             @ApiParam(value = "Email address", required = true)
-            @Valid @ValidEmailAddressForCreation @RequestBody ClientEmailAddressEntity emailAddress) throws EntityException
+            @Valid @EmailAddressCheckUpdate @RequestBody ClientEmailAddressEntity emailAddress) throws EntityException
     {
         ServerEmailAddressEntity serverEmailAddress = converterEmailAddress.fromClientToServer(emailAddress);
         serverEmailAddress = servicePerson.getEmailAddressService().save(serverEmailAddress);
@@ -132,7 +130,7 @@ public class EmailAddressController
     @PostMapping("/random")
     public ResponseEntity<ClientEmailAddressEntity> random(
             @ApiParam(value = "Person identifier (UUID) being the owner of the new random email address", name = "personId", required = true)
-            @Valid @ValidPersonId @NotNull @RequestParam String personId) throws EmailAddressException
+            @Valid @PersonCheckId @NotNull @RequestParam String personId) throws EmailAddressException
     {
         ServerEmailAddressEntity serverEmail = EmailAddressRandomizer.generateServerEntity(false);
 
@@ -152,10 +150,9 @@ public class EmailAddressController
     @PutMapping("/update")
     //@Transactional
     public ResponseEntity<ClientEmailAddressEntity> update(
-            @NotNull @Valid @ValidEmailAddressForUpdate @RequestBody ClientEmailAddressEntity email) throws EntityException
+            @NotNull @Valid @EmailAddressCheckCreate @RequestBody ClientEmailAddressEntity email) throws EntityValidationException
     {
-        //emailAddressRuleEngine.validateEmailAddressId(email);
-        validationEmailAddress.validateEmailForUpdate(email);
+        validationEmailAddress.isValidForUpdate(email);
 
         ServerEmailAddressEntity source = converterEmailAddress.fromClientToServer(email);
         ServerEmailAddressEntity updated = servicePerson.getEmailAddressService().update(source);
@@ -173,7 +170,7 @@ public class EmailAddressController
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<String> delete(
             @ApiParam(value = "Email address identifier (UUID)", required = true)
-            @NotNull @Valid @ValidEmailAddressId @PathVariable String id)
+            @NotNull @Valid @EmailAddressCheckId @PathVariable String id)
     {
         servicePerson.getEmailAddressService().deleteById(UUID.fromString(id));
 
@@ -184,7 +181,7 @@ public class EmailAddressController
      * Service to search for email addresses given some criteria.
      * @param search Email address specification object.
      * @return List of matching email addresses.
-     * @throws EmailAddressException Thrown to indicate an error occurred while trying to search for email addresses.
+     * @throws EntityValidationException Thrown to indicate an error occurred while trying to search for email addresses.
      */
     @ApiOperation(value = "Search for email addresses", notes = "Search for email addresses matching the given predicates. Fill only the fields to be taken into account.")
     @ApiResponses(value = {
@@ -192,15 +189,15 @@ public class EmailAddressController
             @ApiResponse(code = 404, message = "No email address found matching the given criteria"),
             @ApiResponse(code = 400, message = "Missing or invalid request"),
             @ApiResponse(code = 500, message = "Internal server error")})
-    @PatchMapping(value = "/search", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE) // PATCH method Because a GET method cannot have a request body!
-    public ResponseEntity<List<ClientEmailAddressEntity>> search(final @RequestBody @NotNull SearchEmailAddress search) throws EmailAddressException
+    @PatchMapping(value = "/search") // PATCH method Because a GET method cannot have a request body!
+    public ResponseEntity<List<ClientEmailAddressEntity>> search(final @NotNull SearchEmailAddress search) throws EntityValidationException
     {
-        EmailAddressValidationEngine.isSearchValid(search);
+        validationEmailAddress.isSearchValid(search);
 
         List<ClientEmailAddressEntity> clients = servicePerson.getEmailAddressService().search(search)
                 .stream()
                 .map(element -> converterEmailAddress.fromServerToClient(element))
-                .collect(Collectors.toList());
+                .toList();
 
         return ResponseEntity.ok(clients);
     }
@@ -209,7 +206,7 @@ public class EmailAddressController
      * Service to query for email addresses identifiers matching some criteria.
      * @param search Email address specification criteria.
      * @return List of matching email address identifiers.
-     * @throws EmailAddressException Thrown to indicate an error occurred while trying to query for email addresses.
+     * @throws EntityValidationException Thrown to indicate an error occurred while trying to query for email addresses.
      */
     @ApiOperation(value = "Query email addresses", notes = "Returns a list of email addresses matching the given criteria.")
     @ApiResponses(value = {
@@ -218,14 +215,14 @@ public class EmailAddressController
             @ApiResponse(code = 400, message = "Missing or invalid request"),
             @ApiResponse(code = 500, message = "Internal server error")})
     @GetMapping("/query")
-    public ResponseEntity<List<String>> query(final @NotNull SearchEmailAddress search) throws EmailAddressException
+    public ResponseEntity<List<String>> query(final @NotNull SearchEmailAddress search) throws EntityValidationException
     {
-        EmailAddressValidationEngine.isSearchValid(search);
+        validationEmailAddress.isSearchValid(search);
 
         List<ClientEmailAddressEntity> clients = servicePerson.getEmailAddressService().search(search)
                 .stream()
                 .map(element -> converterEmailAddress.fromServerToClient(element))
-                .collect(Collectors.toList());
+                .toList();
 
         return ResponseEntity.ok(GenericEntityConverter.toIdList(clients));
     }

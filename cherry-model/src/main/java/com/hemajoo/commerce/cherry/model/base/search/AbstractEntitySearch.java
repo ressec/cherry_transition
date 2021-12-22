@@ -17,8 +17,6 @@ package com.hemajoo.commerce.cherry.model.base.search;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.hemajoo.commerce.cherry.commons.entity.EntityIdentity;
-import com.hemajoo.commerce.cherry.commons.entity.Identity;
-import com.hemajoo.commerce.cherry.commons.entity.IdentityAware;
 import com.hemajoo.commerce.cherry.commons.type.EntityType;
 import com.hemajoo.commerce.cherry.commons.type.StatusType;
 import io.swagger.annotations.ApiModelProperty;
@@ -38,7 +36,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
-public class BaseSearch extends AbstractStatusSearch implements Identity, IdentityAware
+public class AbstractEntitySearch extends AbstractStatusSearch implements SearchEntity
 {
     /**
      * Entity identifier.
@@ -73,7 +71,7 @@ public class BaseSearch extends AbstractStatusSearch implements Identity, Identi
      * @param type Entity type.
      * @see StatusType
      */
-    public BaseSearch(EntityType type)
+    public AbstractEntitySearch(EntityType type)
     {
         this.entityType = type;
     }

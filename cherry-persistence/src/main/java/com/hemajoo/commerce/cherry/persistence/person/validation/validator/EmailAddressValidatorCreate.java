@@ -14,41 +14,39 @@
  */
 package com.hemajoo.commerce.cherry.persistence.person.validation.validator;
 
+import com.hemajoo.commerce.cherry.model.person.entity.ClientEmailAddressEntity;
 import com.hemajoo.commerce.cherry.model.person.exception.EmailAddressException;
-import com.hemajoo.commerce.cherry.persistence.person.validation.constraint.ValidEmailAddressId;
+import com.hemajoo.commerce.cherry.persistence.person.validation.constraint.EmailAddressCheckUpdate;
 import com.hemajoo.commerce.cherry.persistence.person.validation.engine.EmailAddressValidationEngine;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
-import java.util.UUID;
 
 /**
- * Validator for the {@link ValidEmailAddressId} constraint used to validate an email address identifier exist.
+ * Email address validator associated to the {@link EmailAddressCheckUpdate} constraint used to validate the entity is valid to be created.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-public class EmailAddressIdValidator implements ConstraintValidator<ValidEmailAddressId, String>
+public class EmailAddressValidatorCreate implements ConstraintValidator<EmailAddressCheckUpdate, ClientEmailAddressEntity>
 {
     /**
      * Email address validation engine.
      */
     @Autowired
-    private EmailAddressValidationEngine emailAddressRuleEngine;
+    private EmailAddressValidationEngine engine;
 
     @Override
-    public void initialize(ValidEmailAddressId constraint)
-    {
-        // Empty.
-    }
+    public void initialize(EmailAddressCheckUpdate constraint) { /* Empty*/ }
 
     @Override
     @SuppressWarnings("squid:S1166")
-    public boolean isValid(String id, ConstraintValidatorContext context)
+    public boolean isValid(ClientEmailAddressEntity emailAddress, ConstraintValidatorContext context)
     {
         try
         {
-            emailAddressRuleEngine.validateEmailAddressId(UUID.fromString(id));
+            engine.isEmailAddressUnique(emailAddress);
+            engine.isEmailAddressDefault(emailAddress);
 
             return true;
         }

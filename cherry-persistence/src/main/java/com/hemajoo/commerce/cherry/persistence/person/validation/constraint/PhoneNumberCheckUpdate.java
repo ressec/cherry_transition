@@ -14,26 +14,24 @@
  */
 package com.hemajoo.commerce.cherry.persistence.person.validation.constraint;
 
-import com.hemajoo.commerce.cherry.persistence.person.validation.validator.EmailAddressIdValidator;
-import org.springframework.http.HttpStatus;
+import com.hemajoo.commerce.cherry.persistence.person.validation.validator.PhoneNumberValidatorUpdate;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;
 import java.lang.annotation.*;
 
 /**
- * Validation constraint used to validate an email address identifier.
+ * Validation constraint used to check if a phone number entity is valid to be updated.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
 @Documented
-@Constraint(validatedBy = EmailAddressIdValidator.class)
+@Constraint(validatedBy = PhoneNumberValidatorUpdate.class)
 @Target( { ElementType.FIELD, ElementType.PARAMETER, ElementType.LOCAL_VARIABLE })
 @Retention(RetentionPolicy.RUNTIME)
-public @interface ValidEmailAddressId
+public @interface PhoneNumberCheckUpdate
 {
-    HttpStatus status() default HttpStatus.NOT_FOUND;
-    String message() default "Email address id: '${validatedValue}' does not exist!";
+    String message() default "{null}";
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};
 }

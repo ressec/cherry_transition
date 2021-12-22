@@ -41,7 +41,7 @@ import javax.validation.constraints.NotNull;
 @EntityListeners(AuditingEntityListener.class)
 public class ServerPhoneNumberEntity extends ServerBaseEntity implements PhoneNumber, ServerEntity
 {
-    public static final String FIELD_IS_DEFAULT             = "isDefault";
+    public static final String FIELD_IS_DEFAULT             = "isDefaultPhoneNumber";
     public static final String FIELD_NUMBER                 = "number";
     public static final String FIELD_COUNTRY_CODE           = "countryCode";
     public static final String FIELD_PHONE_TYPE             = "phoneType";
@@ -90,7 +90,7 @@ public class ServerPhoneNumberEntity extends ServerBaseEntity implements PhoneNu
      */
     @Getter
     @Setter
-    @Column(name = "IS_DEFAULT")
+    @Column(name = "IS_DEFAULT", columnDefinition = "BOOLEAN DEFAULT false")
     private Boolean isDefault;
 
     /**

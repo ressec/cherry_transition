@@ -12,16 +12,28 @@
  * Resse Christophe (christophe.resse@gmail.com).
  * -----------------------------------------------------------------------------------------------
  */
-package com.hemajoo.commerce.cherry.persistence.base.validation;
+package com.hemajoo.commerce.cherry.persistence.person.validation.constraint;
+
+import com.hemajoo.commerce.cherry.persistence.person.validation.validator.EmailAddressValidatorId;
+import org.springframework.http.HttpStatus;
+
+import javax.validation.Constraint;
+import javax.validation.Payload;
+import java.lang.annotation.*;
 
 /**
- * A group sequence used to order the validation of constraints.
- * <br><br>
- * This group contains extended validations that must be executed after the basic validations.
+ * Validation constraint used to validate an email address identifier.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-public interface ExtendedValidation
+@Documented
+@Constraint(validatedBy = EmailAddressValidatorId.class)
+@Target( { ElementType.FIELD, ElementType.PARAMETER, ElementType.LOCAL_VARIABLE })
+@Retention(RetentionPolicy.RUNTIME)
+public @interface EmailAddressCheckId
 {
-    // Empty.
+    HttpStatus status() default HttpStatus.NOT_FOUND;
+    String message() default "Email address id: '${validatedValue}' does not exist!";
+    Class<?>[] groups() default {};
+    Class<? extends Payload>[] payload() default {};
 }

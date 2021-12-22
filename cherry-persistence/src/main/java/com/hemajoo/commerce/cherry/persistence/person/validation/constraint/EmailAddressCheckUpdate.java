@@ -14,7 +14,7 @@
  */
 package com.hemajoo.commerce.cherry.persistence.person.validation.constraint;
 
-import com.hemajoo.commerce.cherry.persistence.person.validation.validator.EmailAddressValidatorForCreation;
+import com.hemajoo.commerce.cherry.persistence.person.validation.validator.EmailAddressValidatorCreate;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;
@@ -27,12 +27,12 @@ import java.lang.annotation.*;
  * @version 1.0.0
  */
 @Documented
-@Constraint(validatedBy = EmailAddressValidatorForCreation.class)
+@Constraint(validatedBy = EmailAddressValidatorCreate.class)
 @Target( { ElementType.FIELD, ElementType.PARAMETER, ElementType.LOCAL_VARIABLE })
 @Retention(RetentionPolicy.RUNTIME)
-public @interface ValidEmailAddressForCreation
+public @interface EmailAddressCheckUpdate
 {
-    String message() default "Person id: '${validatedValue}' does not exist!";
+    String message() default "{null}";
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};
 }

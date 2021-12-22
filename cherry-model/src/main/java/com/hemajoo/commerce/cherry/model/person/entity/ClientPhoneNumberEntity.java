@@ -73,7 +73,7 @@ public class ClientPhoneNumberEntity extends ClientBaseEntity implements ClientP
      * Is it a default phone number?
      */
     @JsonProperty("isDefault")
-    @ApiModelProperty(name = "isDefault", notes = "Is it the default phone number?", value = "true")
+    @ApiModelProperty(name = "defaultPhoneNumber", notes = "Is it the default phone number?", value = "true")
     private Boolean isDefault;
 
     /**

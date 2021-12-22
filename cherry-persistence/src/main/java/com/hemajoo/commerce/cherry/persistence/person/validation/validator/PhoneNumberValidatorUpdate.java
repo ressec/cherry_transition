@@ -14,47 +14,47 @@
  */
 package com.hemajoo.commerce.cherry.persistence.person.validation.validator;
 
-import com.hemajoo.commerce.cherry.model.person.entity.ClientEmailAddressEntity;
-import com.hemajoo.commerce.cherry.persistence.person.validation.constraint.ValidEmailAddressForCreation;
-import com.hemajoo.commerce.cherry.persistence.person.validation.engine.EmailAddressValidationEngine;
+import com.hemajoo.commerce.cherry.model.person.entity.ClientPhoneNumberEntity;
+import com.hemajoo.commerce.cherry.model.person.exception.EntityValidationException;
+import com.hemajoo.commerce.cherry.persistence.person.validation.constraint.PhoneNumberCheckUpdate;
+import com.hemajoo.commerce.cherry.persistence.person.validation.engine.PhoneNumberValidationEngine;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
 /**
- * Validator associated to the {@link ValidEmailAddressForCreation} constraint used to validate an email address is valid to be created.
+ * Phone number validator associated to the {@link PhoneNumberCheckUpdate} constraint used to validate the entity is valid tobe updated.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-public class EmailAddressValidatorForCreation implements ConstraintValidator<ValidEmailAddressForCreation, ClientEmailAddressEntity>
+public class PhoneNumberValidatorUpdate implements ConstraintValidator<PhoneNumberCheckUpdate, ClientPhoneNumberEntity>
 {
     /**
-     * Email address validation engine.
+     * Phone number validation engine.
      */
     @Autowired
-    private EmailAddressValidationEngine emailAddressRuleEngine;
+    private PhoneNumberValidationEngine engine;
 
     @Override
-    public void initialize(ValidEmailAddressForCreation constraint)
-    {
-        // Empty.
-    }
+    public void initialize(PhoneNumberCheckUpdate constraint) { /* Empty */}
 
     @Override
     @SuppressWarnings("squid:S1166")
-    public boolean isValid(ClientEmailAddressEntity emailAddress, ConstraintValidatorContext context)
+    public boolean isValid(ClientPhoneNumberEntity entity, ConstraintValidatorContext context)
     {
         try
         {
-            emailAddressRuleEngine.validateNameUniqueness(emailAddress);
-            emailAddressRuleEngine.validateDefaultEmail(emailAddress);
+            engine.isPersonIdValid(entity.getPerson().getId());
+            engine.isIdValid(entity);
+            engine.isPhoneNumberUnique(entity);
+            engine.isPhoneNumberDefault(entity);
 
             return true;
         }
-        catch (Exception e)
+        catch (EntityValidationException e)
         {
-            context.buildConstraintViolationWithTemplate(e.getMessage()).addConstraintViolation();
+            context.buildConstraintViolationWithTemplate(e.getStatus() + "@@" + e.getMessage()).addConstraintViolation();
             context.disableDefaultConstraintViolation(); // Allow to disable the standard constraint message
         }
 

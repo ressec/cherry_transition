@@ -20,7 +20,7 @@ import com.hemajoo.commerce.cherry.persistence.base.entity.ServiceFactoryPerson;
 import com.hemajoo.commerce.cherry.persistence.person.converter.PersonConverter;
 import com.hemajoo.commerce.cherry.persistence.person.entity.ServerPersonEntity;
 import com.hemajoo.commerce.cherry.persistence.person.randomizer.PersonRandomizer;
-import com.hemajoo.commerce.cherry.persistence.person.validation.constraint.ValidPersonId;
+import com.hemajoo.commerce.cherry.persistence.person.validation.constraint.PersonCheckId;
 import com.hemajoo.commerce.cherry.persistence.person.validation.engine.EmailAddressValidationEngine;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -84,7 +84,7 @@ public class PersonController
     @GetMapping("/get/{id}")
     public ResponseEntity<ClientPersonEntity> get(
             @ApiParam(value = "Person identifier", required = true)
-            @Valid @ValidPersonId // Handles person id validation automatically, need both annotations!
+            @Valid @PersonCheckId // Handles person id validation automatically, need both annotations!
             @NotNull
             @PathVariable String id)
     {
@@ -152,7 +152,7 @@ public class PersonController
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<String> delete(
             @ApiParam(value = "Person identifier (UUID)", required = true)
-            @NotNull @Valid @ValidPersonId @PathVariable String id)
+            @NotNull @Valid @PersonCheckId @PathVariable String id)
     {
         servicePerson.getPersonService().deleteById(UUID.fromString(id));
 

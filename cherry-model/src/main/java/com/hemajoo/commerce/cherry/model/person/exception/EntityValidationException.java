@@ -17,15 +17,17 @@ package com.hemajoo.commerce.cherry.model.person.exception;
 import com.hemajoo.commerce.cherry.commons.exception.AbstractEntityCheckedException;
 import com.hemajoo.commerce.cherry.commons.type.EntityType;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 import java.io.Serial;
 
 /**
- * Checked exception thrown to indicate an error occurred with a phone number.
+ * Checked exception thrown to indicate an error occurred with an entity validation.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-public class PhoneNumberException extends AbstractEntityCheckedException
+@ResponseStatus(value = HttpStatus.BAD_REQUEST)
+public class EntityValidationException extends AbstractEntityCheckedException
 {
     /**
      * Default serialization identifier.
@@ -34,41 +36,41 @@ public class PhoneNumberException extends AbstractEntityCheckedException
     private static final long serialVersionUID = 1L;
 
     /**
-     * Thrown to indicate that an error occurred with a phone number.
+     * Thrown to indicate that an error occurred with an entity validation.
      * @param exception Parent exception.
      * @param status {@link HttpStatus}.
      */
-    public PhoneNumberException(final Exception exception, final HttpStatus status)
+    public EntityValidationException(final Exception exception, final HttpStatus status)
     {
         super(EntityType.PHONE_NUMBER, exception, status);
     }
 
     /**
-     * Thrown to indicate that an error occurred with a phone number.
+     * Thrown to indicate that an error occurred with an entity validation.
      * @param message Message describing the error being the cause of the raised exception.
      * @param status {@link HttpStatus}.
      */
-    public PhoneNumberException(final String message, final HttpStatus status)
+    public EntityValidationException(final String message, final HttpStatus status)
     {
         super(EntityType.PHONE_NUMBER, message, status);
     }
 
     /**
-     * Thrown to indicate that an error occurred with a phone number.
+     * Thrown to indicate that an error occurred with an entity validation.
      * @param message Message describing the error being the cause of the raised exception.
      */
-    public PhoneNumberException(final String message)
+    public EntityValidationException(final String message)
     {
         super(EntityType.PHONE_NUMBER, message, HttpStatus.BAD_REQUEST);
     }
 
     /**
-     * Thrown to indicate that an error occurred with a phone number.
+     * Thrown to indicate that an error occurred with an entity validation.
      * @param message Message describing the error being the cause of the raised exception.
      * @param exception Parent exception.
      * @param status {@link HttpStatus}.
      */
-    public PhoneNumberException(final String message, final Exception exception, final HttpStatus status)
+    public EntityValidationException(final String message, final Exception exception, final HttpStatus status)
     {
         super(EntityType.PHONE_NUMBER, message, exception, status);
     }

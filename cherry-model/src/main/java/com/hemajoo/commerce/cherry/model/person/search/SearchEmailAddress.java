@@ -16,7 +16,7 @@ package com.hemajoo.commerce.cherry.model.person.search;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.hemajoo.commerce.cherry.commons.type.EntityType;
-import com.hemajoo.commerce.cherry.model.base.search.BaseSearch;
+import com.hemajoo.commerce.cherry.model.base.search.AbstractEntitySearch;
 import com.hemajoo.commerce.cherry.model.person.type.AddressType;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -35,7 +35,7 @@ import javax.persistence.Enumerated;
 @Data
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
-public final class SearchEmailAddress extends BaseSearch
+public final class SearchEmailAddress extends AbstractEntitySearch
 {
     /**
      * Email address.

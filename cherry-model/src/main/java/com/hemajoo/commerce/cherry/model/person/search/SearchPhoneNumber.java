@@ -15,7 +15,7 @@
 package com.hemajoo.commerce.cherry.model.person.search;
 
 import com.hemajoo.commerce.cherry.commons.type.EntityType;
-import com.hemajoo.commerce.cherry.model.base.search.BaseSearch;
+import com.hemajoo.commerce.cherry.model.base.search.AbstractEntitySearch;
 import com.hemajoo.commerce.cherry.model.person.type.PhoneNumberCategoryType;
 import com.hemajoo.commerce.cherry.model.person.type.PhoneNumberType;
 import io.swagger.annotations.ApiModel;
@@ -36,7 +36,7 @@ import javax.persistence.Enumerated;
 @Data
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
-public class SearchPhoneNumber extends BaseSearch
+public class SearchPhoneNumber extends AbstractEntitySearch
 {
     /**
      * Phone number.

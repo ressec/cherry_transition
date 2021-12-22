@@ -14,7 +14,7 @@
  */
 package com.hemajoo.commerce.cherry.persistence.person.validation.constraint;
 
-import com.hemajoo.commerce.cherry.persistence.person.validation.validator.EmailAddressValidatorForUpdate;
+import com.hemajoo.commerce.cherry.persistence.person.validation.validator.PhoneNumberValidatorCreate;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;
@@ -22,17 +22,17 @@ import java.lang.annotation.*;
 
 /**
  * Validation constraint to be used on field, parameter or local variables used to check
- * if an email address client entity is valid for an update.
+ * if a phone number client entity is valid for a creation.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
 @Documented
-@Constraint(validatedBy = EmailAddressValidatorForUpdate.class)
+@Constraint(validatedBy = PhoneNumberValidatorCreate.class)
 @Target( { ElementType.FIELD, ElementType.PARAMETER, ElementType.LOCAL_VARIABLE })
 @Retention(RetentionPolicy.RUNTIME)
-public @interface ValidEmailAddressForUpdate
+public @interface PhoneNumberCheckCreate
 {
-    String message() default "{null}";
+    String message() default "Person id: '${validatedValue}' does not exist!";
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};
 }
