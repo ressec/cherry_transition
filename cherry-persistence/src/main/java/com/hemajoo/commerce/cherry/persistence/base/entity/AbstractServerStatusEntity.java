@@ -54,7 +54,7 @@ public abstract class AbstractServerStatusEntity extends AbstractServerAuditEnti
     @Getter
     @Setter
     @ApiModelProperty(hidden = true)
-    @Column(name = "SINCE", length = 26)
+    @Column(name = "SINCE", columnDefinition = "TIMESTAMP WITH TIME ZONE")
     private LocalDateTime since;
 
     /**

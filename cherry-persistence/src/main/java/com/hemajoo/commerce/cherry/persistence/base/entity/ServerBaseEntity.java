@@ -51,7 +51,6 @@ public class ServerBaseEntity extends AbstractServerStatusEntity implements Base
     @Getter
     @Setter
     @Id
-    //@Type(type = "uuid-char") // Allow displaying in the DB the UUID as a string instead of a binary field!
     @GeneratedValue
     private UUID id;
 

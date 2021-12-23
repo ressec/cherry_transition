@@ -49,7 +49,7 @@ public abstract class AbstractServerAuditEntity implements AuditEntity
      */
     @Getter
     @Setter
-    @Column(name = "CREATED_DATE", length = 26)
+    @Column(name = "CREATED_DATE", columnDefinition = "TIMESTAMP WITH TIME ZONE")
     @CreatedDate
     private LocalDateTime createdDate;
 
@@ -58,7 +58,7 @@ public abstract class AbstractServerAuditEntity implements AuditEntity
      */
     @Getter
     @Setter
-    @Column(name = "MODIFIED_DATE", length = 26)
+    @Column(name = "MODIFIED_DATE", columnDefinition = "TIMESTAMP WITH TIME ZONE")
     @LastModifiedDate
     private LocalDateTime modifiedDate;
 

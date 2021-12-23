@@ -83,7 +83,7 @@ public class ServerPersonEntity extends ServerBaseEntity implements ServerPerson
     @Getter
     @Setter
     @NotNull(message = "Person: 'birthDate' cannot be null!")
-    @Column(name = "BIRTHDATE")
+    @Column(name = "BIRTHDATE", columnDefinition = "DATE")
     private Date birthDate;
 
     /**
