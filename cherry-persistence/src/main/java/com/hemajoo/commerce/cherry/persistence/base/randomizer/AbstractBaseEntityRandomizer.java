@@ -22,9 +22,9 @@ import lombok.NonNull;
 import org.ressec.avocado.core.random.EnumRandomGenerator;
 
 import java.security.SecureRandom;
-import java.time.ZoneId;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 /**
  * Abstract base entity randomizer.
@@ -75,14 +75,10 @@ public abstract class AbstractBaseEntityRandomizer
         parent.setDescription(description);
         parent.setReference(FAKER.ancient().hero());
         parent.setStatusType((StatusType) STATUS_TYPE_GENERATOR.gen());
+        parent.setCreatedDate(LocalDateTime.now(ZoneOffset.UTC));
         parent.setCreatedBy(FAKER.internet().emailAddress());
-        parent.setCreatedDate(FAKER.date().past(100, TimeUnit.DAYS).toInstant()
-                .atZone(ZoneId.systemDefault())
-                .toLocalDateTime()); // Created in the previous 100 days
+        parent.setModifiedDate(LocalDateTime.now(ZoneOffset.UTC));
         parent.setModifiedBy(FAKER.internet().emailAddress());
-        parent.setCreatedDate(FAKER.date().past(1, TimeUnit.HOURS).toInstant()
-                .atZone(ZoneId.systemDefault())
-                .toLocalDateTime()); // Modified in the last hour
     }
 
     /**
@@ -99,14 +95,10 @@ public abstract class AbstractBaseEntityRandomizer
         parent.setDescription(description);
         parent.setReference(FAKER.ancient().hero());
         parent.setStatusType((StatusType) STATUS_TYPE_GENERATOR.gen());
+        parent.setCreatedDate(LocalDateTime.now(ZoneOffset.UTC));
         parent.setCreatedBy(FAKER.internet().emailAddress());
-        parent.setCreatedDate(FAKER.date().past(100, TimeUnit.DAYS).toInstant()
-                .atZone(ZoneId.systemDefault())
-                .toLocalDateTime()); // Created in the previous 100 days
+        parent.setModifiedDate(LocalDateTime.now(ZoneOffset.UTC));
         parent.setModifiedBy(FAKER.internet().emailAddress());
-        parent.setCreatedDate(FAKER.date().past(1, TimeUnit.HOURS).toInstant()
-                .atZone(ZoneId.systemDefault())
-                .toLocalDateTime()); // Modified in the last hour
     }
 
     /**

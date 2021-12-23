@@ -26,6 +26,7 @@ import javax.persistence.Column;
 import javax.persistence.EntityListeners;
 import javax.persistence.MappedSuperclass;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 
 /**
  * Represents the base audit part of a persistence entity of the {@code Cherry} data model.
@@ -47,7 +48,6 @@ public abstract class AbstractServerAuditEntity implements AuditEntity
     /**
      * Entity creation date.
      */
-    @Getter
     @Setter
     @Column(name = "CREATED_DATE", columnDefinition = "TIMESTAMP WITH TIME ZONE")
     @CreatedDate
@@ -56,7 +56,6 @@ public abstract class AbstractServerAuditEntity implements AuditEntity
     /**
      * Entity modification date.
      */
-    @Getter
     @Setter
     @Column(name = "MODIFIED_DATE", columnDefinition = "TIMESTAMP WITH TIME ZONE")
     @LastModifiedDate
@@ -79,4 +78,14 @@ public abstract class AbstractServerAuditEntity implements AuditEntity
     @Column(name = "MODIFIED_BY", length = 50)
     @LastModifiedBy
     private String modifiedBy;
+
+    public LocalDateTime getCreatedDate()
+    {
+        return createdDate.truncatedTo(ChronoUnit.MILLIS);
+    }
+
+    public LocalDateTime getModifiedDate()
+    {
+        return modifiedDate.truncatedTo(ChronoUnit.MILLIS);
+    }
 }
