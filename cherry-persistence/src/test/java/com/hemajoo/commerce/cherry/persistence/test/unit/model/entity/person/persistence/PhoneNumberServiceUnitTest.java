@@ -62,12 +62,17 @@ class PhoneNumberServiceUnitTest extends AbstractPostgresUnitTest
     /**
      * Number of distinct persons.
      */
-    private final static int COUNT_PERSON = 10;
+    private final static int COUNT_PERSON = 2;
 
     /**
      * Number of distinct phone numbers (per person).
      */
     private final static int COUNT_PHONE = 10;
+
+    /**
+     * Total number of phone numbers.
+     */
+    private final static int TOTAL_PHONE = COUNT_PERSON * COUNT_PHONE;
 
     /**
      * Collection of pre-created persons.
@@ -114,8 +119,8 @@ class PhoneNumberServiceUnitTest extends AbstractPostgresUnitTest
     {
         long count = servicePerson.getPhoneNumberService().count();
         assertThat(count)
-                .as(String.format("Phone numbers entities should be equal to: '%s'", 100))
-                .isEqualTo(100);
+                .as(String.format("Phone numbers entities should be equal to: '%s'", TOTAL_PHONE))
+                .isEqualTo(TOTAL_PHONE);
     }
 
     @Test
@@ -124,8 +129,8 @@ class PhoneNumberServiceUnitTest extends AbstractPostgresUnitTest
     {
         List<ServerPhoneNumberEntity> phones = servicePerson.getPhoneNumberService().findAll();
         assertThat(phones.size())
-                .as("Phone number list should contain: '100' entities")
-                .isEqualTo(100);
+                .as(String.format("Phone number list should contain: '%s' entities", TOTAL_PHONE))
+                .isEqualTo(TOTAL_PHONE);
     }
 
     @Test
@@ -174,8 +179,8 @@ class PhoneNumberServiceUnitTest extends AbstractPostgresUnitTest
     {
         List<ServerPhoneNumberEntity> phones = servicePerson.getPhoneNumberService().findByPersonId(getRandomPerson().getId());
         assertThat(phones.size())
-                .as("Phone number list should contain: '10' elements")
-                .isEqualTo(10);
+                .as(String.format("Phone number list should contain: '%s' elements", COUNT_PHONE))
+                .isEqualTo(COUNT_PHONE);
     }
 
     @Test
@@ -221,8 +226,8 @@ class PhoneNumberServiceUnitTest extends AbstractPostgresUnitTest
                 .as("Phone list should not be null!")
                 .isNotNull();
         assertThat(person.getPhoneNumbers().size())
-                .as("Phone list should contain 10 elements!")
-                .isEqualTo(10);
+                .as(String.format("Phone list should contain: '%s' elements!", COUNT_PHONE))
+                .isEqualTo(COUNT_PHONE);
     }
 
     @Test

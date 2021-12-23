@@ -264,10 +264,9 @@ class EmailAddressConverterUnitTest extends AbstractPostgresUnitTest
                 .as("Both server email addresses should be equal!")
                 .isEqualTo(copy);
 
-        Diff diff = EntityComparator.getJavers().compare(original, copy);
-        assertThat(diff.getChanges().size())
+        assertThat(original)
                 .as("Both server email addresses should be equal!")
-                .isZero();
+                .isEqualTo(copy);
     }
 
     @Test

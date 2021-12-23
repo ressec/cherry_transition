@@ -15,6 +15,7 @@
 package com.hemajoo.commerce.cherry.persistence.base.randomizer;
 
 import com.github.javafaker.Faker;
+import com.hemajoo.commerce.cherry.commons.time.CherryDateTimeHelper;
 import com.hemajoo.commerce.cherry.commons.type.StatusType;
 import com.hemajoo.commerce.cherry.model.base.entity.ClientBaseEntity;
 import com.hemajoo.commerce.cherry.persistence.base.entity.ServerBaseEntity;
@@ -22,8 +23,6 @@ import lombok.NonNull;
 import org.ressec.avocado.core.random.EnumRandomGenerator;
 
 import java.security.SecureRandom;
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
 import java.util.List;
 
 /**
@@ -75,9 +74,9 @@ public abstract class AbstractBaseEntityRandomizer
         parent.setDescription(description);
         parent.setReference(FAKER.ancient().hero());
         parent.setStatusType((StatusType) STATUS_TYPE_GENERATOR.gen());
-        parent.setCreatedDate(LocalDateTime.now(ZoneOffset.UTC));
+        parent.setCreatedDate(CherryDateTimeHelper.now());
         parent.setCreatedBy(FAKER.internet().emailAddress());
-        parent.setModifiedDate(LocalDateTime.now(ZoneOffset.UTC));
+        parent.setModifiedDate(CherryDateTimeHelper.now());
         parent.setModifiedBy(FAKER.internet().emailAddress());
     }
 
@@ -95,9 +94,9 @@ public abstract class AbstractBaseEntityRandomizer
         parent.setDescription(description);
         parent.setReference(FAKER.ancient().hero());
         parent.setStatusType((StatusType) STATUS_TYPE_GENERATOR.gen());
-        parent.setCreatedDate(LocalDateTime.now(ZoneOffset.UTC));
+        parent.setCreatedDate(CherryDateTimeHelper.now());
         parent.setCreatedBy(FAKER.internet().emailAddress());
-        parent.setModifiedDate(LocalDateTime.now(ZoneOffset.UTC));
+        parent.setModifiedDate(CherryDateTimeHelper.now());
         parent.setModifiedBy(FAKER.internet().emailAddress());
     }
 
