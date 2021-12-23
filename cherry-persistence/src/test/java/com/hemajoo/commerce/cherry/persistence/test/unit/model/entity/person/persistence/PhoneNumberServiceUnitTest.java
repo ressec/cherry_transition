@@ -14,6 +14,7 @@
  */
 package com.hemajoo.commerce.cherry.persistence.test.unit.model.entity.person.persistence;
 
+import com.hemajoo.commerce.cherry.commons.time.CherryDateTimeHelper;
 import com.hemajoo.commerce.cherry.commons.type.StatusType;
 import com.hemajoo.commerce.cherry.model.person.exception.PhoneNumberException;
 import com.hemajoo.commerce.cherry.model.person.search.SearchPhoneNumber;
@@ -36,6 +37,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -206,7 +208,14 @@ class PhoneNumberServiceUnitTest extends AbstractPostgresUnitTest
         // Get a random phone number
         ServerPhoneNumberEntity phoneNumber = getRandomPhoneNumber(person.getPhoneNumbers());
 
+        LOGGER.info(String.format("First   createdDate: '%s'", phoneNumber.getCreatedDate()));
+        LOGGER.info(String.format("First  modifiedDate: '%s'", phoneNumber.getModifiedDate()));
+
+
         ServerPhoneNumberEntity other = servicePerson.getPhoneNumberService().findById(phoneNumber.getId());
+        LOGGER.info(String.format("Second  createdDate: '%s'", other.getCreatedDate()));
+        LOGGER.info(String.format("Second modifiedDate: '%s'", other.getModifiedDate()));
+
         assertThat(other)
                 .as("Phone numbers entities should be equal!")
                 .isEqualTo(phoneNumber);
@@ -259,6 +268,8 @@ class PhoneNumberServiceUnitTest extends AbstractPostgresUnitTest
     @DisplayName("Delete a phone number (using the person service)")
     void testServiceDeletePhoneNumberUsingPersonService()
     {
+        LocalDateTime now = CherryDateTimeHelper.now();
+
         // Get a random person
         ServerPersonEntity person = getRandomPerson();
 
@@ -310,11 +321,11 @@ class PhoneNumberServiceUnitTest extends AbstractPostgresUnitTest
         servicePerson.getPersonService().saveAndFlush(person);
 
         // Reload the person
-//        ServerPersonEntity other = servicePerson.getPersonService().findById(uuidPerson);
-//        List<ServerPhoneNumberEntity> phones = other.getPhoneNumbers();
-//        assertThat(phones.size())
-//                .as("Phone number list size should be empty!")
-//                .isZero();
+        ServerPersonEntity other = servicePerson.getPersonService().findById(uuidPerson);
+        List<ServerPhoneNumberEntity> phones = other.getPhoneNumbers();
+        assertThat(phones.size())
+                .as("Phone number list size should be empty!")
+                .isZero();
     }
 
     /**
