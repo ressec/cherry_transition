@@ -14,7 +14,6 @@
  */
 package com.hemajoo.commerce.cherry.persistence.test.unit.model.entity.person.persistence;
 
-import com.hemajoo.commerce.cherry.commons.time.CherryDateTimeHelper;
 import com.hemajoo.commerce.cherry.commons.type.StatusType;
 import com.hemajoo.commerce.cherry.model.person.exception.PhoneNumberException;
 import com.hemajoo.commerce.cherry.model.person.search.SearchPhoneNumber;
@@ -35,9 +34,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.transaction.annotation.Transactional;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -88,7 +87,6 @@ class PhoneNumberServiceUnitTest extends AbstractPostgresUnitTest
 
         ServerPersonEntity serverPerson;
         ServerPhoneNumberEntity serverPhoneNumber;
-        List<ServerPhoneNumberEntity> phones = new ArrayList<>();
 
         // Pre-create the 10 persons.
         for (int i = 0; i < COUNT_PERSON; i++)
@@ -260,7 +258,7 @@ class PhoneNumberServiceUnitTest extends AbstractPostgresUnitTest
         // Reload the phone number
         ServerPhoneNumberEntity other = servicePerson.getPhoneNumberService().findById(uuidPhone);
         assertThat(other.getName())
-                .as(String.format("Phone number name should be: '%s'", reference.toString()))
+                .as(String.format("Phone number name should be: '%s'", reference))
                 .isEqualTo(reference.toString());
     }
 
@@ -268,8 +266,6 @@ class PhoneNumberServiceUnitTest extends AbstractPostgresUnitTest
     @DisplayName("Delete a phone number (using the person service)")
     void testServiceDeletePhoneNumberUsingPersonService()
     {
-        LocalDateTime now = CherryDateTimeHelper.now();
-
         // Get a random person
         ServerPersonEntity person = getRandomPerson();
 
@@ -308,6 +304,7 @@ class PhoneNumberServiceUnitTest extends AbstractPostgresUnitTest
                 .isNull();
     }
 
+    @Transactional // Necessary for lazy collections!
     @Test
     @DisplayName("Delete multiple phone numbers")
     void testDeletePhoneNumbers()
