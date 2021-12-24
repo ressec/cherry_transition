@@ -208,11 +208,12 @@ class PhoneNumberServiceUnitTest extends AbstractPostgresUnitTest
 
         LOGGER.info(String.format("First   createdDate: '%s'", phoneNumber.getCreatedDate()));
         LOGGER.info(String.format("First  modifiedDate: '%s'", phoneNumber.getModifiedDate()));
-
+        LOGGER.info(String.format("First              : '%s'", phoneNumber.toString()));
 
         ServerPhoneNumberEntity other = servicePerson.getPhoneNumberService().findById(phoneNumber.getId());
         LOGGER.info(String.format("Second  createdDate: '%s'", other.getCreatedDate()));
         LOGGER.info(String.format("Second modifiedDate: '%s'", other.getModifiedDate()));
+        LOGGER.info(String.format("Second             : '%s'", other.toString()));
 
         assertThat(other)
                 .as("Phone numbers entities should be equal!")
