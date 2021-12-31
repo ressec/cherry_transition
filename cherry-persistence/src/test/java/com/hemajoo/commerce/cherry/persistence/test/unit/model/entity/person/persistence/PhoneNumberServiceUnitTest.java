@@ -24,6 +24,7 @@ import com.hemajoo.commerce.cherry.persistence.person.entity.ServerPersonEntity;
 import com.hemajoo.commerce.cherry.persistence.person.entity.ServerPhoneNumberEntity;
 import com.hemajoo.commerce.cherry.persistence.person.randomizer.PersonRandomizer;
 import com.hemajoo.commerce.cherry.persistence.person.randomizer.PhoneNumberRandomizer;
+import com.hemajoo.commerce.cherry.persistence.person.service.PhoneNumberServiceCore;
 import com.hemajoo.commerce.cherry.persistence.test.unit.base.AbstractPostgresUnitTest;
 import lombok.NonNull;
 import lombok.extern.log4j.Log4j2;
@@ -44,7 +45,7 @@ import java.util.UUID;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
- * Unit tests for the phone number server entities.
+ * Unit tests for the {@link PhoneNumberServiceCore} entity.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
@@ -88,7 +89,7 @@ class PhoneNumberServiceUnitTest extends AbstractPostgresUnitTest
         ServerPersonEntity serverPerson;
         ServerPhoneNumberEntity serverPhoneNumber;
 
-        // Pre-create the 10 persons.
+        // Pre-create some test persons.
         for (int i = 0; i < COUNT_PERSON; i++)
         {
             serverPerson = PersonRandomizer.generateServerEntity(false);
@@ -115,7 +116,7 @@ class PhoneNumberServiceUnitTest extends AbstractPostgresUnitTest
 
     @Test
     @DisplayName("Count the number of phone numbers")
-    void testServiceCount()
+    void testPhoneNumberServiceCount()
     {
         long count = servicePerson.getPhoneNumberService().count();
         assertThat(count)
@@ -125,7 +126,7 @@ class PhoneNumberServiceUnitTest extends AbstractPostgresUnitTest
 
     @Test
     @DisplayName("Find all phone numbers")
-    void testServiceFindAll()
+    void testPhoneNumberServiceFindAll()
     {
         List<ServerPhoneNumberEntity> phones = servicePerson.getPhoneNumberService().findAll();
         assertThat(phones.size())
@@ -135,7 +136,7 @@ class PhoneNumberServiceUnitTest extends AbstractPostgresUnitTest
 
     @Test
     @DisplayName("Find all phone numbers by phone type")
-    void testServiceFindByPhoneType()
+    void testPhoneNumberServiceFindByPhoneType()
     {
         List<ServerPhoneNumberEntity> phones = servicePerson.getPhoneNumberService().findByPhoneType(PhoneNumberType.PRIVATE);
         assertThat(phones.size())
@@ -145,7 +146,7 @@ class PhoneNumberServiceUnitTest extends AbstractPostgresUnitTest
 
     @Test
     @DisplayName("Find all phone numbers by phone type")
-    void testServiceFindByCategoryType()
+    void testPhoneNumberServiceFindByCategoryType()
     {
         List<ServerPhoneNumberEntity> phones = servicePerson.getPhoneNumberService().findByCategoryType(PhoneNumberCategoryType.FIX);
         assertThat(phones.size())
@@ -155,7 +156,7 @@ class PhoneNumberServiceUnitTest extends AbstractPostgresUnitTest
 
     @Test
     @DisplayName("Find all phone numbers by is default")
-    void testServiceFindByIsDefault()
+    void testPhoneNumberServiceFindByIsDefault()
     {
         List<ServerPhoneNumberEntity> phones = servicePerson.getPhoneNumberService().findByIsDefault(true);
         assertThat(phones.size())
@@ -165,7 +166,7 @@ class PhoneNumberServiceUnitTest extends AbstractPostgresUnitTest
 
     @Test
     @DisplayName("Find all phone numbers by status type")
-    void testServiceFindByStatus()
+    void testPhoneNumberServiceFindByStatus()
     {
         List<ServerPhoneNumberEntity> phones = servicePerson.getPhoneNumberService().findByStatus(StatusType.ACTIVE);
         assertThat(phones.size())
@@ -175,7 +176,7 @@ class PhoneNumberServiceUnitTest extends AbstractPostgresUnitTest
 
     @Test
     @DisplayName("Find all phone numbers by person identifier")
-    void testServiceFindByPersonId()
+    void testPhoneNumberServiceFindByPersonId()
     {
         List<ServerPhoneNumberEntity> phones = servicePerson.getPhoneNumberService().findByPersonId(getRandomPerson().getId());
         assertThat(phones.size())
@@ -185,7 +186,7 @@ class PhoneNumberServiceUnitTest extends AbstractPostgresUnitTest
 
     @Test
     @DisplayName("Search for phone numbers")
-    void testServiceSearch()
+    void testPhoneNumberServiceSearch()
     {
         SearchPhoneNumber search = new SearchPhoneNumber();
         search.setPhoneType(PhoneNumberType.PROFESSIONAL);
@@ -198,7 +199,7 @@ class PhoneNumberServiceUnitTest extends AbstractPostgresUnitTest
 
     @Test
     @DisplayName("Find a phone number by its identifier")
-    void testServiceFindById()
+    void testPhoneNumberServiceFindById()
     {
         // Get a random person
         ServerPersonEntity person = getRandomPerson();
@@ -206,23 +207,15 @@ class PhoneNumberServiceUnitTest extends AbstractPostgresUnitTest
         // Get a random phone number
         ServerPhoneNumberEntity phoneNumber = getRandomPhoneNumber(person.getPhoneNumbers());
 
-        LOGGER.info(String.format("First   createdDate: '%s'", phoneNumber.getCreatedDate()));
-        LOGGER.info(String.format("First  modifiedDate: '%s'", phoneNumber.getModifiedDate()));
-        LOGGER.info(String.format("First              : '%s'", phoneNumber.toString()));
-
         ServerPhoneNumberEntity other = servicePerson.getPhoneNumberService().findById(phoneNumber.getId());
-        LOGGER.info(String.format("Second  createdDate: '%s'", other.getCreatedDate()));
-        LOGGER.info(String.format("Second modifiedDate: '%s'", other.getModifiedDate()));
-        LOGGER.info(String.format("Second             : '%s'", other.toString()));
-
         assertThat(other)
                 .as("Phone numbers entities should be equal!")
                 .isEqualTo(phoneNumber);
     }
 
     @Test
-    @DisplayName("Save a phone number")
-    void testServiceSave()
+    @DisplayName("Save a phone number (using the person service)")
+    void testPhoneNumberServiceSaveUsingPersonService()
     {
         // Already covered by the beforeEach service
 
@@ -239,8 +232,8 @@ class PhoneNumberServiceUnitTest extends AbstractPostgresUnitTest
     }
 
     @Test
-    @DisplayName("Update a phone number")
-    void testServiceSaveAndFlush()
+    @DisplayName("Update a phone number (using the person service)")
+    void testServiceSaveAndFlushUsingPersonService()
     {
         UUID reference = UUID.randomUUID(); // Generate a random UUID that will be used to update one of the phone number name.
         UUID uuidPhone;
