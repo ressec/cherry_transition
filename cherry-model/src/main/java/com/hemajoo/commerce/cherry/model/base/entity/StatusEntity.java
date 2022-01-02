@@ -16,7 +16,7 @@ package com.hemajoo.commerce.cherry.model.base.entity;
 
 import com.hemajoo.commerce.cherry.commons.type.StatusType;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 /**
  * Interface providing the behavior of a status entity.
@@ -42,11 +42,11 @@ public interface StatusEntity extends AuditEntity
      * Returns the inactivation date.
      * @return Inactivation since date.
      */
-    Date getSince();
+    LocalDateTime getSince();
 
     /**
      * Sets the since (inactivation) date.
      * @param date Inactivation date.
      */
-    void setSince(final Date date);
+    void setSince(final LocalDateTime date);
 }

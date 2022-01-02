@@ -99,11 +99,11 @@ public interface PhoneNumberService
     List<ServerPhoneNumberEntity> findByIsDefault(boolean isDefault);
 
     /**
-     * Returns a list of phone numbers belonging to a person.
+     * Returns a list of phone numbers belonging to the given person.
      * @param personId Person identifier.
      * @return List of matching phone numbers.
      */
-    List<ServerPhoneNumberEntity> findByPersonId(long personId);
+    List<ServerPhoneNumberEntity> findByPersonId(UUID personId);
 
     /**
      * Returns the phone numbers matching the given set of predicates.

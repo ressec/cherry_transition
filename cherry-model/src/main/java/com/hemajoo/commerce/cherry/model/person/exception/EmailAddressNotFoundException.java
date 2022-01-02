@@ -16,16 +16,20 @@ package com.hemajoo.commerce.cherry.model.person.exception;
 
 import org.springframework.http.HttpStatus;
 
+import java.io.Serial;
+
 /**
  * Checked exception thrown to indicate an email address identifier cannot be found.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
+@SuppressWarnings("java:S110")
 public class EmailAddressNotFoundException extends EmailAddressException
 {
     /**
      * Default serialization identifier.
      */
+    @Serial
     private static final long serialVersionUID = 1L;
 
     /**

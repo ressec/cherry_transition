@@ -18,6 +18,8 @@ import com.hemajoo.commerce.cherry.commons.exception.AbstractEntityCheckedExcept
 import com.hemajoo.commerce.cherry.commons.type.EntityType;
 import org.springframework.http.HttpStatus;
 
+import java.io.Serial;
+
 /**
  * Checked exception thrown to indicate an error occurred with a postal address.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
@@ -28,6 +30,7 @@ public class PostalAddressException extends AbstractEntityCheckedException
     /**
      * Default serialization identifier.
      */
+    @Serial
     private static final long serialVersionUID = 1L;
 
     /**
@@ -53,10 +56,20 @@ public class PostalAddressException extends AbstractEntityCheckedException
     /**
      * Thrown to indicate that an error occurred with a postal address.
      * @param message Message describing the error being the cause of the raised exception.
+     */
+    public PostalAddressException(final String message)
+    {
+        super(EntityType.POSTAL_ADDRESS, message, HttpStatus.BAD_REQUEST);
+    }
+
+    /**
+     * Thrown to indicate that an error occurred with a postal address.
+     * @param message Message describing the error being the cause of the raised exception.
      * @param exception Parent exception.
      * @param status {@link HttpStatus}.
      */
     public PostalAddressException(final String message, final Exception exception, final HttpStatus status)
     {
         super(EntityType.POSTAL_ADDRESS, message, exception, status);
-    }}
+    }
+}

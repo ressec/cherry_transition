@@ -21,7 +21,7 @@ import com.hemajoo.commerce.cherry.persistence.base.entity.ServiceFactoryPerson;
 import com.hemajoo.commerce.cherry.persistence.document.entity.ServerDocumentEntity;
 import com.hemajoo.commerce.cherry.persistence.document.randomizer.DocumentRandomizer;
 import com.hemajoo.commerce.cherry.persistence.person.entity.ServerPersonEntity;
-import com.hemajoo.commerce.cherry.persistence.person.validation.constraint.ValidPersonId;
+import com.hemajoo.commerce.cherry.persistence.person.validation.constraint.PersonCheckId;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -83,7 +83,7 @@ public class DocumentController
     @PostMapping("/random")
     public ResponseEntity<String> random(
             @ApiParam(value = "Person identifier (UUID) being the parent of the new document", name = "personId", required = true)
-            @Valid @ValidPersonId @NotNull @RequestParam String personId) throws DocumentContentException
+            @Valid @PersonCheckId @NotNull @RequestParam String personId) throws DocumentContentException
     {
         ServerDocumentEntity document = DocumentRandomizer.generateServerEntity(false);
 
@@ -116,7 +116,7 @@ public class DocumentController
                                          @ApiParam(value = "Tags", name = "tags", required = false)
                                          @RequestParam String tags,
                                          @ApiParam(value = "Person identifier (UUID) being the parent of the new document", name = "personId", required = true)
-                                         @Valid @ValidPersonId @NotNull @RequestParam String personId)
+                                         @Valid @PersonCheckId @NotNull @RequestParam String personId)
     {
         ServerDocumentEntity document;
 

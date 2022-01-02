@@ -14,9 +14,9 @@
  */
 package com.hemajoo.commerce.cherry.persistence.person.validation.validator;
 
-import com.hemajoo.commerce.cherry.model.person.exception.EmailAddressException;
-import com.hemajoo.commerce.cherry.persistence.person.validation.constraint.ValidEmailAddressId;
-import com.hemajoo.commerce.cherry.persistence.person.validation.engine.EmailAddressValidationEngine;
+import com.hemajoo.commerce.cherry.model.person.exception.EntityValidationException;
+import com.hemajoo.commerce.cherry.persistence.person.validation.constraint.PersonCheckId;
+import com.hemajoo.commerce.cherry.persistence.person.validation.engine.PersonValidationEngine;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.validation.ConstraintValidator;
@@ -24,35 +24,32 @@ import javax.validation.ConstraintValidatorContext;
 import java.util.UUID;
 
 /**
- * Validator for the {@link ValidEmailAddressId} constraint used to validate an email address identifier exist.
+ * Validator used to validate an <b>Email Address</b> is valid to be created.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
+ * @see PersonCheckId
  */
-public class EmailAddressIdValidator implements ConstraintValidator<ValidEmailAddressId, String>
+public class PersonValidatorId implements ConstraintValidator<PersonCheckId, String>
 {
     /**
-     * Email address validation engine.
+     * Person validation engine.
      */
     @Autowired
-    private EmailAddressValidationEngine emailAddressRuleEngine;
+    private PersonValidationEngine engine;
 
     @Override
-    public void initialize(ValidEmailAddressId constraint)
-    {
-        // Empty.
-    }
+    public void initialize(PersonCheckId constraint) { /* Empty */ }
 
     @Override
-    @SuppressWarnings("squid:S1166")
     public boolean isValid(String id, ConstraintValidatorContext context)
     {
         try
         {
-            emailAddressRuleEngine.validateEmailAddressId(UUID.fromString(id));
+            engine.isIdValid(UUID.fromString(id));
 
             return true;
         }
-        catch (EmailAddressException e)
+        catch (EntityValidationException e)
         {
             context.buildConstraintViolationWithTemplate(e.getStatus() + "@@" + e.getMessage()).addConstraintViolation();
             context.disableDefaultConstraintViolation(); // Allow to disable the standard constraint message

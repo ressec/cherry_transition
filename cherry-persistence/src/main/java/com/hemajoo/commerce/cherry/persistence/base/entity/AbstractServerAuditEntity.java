@@ -25,7 +25,8 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import javax.persistence.Column;
 import javax.persistence.EntityListeners;
 import javax.persistence.MappedSuperclass;
-import java.util.Date;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 
 /**
  * Represents the base audit part of a persistence entity of the {@code Cherry} data model.
@@ -47,20 +48,18 @@ public abstract class AbstractServerAuditEntity implements AuditEntity
     /**
      * Entity creation date.
      */
-    @Getter
     @Setter
-    @Column(name = "CREATED_DATE", length = 26)
+    @Column(name = "CREATED_DATE", columnDefinition = "TIMESTAMP WITH TIME ZONE")
     @CreatedDate
-    private Date createdDate;
+    private LocalDateTime createdDate;
 
     /**
      * Entity modification date.
      */
-    @Getter
     @Setter
-    @Column(name = "MODIFIED_DATE", length = 26)
+    @Column(name = "MODIFIED_DATE", columnDefinition = "TIMESTAMP WITH TIME ZONE")
     @LastModifiedDate
-    private Date modifiedDate;
+    private LocalDateTime modifiedDate;
 
     /**
      * Entity author.
@@ -79,4 +78,14 @@ public abstract class AbstractServerAuditEntity implements AuditEntity
     @Column(name = "MODIFIED_BY", length = 50)
     @LastModifiedBy
     private String modifiedBy;
+
+    public LocalDateTime getCreatedDate()
+    {
+        return createdDate.truncatedTo(ChronoUnit.MILLIS);
+    }
+
+    public LocalDateTime getModifiedDate()
+    {
+        return modifiedDate.truncatedTo(ChronoUnit.MILLIS);
+    }
 }

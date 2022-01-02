@@ -14,6 +14,7 @@
  */
 package com.hemajoo.commerce.cherry.persistence.person.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.hemajoo.commerce.cherry.commons.type.EntityType;
 import com.hemajoo.commerce.cherry.model.person.entity.base.PhoneNumber;
 import com.hemajoo.commerce.cherry.model.person.type.PhoneNumberCategoryType;
@@ -34,14 +35,14 @@ import javax.validation.constraints.NotNull;
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-@ToString(callSuper = false)
-@EqualsAndHashCode(callSuper = false)
+@ToString(callSuper = true)
+@EqualsAndHashCode(callSuper = true)
 @Table(name = "PHONE_NUMBER")
 @Entity
 @EntityListeners(AuditingEntityListener.class)
 public class ServerPhoneNumberEntity extends ServerBaseEntity implements PhoneNumber, ServerEntity
 {
-    public static final String FIELD_IS_DEFAULT             = "isDefault";
+    public static final String FIELD_IS_DEFAULT             = "isDefaultPhoneNumber";
     public static final String FIELD_NUMBER                 = "number";
     public static final String FIELD_COUNTRY_CODE           = "countryCode";
     public static final String FIELD_PHONE_TYPE             = "phoneType";
@@ -90,7 +91,7 @@ public class ServerPhoneNumberEntity extends ServerBaseEntity implements PhoneNu
      */
     @Getter
     @Setter
-    @Column(name = "IS_DEFAULT")
+    @Column(name = "IS_DEFAULT", columnDefinition = "BOOLEAN DEFAULT false")
     private Boolean isDefault;
 
     /**
@@ -99,8 +100,8 @@ public class ServerPhoneNumberEntity extends ServerBaseEntity implements PhoneNu
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     @Getter
-    @Setter
-    @ManyToOne(targetEntity = ServerPersonEntity.class, fetch = FetchType.LAZY)
+    @JsonIgnoreProperties
+    @ManyToOne(targetEntity = ServerPersonEntity.class, fetch = FetchType.EAGER)
     @JoinColumn(name = "PERSON_ID", nullable = false)
     private ServerPersonEntity person;
 
@@ -110,5 +111,16 @@ public class ServerPhoneNumberEntity extends ServerBaseEntity implements PhoneNu
     public ServerPhoneNumberEntity()
     {
         super(EntityType.PHONE_NUMBER);
+    }
+
+    /**
+     * Sets the owner person.
+     * <hr>
+     * <b>NOTE:</b> Never invoke directly this service to add a phone number to a person. For that, you need to call {@link ServerPersonEntity#addPhoneNumber(ServerPhoneNumberEntity)}.
+     * @param person Person being the owner of the phone number.
+     */
+    public void setPerson(final ServerPersonEntity person)
+    {
+        this.person = person;
     }
 }

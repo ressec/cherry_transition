@@ -1,7 +1,7 @@
 ---
-name: Unit tests
-about: Design and implement new unit tests.
-title: Design and implement unit tests for [ENTITY]
+name: Unit Tests
+about: Design and implement new unit test classes.
+title: Design and implement unit test classes for [ENTITY]
 labels: ''
 assignees: ressec
 
@@ -9,19 +9,13 @@ assignees: ressec
 
 ## Purpose
 
-This task aims to design and implement unit tests for the `[ENTITY]` entity.
+This task aims to design and implement the following unit test classes:
 
-## Tests
+- `Test[ENTITY]ClientEntity`
+- `Test[ENTITY]ServerEntity`
+- `Test[ENTITY]Mapper`
+- `Test[ENTITY]Converter`
+- `Test[ENTITY]Randomizer`
+- `Test[ENTITY]Repository`
+- `Test[ENTITY]ServiceCore`
 
-- [ ] Implement test: `testConvertPersistentToClient` 
-- [ ] Implement test: `testConvertPersistentWithDocumentsToClient` 
-- [ ] Implement test: `testConvertListPersistentToListClient` 
-- [ ] Implement test: `testConvertListPersistentWithDocumentsToListClient` 
-- [ ] Implement test: `testConvertClientToPersistent` 
-- [ ] Implement test: `testConvertClientWithDocumentToPersistent` 
-- [ ] Implement test: `testConvertListClientToListPersistent` 
-- [ ] Implement test: `testConvertListClientWithDocumentToListPersistent` 
-- [ ] Implement test: `testCopyClient` 
-- [ ] Implement test: `testCopyPersistent` 
-
-then also implement tests for all validation rules.

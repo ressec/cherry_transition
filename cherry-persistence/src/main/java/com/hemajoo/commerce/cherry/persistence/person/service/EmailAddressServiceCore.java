@@ -99,7 +99,7 @@ public class EmailAddressServiceCore implements EmailAddressService
         return save(merge(emailAddress, original));
     }
 
-    //@Transactional
+
     @Override
     public ServerEmailAddressEntity save(final @NonNull ServerEmailAddressEntity emailAddress) throws EmailAddressException, DocumentException
     {

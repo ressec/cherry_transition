@@ -14,8 +14,9 @@
  */
 package com.hemajoo.commerce.cherry.persistence.person.validation.validator;
 
-import com.hemajoo.commerce.cherry.persistence.person.repository.PersonRepository;
-import com.hemajoo.commerce.cherry.persistence.person.validation.constraint.ValidPersonId;
+import com.hemajoo.commerce.cherry.model.person.exception.EntityValidationException;
+import com.hemajoo.commerce.cherry.persistence.person.validation.constraint.EmailAddressCheckId;
+import com.hemajoo.commerce.cherry.persistence.person.validation.engine.EmailAddressValidationEngine;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.validation.ConstraintValidator;
@@ -23,27 +24,38 @@ import javax.validation.ConstraintValidatorContext;
 import java.util.UUID;
 
 /**
- * Validator for the {@link ValidPersonId} constraint used to validate a person identifier exist.
+ * Validator used to validate an <b>Email Address</b> identifier is valid.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
+ * @see EmailAddressCheckId
  */
-public class PersonIdValidator implements ConstraintValidator<ValidPersonId, String>
+public class EmailAddressValidatorId implements ConstraintValidator<EmailAddressCheckId, String>
 {
     /**
-     * Person repository.
+     * Email address validation engine.
      */
     @Autowired
-    private PersonRepository personRepository;
+    private EmailAddressValidationEngine engine;
 
     @Override
-    public void initialize(ValidPersonId constraint)
-    {
-        // Empty.
-    }
+    public void initialize(EmailAddressCheckId constraint) { /* Empty */ }
 
     @Override
-    public boolean isValid(String personId, ConstraintValidatorContext context)
+    @SuppressWarnings("squid:S1166")
+    public boolean isValid(String id, ConstraintValidatorContext context)
     {
-        return personRepository.existsById(UUID.fromString(personId));
+        try
+        {
+            engine.isIdValid(UUID.fromString(id));
+
+            return true;
+        }
+        catch (EntityValidationException e)
+        {
+            context.buildConstraintViolationWithTemplate(e.getStatus() + "@@" + e.getMessage()).addConstraintViolation();
+            context.disableDefaultConstraintViolation(); // Allow to disable the standard constraint message
+        }
+
+        return false;
     }
 }

@@ -12,16 +12,14 @@
  * Resse Christophe (christophe.resse@gmail.com).
  * -----------------------------------------------------------------------------------------------
  */
-package com.hemajoo.commerce.cherry.persistence.base.validation;
+package com.hemajoo.commerce.cherry.model.base.search;
 
-/**
- * A group sequence used to order the validation of constraints.
- * <hr>
- * This group contains the basic validations and must be executed just after the default one.
- * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
- * @version 1.0.0
- */
-public interface BasicValidation
+import com.hemajoo.commerce.cherry.commons.entity.Identity;
+import com.hemajoo.commerce.cherry.commons.entity.IdentityAware;
+
+public interface SearchEntity extends Identity, IdentityAware
 {
-    // Empty.
+    String getName();
+
+    String getDescription();
 }

@@ -25,7 +25,8 @@ import lombok.ToString;
 
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import java.util.Date;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 
 /**
  * Represents a client abstract status entity.
@@ -51,7 +52,7 @@ public abstract class AbstractClientStatusEntity extends AbstractClientAuditEnti
      */
     @JsonProperty("inactiveSince")
     @ApiModelProperty(hidden = true) // As it is set automatically when status changes.
-    private Date since;
+    private LocalDateTime since;
 
     /**
      * Returns if the entity is active?
@@ -79,7 +80,7 @@ public abstract class AbstractClientStatusEntity extends AbstractClientAuditEnti
     public final void setInactive()
     {
         statusType = StatusType.INACTIVE;
-        since = new Date(System.currentTimeMillis());
+        since = LocalDateTime.now(ZoneId.systemDefault());
     }
 
     /**

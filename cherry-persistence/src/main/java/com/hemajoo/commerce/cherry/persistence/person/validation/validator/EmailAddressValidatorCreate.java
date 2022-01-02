@@ -16,34 +16,29 @@ package com.hemajoo.commerce.cherry.persistence.person.validation.validator;
 
 import com.hemajoo.commerce.cherry.model.person.entity.ClientEmailAddressEntity;
 import com.hemajoo.commerce.cherry.model.person.exception.EmailAddressException;
-import com.hemajoo.commerce.cherry.persistence.person.validation.constraint.ValidEmailAddressForUpdate;
+import com.hemajoo.commerce.cherry.persistence.person.validation.constraint.EmailAddressCheckCreate;
 import com.hemajoo.commerce.cherry.persistence.person.validation.engine.EmailAddressValidationEngine;
-import org.apache.commons.validator.routines.EmailValidator;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
 /**
- * Validator associated to the {@link ValidEmailAddressForUpdate} constraint used to validate a client email
- * address entity is valid for an update.
+ * Validator used to validate an <b>Email Address</b> is valid to be created.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
+ * @see EmailAddressCheckCreate
  */
-public class EmailAddressValidatorForUpdate implements ConstraintValidator<ValidEmailAddressForUpdate, ClientEmailAddressEntity>
+public class EmailAddressValidatorCreate implements ConstraintValidator<EmailAddressCheckCreate, ClientEmailAddressEntity>
 {
     /**
      * Email address validation engine.
      */
     @Autowired
-    private EmailAddressValidationEngine emailAddressRuleEngine;
+    private EmailAddressValidationEngine engine;
 
     @Override
-    public void initialize(ValidEmailAddressForUpdate constraint)
-    {
-        // Empty.
-    }
+    public void initialize(EmailAddressCheckCreate constraint) { /* Empty*/ }
 
     @Override
     @SuppressWarnings("squid:S1166")
@@ -51,21 +46,14 @@ public class EmailAddressValidatorForUpdate implements ConstraintValidator<Valid
     {
         try
         {
-            if (!EmailValidator.getInstance().isValid(emailAddress.getEmail()))
-            {
-                throw new EmailAddressException(String.format("Email address: '%s' is invalid!", emailAddress.getEmail()), HttpStatus.BAD_REQUEST);
-            }
-
-            emailAddressRuleEngine.validatePersonId(emailAddress.getPerson().getId());
-            emailAddressRuleEngine.validateEmailAddressId(emailAddress);
-            emailAddressRuleEngine.validateNameUniqueness(emailAddress);
-            emailAddressRuleEngine.validateDefaultEmail(emailAddress);
+            engine.isEmailAddressUnique(emailAddress);
+            engine.isEmailAddressDefault(emailAddress);
 
             return true;
         }
-        catch (Exception e)
+        catch (EmailAddressException e)
         {
-            context.buildConstraintViolationWithTemplate(e.getMessage()).addConstraintViolation();
+            context.buildConstraintViolationWithTemplate(e.getStatus() + "@@" + e.getMessage()).addConstraintViolation();
             context.disableDefaultConstraintViolation(); // Allow to disable the standard constraint message
         }
 

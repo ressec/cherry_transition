@@ -15,6 +15,7 @@
 package com.hemajoo.commerce.cherry.persistence.base.randomizer;
 
 import com.github.javafaker.Faker;
+import com.hemajoo.commerce.cherry.commons.time.CherryDateTimeHelper;
 import com.hemajoo.commerce.cherry.commons.type.StatusType;
 import com.hemajoo.commerce.cherry.model.base.entity.ClientBaseEntity;
 import com.hemajoo.commerce.cherry.persistence.base.entity.ServerBaseEntity;
@@ -23,7 +24,6 @@ import org.ressec.avocado.core.random.EnumRandomGenerator;
 
 import java.security.SecureRandom;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 /**
  * Abstract base entity randomizer.
@@ -74,10 +74,10 @@ public abstract class AbstractBaseEntityRandomizer
         parent.setDescription(description);
         parent.setReference(FAKER.ancient().hero());
         parent.setStatusType((StatusType) STATUS_TYPE_GENERATOR.gen());
+        parent.setCreatedDate(CherryDateTimeHelper.now());
         parent.setCreatedBy(FAKER.internet().emailAddress());
-        parent.setCreatedDate(FAKER.date().past(100, TimeUnit.DAYS)); // Created in the previous 100 days
+        parent.setModifiedDate(CherryDateTimeHelper.now());
         parent.setModifiedBy(FAKER.internet().emailAddress());
-        parent.setCreatedDate(FAKER.date().past(1, TimeUnit.HOURS)); // Modified in the last hour
     }
 
     /**
@@ -94,10 +94,10 @@ public abstract class AbstractBaseEntityRandomizer
         parent.setDescription(description);
         parent.setReference(FAKER.ancient().hero());
         parent.setStatusType((StatusType) STATUS_TYPE_GENERATOR.gen());
+        parent.setCreatedDate(CherryDateTimeHelper.now());
         parent.setCreatedBy(FAKER.internet().emailAddress());
-        parent.setCreatedDate(FAKER.date().past(100, TimeUnit.DAYS)); // Created in the previous 100 days
+        parent.setModifiedDate(CherryDateTimeHelper.now());
         parent.setModifiedBy(FAKER.internet().emailAddress());
-        parent.setCreatedDate(FAKER.date().past(1, TimeUnit.HOURS)); // Modified in the last hour
     }
 
     /**

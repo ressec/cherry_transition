@@ -20,6 +20,7 @@ import com.hemajoo.commerce.cherry.persistence.base.entity.ServerBaseEntity;
 import com.hemajoo.commerce.cherry.persistence.document.entity.ServerDocumentEntity;
 import com.hemajoo.commerce.cherry.persistence.person.entity.ServerEmailAddressEntity;
 import com.hemajoo.commerce.cherry.persistence.person.entity.ServerPersonEntity;
+import com.hemajoo.commerce.cherry.persistence.person.entity.ServerPhoneNumberEntity;
 import com.hemajoo.commerce.cherry.persistence.person.repository.PersonRepository;
 import lombok.NonNull;
 
@@ -100,7 +101,12 @@ public interface PersonService
      */
     List<ServerEmailAddressEntity> getEmailAddresses(final @NonNull ServerPersonEntity person);
 
-//    ServerPersonEntity loadEmailAddresses(final @NonNull ServerPersonEntity person);
+    /**
+     * Returns the list of phone numbers owned by the given person.
+     * @param person Person.
+     * @return List of phone numbers.
+     */
+    List<ServerPhoneNumberEntity> getPhoneNumbers(final @NonNull ServerPersonEntity person);
 
     /**
      * Returns the list of documents owned by the given base entity.

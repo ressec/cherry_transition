@@ -21,6 +21,8 @@ import org.springframework.test.context.DynamicPropertySource;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 
+import java.util.Random;
+
 /**
  * Abstract class providing PostgresSQL support for unit tests through docker container.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
@@ -29,6 +31,9 @@ import org.testcontainers.junit.jupiter.Container;
 @Log4j2
 public abstract class AbstractPostgresUnitTest
 {
+    @Getter
+    private static final Random random = new Random();
+
     /**
      * PostgresSQL docker container.
      */

@@ -14,27 +14,25 @@
  */
 package com.hemajoo.commerce.cherry.persistence.person.validation.constraint;
 
-import com.hemajoo.commerce.cherry.persistence.person.validation.validator.PersonIdValidator;
-import org.springframework.http.HttpStatus;
+import com.hemajoo.commerce.cherry.persistence.person.validation.validator.EmailAddressValidatorCreate;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;
 import java.lang.annotation.*;
 
 /**
- * Validation constraint to be used on field, parameter or local variables representing a person identifier
- * and providing validation rules used to ensure the person identifier exist.
+ * Validation constraint used to validate an <b>Email Address</b> is valid to be created.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
+ * @see EmailAddressValidatorCreate
  */
 @Documented
-@Constraint(validatedBy = PersonIdValidator.class)
+@Constraint(validatedBy = EmailAddressValidatorCreate.class)
 @Target( { ElementType.FIELD, ElementType.PARAMETER, ElementType.LOCAL_VARIABLE })
 @Retention(RetentionPolicy.RUNTIME)
-public @interface ValidPersonId
+public @interface EmailAddressCheckCreate
 {
-    HttpStatus status() default HttpStatus.BAD_REQUEST;
-    String message() default "Person id: '${validatedValue}' does not exist!";
+    String message() default "{null}";
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};
 }

@@ -20,7 +20,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 /**
  * Represents a client abstract audit entity.
@@ -37,14 +37,14 @@ public abstract class AbstractClientAuditEntity implements AuditEntity
      */
     @JsonProperty("createdDate")
     @ApiModelProperty(hidden = true)
-    private Date createdDate;
+    private LocalDateTime createdDate;
 
     /**
      * Entity modification date.
      */
     @JsonProperty("modifiedDate")
     @ApiModelProperty(hidden = true)
-    private Date modifiedDate;
+    private LocalDateTime modifiedDate;
 
     /**
      * Entity creation author.

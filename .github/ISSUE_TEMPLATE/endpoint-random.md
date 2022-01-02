@@ -1,7 +1,7 @@
 ---
 name: Endpoint Random
 about: 'Design and implement a new random endpoint'
-title: Design and implement a random REST endpoint for the <entity> entity
+title: Design and implement a random REST endpoint for the [ENTITY] entity
 labels: ''
 assignees: ressec
 
@@ -9,17 +9,26 @@ assignees: ressec
 
 ## Purpose
 
-This task aims to design and implement the `random` endpoint used to create a random [entity] given a [other entity] identifier.
+This task aims to design and implement the `random` endpoint used to create a random [ENTITY] given a [other entity] identifier.
+
+## Route
+
+Endpoint route is: `/api/v1/person/phone/random/{personId}`
 
 ## Signature
 
-Endpoint route is: `/api/v1/person/[entity]/random/{personId}`
+Mode | Name     | Param Type | Param Name |  Description
+--- |----------| --- |------------| ---
+**POST** | `random` |  |            | Creates a randomly generated [ENTITY] entity given a [OTHER ENTITY] identifier.
+|  |          | PathVariable | `[PARAM]` | [OTHER ENTITY] Identifier the [ENTITY] belongs to.
 
 ## Result
 
-The endpoint returns the following result: `ResponseEntity<Client[entity]Entity>`
+The endpoint returns the following result: `ResponseEntity<Client[ENTITY]Entity>`
 
 ## Example
+
+>  Update the JSON result...
 
 ```
 {

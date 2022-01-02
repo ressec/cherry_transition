@@ -108,7 +108,7 @@ public class PhoneNumberServiceCore implements PhoneNumberService
     }
 
     @Override
-    public List<ServerPhoneNumberEntity> findByPersonId(long personId)
+    public List<ServerPhoneNumberEntity> findByPersonId(UUID personId)
     {
         return phoneNumberRepository.findByPersonId(personId);
     }

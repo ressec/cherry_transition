@@ -15,7 +15,8 @@
 package com.hemajoo.commerce.cherry.persistence.person.validation.validator;
 
 import com.hemajoo.commerce.cherry.model.person.entity.ClientEmailAddressEntity;
-import com.hemajoo.commerce.cherry.persistence.person.validation.constraint.ValidEmailAddressForCreation;
+import com.hemajoo.commerce.cherry.model.person.exception.EntityValidationException;
+import com.hemajoo.commerce.cherry.persistence.person.validation.constraint.EmailAddressCheckUpdate;
 import com.hemajoo.commerce.cherry.persistence.person.validation.engine.EmailAddressValidationEngine;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -23,23 +24,21 @@ import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
 /**
- * Validator associated to the {@link ValidEmailAddressForCreation} constraint used to validate an email address is valid to be created.
+ * Validator used to validate an <b>Email Address</b> is valid to be updated.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
+ * @see EmailAddressCheckUpdate
  */
-public class EmailAddressValidatorForCreation implements ConstraintValidator<ValidEmailAddressForCreation, ClientEmailAddressEntity>
+public class EmailAddressValidatorUpdate implements ConstraintValidator<EmailAddressCheckUpdate, ClientEmailAddressEntity>
 {
     /**
      * Email address validation engine.
      */
     @Autowired
-    private EmailAddressValidationEngine emailAddressRuleEngine;
+    private EmailAddressValidationEngine engine;
 
     @Override
-    public void initialize(ValidEmailAddressForCreation constraint)
-    {
-        // Empty.
-    }
+    public void initialize(EmailAddressCheckUpdate constraint) { /* Empty */ }
 
     @Override
     @SuppressWarnings("squid:S1166")
@@ -47,14 +46,16 @@ public class EmailAddressValidatorForCreation implements ConstraintValidator<Val
     {
         try
         {
-            emailAddressRuleEngine.validateNameUniqueness(emailAddress);
-            emailAddressRuleEngine.validateDefaultEmail(emailAddress);
+            engine.isPersonIdValid(emailAddress.getPerson().getId());
+            engine.isIdValid(emailAddress);
+            engine.isEmailAddressUnique(emailAddress);
+            engine.isEmailAddressDefault(emailAddress);
 
             return true;
         }
-        catch (Exception e)
+        catch (EntityValidationException e)
         {
-            context.buildConstraintViolationWithTemplate(e.getMessage()).addConstraintViolation();
+            context.buildConstraintViolationWithTemplate(e.getStatus() + "@@" + e.getMessage()).addConstraintViolation();
             context.disableDefaultConstraintViolation(); // Allow to disable the standard constraint message
         }
 

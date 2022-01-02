@@ -14,6 +14,7 @@
  */
 package com.hemajoo.commerce.cherry.rest.error;
 
+import com.hemajoo.commerce.cherry.model.person.exception.EntityValidationException;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -37,10 +38,17 @@ import java.util.Optional;
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler
 {
     @ExceptionHandler(Exception.class)
-    //@ResponseStatus(HttpStatus.BAD_REQUEST)
     @ResponseBody
     @NotNull
-    public static ResponseEntity<String> handleExceptions(Exception exception, WebRequest request)
+    public static ResponseEntity<String> handleBadRequestException(Exception exception, WebRequest request)
+    {
+        return ResponseEntity.badRequest().body(exception.getCause().getMessage());
+    }
+
+    @ExceptionHandler(EntityValidationException.class)
+    @ResponseBody
+    @NotNull
+    public static ResponseEntity<String> handleEntityValidationException(Exception exception, WebRequest request)
     {
         return ResponseEntity.badRequest().body(exception.getCause().getMessage());
     }

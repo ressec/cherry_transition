@@ -18,6 +18,8 @@ import com.hemajoo.commerce.cherry.model.document.ClientDocumentEntity;
 import com.hemajoo.commerce.cherry.model.document.exception.DocumentContentException;
 import com.hemajoo.commerce.cherry.model.person.entity.ClientPersonEntity;
 import com.hemajoo.commerce.cherry.model.person.exception.EmailAddressException;
+import com.hemajoo.commerce.cherry.model.person.exception.PhoneNumberException;
+import com.hemajoo.commerce.cherry.model.person.exception.PostalAddressException;
 import com.hemajoo.commerce.cherry.model.person.type.GenderType;
 import com.hemajoo.commerce.cherry.model.person.type.PersonType;
 import com.hemajoo.commerce.cherry.persistence.base.randomizer.AbstractBaseEntityRandomizer;
@@ -170,9 +172,11 @@ public final class PersonRandomizer extends AbstractBaseEntityRandomizer
      * <br>Generally set to {@code true} only for unit tests.
      * @param bound Maximum number of dependencies to generate.
      * @return Person.
-     * @throws EmailAddressException Raised in case an error occurred when trying to create an email address!
+     * @throws EmailAddressException Thrown to indicate an error occurred when trying to create a random email address!
+     * @throws PhoneNumberException Thrown to indicate an error occurred when trying to create a random phone number!
+     * @throws PostalAddressException Thrown to indicate an error occurred when trying to create a random postal address!
      */
-    public static ServerPersonEntity generateServerEntityWithDependencies(final boolean withRandomId, final int bound) throws EmailAddressException
+    public static ServerPersonEntity generateServerEntityWithDependencies(final boolean withRandomId, final int bound) throws EmailAddressException, PhoneNumberException, PostalAddressException
     {
         var person = generateServerEntity(withRandomId);
 

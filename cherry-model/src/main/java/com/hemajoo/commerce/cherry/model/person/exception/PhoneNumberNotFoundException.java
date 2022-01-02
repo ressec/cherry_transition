@@ -12,27 +12,32 @@
  * Resse Christophe (christophe.resse@gmail.com).
  * -----------------------------------------------------------------------------------------------
  */
-package com.hemajoo.commerce.cherry.persistence.person.validation.constraint;
+package com.hemajoo.commerce.cherry.model.person.exception;
 
-import com.hemajoo.commerce.cherry.persistence.person.validation.validator.EmailAddressValidatorForCreation;
+import org.springframework.http.HttpStatus;
 
-import javax.validation.Constraint;
-import javax.validation.Payload;
-import java.lang.annotation.*;
+import java.io.Serial;
 
 /**
- * Validation constraint to be used on field, parameter or local variables used to check
- * if an email address client entity is valid for a creation.
+ * Checked exception thrown to indicate a phone number identifier cannot be found.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @version 1.0.0
  */
-@Documented
-@Constraint(validatedBy = EmailAddressValidatorForCreation.class)
-@Target( { ElementType.FIELD, ElementType.PARAMETER, ElementType.LOCAL_VARIABLE })
-@Retention(RetentionPolicy.RUNTIME)
-public @interface ValidEmailAddressForCreation
+@SuppressWarnings("java:S110")
+public class PhoneNumberNotFoundException extends EmailAddressException
 {
-    String message() default "Person id: '${validatedValue}' does not exist!";
-    Class<?>[] groups() default {};
-    Class<? extends Payload>[] payload() default {};
+    /**
+     * Default serialization identifier.
+     */
+    @Serial
+    private static final long serialVersionUID = 1L;
+
+    /**
+     * Thrown to indicate a phone number cannot be found.
+     * @param id Phone number identifier.
+     */
+    public PhoneNumberNotFoundException(final Long id)
+    {
+        super(String.format("Phone number id: '%s' cannot be found!", id), HttpStatus.NOT_FOUND);
+    }
 }

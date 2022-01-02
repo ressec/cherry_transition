@@ -15,7 +15,7 @@
 package com.hemajoo.commerce.cherry.model.person.search;
 
 import com.hemajoo.commerce.cherry.commons.type.EntityType;
-import com.hemajoo.commerce.cherry.model.base.search.BaseSearch;
+import com.hemajoo.commerce.cherry.model.base.search.AbstractEntitySearch;
 import com.hemajoo.commerce.cherry.model.person.type.GenderType;
 import com.hemajoo.commerce.cherry.model.person.type.PersonType;
 import io.swagger.annotations.ApiModel;
@@ -35,7 +35,7 @@ import java.time.LocalDate;
 @ApiModel(value = "PersonSearch", description = "Specification object used to search for persons.")
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class SearchPerson extends BaseSearch
+public class SearchPerson extends AbstractEntitySearch
 {
     /**
      * Person last name.

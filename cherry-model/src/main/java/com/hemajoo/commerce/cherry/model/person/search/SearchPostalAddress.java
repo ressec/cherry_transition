@@ -15,7 +15,7 @@
 package com.hemajoo.commerce.cherry.model.person.search;
 
 import com.hemajoo.commerce.cherry.commons.type.EntityType;
-import com.hemajoo.commerce.cherry.model.base.search.BaseSearch;
+import com.hemajoo.commerce.cherry.model.base.search.AbstractEntitySearch;
 import com.hemajoo.commerce.cherry.model.person.type.AddressCategoryType;
 import com.hemajoo.commerce.cherry.model.person.type.AddressType;
 import io.swagger.annotations.ApiModel;
@@ -34,7 +34,7 @@ import javax.persistence.Enumerated;
 @ApiModel(value = "PostalAddressSearch", description = "Specification object used to search for postal addresses.")
 @Data
 @EqualsAndHashCode(callSuper = false)
-public class SearchPostalAddress extends BaseSearch
+public class SearchPostalAddress extends AbstractEntitySearch
 {
     /**
      * Postal address street name.

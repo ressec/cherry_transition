@@ -14,13 +14,17 @@
  */
 package com.hemajoo.commerce.cherry.persistence.base.entity;
 
+import com.hemajoo.commerce.cherry.commons.time.CherryDateTimeHelper;
 import com.hemajoo.commerce.cherry.commons.type.StatusType;
 import com.hemajoo.commerce.cherry.model.base.entity.StatusEntity;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
-import javax.persistence.*;
-import java.util.Date;
+import javax.persistence.Column;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.MappedSuperclass;
+import java.time.LocalDateTime;
 
 /**
  * Represents the base status part of a persistence entity of the {@code Cherry} data model.
@@ -50,9 +54,8 @@ public abstract class AbstractServerStatusEntity extends AbstractServerAuditEnti
     @Getter
     @Setter
     @ApiModelProperty(hidden = true)
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "SINCE", length = 26)
-    private Date since;
+    @Column(name = "SINCE", columnDefinition = "TIMESTAMP WITH TIME ZONE")
+    private LocalDateTime since;
 
     /**
      * Returns if this entity is active?
@@ -78,7 +81,7 @@ public abstract class AbstractServerStatusEntity extends AbstractServerAuditEnti
     public final void setInactive()
     {
         statusType = StatusType.INACTIVE;
-        since = new Date(System.currentTimeMillis());
+        since = CherryDateTimeHelper.now();
     }
 
     /**

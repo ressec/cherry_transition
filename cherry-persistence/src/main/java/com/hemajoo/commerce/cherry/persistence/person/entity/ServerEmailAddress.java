@@ -18,7 +18,7 @@ import com.hemajoo.commerce.cherry.model.person.entity.base.EmailAddress;
 import com.hemajoo.commerce.cherry.persistence.base.entity.ServerEntity;
 
 /**
- * Interface providing the behavior of a server email address entity.
+ * Interface providing the minimal behavior of a server email address entity.
  * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
  * @since Cherry 0.1.0
  * @version 1.0.0
