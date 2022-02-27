@@ -28,12 +28,23 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
+/**
+ * Document helper utility class.
+ * @author <a href="mailto:christophe.resse@gmail.com">Christophe Resse</a>
+ * @version 1.0.0
+ */
 @Component
 public class DocumentHelper
 {
     @Autowired
     private ProxyContentStore proxyStore;
 
+    /**
+     * Saves a document.
+     * @param document Document.
+     * @param outputPath Output path.
+     * @throws DocumentException Thrown to indicate an error occurred when trying to save the document.
+     */
     public void saveAs(final @NonNull ServerDocumentEntity document, final @NonNull String outputPath) throws DocumentException
     {
         try

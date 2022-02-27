@@ -43,6 +43,10 @@ public class SpringWebApplicationRestApi implements CommandLineRunner
     @Autowired
     private ApplicationContext appContext;
 
+    /**
+     * Main Spring web application entry point.
+     * @param args Arguments.
+     */
     public static void main(String[] args)
     {
         SpringApplication.run(SpringWebApplicationRestApi.class, args);
